@@ -1,0 +1,19 @@
+﻿@page "/Time"
+
+<h3>Time</h3>
+
+
+<SfButton class="btn btn-primary">Start</SfButton>
+
+
+@code
+{
+	[Parameter]
+	public string ParentMessage { get; set; }
+
+	[Parameter]
+	public EventCallback<string> MessageChanged { get; set; }
+
+}
+
+
