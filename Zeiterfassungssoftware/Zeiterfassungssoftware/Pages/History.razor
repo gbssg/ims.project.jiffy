@@ -4,7 +4,6 @@
 
 <h1>History</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
 
 @if (Entries == null)
 {
@@ -12,13 +11,14 @@
 }
 else
 {
-    <select size="10" style="width: 100%;">
+    <p></p>
+    <select class="list-list" size="10" style="width: 100%;">
         @foreach (var Entry in Entries)
         {
-            <option value="@Entry.Id">
-                @Entry.Title @Entry.GetDateString() @Entry.GetFromToString() <br>
-                @Entry.GetTimeString()
-                @Entry.Description 
+            <option class="list-option" value="@Entry.Id">
+                <p class="list-header">@Entry.Title @Entry.GetDateString() @Entry.GetFromToString()</p>
+                <p class="list-time">@Entry.GetTimeString()</p>
+                <p class="list-description">@Entry.Description</p>
             </option>
         }
     </select>
