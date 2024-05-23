@@ -1,0 +1,32 @@
+﻿@page "/history"
+
+<PageTitle>History</PageTitle>
+
+<h1>History</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (Entries == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <select size="4" style="width: 60%;">
+        @foreach (var Entry in Entries)
+        {
+            <option value="@Entry.Id">@Entry.Id @Entry.Title <br> @Entry.Description </option>
+        }
+    </select>
+}
+
+@code {
+    public List<TimeEntry> Entries;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Entries = new TimeEntryProvider().LoadTimeEntries();
+    }
+
+   
+}
