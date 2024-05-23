@@ -1,4 +1,4 @@
-﻿namespace Zeiterfassungssoftware.Data
+﻿namespace Zeiterfassungssoftware.Data.Time
 {
     public class TimeEntry
     {

@@ -1,19 +1,19 @@
-﻿namespace Zeiterfassungssoftware.Data
+﻿namespace Zeiterfassungssoftware.Data.Time
 {
 
 
     public class TimeEntryProvider
     {
-    
+
         // Replace later
         public List<TimeEntry> LoadTimeEntries()
         {
             List<TimeEntry> Entries = new List<TimeEntry>();
 
             int I = 0;
-            for(int year = 2007; year <= 2024; year++)
+            for (int year = 2007; year <= 2024; year++)
             {
-                for(int month = 1; month <= 12; month++)
+                for (int month = 1; month <= 12; month++)
                 {
                     for (int day = 1; day <= 28; day++)
                     {
