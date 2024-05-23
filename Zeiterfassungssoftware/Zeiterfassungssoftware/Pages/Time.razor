@@ -3,17 +3,36 @@
 <h3>Time</h3>
 
 
-<SfButton class="btn btn-primary">Start</SfButton>
 
+<PageTitle>Time</PageTitle>
 
-@code
+<RoundButton Text="Start" onclick="startClock"/>
+@if (ActivityTitles != null)
 {
-	[Parameter]
-	public string ParentMessage { get; set; }
-
-	[Parameter]
-	public EventCallback<string> MessageChanged { get; set; }
-
+	<select>
+		@foreach (var ActivityTitle in ActivityTitles)
+		{
+			<option value="@ActivityTitle.Value">@ActivityTitle.Value</option>
+		}
+	</select>
+	
 }
 
+<sfTextBox>Text</sfTextBox>
+@if (messages != null)
+{
+	<div>
+		@foreach(var message in this.messages)
+		{
+			<div>
+				@message
+			</div>
+		}
+	</div>
+	
+}
 
+<div>
+	<input @bind-value="this.currentMessage" type="text" />
+	<button @onclick="this.SendMessage">Senden</button>
+</div>
