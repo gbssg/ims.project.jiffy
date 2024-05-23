@@ -20,13 +20,3 @@ else
     </select>
 }
 
-@code {
-    public List<TimeEntry> Entries;
-
-    protected override async Task OnInitializedAsync()
-    {
-        Entries = new TimeEntryProvider().LoadTimeEntries();
-    }
-
-   
-}
