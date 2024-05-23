@@ -16,6 +16,22 @@ a, .btn-link {
     border-color: #1861ac;
 }
 
+.btn-round {
+    background-color: #BB86FC;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 40px;
+    border: none;
+    width: 276px;
+    height: 276px;
+    transition: 1s;
+}
+
+.btn-round:hover {
+    transition: 1s;
+    background-color: #a861ff;
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
