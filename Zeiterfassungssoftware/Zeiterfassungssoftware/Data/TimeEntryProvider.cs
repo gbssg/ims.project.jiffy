@@ -17,8 +17,7 @@
                 {
                     for (int day = 1; day <= 28; day++)
                     {
-
-                        Entries.Add(new TimeEntry()
+                        TimeEntry Entry = new TimeEntry()
                         {
                             Id = I,
                             Date = new DateOnly(year, month, day),
@@ -26,7 +25,10 @@
                             EndTime = new TimeOnly(16, 15),
                             Title = "Arbeit",
                             Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                        });
+                        };
+                        Entry.Time = Entry.EndTime - Entry.StartTime;
+
+                        Entries.Add(Entry);
                         I++;
                     }
                 }

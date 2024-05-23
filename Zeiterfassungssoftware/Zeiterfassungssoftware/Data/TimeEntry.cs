@@ -8,5 +8,22 @@
         public TimeOnly EndTime { get; init; }
         public string Title { get; init; }
         public string Description { get; init; }
+        public TimeSpan Time { get; set; }
+
+        public string GetTimeString()
+        {
+            return $"{Time.Hours}h {Time.Minutes}min";
+        }
+
+        public string GetFromToString()
+        {
+            return $"{StartTime.Hour}:{StartTime.Minute} - {EndTime.Hour}:{EndTime.Minute}";
+        }
+
+        public string GetDateString()
+        {
+            return $"{Date.Day}.{Date.Month}.{Date.Year}";
+        }
+
     }
 }
