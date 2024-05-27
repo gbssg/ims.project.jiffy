@@ -1,29 +1,46 @@
 ﻿@page "/Time"
 
-<h3>Time</h3>
-
-
 
 <PageTitle>Time</PageTitle>
 
-<RoundButton Text="Start" OnClick="startClock"/>
+<div>
+	<RoundButton/>
+</div
+
+<TextField>
+	
+</TextField>
 
 @if (ActivityTitles != null)
 {
 	<select>
+
+		<option value="Neue Tätigkeiten erfassen">Neue Tätigkeiten erfassen</option>
 		@foreach (var ActivityTitle in ActivityTitles)
 		{
 			<option value="@ActivityTitle.Value">@ActivityTitle.Value</option>
 		}
 	</select>
-	
+
 }
 
-<sfTextBox>Text</sfTextBox>
+
+
+<div>
+	Tätigkeiten
+</div>
+
+
+<div>
+	<input @bind-value="this.currentMessage" type="text" />
+	<button @onclick="this.SendMessage">Senden</button>
+</div>
+
+
 <div>
 	@if (messages.Count > 0)
 	{
-		@foreach(var message in this.messages)
+		@foreach (var message in this.messages)
 		{
 			<div>
 				@message
@@ -34,9 +51,4 @@
 	{
 		<span>No entries</span>
 	}
-</div>
-
-<div>
-	<input @bind-value="this.currentMessage" type="text" />
-	<button @onclick="this.SendMessage">Senden</button>
 </div>

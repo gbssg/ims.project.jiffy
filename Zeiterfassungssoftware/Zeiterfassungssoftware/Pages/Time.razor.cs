@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Components;
+using System.Diagnostics.Tracing;
+using System.Runtime.CompilerServices;
 using Zeiterfassungssoftware.Data.Activities;
 
 
@@ -35,6 +37,25 @@ namespace Zeiterfassungssoftware.Pages
 		private void startClock()
 		{
 			this.currentMessage = "Hoi Wält!";
+		}
+
+		public string buttonIndex = "Start";
+		bool buttonStatus = false;
+
+		private void changeButtonIndex()
+		{
+			
+			if(buttonStatus == false)
+			{
+				buttonStatus = true;
+				buttonIndex = "Stop";
+			}
+			else
+			{
+				buttonStatus = false;
+				buttonIndex = "Start";
+			}
+			
 		}
 	}
 	
