@@ -5,6 +5,7 @@ namespace Zeiterfassungssoftware.Pages
 {
     public partial class History
     {
+        public string Filter;
 
         public List<TimeEntry> Entries;
 
