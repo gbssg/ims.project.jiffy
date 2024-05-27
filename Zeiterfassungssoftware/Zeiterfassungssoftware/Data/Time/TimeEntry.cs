@@ -3,9 +3,8 @@
     public class TimeEntry
     {
         public int Id { get; set; }
-        public DateOnly Date { get; set; }
-        public TimeOnly StartTime { get; set; }
-        public TimeOnly EndTime { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public TimeSpan Time { get; set; }
@@ -17,12 +16,12 @@
 
         public string GetFromToString()
         {
-            return $"{StartTime.Hour}:{StartTime.Minute} - {EndTime.Hour}:{EndTime.Minute}";
+            return $"{Start.Hour}:{Start.Minute} - {End.Hour}:{End.Minute}";
         }
 
         public string GetDateString()
         {
-            return $"{Date.Day}.{Date.Month}.{Date.Year}";
+            return $"{Start.Day}.{Start.Month}.{Start.Year}";
         }
 
     }
