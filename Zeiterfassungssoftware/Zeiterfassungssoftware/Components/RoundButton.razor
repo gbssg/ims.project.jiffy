@@ -1,8 +1,18 @@
-﻿<button class="btn-round">
+﻿<button class="btn-round" @onclick="OnButtonClicked">
     @Text
 </button>
 
 @code {
+    public delegate void OnButtonClick();
+
     [Parameter]
-    public string Text { get; set; }
+    public string Text { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback<OnButtonClick> OnClick { get; set; }
+
+    private void OnButtonClicked()
+    {
+        OnClick.InvokeAsync();
+    }
 }

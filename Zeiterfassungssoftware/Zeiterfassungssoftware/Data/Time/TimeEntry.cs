@@ -2,12 +2,12 @@
 {
     public class TimeEntry
     {
-        public int Id { get; init; }
-        public DateOnly Date { get; init; }
-        public TimeOnly StartTime { get; init; }
-        public TimeOnly EndTime { get; init; }
-        public string Title { get; init; }
-        public string Description { get; init; }
+        public int Id { get; set; }
+        public DateOnly Date { get; set; }
+        public TimeOnly StartTime { get; set; }
+        public TimeOnly EndTime { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
         public TimeSpan Time { get; set; }
 
         public string GetTimeString()

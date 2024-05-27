@@ -6,7 +6,8 @@
 
 <PageTitle>Time</PageTitle>
 
-<RoundButton Text="Start" onclick="startClock"/>
+<RoundButton Text="Start" OnClick="startClock"/>
+
 @if (ActivityTitles != null)
 {
 	<select>
@@ -19,18 +20,21 @@
 }
 
 <sfTextBox>Text</sfTextBox>
-@if (messages != null)
-{
-	<div>
+<div>
+	@if (messages.Count > 0)
+	{
 		@foreach(var message in this.messages)
 		{
 			<div>
 				@message
 			</div>
 		}
-	</div>
-	
-}
+	}
+	else
+	{
+		<span>No entries</span>
+	}
+</div>
 
 <div>
 	<input @bind-value="this.currentMessage" type="text" />

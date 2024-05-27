@@ -21,13 +21,20 @@ namespace Zeiterfassungssoftware.Pages
 		string currentMessage;
 		protected override void OnInitialized()
 		{
+			/*
 			this.messages.Add("Test");
 			this.messages.Add("Test1");
+		*/
 		}
 		private void SendMessage()
 		{
 			this.messages.Add(this.currentMessage);
 			this.currentMessage = String.Empty;
+		}
+
+		private void startClock()
+		{
+			this.currentMessage = "Hoi Wält!";
 		}
 	}
 	
