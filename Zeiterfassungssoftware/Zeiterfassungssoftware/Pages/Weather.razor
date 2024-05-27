@@ -1,22 +1,10 @@
-﻿@page "/sindschonferien"
+﻿@page "/test"
 
-<<<<<<< HEAD
-<h1>weather</h1>
-=======
 <PageTitle>Weather</PageTitle>
 
 
-<h1>@Message</h1>
 
 
 @code {
-    public bool Holiday;
-    public string Message;
 
-    protected override async Task OnInitializedAsync()
-    {
-        Holiday = await HolidayProvider.IsHolyDay();
-        Message = Holiday ? "Jaaa" : "Nein :(";
-    }
 }
->>>>>>> refs/remotes/origin/main
