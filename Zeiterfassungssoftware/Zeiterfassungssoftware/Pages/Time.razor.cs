@@ -1,42 +1,46 @@
-using Microsoft.AspNetCore.Components;
-using System.Diagnostics.Tracing;
-using System.Runtime.CompilerServices;
 using Zeiterfassungssoftware.Data;
-using Zeiterfassungssoftware.Data.Activities;
-using Zeiterfassungssoftware.Data.Time;
+using Zeiterfassungssoftware.Services;
+using Zeiterfassungssoftware.SharedData.Time;
 
 
 namespace Zeiterfassungssoftware.Pages
 {
 
-	public partial class Time
+    public partial class Time
 	{
-		public bool Started { get; set; }
-		public TimeEntry CurrentEntry { get; set; }
+		public bool Started => CurrentEntry != null && CurrentEntry.End == null;
+		public TimeEntry? CurrentEntry { get; set; }
 
 		protected override async Task OnInitializedAsync()
 		{
-			DataProvider.LoadData();	
+			CurrentEntry = TimeEntrySource.GetEntries().Last();
+			if ((CurrentEntry != null) 
+				&& (CurrentEntry.End != null))
+			{
+				CurrentEntry = null;
+			}
 		}
 
 		private void ToggleClock()
 		{
-			Started = !Started;
-			if(Started)
+			if (!Started)
 			{
 				CurrentEntry = new()
 				{
-					Id = TimeEntryProvider.TimeEntries.Count + 1,
 					Start = DateTime.Now,
 					Title = "Test",
 					Description = "Test lorem ipsum",
 				};
-			} 
+
+				TimeEntrySource.Add(CurrentEntry);
+			}
+			else if (CurrentEntry != null)
+            {
+				CurrentEntry.End = DateTime.Now;
+			}
 			else
 			{
-				CurrentEntry.End = DateTime.Now;
-				CurrentEntry.Time = CurrentEntry.End - CurrentEntry.Start;
-                TimeEntryProvider.TimeEntries.Add(CurrentEntry);
+				throw new Exception("CurrenEntry was null even though the measuring was not started!");
 			}
 		}
 

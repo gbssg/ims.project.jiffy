@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zeiterfassungssoftware", "Zeiterfassungssoftware\Zeiterfassungssoftware.csproj", "{058F5AE6-7F67-4CE4-9C6B-0E69E5997D40}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zeiterfassungssoftware.SharedData", "Zeiterfassungssoftware.SharedData\Zeiterfassungssoftware.SharedData.csproj", "{13453ED3-9928-49CC-9AD8-72F8FE3B18B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{058F5AE6-7F67-4CE4-9C6B-0E69E5997D40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{058F5AE6-7F67-4CE4-9C6B-0E69E5997D40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{058F5AE6-7F67-4CE4-9C6B-0E69E5997D40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13453ED3-9928-49CC-9AD8-72F8FE3B18B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13453ED3-9928-49CC-9AD8-72F8FE3B18B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13453ED3-9928-49CC-9AD8-72F8FE3B18B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13453ED3-9928-49CC-9AD8-72F8FE3B18B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

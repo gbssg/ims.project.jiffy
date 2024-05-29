@@ -1,6 +1,6 @@
 ﻿using Zeiterfassungssoftware.Data.Activities;
 using Zeiterfassungssoftware.Data.Holidays;
-using Zeiterfassungssoftware.Data.Time;
+using Zeiterfassungssoftware.Services;
 
 namespace Zeiterfassungssoftware.Data
 {
@@ -21,8 +21,6 @@ namespace Zeiterfassungssoftware.Data
 
         public static void LoadTimeEntries()
         {
-            if (TimeEntryProvider.TimeEntries == null)
-                TimeEntryProvider.LoadTimeEntries();
         }
 
         public static void LoadActivities()
