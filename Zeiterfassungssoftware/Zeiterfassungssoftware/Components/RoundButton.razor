@@ -1,5 +1,5 @@
-﻿<button class="btn-round" @onclick="OnButtonClicked">
-    @buttonIndex
+﻿<button class=@CssClass @onclick="OnButtonClicked">
+	@Text
 </button>
 
 @code {
@@ -8,24 +8,16 @@
 	[Parameter]
 	public EventCallback<OnButtonClick> OnClick { get; set; }
 
+	private string CssClass { get; set; } = "btn-round";
 
-	bool buttonStatus = false;
-	public string buttonIndex = "Start";
+	private string Text { get; set; } = "Start";
+	private bool Started { get; set; }
 
 	private void OnButtonClicked()
 	{
-
-
-		if(buttonStatus == false)
-		{
-			buttonStatus = true;
-			buttonIndex = "Stop";
-		}
-		else
-		{
-			buttonStatus = false;
-			buttonIndex = "Start";
-		}
+		Started = !Started;
+		Text = Started ? "Stop" : "Start";
+		CssClass = Started ? "btn-started" : "btn-round";
 
 		OnClick.InvokeAsync();
 	}

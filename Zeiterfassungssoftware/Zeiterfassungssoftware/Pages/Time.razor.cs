@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
+using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Activities;
+using Zeiterfassungssoftware.Data.Time;
 
 
 namespace Zeiterfassungssoftware.Pages
@@ -9,54 +11,36 @@ namespace Zeiterfassungssoftware.Pages
 
 	public partial class Time
 	{
-		private List<ActivityTitle> ActivityTitles;
-		private List<ActivityDescription> ActivityDescription;
+		public bool Started { get; set; }
+		public TimeEntry CurrentEntry { get; set; }
+
 		protected override async Task OnInitializedAsync()
 		{
-			ActivityProvider provider = new ActivityProvider();
-			ActivityTitles = provider.LoadSavedTitles();
-			ActivityDescription = provider.LoadSavedDescriptions();
+			DataProvider.LoadData();	
 		}
 
-		List<string> messages = new();
-
-		string currentMessage;
-		protected override void OnInitialized()
+		private void ToggleClock()
 		{
-			/*
-			this.messages.Add("Test");
-			this.messages.Add("Test1");
-		*/
-		}
-		private void SendMessage()
-		{
-			this.messages.Add(this.currentMessage);
-			this.currentMessage = String.Empty;
-		}
-
-		private void startClock()
-		{
-			this.currentMessage = "Hoi Wält!";
-		}
-
-		public string buttonIndex = "Start";
-		bool buttonStatus = false;
-
-		private void changeButtonIndex()
-		{
-			
-			if(buttonStatus == false)
+			Started = !Started;
+			if(Started)
 			{
-				buttonStatus = true;
-				buttonIndex = "Stop";
-			}
+				CurrentEntry = new()
+				{
+					Id = TimeEntryProvider.TimeEntries.Count + 1,
+					Start = DateTime.Now,
+					Title = "Test",
+					Description = "Test lorem ipsum",
+				};
+			} 
 			else
 			{
-				buttonStatus = false;
-				buttonIndex = "Start";
+				CurrentEntry.End = DateTime.Now;
+				CurrentEntry.Time = CurrentEntry.End - CurrentEntry.Start;
+                TimeEntryProvider.TimeEntries.Add(CurrentEntry);
 			}
-			
 		}
+
+
 	}
 	
 

@@ -5,23 +5,16 @@
 <h1>History</h1>
 
 
-@if (Entries == null)
+@if (TimeEntryProvider.TimeEntries != null)
 {
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <p>Krankheitstage</p>
-    <p>@SickDays</p>
     <select class="list-list" size="10" style="width: 100%;">
-        @foreach (var Entry in Entries)
+        @foreach (var Entry in TimeEntryProvider.TimeEntries)
         {
-            <option class="list-option" value="@Entry.Id">
-                <p class="list-header">@Entry.Title @Entry.GetDateString() @Entry.GetFromToString()</p>
-                <p class="list-time">@Entry.GetTimeString()</p>
-                <p class="list-description">@Entry.Description</p>
-            </option>
+            <HistoryEntry Entry="@Entry"/>
         }
     </select>
 }
-
+else
+{
+    <p>Loading...</p>
+}

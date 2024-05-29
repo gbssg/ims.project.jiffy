@@ -3,52 +3,15 @@
 
 <PageTitle>Time</PageTitle>
 
-<div>
-	<RoundButton/>
-</div
-
-<TextField>
-	
-</TextField>
-
-@if (ActivityTitles != null)
-{
-	<select>
-
-		<option value="Neue Tätigkeiten erfassen">Neue Tätigkeiten erfassen</option>
-		@foreach (var ActivityTitle in ActivityTitles)
-		{
-			<option value="@ActivityTitle.Value">@ActivityTitle.Value</option>
-		}
-	</select>
-
-}
+<RoundButton OnClick="ToggleClock"/>
 
 
 
-<div>
+
+<p>
 	Tätigkeiten
-</div>
+</p>
+<TextField />
 
 
-<div>
-	<input @bind-value="this.currentMessage" type="text" />
-	<button @onclick="this.SendMessage">Senden</button>
-</div>
 
-
-<div>
-	@if (messages.Count > 0)
-	{
-		@foreach (var message in this.messages)
-		{
-			<div>
-				@message
-			</div>
-		}
-	}
-	else
-	{
-		<span>No entries</span>
-	}
-</div>

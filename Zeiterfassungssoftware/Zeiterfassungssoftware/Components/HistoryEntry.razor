@@ -1,0 +1,10 @@
+﻿<option class="list-option" value="@Entry.Id">
+    <p class="list-header">@Entry.Title @Entry.GetDateString() @Entry.GetFromToString()</p>
+    <p class="list-time">@Entry.GetTimeString()</p>
+    <p class="list-description">@Entry.Description</p>
+</option>
+
+@code {
+    [Parameter]
+    public TimeEntry Entry { get; set; }
+}

@@ -1,14 +1,14 @@
 ﻿namespace Zeiterfassungssoftware.Data.Time
 {
 
-
     public class TimeEntryProvider
     {
+        public static List<TimeEntry> TimeEntries { get; set; }
 
-        // Replace later
-        public List<TimeEntry> LoadTimeEntries()
+        // Replace
+        public static void LoadTimeEntries()
         {
-            List<TimeEntry> Entries = new List<TimeEntry>();
+            TimeEntries = new List<TimeEntry>();
 
             int I = 0;
             for (int year = 2021; year <= 2024; year++)
@@ -27,12 +27,11 @@
                         };
                         Entry.Time = Entry.End - Entry.Start;
 
-                        Entries.Add(Entry);
+                        TimeEntries.Add(Entry);
                         I++;
                     }
                 }
             }
-            return Entries;
         }
     }
 }

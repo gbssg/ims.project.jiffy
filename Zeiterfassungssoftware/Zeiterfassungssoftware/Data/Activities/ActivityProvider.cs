@@ -2,10 +2,13 @@
 {
     public class ActivityProvider
     {
+        public static List<ActivityTitle> ActivityTitles { get; set; }
+        public static List<ActivityDescription> ActivityDescriptions { get; set; }
 
-        public List<ActivityTitle> LoadSavedTitles()
+
+        public static void LoadActivityTitles()
         {
-            List<ActivityTitle> Titles = new List<ActivityTitle>()
+            ActivityTitles = new List<ActivityTitle>()
             {
                 new ActivityTitle()
                 {
@@ -32,12 +35,11 @@
                     Value = "M431"
                 }
             };
-            return Titles;
         }
 
-        public List<ActivityDescription> LoadSavedDescriptions() 
+        public static void LoadActivityDescriptions() 
         {
-            List<ActivityDescription> Descriptions = new List<ActivityDescription>()
+            ActivityDescriptions = new List<ActivityDescription>()
             {
                 new ActivityDescription()
                 {
@@ -60,7 +62,6 @@
                     Value = "Prüfung"
                 }
             };
-            return Descriptions;
         }
         
     }

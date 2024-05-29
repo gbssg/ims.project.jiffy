@@ -11,9 +11,13 @@ a, .btn-link {
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color: #BB86FC;
+    border-radius: 25px;
+    font-size: 24px;
+    border: none;
+    width: 100px;
+    height: 50px;
+    transition: 1s;
 }
 
 .btn-round {
@@ -27,7 +31,23 @@ a, .btn-link {
     transition: 1s;
 }
 
-.btn-round:hover {
+.btn-started {
+    color: #ffffff;
+    background-color: #000000;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 40px;
+    border: none;
+    width: 271px;
+    height: 271px;
+    transition: 1s;
+}
+
+.widget-title {
+    font-size: 20px;
+}
+
+.btn-primary:hover, .btn-round:hover {
     transition: 1s;
     background-color: #a861ff;
 }

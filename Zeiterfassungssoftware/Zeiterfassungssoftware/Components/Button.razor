@@ -1,18 +1,21 @@
-﻿<button class="btn-test" @onclick="OnButtonClicked">
-    @Text
+﻿<button class="btn-primary" style="width:@Width;" @onclick="OnButtonClicked">
+	@Text
 </button>
 
 @code {
-    public delegate void OnButtonClick();
+	public delegate void OnButtonClick();
 
-    [Parameter]
-    public string Text { get; set; }
+	[Parameter]
+	public string Text { get; set; } = string.Empty;
+	[Parameter]
+	public string Width { get; set; } = "100%";
 
-    [Parameter]
-    public EventCallback<OnButtonClick> OnClick { get; set; }
+	[Parameter]
+	public EventCallback<OnButtonClick> OnClick { get; set; }
+	
 
-    private void OnButtonClicked()
-    {
-        OnClick.InvokeAsync();
-    }
+	private void OnButtonClicked()
+	{
+		OnClick.InvokeAsync();
+	}
 }
