@@ -1,16 +1,15 @@
-﻿namespace Zeiterfassungssoftware.Data.Time
+﻿using Zeiterfassungssoftware.SharedData.Time;
+
+namespace Zeiterfassungssoftware.Services
 {
 
-    public class TimeEntryProvider
+    public class LocalTimeEntryProvider: ITimeEntryProvider
     {
-        public static List<TimeEntry> TimeEntries { get; set; }
+        private List<TimeEntry> _timeEntries = [];
 
-        // Replace
-        public static void LoadTimeEntries()
+        public LocalTimeEntryProvider()
         {
-            TimeEntries = new List<TimeEntry>();
-
-            int I = 0;
+            int id = 0;
             for (int year = 2021; year <= 2024; year++)
             {
                 for (int month = 1; month <= 12; month++)
@@ -19,19 +18,29 @@
                     {
                         TimeEntry Entry = new TimeEntry()
                         {
-                            Id = I,
                             Start = new DateTime(year, month, day, 8, 20, 0),
-							End = new DateTime(year, month, day, 16, 15, 0),
-							Title = I % 15 == 0 ? "Krank" : "Arbeit",
+                            End = new DateTime(year, month, day, 16, 15, 0),
+                            Title = id % 15 == 0 ? "Krank" : "Arbeit",
                             Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
                         };
-                        Entry.Time = Entry.End - Entry.Start;
 
-                        TimeEntries.Add(Entry);
-                        I++;
+                        _timeEntries.Add(Entry);
+                        id++;
                     }
                 }
             }
+        }
+
+        public bool IsLoaded => true;
+
+        public void Add(TimeEntry entry)
+        {
+            _timeEntries.Add(entry);
+        }
+
+        public List<TimeEntry> GetEntries()
+        {
+            return _timeEntries;
         }
     }
 }

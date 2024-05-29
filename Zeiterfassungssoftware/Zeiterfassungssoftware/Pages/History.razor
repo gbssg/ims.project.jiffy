@@ -1,14 +1,16 @@
 ﻿@page "/history"
 
+@inject ITimeEntryProvider TimeEntrySource
+
 <PageTitle>History</PageTitle>
 
 <h1>History</h1>
 
 
-@if (TimeEntryProvider.TimeEntries != null)
+@if (TimeEntrySource.IsLoaded)
 {
     <select class="list-list" size="10" style="width: 100%;">
-        @foreach (var Entry in TimeEntryProvider.TimeEntries)
+        @foreach (var Entry in TimeEntrySource.GetEntries().TakeLast(15))
         {
             <HistoryEntry Entry="@Entry"/>
         }

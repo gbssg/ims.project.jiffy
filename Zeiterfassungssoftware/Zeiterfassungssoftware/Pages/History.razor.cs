@@ -1,5 +1,5 @@
 using Zeiterfassungssoftware.Data;
-using Zeiterfassungssoftware.Data.Time;
+using Zeiterfassungssoftware.Services;
 
 namespace Zeiterfassungssoftware.Pages
 {
@@ -9,8 +9,6 @@ namespace Zeiterfassungssoftware.Pages
         
         protected override async Task OnInitializedAsync()
         {
-            if (TimeEntryProvider.TimeEntries == null)
-                TimeEntryProvider.LoadTimeEntries();
         }
 
     }
