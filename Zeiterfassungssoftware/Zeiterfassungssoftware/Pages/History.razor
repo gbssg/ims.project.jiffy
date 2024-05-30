@@ -7,14 +7,42 @@
 <h1>History</h1>
 
 
-@if (TimeEntrySource.IsLoaded)
+@if (TimeEntries != null)
 {
-    <select class="list-list" size="10" style="width: 100%;">
-        @foreach (var Entry in TimeEntrySource.GetEntries().TakeLast(15))
+    <Widget Title="Sick Days" Text="@SickDays.ToString()" />
+    <Widget Title="Overtime" Text="@Overtime.ToString(@"dd\d\ hh\h\ mm\m")" />
+
+    <div class="@FilterCssClass">
+        <p class="filter-title" @onclick="OnFilterClick">Filter Settings</p>
+        
+    </div>
+
+    <table class="list" style="width: 100%">
+        <tr>
+            <th>
+                Time
+            </th>
+            <th>
+                Start
+            </th>
+            <th>
+                Stop
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Activity
+            </th>
+            <th>
+                Description
+            </th>
+        </tr>
+        @foreach (var Entry in TimeEntries)
         {
             <HistoryEntry Entry="@Entry"/>
         }
-    </select>
+    </table>
 }
 else
 {

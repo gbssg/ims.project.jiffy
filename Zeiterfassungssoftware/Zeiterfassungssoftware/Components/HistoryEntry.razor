@@ -1,8 +1,24 @@
-﻿<option class="list-option" value="@Entry.Id">
-    <p class="list-header">@Entry.Title @Entry.GetDateString() @Entry.GetFromToString()</p>
-    <p class="list-time">@Entry.GetTimeString()</p>
-    <p class="list-description">@Entry.Description</p>
-</option>
+﻿<tr class="list-entry">
+    <td class="list-time">
+        @Entry.Time.ToString(@"h\h\ mm\m")
+    </td>
+    <td class="list-start">
+        @Entry.Start.ToString(@"h\:mm")
+    </td>
+    <td class="list-start">
+        @Entry.GetEndString()
+    </td>
+    <td class="list-date">
+        @Entry.Start.ToString(@"d\.M\.yyyy")
+    </td>
+    <td class="list-title">
+        @Entry.Title
+    </td>
+    <td class="list-description">
+        @Entry.Description
+    </td>
+
+</tr>
 
 @code {
     [Parameter]

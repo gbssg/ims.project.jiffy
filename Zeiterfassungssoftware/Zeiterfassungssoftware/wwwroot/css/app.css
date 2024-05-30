@@ -47,6 +47,27 @@ a, .btn-link {
     font-size: 20px;
 }
 
+.widget {
+    background-color: #292929;
+    border-radius: 20px;
+    width: 150px;
+    padding: 10px;
+    color: #ffffff;
+}
+/*.filter-title {
+    background: #292929;
+    color: #ffffff;
+}*/
+
+.list-entry {
+    border: 2px solid black;
+}
+.list-time {
+    font-size: 20px;
+    color: #BB86FC;
+    font-weight: bold;
+}
+
 .btn-primary:hover, .btn-round:hover {
     transition: 1s;
     background-color: #a861ff;

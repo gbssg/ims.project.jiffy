@@ -7,21 +7,26 @@
         public DateTime? End { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public TimeSpan Time => (End != null ? End - Start : TimeSpan.Zero).Value;
+        public TimeSpan Time => (End != null ? End - Start : DateTime.Now-Start).Value;
 
         public string GetTimeString()
         {
             return $"{Time.Hours}h {Time.Minutes}min";
         }
 
-        public string GetFromToString()
+        public string GetStartString()
+        {
+            return $"{Start.Hour}:{Start.Minute}";
+        }
+
+        public string GetEndString()
         {
             if (End == null)
-            {
-                return $"{Start.Hour}:{Start.Minute} - ?";
-            }
-            return $"{Start.Hour}:{Start.Minute} - {End.Value.Hour}:{End.Value.Minute}";
+                return "?";
+
+            return $"{End?.Hour}:{End?.Minute}";
         }
+
 
         public string GetDateString()
         {

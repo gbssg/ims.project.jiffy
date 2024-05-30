@@ -1,19 +1,19 @@
-﻿
-@*  <div>
-	<input @bind-value="currentInput" placeholder="..." style="width:100%; height:60%;" />
-</div>
+﻿<textarea placeholder="" onchange></textarea>
 
 @code {
 
-    public delegate void OnInputChange();
-
     [Parameter]
-    public EventCallback<OnInputChange> OnChange { get; set; }
+    public string PlaceHolder { get; set; } = string.Empty;
+
+    // public delegate void OnInputChange();
+
+    // [Parameter]
+    // public EventCallback<OnInputChange> OnChange { get; set; }
 
 
-    private void OnChange(ChangeEventArgs args)
-    {
+    // private void OnChange(ChangeEventArgs args)
+    // {
         
-    }
+    // }
 
-} *@
+}
