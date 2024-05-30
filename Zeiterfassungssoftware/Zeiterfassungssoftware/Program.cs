@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Zeiterfassungssoftware.Services;
+using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Time;
 
 namespace Zeiterfassungssoftware
@@ -13,9 +14,10 @@ namespace Zeiterfassungssoftware
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
-            builder.Services.AddSingleton<ITimeEntryProvider, LocalTimeEntryProvider>(); 
+            builder.Services.AddSingleton<ITimeEntryProvider, LocalTimeEntryProvider>();
+			builder.Services.AddSingleton<IActivityProvider, LocalActivityProvider>();
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+			builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             await builder.Build().RunAsync();
         }

@@ -33,9 +33,14 @@ namespace Zeiterfassungssoftware.Services
 
         public bool IsLoaded => true;
 
-        public void Add(TimeEntry entry)
+        public void Add(TimeEntry Entry)
         {
-            _timeEntries.Add(entry);
+            _timeEntries.Add(Entry);
+        }
+
+        public void Remove(TimeEntry Entry)
+        {
+            _timeEntries.Remove(Entry);
         }
 
         public List<TimeEntry> GetEntries()

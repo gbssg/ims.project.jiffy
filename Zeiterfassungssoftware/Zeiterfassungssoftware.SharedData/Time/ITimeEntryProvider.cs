@@ -10,7 +10,8 @@ namespace Zeiterfassungssoftware.SharedData.Time
     {
         public bool IsLoaded { get; }
 
-        public void Add(TimeEntry entry);
-        public List<TimeEntry> GetEntries();
+        public void Add(TimeEntry Entry);
+		public void Remove(TimeEntry Entry);
+		public List<TimeEntry> GetEntries();
     }
 }

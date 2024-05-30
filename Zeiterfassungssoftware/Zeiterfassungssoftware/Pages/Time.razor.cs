@@ -23,6 +23,7 @@ namespace Zeiterfassungssoftware.Pages
 
 		private void ToggleClock()
 		{
+			
 			if (!Started)
 			{
 				CurrentEntry = new()

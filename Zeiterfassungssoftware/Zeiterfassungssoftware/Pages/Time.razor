@@ -1,11 +1,11 @@
 ﻿@page "/Time"
 
 @inject ITimeEntryProvider TimeEntrySource
-
+@inject IActivityProvider ActivitySource
 
 <PageTitle>Time</PageTitle>
 
-<RoundButton OnClick="ToggleClock"/>
+<RoundButton OnClick="ToggleClock" Started="@Started"/>
 
 
 

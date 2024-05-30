@@ -8,17 +8,14 @@
 	[Parameter]
 	public EventCallback<OnButtonClick> OnClick { get; set; }
 
-	private string CssClass { get; set; } = "btn-round";
+	private string CssClass => Started ? "btn-started" : "btn-round";
+	private string Text => Started ? "Stop" : "Start";
 
-	private string Text { get; set; } = "Start";
-	private bool Started { get; set; }
+	[Parameter]
+	public bool Started { get; set; }
 
 	private void OnButtonClicked()
 	{
-		Started = !Started;
-		Text = Started ? "Stop" : "Start";
-		CssClass = Started ? "btn-started" : "btn-round";
-
 		OnClick.InvokeAsync();
 	}
 }
