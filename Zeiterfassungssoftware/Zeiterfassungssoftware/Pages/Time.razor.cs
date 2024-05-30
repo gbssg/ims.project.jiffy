@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Timers;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Services;
 using Zeiterfassungssoftware.SharedData.Time;
@@ -10,6 +13,9 @@ namespace Zeiterfassungssoftware.Pages
 	{
 		public bool Started => CurrentEntry != null && CurrentEntry.End == null;
 		public TimeEntry? CurrentEntry { get; set; }
+
+		private TimeSpan passedTime => DateTime.Now - CurrentEntry.Start;
+		private System.Threading.Timer timer;
 
 		protected override async Task OnInitializedAsync()
 		{
@@ -26,6 +32,7 @@ namespace Zeiterfassungssoftware.Pages
 			
 			if (!Started)
 			{
+				timer = new System.Threading.Timer(UpdateTimer, null, 0, 1000);
 				CurrentEntry = new()
 				{
 					Start = DateTime.Now,
@@ -37,13 +44,28 @@ namespace Zeiterfassungssoftware.Pages
 			}
 			else if (CurrentEntry != null)
             {
+				timer.Dispose();
 				CurrentEntry.End = DateTime.Now;
 			}
 			else
 			{
+				timer.Dispose();
 				throw new Exception("CurrenEntry was null even though the measuring was not started!");
 			}
 		}
+
+		public void UpdateTimer(object obj)
+		{
+			InvokeAsync(StateHasChanged);
+		}
+		
+
+		void IDisposable.Dispose()
+		{
+			timer.Dispose();
+			
+		}
+
 
 
 	}

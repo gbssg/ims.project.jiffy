@@ -1,19 +1,10 @@
 ﻿
-@*  <div>
-	<input @bind-value="currentInput" placeholder="..." style="width:100%; height:60%;" />
+<div>
+	<input placeholder="..." style="width:100%; height:60%;" />
 </div>
 
 @code {
 
-    public delegate void OnInputChange();
 
-    [Parameter]
-    public EventCallback<OnInputChange> OnChange { get; set; }
+} 
 
-
-    private void OnChange(ChangeEventArgs args)
-    {
-        
-    }
-
-} *@

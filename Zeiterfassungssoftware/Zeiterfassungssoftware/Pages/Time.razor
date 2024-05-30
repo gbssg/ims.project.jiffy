@@ -3,16 +3,37 @@
 @inject ITimeEntryProvider TimeEntrySource
 @inject IActivityProvider ActivitySource
 
+@implements IDisposable
+
+
 <PageTitle>Time</PageTitle>
 
-<RoundButton OnClick="ToggleClock" Started="@Started"/>
+<div style="padding:20px">
+	<RoundButton OnClick="ToggleClock" Started="@Started" />
+</div>
 
 
+@if (!Started)
+{
+	<div>
+		<select style="width:100%; height:60%;%">
+			<option>Neue Tätigkeit erfassen</option>
+			@foreach (var Activity in ActivitySource.GetActivityTitles())
+			{
+				
+				<option value="@Activity.Value">@Activity.Value</option>
+			}
 
 
-<p>
-	Tätigkeit
-</p>
-<TextField />
+		</select>
+	</div>
 
-
+	<p>
+		Tätigkeit
+	</p>
+	<TextField />
+}
+else
+{
+	<div>@passedTime.ToString(@"hh\:mm\:ss")</div>
+}
