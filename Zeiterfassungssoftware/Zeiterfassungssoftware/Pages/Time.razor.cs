@@ -25,6 +25,11 @@ namespace Zeiterfassungssoftware.Pages
 			{
 				CurrentEntry = null;
 			}
+
+			if (Started)
+            {
+				timer = new System.Threading.Timer(UpdateTimer, null, 0, 1000);
+            }
 		}
 
 		private void ToggleClock()
