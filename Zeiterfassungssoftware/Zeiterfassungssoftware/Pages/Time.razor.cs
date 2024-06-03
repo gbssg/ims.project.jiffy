@@ -67,11 +67,8 @@ namespace Zeiterfassungssoftware.Pages
 
 		void IDisposable.Dispose()
 		{
-			timer.Dispose();
-			
+			timer?.Dispose();
 		}
-
-
 
 	}
 	

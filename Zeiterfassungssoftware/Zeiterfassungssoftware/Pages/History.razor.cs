@@ -1,4 +1,5 @@
 using Zeiterfassungssoftware.Data;
+using Zeiterfassungssoftware.Data.Filter;
 using Zeiterfassungssoftware.Services;
 using Zeiterfassungssoftware.SharedData.Time;
 
@@ -16,10 +17,13 @@ namespace Zeiterfassungssoftware.Pages
 
         public bool FilterColapsed { get; set; } = true;
         public string FilterCssClass => FilterColapsed ? "filter-dropdown-colapsed" : "filter-dropdown";
+        public IFilter filter = new DateFilter() { Name = "Datum"};
+        public IFilter stringfilter = new StringFilter() { Name = "String" };
+        public IFilter timefilter = new TimeFilter() { Name = "Time" };
 
-        
 
-		protected override async Task OnInitializedAsync()
+
+        protected override async Task OnInitializedAsync()
         {
             TimeEntries = new TimeEntry[TimeEntrySource.GetEntries().Count];
             TimeEntrySource.GetEntries().CopyTo(TimeEntries, 0);

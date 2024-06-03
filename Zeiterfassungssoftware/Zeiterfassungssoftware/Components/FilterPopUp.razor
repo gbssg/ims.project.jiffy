@@ -1,0 +1,29 @@
+﻿
+<div class="filter-popup">
+    <p class="filter-popup-title">@Filter.Name</p>
+    @if (Filter is DateFilter dateFilter)
+    {
+        <p>Zwischen</p>
+        <input type="date" />
+        <p>und</p>
+        <input type="date" />
+    } 
+    else if (Filter is TimeFilter timeFilter)
+    {
+        <p>Zwischen</p>
+        <input type="time" />
+        <p>und</p>
+        <input type="time" />
+    }
+    else if (Filter is StringFilter stringFilter)
+    {
+        <p>Enthält</p>
+        <input/>
+    }
+    
+</div>
+
+@code {
+    [Parameter]
+    public IFilter Filter { get; set; }
+}

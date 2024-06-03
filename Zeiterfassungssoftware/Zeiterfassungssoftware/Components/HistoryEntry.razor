@@ -2,14 +2,14 @@
     <td class="list-time">
         @Entry.Time.ToString(@"h\h\ mm\m")
     </td>
+    <td class="list-date">
+        @Entry.Start.ToString(@"d\.M\.yyyy")
+    </td>
     <td class="list-start">
         @Entry.Start.ToString(@"h\:mm")
     </td>
     <td class="list-start">
         @Entry.GetEndString()
-    </td>
-    <td class="list-date">
-        @Entry.Start.ToString(@"d\.M\.yyyy")
     </td>
     <td class="list-title">
         @Entry.Title

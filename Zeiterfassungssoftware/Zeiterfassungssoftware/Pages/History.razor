@@ -16,20 +16,22 @@
         <p class="filter-title" @onclick="OnFilterClick">Filter Settings</p>
         
     </div>
-
+    <FilterPopUp Filter="@filter" />
+    <FilterPopUp Filter="@timefilter" />
+    <FilterPopUp Filter="@stringfilter" />
     <table class="list" style="width: 100%">
         <tr>
             <th>
                 Time
             </th>
             <th>
+                Date
+            </th>
+            <th>
                 Start
             </th>
             <th>
                 Stop
-            </th>
-            <th>
-                Date
             </th>
             <th>
                 Activity

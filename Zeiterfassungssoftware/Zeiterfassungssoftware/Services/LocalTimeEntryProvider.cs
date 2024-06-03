@@ -10,22 +10,25 @@ namespace Zeiterfassungssoftware.Services
         public LocalTimeEntryProvider()
         {
             int id = 0;
-            for (int year = 2021; year <= 2024; year++)
+            for (int year = 2023; year <= 2024; year++)
             {
                 for (int month = 1; month <= 12; month++)
                 {
                     for (int day = 1; day <= 28; day++)
                     {
-                        TimeEntry Entry = new TimeEntry()
+                        for(int i = 0; i < 10; i++)
                         {
-                            Start = new DateTime(year, month, day, 8, 20, 0),
-                            End = new DateTime(year, month, day, 16, 15, 0),
-                            Title = id % 15 == 0 ? "Krank" : "Arbeit",
-                            Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                        };
+                            TimeEntry Entry = new TimeEntry()
+                            {
+                                Start = new DateTime(year, month, day, 8, 20, 0),
+                                End = new DateTime(year, month, day, 16, 15, 0),
+                                Title = id % 15 == 0 ? "Krank" : "Arbeit",
+                                Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+                            };
 
-                        _timeEntries.Add(Entry);
-                        id++;
+                            _timeEntries.Add(Entry);
+                            id++;
+                        }
                     }
                 }
             }

@@ -20,6 +20,10 @@ a, .btn-link {
     transition: 1s;
 }
 
+.filter-popup {
+    background-color: #292929;
+}
+
 .btn-round {
     background-color: #BB86FC;
     border-radius: 50%;
