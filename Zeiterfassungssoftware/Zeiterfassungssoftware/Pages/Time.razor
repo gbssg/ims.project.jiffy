@@ -16,8 +16,8 @@
 @if (!Started)
 {
 	<div>
-		<select style="width:100%; height:60%;%">
-			<option>Neue Tätigkeit erfassen</option>
+		<select id="SelectedActivity" style="width:100%; height:60%;%">
+			<option id="CreateNewTask">Neue Tätigkeit erfassen</option>
 			@foreach (var Activity in ActivitySource.GetActivityTitles())
 			{
 				
@@ -27,7 +27,6 @@
 
 		</select>
 	</div>
-
 	<p>
 		Tätigkeit
 	</p>
