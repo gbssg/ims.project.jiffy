@@ -28,7 +28,6 @@ a, .btn-link {
     border: none;
     width: 276px;
     height: 276px;
-    transition: 1s;
 }
 
 .btn-started {
@@ -38,9 +37,8 @@ a, .btn-link {
     font-weight: bold;
     font-size: 40px;
     border: none;
-    width: 271px;
-    height: 271px;
-    transition: 1s;
+    width: 276px;
+    height: 276px;
 }
 
 .widget-title {

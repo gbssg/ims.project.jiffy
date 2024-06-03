@@ -1,9 +1,7 @@
-
-<div>
-	<input placeholder="..." style="width:100%; height:60%;" />
-</div>
+<textarea class="textfield" placeholder="@PlaceHolder" ></textarea>
 
 @code {
-
+    [Parameter]
+    public string PlaceHolder { get; set; } = string.Empty;
 
 }
