@@ -26,6 +26,14 @@ a, .btn-link {
     transition: 1s;
 }
 
+.filter-popup {
+    background-color: #292929;
+    border-radius: 20px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+}
+
 .btn-round {
     background-color: #BB86FC;
     border-radius: 50%;

@@ -2,6 +2,7 @@
 
 @inject ITimeEntryProvider TimeEntrySource
 
+
 <PageTitle>History</PageTitle>
 
 <h1>History</h1>
@@ -14,13 +15,21 @@
 
     <div class="@FilterCssClass">
         <p class="filter-title" @onclick="OnFilterClick">Filter Settings</p>
-        
+        <div style="@(FilterColapsed ? "display: none" : "")">
+            <FilterPopUp Filter="@DateFilter" style="@(DateFilter.Enabled ? "" : "display: none")" />
+            <FilterPopUp Filter="@TimeFilter" style="@(TimeFilter.Enabled ? "" : "display: none")" />
+            <FilterPopUp Filter="@TitleFilter" style="@(TitleFilter.Enabled ? "" : "display: none")" />
+        </div>
     </div>
+    
 
     <table class="list" style="width: 100%">
         <tr>
-            <th>
+            <th @onclick="TimeFilterClick">
                 Time
+            </th>
+            <th @onclick="DateFilterClick">
+                Date
             </th>
             <th>
                 Start
@@ -28,17 +37,15 @@
             <th>
                 Stop
             </th>
-            <th>
-                Date
-            </th>
-            <th>
+            <th @onclick="TitleFilterClick">
                 Activity
             </th>
             <th>
                 Description
             </th>
         </tr>
-        @foreach (var Entry in TimeEntries)
+
+        @foreach (var Entry in TimeEntries.Where(e => TitleFilter.MatchesCriteria(e.Title)))
         {
             <HistoryEntry Entry="@Entry"/>
         }

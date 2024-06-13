@@ -1,0 +1,32 @@
+﻿
+<div class="filter-popup" style="@style">
+    <p class="filter-popup-title">@Filter.Name</p>
+    @if (Filter is DateFilter dateFilter)
+    {
+        <p>Zwischen</p>
+        <input type="date" @bind="dateFilter.MinDate"/>
+        <p>und</p>
+        <input type="date" @bind="dateFilter.MaxDate" />
+    } 
+    else if (Filter is TimeFilter timeFilter)
+    {
+        <p>Zwischen</p>
+        <input type="time" @bind="timeFilter.MinTime"/>
+        <p>und</p>
+        <input type="time" @bind="timeFilter.MaxTime" />
+    }
+    else if (Filter is StringFilter stringFilter)
+    {
+        <p>Enthält</p>
+        <input @bind="stringFilter.Value"/>
+    } 
+    
+</div>
+
+@code {
+    [Parameter]
+    public string style { get; set; }
+    [Parameter]
+    public IFilter Filter { get; set; }
+
+}
