@@ -8,7 +8,7 @@
 
 <PageTitle>Time</PageTitle>
 
-<div style="padding:20px">
+<div class="btn-div">
 	<RoundButton OnClick="ToggleClock" Started="@Started" />
 </div>
 
@@ -34,9 +34,9 @@
 	<p>
 		Tätigkeit
 	</p>
-	<TextField />
+	<TextField/>
 }
 else
 {
-	<div>@passedTime.ToString(@"hh\:mm\:ss")</div>
+	<div style="text-align: center; font-size: 80px; " >@passedTime.ToString(@"hh\:mm\:ss")</div>
 }
