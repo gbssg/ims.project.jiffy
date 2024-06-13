@@ -15,15 +15,27 @@ main {
 .top-row {
     background-color: #f7f7f7;
     border-bottom: 1px solid #d6d5d5;
-    justify-content: flex-end;
+    justify-content: flex-start;
     height: 3.5rem;
     display: flex;
     align-items: center;
 }
 
+.img-profile {
+    background-color: white;
+    display: flex;
+    align-content: start;
+    width: 50px;
+    height: 50px;
+    border-style: solid;
+    border-radius: 50px;
+    border-width: 1px;
+    border-color: black;
+}
     .top-row ::deep a, .top-row ::deep .btn-link {
         white-space: nowrap;
         margin-left: 1.5rem;
+        display: flex;
         text-decoration: none;
     }
 

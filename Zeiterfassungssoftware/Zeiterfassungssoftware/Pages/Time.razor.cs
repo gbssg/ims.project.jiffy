@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Timers;
@@ -70,11 +71,24 @@ namespace Zeiterfassungssoftware.Pages
 			timer.Dispose();
 			
 		}
+		bool checkIfArgumentIsTrue = false;
+		void CreateNewTask(ChangeEventArgs args)
+		{
+			if(args.Value.ToString() == "Neue Tätigkeit erfassen")
+			{
+				checkIfArgumentIsTrue = true;
+			}
+			else{
+				checkIfArgumentIsTrue= false;
+			}
+
+		}
 
 
 
 	}
 	
+
 
 
 }

@@ -9,6 +9,12 @@ h1:focus {
 a, .btn-link {
     color: #0071c1;
 }
+.btn-div {
+    display: flex;
+
+    justify-content: center;
+    padding: 20px;
+}
 
 .btn-primary {
     background-color: #BB86FC;
@@ -156,3 +162,4 @@ a, .btn-link {
 code {
     color: #c02d76;
 }
+

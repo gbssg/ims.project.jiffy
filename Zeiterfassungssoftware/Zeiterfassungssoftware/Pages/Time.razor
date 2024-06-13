@@ -8,15 +8,15 @@
 
 <PageTitle>Time</PageTitle>
 
-<div style="padding:20px">
+<div class="btn-div">
 	<RoundButton OnClick="ToggleClock" Started="@Started" />
 </div>
 
-
+ 
 @if (!Started)
 {
 	<div>
-		<select style="width:100%; height:60%;%">
+		<select id="SelectedActivity" @onchange="CreateNewTask" style="width:100%; height:60%;%">
 			<option>Neue Tätigkeit erfassen</option>
 			@foreach (var Activity in ActivitySource.GetActivityTitles())
 			{
@@ -27,13 +27,16 @@
 
 		</select>
 	</div>
-
+	if (checkIfArgumentIsTrue == true)
+	{
+		<TextField></TextField>
+	}
 	<p>
 		Tätigkeit
 	</p>
-	<TextField />
+	<TextField/>
 }
 else
 {
-	<div>@passedTime.ToString(@"hh\:mm\:ss")</div>
+	<div style="text-align: center; font-size: 80px; " >@passedTime.ToString(@"hh\:mm\:ss")</div>
 }
