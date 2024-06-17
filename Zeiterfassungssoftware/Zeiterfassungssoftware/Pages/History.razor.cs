@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components.Web;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Filter;
 using Zeiterfassungssoftware.Services;
@@ -8,7 +9,7 @@ namespace Zeiterfassungssoftware.Pages
     public partial class History
     {
         //test
-        public TimeEntry[] TimeEntries { get; set; }
+        public TimeEntry[] TimeEntries { get; set; } = [];
 
         public int SickDays => TimeEntrySource.GetEntries().Where(e => e.Title.ToLower().Trim().Equals("krank")).Count();
         public TimeSpan Overtime = new TimeSpan(0, 0, 0);
@@ -29,6 +30,7 @@ namespace Zeiterfassungssoftware.Pages
         public IFilter TitleFilter => filters[1];
         public IFilter TimeFilter => filters[2];
 
+        public int Page { get; set; } = 0;
 
 
         protected override async Task OnInitializedAsync()
@@ -58,7 +60,6 @@ namespace Zeiterfassungssoftware.Pages
                     Overtime -= timeLeft;
                 }
             }
-
         }
 
         private void FilterHasChanged(object? sender, EventArgs e)
@@ -71,21 +72,27 @@ namespace Zeiterfassungssoftware.Pages
             FilterColapsed = !FilterColapsed;
         }
 
-        public void TitleFilterClick()
+        public bool DoFiltersApply(TimeEntry Entry)
         {
-            TitleFilter.Enabled = !TitleFilter.Enabled;
+            return TimeFilter.MatchesCriteria(Entry.Start) && TitleFilter.MatchesCriteria(Entry.Title) &&
+                   DateFilter.MatchesCriteria(Entry.Start);
         }
 
-        public void DateFilterClick()
+        public void OnNextClick()
         {
-            DateFilter.Enabled = !DateFilter.Enabled;
+            Page++;
+
+            if(Page*10 > TimeEntrySource.GetEntries().Count)
+                Page = (int)Math.Round(TimeEntrySource.GetEntries().Count / 10f);
         }
 
-        public void TimeFilterClick()
+        public void OnPreviousClick()
         {
-            TimeFilter.Enabled = !TimeFilter.Enabled;
+            Page--;
+
+            if (Page < 0)
+                Page = 0;
         }
-
-
+        
     }
 }

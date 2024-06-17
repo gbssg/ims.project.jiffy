@@ -6,9 +6,7 @@ namespace Zeiterfassungssoftware.Data.Filter
     {
         private string _value = string.Empty;
 
-        public StringFilter(string name) : base(name)
-        {
-        }
+        public StringFilter(string name) : base(name) {}
 
         public string Value
         {
@@ -22,6 +20,7 @@ namespace Zeiterfassungssoftware.Data.Filter
 
         public override bool MatchesCriteria(object Input)
         {
+
             if (Input is not string Entry)
             {
                 return false;
@@ -30,7 +29,7 @@ namespace Zeiterfassungssoftware.Data.Filter
             var valueNormalized = Normalize(Value);
             var entryNormalized = Normalize(Entry);
 
-            return entryNormalized.Contains(valueNormalized);
+            return !Enabled || entryNormalized.Contains(valueNormalized);
         }
 
         private static string Normalize(string val)

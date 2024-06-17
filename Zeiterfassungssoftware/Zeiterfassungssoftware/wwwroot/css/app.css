@@ -3,7 +3,8 @@ html, body {
 }
 
 body {
-    background-color: black;
+    background-color: #121212;
+    color: #ffffff;
 }
 
 h1:focus {
@@ -45,6 +46,15 @@ a, .btn-link {
 
 .btn-round {
     background-color: #BB86FC;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 40px;
+    border: none;
+    width: 276px;
+    height: 276px;
+}
+.btn-disabled {
+    background-color: #292929;
     border-radius: 50%;
     font-weight: bold;
     font-size: 40px;

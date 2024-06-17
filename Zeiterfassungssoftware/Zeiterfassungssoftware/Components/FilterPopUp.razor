@@ -1,5 +1,5 @@
 ﻿
-<div class="filter-popup" style="@style">
+<div class="filter-popup" style="@Style">
     <p class="filter-popup-title">@Filter.Name</p>
     @if (Filter is DateFilter dateFilter)
     {
@@ -25,7 +25,7 @@
 
 @code {
     [Parameter]
-    public string style { get; set; }
+    public string Style { get; set; } = string.Empty;
     [Parameter]
     public IFilter Filter { get; set; }
 

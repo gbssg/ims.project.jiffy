@@ -17,7 +17,7 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 
         public override bool Equals(object? obj)
         {
-            ActivityTitle Other = obj as ActivityTitle;
+            ActivityTitle? Other = obj as ActivityTitle;
 
 			if(Other is null)
 				return false;
@@ -50,7 +50,7 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 
         public override bool Equals(object? obj)
         {
-            ActivityDescription Other = obj as ActivityDescription;
+            ActivityDescription? Other = obj as ActivityDescription;
 
             if (Other is null)
                 return false;

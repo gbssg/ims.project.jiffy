@@ -21,12 +21,15 @@ namespace Zeiterfassungssoftware.Services
 			};
 			_activityDescriptions = new List<ActivityDescription>()
 			{
-				new ActivityDescription("Arbeit"),
+				new ActivityDescription("Arbeit am Projekt Zeiterfassungssoftware"),
 				new ActivityDescription("Projekt"),
-				new ActivityDescription("Lernen"),
+				new ActivityDescription("Lernen für Prüfung in 2 Wochen"),
 				new ActivityDescription("Programmieren"),
-				new ActivityDescription("Prüfung")
-			};
+				new ActivityDescription("Prüfung"),
+				new ActivityDescription("BugFix in LocalTimeEntryProvider.cs"),
+                new ActivityDescription("Englisch Vokabular gelernt"),
+                new ActivityDescription("Selbstständige arbeit an der Website"),
+            };
 		}
 
 		public bool IsLoaded => true;

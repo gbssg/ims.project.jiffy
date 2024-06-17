@@ -1,4 +1,5 @@
-﻿using Zeiterfassungssoftware.SharedData.Time;
+﻿using Zeiterfassungssoftware.SharedData.Activities;
+using Zeiterfassungssoftware.SharedData.Time;
 
 namespace Zeiterfassungssoftware.Services
 {
@@ -6,6 +7,7 @@ namespace Zeiterfassungssoftware.Services
     public class LocalTimeEntryProvider : ITimeEntryProvider
     {
         private List<TimeEntry> _timeEntries = [];
+        private IActivityProvider ActivitySource = new LocalActivityProvider();
 
         public LocalTimeEntryProvider()
         {
@@ -13,16 +15,16 @@ namespace Zeiterfassungssoftware.Services
             
             for (int day = 1; day <= 13; day++)
             {
-                if(day % 5 != 0)
+                if(day % new Random().Next(1, 5) != 0)
                 {
                     for (int i = 0; i < 8; i++)
                     {
                         TimeEntry Entry = new TimeEntry()
                         {
-                            Start = new DateTime(2024, 6, day, 8+i, 20, 0),
-                            End = new DateTime(2024, 6, day, 8+i+1, 20, 0),
-                            Title =  "Arbeit",
-                            Description = ""
+                            Start = new DateTime(2024, 6, day, 8 + i, 20, 0),
+                            End = new DateTime(2024, 6, day, 8 + i + 1, 20, 0),
+                            Title = ActivitySource.GetActivityTitles()[new Random().Next(0, ActivitySource.GetActivityTitles().Count)].Value,
+                            Description = ActivitySource.GetActivityDescriptions()[new Random().Next(0, ActivitySource.GetActivityDescriptions().Count)].Value
                         };
 
                         _timeEntries.Add(Entry);

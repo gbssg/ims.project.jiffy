@@ -9,7 +9,7 @@
 <PageTitle>Time</PageTitle>
 
 <div class="btn-div">
-	<RoundButton OnClick="ToggleClock" Started="@Started" />
+	<RoundButton OnClick="ToggleClock" Started="@Started" Disabled="@Disabled"/>
 </div>
 
  
@@ -17,24 +17,24 @@
 {
 	<div>
 		<select class="select-activity-title" @bind="ActivityTitleSelect" style="width:100%; height:60%;">
-			<option>@NewActivityTitle</option>
+			<option>@NEW_ACTIVITY_TITLE</option>
 			@foreach (var Activity in ActivitySource.GetActivityTitles())
 			{
 				<option value="@Activity.Value">@Activity.Value</option>
 			}
 		</select>
 
-		<textarea placeholder="Activity Title..." style=@(ActivityTitleSelect.Equals(NewActivityTitle) ? "" : "display: none;") @bind="ActivityTitle"></textarea>
+		<textarea placeholder="Activity Title..." style=@(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "" : "display: none;") @bind="ActivityTitle"></textarea>
 		
 		<select class="select-activity-description" @bind="ActivityDescriptionSelect" style="width:100%; height:60%;">
-			<option>@NewActivityDescription</option>
+			<option>@NEW_ACTIVITY_DESCRIPTION</option>
 			@foreach (var Activity in ActivitySource.GetActivityDescriptions())
 			{
 				<option value="@Activity.Value">@Activity.Value</option>
 			}
 		</select>
 
-		<textarea placeholder="Activity Description..." style=@(ActivityDescriptionSelect.Equals(NewActivityDescription) ? "" : "display: none;") @bind="ActivityDescription"></textarea>
+		<textarea placeholder="Activity Description..." style=@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "display: none;") @bind="ActivityDescription"></textarea>
 	</div>
 }
 else

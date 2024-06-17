@@ -4,21 +4,42 @@ namespace Zeiterfassungssoftware.Data.Filter
 {
     public class TimeFilter : AbstractFilter
     {
-        public TimeOnly MinTime { get; set; }
-        public TimeOnly MaxTime { get; set; }
 
-        public TimeFilter(string name) : base(name)
-        {
+        private TimeOnly _minTime = TimeOnly.MinValue;
+        private TimeOnly _maxTime = TimeOnly.MaxValue;
+
+        public TimeOnly MinTime { 
+            get 
+            {
+                return _minTime;
+            }
+            set 
+            {
+                _minTime = value;
+                NotifySubscribers();
+            }
         }
+        public TimeOnly MaxTime
+        {
+            get
+            {
+                return _maxTime;
+            }
+            set
+            {
+                _maxTime = value;
+                NotifySubscribers();
+            }
+        }
+
+        public TimeFilter(string name) : base(name) {}
 
         public override bool MatchesCriteria(object Input)
         {
-            if (!(Input is DateTime))
+            if (Input is not DateTime Entry)
                 return false;
 
-            DateTime Entry = (DateTime)Input;
-
-            TimeOnly timeOnly = new TimeOnly(Entry.Hour, Entry.Minute, Entry.Second);
+            TimeOnly timeOnly = TimeOnly.FromDateTime(Entry);
             return !Enabled || (timeOnly <= MaxTime && timeOnly >= MinTime);
         }
     }

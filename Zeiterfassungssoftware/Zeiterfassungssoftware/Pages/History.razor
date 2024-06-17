@@ -45,11 +45,16 @@
             </th>
         </tr>
 
-        @foreach (var Entry in TimeEntries.Where(e => TitleFilter.MatchesCriteria(e.Title)))
+
+        @foreach (var Entry in TimeEntries.Where(e => DoFiltersApply(e)).Skip(Page*10).Take(10))
         {
             <HistoryEntry Entry="@Entry"/>
         }
     </table>
+
+    <Button Text="Next" OnClick="OnNextClick"/>
+    <Button Text="Previous" OnClick="OnPreviousClick" />
+
 }
 else
 {

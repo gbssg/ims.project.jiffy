@@ -1,24 +1,15 @@
 ﻿<tr class="list-entry">
     <td class="list-time" style="white-space:nowrap">
-        @if(Entry.Title != "Krank")
-        {
-            @Entry.Time.ToString(@"h\h\ mm\m")
-        } 
+        @Entry.GetTimeString()
     </td>
     <td class="list-date">
-        @Entry.Start.ToString(@"d\.M\.yyyy")
+        @Entry.Start.ToString(@"dd\ MMM\ yyyy")
     </td>
     <td class="list-start">
-        @if(Entry.Title != "Krank")
-        {
-            @Entry.Start.ToString(@"H\:mm")
-        }
+        @Entry.GetStartString()
     </td>
     <td class="list-start">
-        @if(Entry.Title != "Krank")
-        {
-            @Entry.GetEndString()
-        }
+        @Entry.GetEndString()
     </td>
     <td class="list-title">
         @Entry.Title
@@ -31,5 +22,8 @@
 
 @code {
     [Parameter]
-    public TimeEntry Entry { get; set; }
+    public TimeEntry Entry { get; set; } = new()
+    {
+        
+    };
 }
