@@ -16,27 +16,28 @@
 @if (!Started)
 {
 	<div>
-		<select id="SelectedActivity" @onchange="CreateNewTask" style="width:100%; height:60%;%">
-			<option>Neue Tätigkeit erfassen</option>
+		<select class="select-activity-title" @bind="ActivityTitleSelect" style="width:100%; height:60%;">
+			<option>@NewActivityTitle</option>
 			@foreach (var Activity in ActivitySource.GetActivityTitles())
 			{
-				
 				<option value="@Activity.Value">@Activity.Value</option>
 			}
-
-
 		</select>
+
+		<textarea placeholder="Activity Title..." style=@(ActivityTitleSelect.Equals(NewActivityTitle) ? "" : "display: none;") @bind="ActivityTitle"></textarea>
+		
+		<select class="select-activity-description" @bind="ActivityDescriptionSelect" style="width:100%; height:60%;">
+			<option>@NewActivityDescription</option>
+			@foreach (var Activity in ActivitySource.GetActivityDescriptions())
+			{
+				<option value="@Activity.Value">@Activity.Value</option>
+			}
+		</select>
+
+		<textarea placeholder="Activity Description..." style=@(ActivityDescriptionSelect.Equals(NewActivityDescription) ? "" : "display: none;") @bind="ActivityDescription"></textarea>
 	</div>
-	if (checkIfArgumentIsTrue == true)
-	{
-		<TextField></TextField>
-	}
-	<p>
-		Tätigkeit
-	</p>
-	<TextField/>
 }
 else
 {
-	<div style="text-align: center; font-size: 80px; " >@passedTime.ToString(@"hh\:mm\:ss")</div>
+	<div class="passed-time-text">@PassedTime.ToString(@"hh\:mm\:ss")</div>
 }

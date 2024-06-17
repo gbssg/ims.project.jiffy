@@ -1,0 +1,13 @@
+﻿<div class="message-popup" style="background-color: @Color">
+    <p class="message-popup-title">@Title</p>
+    <p class="message-popup-text">@Text</p>
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public string Text { get; set; }
+    [Parameter]
+    public string Color { get; set; }
+}

@@ -16,7 +16,10 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 		public void Add(ActivityDescription ActivityDescription);
 		public void Add(ActivityTitle ActivityTitle);
 
-		public List<ActivityDescription> GetActivityDescription();
+		public bool Contains(ActivityDescription ActivityDescription);
+        public bool Contains(ActivityTitle ActivityTitle);
+
+        public List<ActivityDescription> GetActivityDescriptions();
 		public List<ActivityTitle> GetActivityTitles();
 	}
 }

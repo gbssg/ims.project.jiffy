@@ -3,35 +3,48 @@
 namespace Zeiterfassungssoftware.Services
 {
 
-    public class LocalTimeEntryProvider: ITimeEntryProvider
+    public class LocalTimeEntryProvider : ITimeEntryProvider
     {
         private List<TimeEntry> _timeEntries = [];
 
         public LocalTimeEntryProvider()
         {
             int id = 0;
-            for (int year = 2023; year <= 2024; year++)
+            
+            for (int day = 1; day <= 13; day++)
             {
-                for (int month = 1; month <= 12; month++)
+                if(day % 5 != 0)
                 {
-                    for (int day = 1; day <= 28; day++)
+                    for (int i = 0; i < 8; i++)
                     {
-                        for(int i = 0; i < 10; i++)
+                        TimeEntry Entry = new TimeEntry()
                         {
-                            TimeEntry Entry = new TimeEntry()
-                            {
-                                Start = new DateTime(year, month, day, 8, 20, 0),
-                                End = new DateTime(year, month, day, 16, 15, 0),
-                                Title = id % 15 == 0 ? "Krank" : "Arbeit",
-                                Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                            };
+                            Start = new DateTime(2024, 6, day, 8+i, 20, 0),
+                            End = new DateTime(2024, 6, day, 8+i+1, 20, 0),
+                            Title =  "Arbeit",
+                            Description = ""
+                        };
 
-                            _timeEntries.Add(Entry);
-                            id++;
-                        }
+                        _timeEntries.Add(Entry);
+                        id++;
                     }
+
+                } else
+                {
+                    TimeEntry Entry = new TimeEntry()
+                    {
+                        Start = new DateTime(2024, 6, day, 0, 0, 0),
+                        End = new DateTime(2024, 6, day, 23, 59, 59),
+                        Title = "Krank",
+                        Description = ""
+                    };
+
+                    _timeEntries.Add(Entry);
+                    id++;
                 }
+                
             }
+            
         }
 
         public bool IsLoaded => true;

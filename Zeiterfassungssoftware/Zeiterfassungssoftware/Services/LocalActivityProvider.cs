@@ -12,53 +12,20 @@ namespace Zeiterfassungssoftware.Services
 		{
 			_activityTitles = new List<ActivityTitle>()
 			{
-				new ActivityTitle()
-				{
-					Value = "Arbeit"
-				},
-				new ActivityTitle()
-				{
-					Value = "Integrierte Praxisarbeit"
-				},
-				new ActivityTitle()
-				{
-					Value = "Englisch"
-				},
-				new ActivityTitle()
-				{
-					Value = "English BMS"
-				},
-				new ActivityTitle()
-				{
-					Value = "M122"
-				},
-				new ActivityTitle()
-				{
-					Value = "M431"
-				}
+				new ActivityTitle("Arbeit"),
+				new ActivityTitle("Integrierte Praxisarbeit"),
+				new ActivityTitle("Englisch"),
+				new ActivityTitle("English BMS"),
+				new ActivityTitle("M122"),
+				new ActivityTitle("M431")
 			};
 			_activityDescriptions = new List<ActivityDescription>()
 			{
-				new ActivityDescription()
-				{
-					Value = "Arbeit"
-				},
-				new ActivityDescription()
-				{
-					Value = "Projekt"
-				},
-				new ActivityDescription()
-				{
-					Value = "Lernen"
-				},
-				new ActivityDescription()
-				{
-					Value = "Programmieren"
-				},
-				new ActivityDescription()
-				{
-					Value = "Prüfung"
-				}
+				new ActivityDescription("Arbeit"),
+				new ActivityDescription("Projekt"),
+				new ActivityDescription("Lernen"),
+				new ActivityDescription("Programmieren"),
+				new ActivityDescription("Prüfung")
 			};
 		}
 
@@ -74,7 +41,7 @@ namespace Zeiterfassungssoftware.Services
 			_activityTitles.Add(ActivityTitle);
 		}
 
-		public List<ActivityDescription> GetActivityDescription()
+		public List<ActivityDescription> GetActivityDescriptions()
 		{
 			return _activityDescriptions;
 		}
@@ -93,5 +60,15 @@ namespace Zeiterfassungssoftware.Services
 		{
 			_activityTitles.Remove(ActivityTitle);
 		}
-	}
+
+		public bool Contains(ActivityTitle ActivityTitle)
+		{
+			return _activityTitles.Contains(ActivityTitle);
+		}
+
+        public bool Contains(ActivityDescription ActivityDescription)
+        {
+            return _activityDescriptions.Contains(ActivityDescription);
+        }
+    }
 }

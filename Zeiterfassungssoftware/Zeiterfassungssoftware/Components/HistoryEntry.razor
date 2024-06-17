@@ -1,15 +1,24 @@
 ﻿<tr class="list-entry">
     <td class="list-time" style="white-space:nowrap">
-        @Entry.Time.ToString(@"h\h\ mm\m")
+        @if(Entry.Title != "Krank")
+        {
+            @Entry.Time.ToString(@"h\h\ mm\m")
+        } 
     </td>
     <td class="list-date">
         @Entry.Start.ToString(@"d\.M\.yyyy")
     </td>
     <td class="list-start">
-        @Entry.Start.ToString(@"h\:mm")
+        @if(Entry.Title != "Krank")
+        {
+            @Entry.Start.ToString(@"H\:mm")
+        }
     </td>
     <td class="list-start">
-        @Entry.GetEndString()
+        @if(Entry.Title != "Krank")
+        {
+            @Entry.GetEndString()
+        }
     </td>
     <td class="list-title">
         @Entry.Title

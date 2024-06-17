@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Timers;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Services;
+using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Time;
 
 
@@ -13,12 +13,22 @@ namespace Zeiterfassungssoftware.Pages
     public partial class Time
 	{
 		public bool Started => CurrentEntry != null && CurrentEntry.End == null;
+		private TimeSpan PassedTime => DateTime.Now - CurrentEntry.Start;
+
 		public TimeEntry? CurrentEntry { get; set; }
+		private Timer Timer;
 
-		private TimeSpan passedTime => DateTime.Now - CurrentEntry.Start;
-		private System.Threading.Timer timer;
+		private readonly string NewActivityTitle = "Neue Tätigkeit erfassen";
+		private readonly string NewActivityDescription = "Neue Beschreibung erfassen";
 
-		protected override async Task OnInitializedAsync()
+		private string ActivityTitleSelect = "Neue Tätigkeit erfassen";
+        private string ActivityTitle = string.Empty;
+
+		private string ActivityDescriptionSelect = "Neue Beschreibung erfassen";
+		private string ActivityDescription = string.Empty;
+
+
+        protected override async Task OnInitializedAsync()
 		{
 			CurrentEntry = TimeEntrySource.GetEntries().Last();
 			if ((CurrentEntry != null) 
@@ -29,7 +39,7 @@ namespace Zeiterfassungssoftware.Pages
 
 			if (Started)
             {
-				timer = new System.Threading.Timer(UpdateTimer, null, 0, 1000);
+				Timer = new System.Threading.Timer(UpdateTimer, null, 0, 1000);
             }
 		}
 
@@ -38,24 +48,47 @@ namespace Zeiterfassungssoftware.Pages
 			
 			if (!Started)
 			{
-				timer = new System.Threading.Timer(UpdateTimer, null, 0, 1000);
+				if (ActivityTitleSelect.Equals(NewActivityTitle))
+				{
+                    if (ActivityTitle.Trim() == string.Empty)
+                        return;
+
+					var Title = new ActivityTitle(ActivityTitle);
+
+                    if (!ActivitySource.Contains(Title))
+						ActivitySource.Add(Title);
+				}
+
+				
+                if (ActivityDescriptionSelect.Equals(NewActivityDescription))
+				{
+					if (ActivityDescription.Trim() == string.Empty)
+						return;
+
+                    var Description = new ActivityDescription(ActivityTitle);
+
+					if(!ActivitySource.Contains(Description)) 
+						ActivitySource.Add(Description);
+				}
+                
+                Timer = new System.Threading.Timer(UpdateTimer, null, 0, 1000);
 				CurrentEntry = new()
 				{
 					Start = DateTime.Now,
-					Title = "Test",
-					Description = "Test lorem ipsum",
+					Title = ActivityTitleSelect.Equals(NewActivityTitle) ? ActivityTitle : ActivityTitleSelect,
+					Description = ActivityDescriptionSelect.Equals(NewActivityDescription) ? ActivityDescription : ActivityDescriptionSelect,
 				};
 
 				TimeEntrySource.Add(CurrentEntry);
 			}
 			else if (CurrentEntry != null)
             {
-				timer.Dispose();
+				Timer.Dispose();
 				CurrentEntry.End = DateTime.Now;
 			}
 			else
 			{
-				timer.Dispose();
+				Timer.Dispose();
 				throw new Exception("CurrenEntry was null even though the measuring was not started!");
 			}
 		}
@@ -68,20 +101,9 @@ namespace Zeiterfassungssoftware.Pages
 
 		void IDisposable.Dispose()
 		{
-			timer?.Dispose();
+			Timer?.Dispose();
 		}
-		bool checkIfArgumentIsTrue = false;
-		void CreateNewTask(ChangeEventArgs args)
-		{
-			if(args.Value.ToString() == "Neue Tätigkeit erfassen")
-			{
-				checkIfArgumentIsTrue = true;
-			}
-			else{
-				checkIfArgumentIsTrue= false;
-			}
-
-		}
+		
 
 	}
 	

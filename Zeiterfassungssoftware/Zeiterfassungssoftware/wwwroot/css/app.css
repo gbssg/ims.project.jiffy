@@ -2,6 +2,10 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+body {
+    background-color: black;
+}
+
 h1:focus {
     outline: none;
 }
@@ -24,6 +28,11 @@ a, .btn-link {
     width: 100px;
     height: 50px;
     transition: 1s;
+}
+
+.passed-time-text {
+    text-align: center;
+    font-size: 80px;
 }
 
 .filter-popup {
@@ -53,6 +62,14 @@ a, .btn-link {
     border: none;
     width: 276px;
     height: 276px;
+    
+}
+
+.message-popup {
+
+}
+
+.message-popup {
 }
 
 .widget-title {

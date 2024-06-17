@@ -39,26 +39,26 @@ namespace Zeiterfassungssoftware.Pages
 
             foreach (var f in filters)
             {
+                f.Enabled = true;
                 f.FilterChanged += FilterHasChanged;
             }
 
             var entries = TimeEntrySource.GetEntries();
             var days = entries.GroupBy(e => e.Start.Date);
 
-            foreach (var day in days)
+            foreach (var day in days )
             {
-                var timeLeft = NeededDailyTime;
-                foreach (var entry in day)
+                if (!day.First().Title.Equals("Krank"))
                 {
-                    timeLeft -= entry.Time;
+                    var timeLeft = NeededDailyTime;
+                    foreach (var entry in day)
+                    {
+                        timeLeft -= entry.Time;
+                    }
+                    Overtime -= timeLeft;
                 }
-                Overtime -= timeLeft;
             }
 
-            foreach (var Entry in entries)
-            {
-                Overtime += Entry.Time.Subtract(NeededDailyTime);
-            }
         }
 
         private void FilterHasChanged(object? sender, EventArgs e)
