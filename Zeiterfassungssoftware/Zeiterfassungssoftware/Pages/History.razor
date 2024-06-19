@@ -1,7 +1,7 @@
 ﻿@page "/history"
 
 @inject ITimeEntryProvider TimeEntrySource
-
+@implements IDisposable
 
 <PageTitle>History</PageTitle>
 
@@ -51,7 +51,7 @@
             <HistoryEntry Entry="@Entry"/>
         }
     </table>
-
+    <p class="site-number">@Page/@MaxPage</p>
     <Button Text="Next" OnClick="OnNextClick"/>
     <Button Text="Previous" OnClick="OnPreviousClick" />
 

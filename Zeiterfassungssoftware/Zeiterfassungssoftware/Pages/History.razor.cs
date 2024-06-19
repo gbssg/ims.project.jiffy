@@ -13,7 +13,6 @@ namespace Zeiterfassungssoftware.Pages
 
         public int SickDays => TimeEntrySource.GetEntries().Where(e => e.Title.ToLower().Trim().Equals("krank")).Count();
         public TimeSpan Overtime = new TimeSpan(0, 0, 0);
-
         public TimeSpan NeededDailyTime = new TimeSpan(6, 30, 0);
 
         public bool FilterColapsed { get; set; } = true;
@@ -30,7 +29,10 @@ namespace Zeiterfassungssoftware.Pages
         public IFilter TitleFilter => filters[1];
         public IFilter TimeFilter => filters[2];
 
+        public Timer? Timer;
+        public bool ShouldUpdateTimer => (Page == 0 && TimeEntries.Where(e => DoFiltersApply(e)).Count() > 0 && TimeEntries.Where(e => DoFiltersApply(e)).Last().End != null);
         public int Page { get; set; } = 0;
+        public int MaxPage => (int)(Math.Ceiling(TimeEntrySource.GetEntries().Where(e => DoFiltersApply(e)).Count() / 10f) - 1);
 
 
         protected override async Task OnInitializedAsync()
@@ -60,11 +62,18 @@ namespace Zeiterfassungssoftware.Pages
                     Overtime -= timeLeft;
                 }
             }
+
+            if(ShouldUpdateTimer)
+                Timer = new Timer(UpdateTimer, null, 0, 1000);
+            
         }
 
         private void FilterHasChanged(object? sender, EventArgs e)
         {
             InvokeAsync(StateHasChanged);
+
+            if (Page > MaxPage)
+                Page = MaxPage;
         }
 
         private void OnFilterClick()
@@ -82,8 +91,8 @@ namespace Zeiterfassungssoftware.Pages
         {
             Page++;
 
-            if(Page*10 > TimeEntrySource.GetEntries().Count)
-                Page = (int)Math.Round(TimeEntrySource.GetEntries().Count / 10f);
+            if(Page > MaxPage)
+                Page = MaxPage;
         }
 
         public void OnPreviousClick()
@@ -92,7 +101,29 @@ namespace Zeiterfassungssoftware.Pages
 
             if (Page < 0)
                 Page = 0;
+
+            if (ShouldUpdateTimer)
+                Timer = new Timer(UpdateTimer, null, 0, 1000);
+            
         }
+        
+        public void UpdateTimer(object? State)
+        {
+            if(!ShouldUpdateTimer)
+            {
+                Timer?.Dispose();
+                return;
+            }
+
+            InvokeAsync(StateHasChanged);
+            
+        }
+
+        void IDisposable.Dispose()
+        {
+            Timer?.Dispose();
+        }
+
         
     }
 }
