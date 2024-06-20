@@ -86,6 +86,9 @@ namespace Zeiterfassungssoftware.Pages
             {
 				Timer?.Dispose();
 				CurrentEntry.End = DateTime.Now;
+				if(CurrentEntry.Time < new TimeSpan(0, 0, 1))
+					TimeEntrySource.Remove(CurrentEntry);
+				
 			}
 			else
 			{

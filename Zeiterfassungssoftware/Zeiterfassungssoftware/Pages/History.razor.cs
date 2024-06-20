@@ -29,9 +29,9 @@ namespace Zeiterfassungssoftware.Pages
         public IFilter TitleFilter => filters[1];
         public IFilter TimeFilter => filters[2];
 
-        public Timer? Timer;
+        public Timer? RefreshTimer;
 
-        public int ItemsPerPage = 10;
+        public int ItemsPerPage => 10;
 
         public int SearchResults => TimeEntries.Where(e => DoFiltersApply(e)).Count();
         public bool ShouldUpdateTimer => (Page == 0 && SearchResults > 0 && TimeEntries.Where(e => DoFiltersApply(e)).Last().End != null);
@@ -39,6 +39,9 @@ namespace Zeiterfassungssoftware.Pages
         public int MaxPage => (int)(SearchResults / (float)(ItemsPerPage));
 
         public IFilter? OpendFilter => filters.Where(e => e.PopUp).Count() > 0 ? filters.Where(e => e.PopUp).First() : null;
+
+        public string NextButtonStyling => $"10%{(Page == MaxPage ? "; background-color: #292929" : "")}";
+        public string PreviousButtonStyling => $"10%{(Page == 0 ? "; background-color: #292929" : "")}";
 
         protected override async Task OnInitializedAsync()
         {
@@ -48,7 +51,6 @@ namespace Zeiterfassungssoftware.Pages
 
             foreach (var f in filters)
             {
-                f.Enabled = new Random().Next(2) == 1;
                 f.FilterChanged += FilterHasChanged;
             }
 
@@ -67,9 +69,9 @@ namespace Zeiterfassungssoftware.Pages
                     Overtime -= timeLeft;
                 }
             }
-
-            if(ShouldUpdateTimer)
-                Timer = new Timer(UpdateTimer, null, 0, 1000);
+            // Temp fix
+            //if(ShouldUpdateTimer)
+                RefreshTimer = new Timer(UpdateTimer, null, 0, 1000);
             
         }
 
@@ -113,18 +115,18 @@ namespace Zeiterfassungssoftware.Pages
             if (Page < 0)
                 Page = 0;
 
-            if (ShouldUpdateTimer)
-                Timer = new Timer(UpdateTimer, null, 0, 1000);
+            //if (ShouldUpdateTimer)
+            //    Timer = new Timer(UpdateTimer, null, 0, 1000);
             
         }
         
         public void UpdateTimer(object? State)
         {
-            if(!ShouldUpdateTimer)
-            {
-                Timer?.Dispose();
-                return;
-            }
+            //if(!ShouldUpdateTimer)
+            //{
+            //    Timer?.Dispose();
+            //    return;
+            //}
 
             InvokeAsync(StateHasChanged);
             
@@ -134,7 +136,7 @@ namespace Zeiterfassungssoftware.Pages
 
         void IDisposable.Dispose()
         {
-            Timer?.Dispose();
+            RefreshTimer?.Dispose();
         }
 
         

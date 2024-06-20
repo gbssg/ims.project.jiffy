@@ -15,25 +15,32 @@
  
 @if (!Started)
 {
-	<div>
-		<select class="select-activity-title" @bind="ActivityTitleSelect" style="width:100%; height:60%;">
+
+	<div class="centered-div-flex">
+		<select @bind="ActivityTitleSelect">
 			<option>@NEW_ACTIVITY_TITLE</option>
 			@foreach (var Activity in ActivitySource.GetActivityTitles())
 			{
 				<option value="@Activity.Value">@Activity.Value</option>
 			}
 		</select>
+	</div>
 
+	<div class="centered-div-flex">
 		<textarea style="@ActivityTitleTextAreaStyle" placeholder="Activity Title..." @bind="ActivityTitle"></textarea>
-		
-		<select class="select-activity-description" @bind="ActivityDescriptionSelect" style="width:100%; height:60%;">
+	</div>
+	
+	<div class="centered-div-flex">
+		<select @bind="ActivityDescriptionSelect">
 			<option>@NEW_ACTIVITY_DESCRIPTION</option>
 			@foreach (var Activity in ActivitySource.GetActivityDescriptions())
 			{
 				<option value="@Activity.Value">@Activity.Value</option>
 			}
 		</select>
-
+	</div>
+	
+	<div class="centered-div-flex">
 		<textarea style="@ActivityDescriptionTextAreaStyle" placeholder="Activity Description..." @bind="ActivityDescription"></textarea>
 	</div>
 }
