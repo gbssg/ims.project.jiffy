@@ -10,11 +10,12 @@ using Zeiterfassungssoftware.SharedData.Time;
 namespace Zeiterfassungssoftware.Pages
 {
 
-    public partial class Time
+	public partial class Time
 	{
 		public bool Started => CurrentEntry != null && CurrentEntry.End == null;
 		public bool Disabled => !(Started || !((ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) && ActivityTitle.Trim().Equals("")) || (ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) && ActivityDescription.Trim().Equals(""))));
 		private TimeSpan PassedTime => (DateTime.Now - CurrentEntry.Start);
+
 
 		public TimeEntry? CurrentEntry { get; set; }
 		private Timer? Timer;
@@ -23,13 +24,16 @@ namespace Zeiterfassungssoftware.Pages
 		private const string NEW_ACTIVITY_DESCRIPTION = "Neue Beschreibung erfassen";
 
 		private string ActivityTitleSelect = "Neue Tätigkeit erfassen";
-        private string ActivityTitle = string.Empty;
+		private string ActivityTitle = string.Empty;
 
 		private string ActivityDescriptionSelect = "Neue Beschreibung erfassen";
 		private string ActivityDescription = string.Empty;
 
+		public string ActivityDescriptionTextAreaStyle => $"resize:none;{(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "display: none;")}";
+		public string ActivityTitleTextAreaStyle => $"resize:none;{(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE)? "" : "display: none;")}";
 
-        protected override async Task OnInitializedAsync()
+
+		protected override async Task OnInitializedAsync()
 		{
 			CurrentEntry = TimeEntrySource.GetEntries().Last();
 			if ((CurrentEntry != null) 
@@ -62,7 +66,7 @@ namespace Zeiterfassungssoftware.Pages
 				
                 if (ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION))
 				{
-                    var Description = new ActivityDescription(ActivityTitle);
+                    var Description = new ActivityDescription(ActivityDescription);
 
 					if(!ActivitySource.Contains(Description)) 
 						ActivitySource.Add(Description);

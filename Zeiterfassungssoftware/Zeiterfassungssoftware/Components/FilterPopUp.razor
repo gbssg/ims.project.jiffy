@@ -1,32 +1,7 @@
-﻿
-<div class="filter-popup" style="@Style">
-    <p class="filter-popup-title">@Filter.Name</p>
-    @if (Filter is DateFilter dateFilter)
-    {
-        <p>Zwischen</p>
-        <input type="date" @bind="dateFilter.MinDate"/>
-        <p>und</p>
-        <input type="date" @bind="dateFilter.MaxDate" />
-    } 
-    else if (Filter is TimeFilter timeFilter)
-    {
-        <p>Zwischen</p>
-        <input type="time" @bind="timeFilter.MinTime"/>
-        <p>und</p>
-        <input type="time" @bind="timeFilter.MaxTime" />
-    }
-    else if (Filter is StringFilter stringFilter)
-    {
-        <p>Enthält</p>
-        <input @bind="stringFilter.Value"/>
-    } 
-    
+﻿<div class="filter-popup-test">
+    <p class="filter-title">@Filter.Name</p>
+    <DynamicComponent Type="Type" Parameters="Parameters" />
+    <Button Width="660px; margin-top: 60px; margin-left: 20px" Text="Apply" OnClick="ApplyFilter" />
+    <Button Width="660px; margin-left: 20px; margin-top: 10px" Text="Close" OnClick="Cancel" />
 </div>
 
-@code {
-    [Parameter]
-    public string Style { get; set; } = string.Empty;
-    [Parameter]
-    public IFilter Filter { get; set; }
-
-}

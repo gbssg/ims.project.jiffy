@@ -20,9 +20,9 @@ namespace Zeiterfassungssoftware.Pages
 
         private IFilter[] filters =
         {
-            new DateFilter("Datum"),
+            new DateFilter("Date"),
             new StringFilter("Titel"),
-            new TimeFilter("Time"),
+            new TimeFilter("Start Time"),
         };
 
         public IFilter DateFilter => filters[0];
@@ -30,10 +30,15 @@ namespace Zeiterfassungssoftware.Pages
         public IFilter TimeFilter => filters[2];
 
         public Timer? Timer;
-        public bool ShouldUpdateTimer => (Page == 0 && TimeEntries.Where(e => DoFiltersApply(e)).Count() > 0 && TimeEntries.Where(e => DoFiltersApply(e)).Last().End != null);
-        public int Page { get; set; } = 0;
-        public int MaxPage => (int)(Math.Ceiling(TimeEntrySource.GetEntries().Where(e => DoFiltersApply(e)).Count() / 10f) - 1);
 
+        public int ItemsPerPage = 10;
+
+        public int SearchResults => TimeEntries.Where(e => DoFiltersApply(e)).Count();
+        public bool ShouldUpdateTimer => (Page == 0 && SearchResults > 0 && TimeEntries.Where(e => DoFiltersApply(e)).Last().End != null);
+        public int Page { get; set; } = 0;
+        public int MaxPage => (int)(SearchResults / (float)(ItemsPerPage));
+
+        public IFilter? OpendFilter => filters.Where(e => e.PopUp).Count() > 0 ? filters.Where(e => e.PopUp).First() : null;
 
         protected override async Task OnInitializedAsync()
         {
@@ -43,7 +48,7 @@ namespace Zeiterfassungssoftware.Pages
 
             foreach (var f in filters)
             {
-                f.Enabled = true;
+                f.Enabled = new Random().Next(2) == 1;
                 f.FilterChanged += FilterHasChanged;
             }
 
@@ -76,9 +81,15 @@ namespace Zeiterfassungssoftware.Pages
                 Page = MaxPage;
         }
 
-        private void OnFilterClick()
+        private void OnFilterClick(IFilter Filter)
         {
-            FilterColapsed = !FilterColapsed;
+            if(OpendFilter == null)
+                Filter.PopUp = true;
+        }
+
+        private void StopFilter(IFilter Filter)
+        {
+            Filter.Enabled = false;
         }
 
         public bool DoFiltersApply(TimeEntry Entry)
@@ -118,6 +129,8 @@ namespace Zeiterfassungssoftware.Pages
             InvokeAsync(StateHasChanged);
             
         }
+
+       
 
         void IDisposable.Dispose()
         {

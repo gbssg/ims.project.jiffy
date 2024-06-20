@@ -24,7 +24,7 @@
 			}
 		</select>
 
-		<textarea placeholder="Activity Title..." style=@(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "" : "display: none;") @bind="ActivityTitle"></textarea>
+		<textarea style="@ActivityTitleTextAreaStyle" placeholder="Activity Title..." @bind="ActivityTitle"></textarea>
 		
 		<select class="select-activity-description" @bind="ActivityDescriptionSelect" style="width:100%; height:60%;">
 			<option>@NEW_ACTIVITY_DESCRIPTION</option>
@@ -34,10 +34,10 @@
 			}
 		</select>
 
-		<textarea placeholder="Activity Description..." style=@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "display: none;") @bind="ActivityDescription"></textarea>
+		<textarea style="@ActivityDescriptionTextAreaStyle" placeholder="Activity Description..." @bind="ActivityDescription"></textarea>
 	</div>
 }
 else
-{
+{	
 	<div class="passed-time-text">@PassedTime.ToString(@"hh\:mm\:ss")</div>
 }

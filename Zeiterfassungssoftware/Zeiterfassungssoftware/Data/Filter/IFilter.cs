@@ -8,6 +8,7 @@ namespace Zeiterfassungssoftware.Data.Filter
         public bool Enabled { get; set; }
 
         public event EventHandler? FilterChanged;
+        public bool PopUp { get; set; }
 
         public bool MatchesCriteria(object Input);
     }

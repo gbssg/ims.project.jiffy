@@ -1,9 +1,11 @@
 ﻿@page "/"
 
+@inject IJSRuntime JS
+
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
-<Button Text="Hallo" Width="100%"/>
+<Button Text="Hallo" Width="100%" OnClick="PopUp"/>
 <Widget Title="Test" Text="Content" />
-
+<FilterPopUp Filter="Filter" />
 
