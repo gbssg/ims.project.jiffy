@@ -29,8 +29,8 @@ namespace Zeiterfassungssoftware.Pages
 		private string ActivityDescriptionSelect = NEW_ACTIVITY_DESCRIPTION;
 		private string ActivityDescription = string.Empty;
 
-		public string ActivityDescriptionTextAreaStyle => ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "display: none;");
-		public string ActivityTitleTextAreaStyle => ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE)? "" : "display: none;");
+		public string ActivityDescriptionTextAreaStyle => ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "display: none;";
+		public string ActivityTitleTextAreaStyle => ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE)? "" : "display: none;";
 
 
 		protected override async Task OnInitializedAsync()

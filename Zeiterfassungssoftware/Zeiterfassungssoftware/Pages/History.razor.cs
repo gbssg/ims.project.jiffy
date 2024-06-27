@@ -27,6 +27,9 @@ namespace Zeiterfassungssoftware.Pages
         public Timer? RefreshTimer;
         public int SearchResults => TimeEntries.Where(e => DoFiltersApply(e)).Count();
 
+        public string PreviousClass => "btn-primary" + (Page == 0 ? " btn-primary-disabled" : "");
+        public string NextClass => "btn-primary" + (Page == MaxPage ? " btn-primary-disabled" : "");
+
 
         public int _page = 0;
         public int Page { 

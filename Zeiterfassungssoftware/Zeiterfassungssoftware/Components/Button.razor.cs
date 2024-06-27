@@ -15,6 +15,7 @@ namespace Zeiterfassungssoftware.Components
         [Parameter]
         public EventCallback<OnButtonClick> OnClick { get; set; }
 
+        public string CssClass => CustomCssClass.Trim().Equals("") ? "btn-primary" : CustomCssClass;
 
         private void OnButtonClicked()
         {

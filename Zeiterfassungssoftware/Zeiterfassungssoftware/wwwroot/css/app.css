@@ -278,6 +278,10 @@ select {
     z-index: 1000;
 }
 
+.btn-primary-disabled, .btn-primary-disabled:hover, .btn-primary-disabled:active, .btn-primary-disabled:focus {
+    background-color: #292929;
+}
+
     #blazor-error-ui .dismiss {
         cursor: pointer;
         position: absolute;
