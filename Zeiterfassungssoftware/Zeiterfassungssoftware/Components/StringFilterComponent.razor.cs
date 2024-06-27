@@ -6,7 +6,7 @@ namespace Zeiterfassungssoftware.Components
     public partial class StringFilterComponent
     {
         [Parameter]
-        public StringFilter Filter { get; set; }
+        public StringFilter Filter { get; set; } = new("");
 
     }
 }

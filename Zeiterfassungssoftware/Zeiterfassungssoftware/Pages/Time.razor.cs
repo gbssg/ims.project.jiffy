@@ -14,7 +14,7 @@ namespace Zeiterfassungssoftware.Pages
 	{
 		public bool Started => CurrentEntry != null && CurrentEntry.End == null;
 		public bool Disabled => !(Started || !((ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) && ActivityTitle.Trim().Equals("")) || (ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) && ActivityDescription.Trim().Equals(""))));
-		private TimeSpan PassedTime => (DateTime.Now - CurrentEntry.Start);
+		private TimeSpan PassedTime => (DateTime.Now - CurrentEntry?.Start) ?? TimeSpan.Zero;
 
 
 		public TimeEntry? CurrentEntry { get; set; }
@@ -33,7 +33,7 @@ namespace Zeiterfassungssoftware.Pages
 		public string ActivityTitleTextAreaStyle => ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE)? "" : "display: none;";
 
 
-		protected override async Task OnInitializedAsync()
+		protected override void OnInitialized()
 		{
 			CurrentEntry = TimeEntrySource.GetEntries().Last();
 

@@ -6,6 +6,6 @@ namespace Zeiterfassungssoftware.Components
     public partial class TimeFilterComponent
     {
         [Parameter]
-        public TimeFilter Filter { get; set; }
+        public TimeFilter Filter { get; set; } = new ("");
     }
 }

@@ -46,7 +46,7 @@ namespace Zeiterfassungssoftware.Pages
 
         public IFilter? OpendFilter => Filters.FirstOrDefault(e => e.PopUp);
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             TimeEntries = new TimeEntry[TimeEntrySource.GetEntries().Count];
             TimeEntrySource.GetEntries().CopyTo(TimeEntries, 0);
@@ -94,7 +94,7 @@ namespace Zeiterfassungssoftware.Pages
         public bool DoFiltersApply(TimeEntry Entry)
         {
             return Filters[0].MatchesCriteria(Entry.Start) && Filters[1].MatchesCriteria(Entry.Start) &&
-                   Filters[2].MatchesCriteria(Entry.End) && Filters[3].MatchesCriteria(Entry.Title) &&
+                   Filters[2].MatchesCriteria(Entry.End ?? DateTime.Now) && Filters[3].MatchesCriteria(Entry.Title) &&
                    Filters[4].MatchesCriteria(Entry.Description);
         }
 
