@@ -15,33 +15,33 @@ namespace Zeiterfassungssoftware.Pages
         public TimeSpan Overtime = new TimeSpan(0, 0, 0);
         public TimeSpan NeededDailyTime = new TimeSpan(6, 30, 0);
 
-        public bool FilterColapsed { get; set; } = true;
-        public string FilterCssClass => FilterColapsed ? "filter-dropdown-colapsed" : "filter-dropdown";
-
-        private IFilter[] filters =
+        private IFilter[] Filters =
         {
             new DateFilter("Date"),
-            new StringFilter("Titel"),
             new TimeFilter("Start Time"),
+            new TimeFilter("Stop Time"),
+            new StringFilter("Activity"),
+            new StringFilter("Description"),
         };
 
-        public IFilter DateFilter => filters[0];
-        public IFilter TitleFilter => filters[1];
-        public IFilter TimeFilter => filters[2];
-
         public Timer? RefreshTimer;
-
-        public int ItemsPerPage => 10;
-
         public int SearchResults => TimeEntries.Where(e => DoFiltersApply(e)).Count();
-        public bool ShouldUpdateTimer => (Page == 0 && SearchResults > 0 && TimeEntries.Where(e => DoFiltersApply(e)).Last().End != null);
-        public int Page { get; set; } = 0;
-        public int MaxPage => (int)(SearchResults / (float)(ItemsPerPage));
 
-        public IFilter? OpendFilter => filters.Where(e => e.PopUp).Count() > 0 ? filters.Where(e => e.PopUp).First() : null;
 
-        public string NextButtonStyling => $"10%{(Page == MaxPage ? "; background-color: #292929" : "")}";
-        public string PreviousButtonStyling => $"10%{(Page == 0 ? "; background-color: #292929" : "")}";
+        public int _page = 0;
+        public int Page { 
+            get 
+            {
+                return Math.Clamp(_page, 0, MaxPage);
+            }
+            set
+            {
+                _page = Math.Clamp(value, 0, MaxPage);
+            }
+        }
+        public int MaxPage => (int)(SearchResults / 10f);
+
+        public IFilter? OpendFilter => Filters.FirstOrDefault(e => e.PopUp);
 
         protected override async Task OnInitializedAsync()
         {
@@ -49,38 +49,32 @@ namespace Zeiterfassungssoftware.Pages
             TimeEntrySource.GetEntries().CopyTo(TimeEntries, 0);
             TimeEntries = TimeEntries.Reverse().ToArray();
 
-            foreach (var f in filters)
+            foreach (IFilter Filter in Filters)
             {
-                f.FilterChanged += FilterHasChanged;
+                Filter.FilterChanged += FilterHasChanged;
             }
 
-            var entries = TimeEntrySource.GetEntries();
-            var days = entries.GroupBy(e => e.Start.Date);
+            var Days = TimeEntries.GroupBy(e => e.Start.Date);
 
-            foreach (var day in days )
+            foreach (var Day in Days)
             {
-                if (!day.First().Title.Equals("Krank"))
+                if (!Day.First().Title.Equals("Krank"))
                 {
-                    var timeLeft = NeededDailyTime;
-                    foreach (var entry in day)
+                    var TimeLeft = NeededDailyTime;
+                    foreach (var Entry in Day)
                     {
-                        timeLeft -= entry.Time;
+                        TimeLeft -= Entry.Time;
                     }
-                    Overtime -= timeLeft;
+                    Overtime -= TimeLeft;
                 }
             }
-            // Temp fix
-            //if(ShouldUpdateTimer)
-                RefreshTimer = new Timer(UpdateTimer, null, 0, 1000);
             
+            RefreshTimer = new Timer(UpdateTimer, null, 0, 1000);
         }
 
         private void FilterHasChanged(object? sender, EventArgs e)
         {
             InvokeAsync(StateHasChanged);
-
-            if (Page > MaxPage)
-                Page = MaxPage;
         }
 
         private void OnFilterClick(IFilter Filter)
@@ -96,49 +90,30 @@ namespace Zeiterfassungssoftware.Pages
 
         public bool DoFiltersApply(TimeEntry Entry)
         {
-            return TimeFilter.MatchesCriteria(Entry.Start) && TitleFilter.MatchesCriteria(Entry.Title) &&
-                   DateFilter.MatchesCriteria(Entry.Start);
+            return Filters[0].MatchesCriteria(Entry.Start) && Filters[1].MatchesCriteria(Entry.Start) &&
+                   Filters[2].MatchesCriteria(Entry.End) && Filters[3].MatchesCriteria(Entry.Title) &&
+                   Filters[4].MatchesCriteria(Entry.Description);
         }
 
         public void OnNextClick()
         {
             Page++;
-
-            if(Page > MaxPage)
-                Page = MaxPage;
         }
 
         public void OnPreviousClick()
         {
             Page--;
-
-            if (Page < 0)
-                Page = 0;
-
-            //if (ShouldUpdateTimer)
-            //    Timer = new Timer(UpdateTimer, null, 0, 1000);
-            
         }
-        
+
         public void UpdateTimer(object? State)
         {
-            //if(!ShouldUpdateTimer)
-            //{
-            //    Timer?.Dispose();
-            //    return;
-            //}
-
             InvokeAsync(StateHasChanged);
-            
         }
-
-       
 
         void IDisposable.Dispose()
         {
             RefreshTimer?.Dispose();
         }
 
-        
     }
 }

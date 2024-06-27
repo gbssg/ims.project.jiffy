@@ -19,7 +19,7 @@
     <div class="filter-container">
         <p class="filter-control-title">Enabled</p>
         <div class="filter-control">
-            @foreach(IFilter Filter in filters.Where(e => e.Enabled))
+            @foreach(IFilter Filter in Filters.Where(e => e.Enabled))
             {
                 <p class="filter-control-element enabled-filter" @onclick="() => OnFilterClick(Filter)">
                     @Filter.Name
@@ -32,7 +32,7 @@
 
         <p class="filter-control-title">Disabled</p>
         <div class="filter-control">
-            @foreach (IFilter Filter in filters.Where(e => !e.Enabled))
+            @foreach (IFilter Filter in Filters.Where(e => !e.Enabled))
             {
                 <p class="filter-control-element disabled-filter" @onclick="() => OnFilterClick(Filter)">@Filter.Name</p>
             }
@@ -74,8 +74,8 @@
         }
     </table>
     <p class="site-number">@(Page+1)/@(MaxPage+1)</p>
-    <Button Width="@PreviousButtonStyling" Text="Previous" OnClick="OnPreviousClick" />
-    <Button Width="@NextButtonStyling" Text="Next" OnClick="OnNextClick" />
+    <Button Width="10%" Text="Previous" OnClick="OnPreviousClick" />
+    <Button Width="10%" Text="Next" OnClick="OnNextClick" />
     
     
 }

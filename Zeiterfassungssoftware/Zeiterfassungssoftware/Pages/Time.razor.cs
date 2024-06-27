@@ -20,32 +20,29 @@ namespace Zeiterfassungssoftware.Pages
 		public TimeEntry? CurrentEntry { get; set; }
 		private Timer? Timer;
 
-		private const string NEW_ACTIVITY_TITLE = "Neue Tätigkeit erfassen";
-		private const string NEW_ACTIVITY_DESCRIPTION = "Neue Beschreibung erfassen";
+		private const string NEW_ACTIVITY_TITLE = "New Activity";
+		private const string NEW_ACTIVITY_DESCRIPTION = "New Description";
 
-		private string ActivityTitleSelect = "Neue Tätigkeit erfassen";
+		private string ActivityTitleSelect = NEW_ACTIVITY_TITLE;
 		private string ActivityTitle = string.Empty;
 
-		private string ActivityDescriptionSelect = "Neue Beschreibung erfassen";
+		private string ActivityDescriptionSelect = NEW_ACTIVITY_DESCRIPTION;
 		private string ActivityDescription = string.Empty;
 
-		public string ActivityDescriptionTextAreaStyle => $"resize:none;{(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "display: none;")}";
-		public string ActivityTitleTextAreaStyle => $"resize:none;{(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE)? "" : "display: none;")}";
+		public string ActivityDescriptionTextAreaStyle => ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "display: none;");
+		public string ActivityTitleTextAreaStyle => ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE)? "" : "display: none;");
 
 
 		protected override async Task OnInitializedAsync()
 		{
 			CurrentEntry = TimeEntrySource.GetEntries().Last();
-			if ((CurrentEntry != null) 
-				&& (CurrentEntry.End != null))
-			{
+
+			if ((CurrentEntry != null) && (CurrentEntry.End != null))
 				CurrentEntry = null;
-			}
 
 			if (Started)
-            {
 				Timer = new Timer(UpdateTimer, null, 0, 1000);
-            }
+            
 		}
 
 		private void ToggleClock()
@@ -86,9 +83,9 @@ namespace Zeiterfassungssoftware.Pages
             {
 				Timer?.Dispose();
 				CurrentEntry.End = DateTime.Now;
+
 				if(CurrentEntry.Time < new TimeSpan(0, 0, 1))
 					TimeEntrySource.Remove(CurrentEntry);
-				
 			}
 			else
 			{

@@ -14,15 +14,14 @@ h1:focus {
 a, .btn-link {
     color: #a861ff;
 }
+
 .btn-div {
     display: flex;
     justify-content: center;
     padding: 20px;
 }
 
-
-
-.filter-popup-test {
+.filter-popup {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -229,13 +228,12 @@ select {
     padding: 10px;
     color: #ffffff;
 }
-/*.filter-title {
-    background: #292929;
-    color: #ffffff;
-}*/
+
+.list {
+}
 
 .list-entry {
-
+    
 }
 .list-time {
     font-size: 20px;
