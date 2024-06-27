@@ -12,17 +12,17 @@ namespace Zeiterfassungssoftware.Pages
         public TimeEntry[] TimeEntries { get; set; } = [];
 
         public int SickDays => TimeEntrySource.GetEntries().Where(e => e.Title.ToLower().Trim().Equals("krank")).Count();
-        public TimeSpan Overtime = new TimeSpan(0, 0, 0);
-        public TimeSpan NeededDailyTime = new TimeSpan(6, 30, 0);
+        public TimeSpan Overtime = new (0, 0, 0);
+        public TimeSpan NeededDailyTime = new (6, 30, 0);
 
-        private IFilter[] Filters =
-        {
+        private readonly IFilter[] Filters =
+        [
             new DateFilter("Date"),
             new TimeFilter("Start Time"),
             new TimeFilter("Stop Time"),
             new StringFilter("Activity"),
             new StringFilter("Description"),
-        };
+        ];
 
         public Timer? RefreshTimer;
         public int SearchResults => TimeEntries.Where(e => DoFiltersApply(e)).Count();

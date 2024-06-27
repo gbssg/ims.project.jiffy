@@ -2,11 +2,9 @@
 
 namespace Zeiterfassungssoftware.Data.Filter
 {
-    public class StringFilter : AbstractFilter
+    public class StringFilter(string name) : AbstractFilter(name)
     {
         private string _value = string.Empty;
-
-        public StringFilter(string name) : base(name) {}
 
         public string Value
         {

@@ -25,11 +25,14 @@ namespace Zeiterfassungssoftware.Pages
 
 		private string ActivityTitleSelect = NEW_ACTIVITY_TITLE;
 		private string ActivityTitle = string.Empty;
+		private string Title => ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? ActivityTitle : ActivityTitleSelect;
 
-		private string ActivityDescriptionSelect = NEW_ACTIVITY_DESCRIPTION;
+
+        private string ActivityDescriptionSelect = NEW_ACTIVITY_DESCRIPTION;
 		private string ActivityDescription = string.Empty;
+        private string Description => ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? ActivityDescription : ActivityDescriptionSelect;
 
-		public string ActivityDescriptionTextAreaStyle => ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "display: none;";
+        public string ActivityDescriptionTextAreaStyle => ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "display: none;";
 		public string ActivityTitleTextAreaStyle => ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE)? "" : "display: none;";
 
 
@@ -73,8 +76,8 @@ namespace Zeiterfassungssoftware.Pages
 				CurrentEntry = new()
 				{
 					Start = DateTime.Now,
-					Title = ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? ActivityTitle : ActivityTitleSelect,
-					Description = ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? ActivityDescription : ActivityDescriptionSelect,
+					Title = this.Title,
+					Description = this.Description,
 				};
 
 				TimeEntrySource.Add(CurrentEntry);
@@ -102,7 +105,7 @@ namespace Zeiterfassungssoftware.Pages
 
 		void IDisposable.Dispose()
 		{
-			Timer?.Dispose();
+            Timer?.Dispose();
 		}
 		
 

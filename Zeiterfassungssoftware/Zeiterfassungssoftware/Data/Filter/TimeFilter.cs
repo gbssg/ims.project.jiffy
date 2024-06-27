@@ -2,7 +2,7 @@
 
 namespace Zeiterfassungssoftware.Data.Filter
 {
-    public class TimeFilter : AbstractFilter
+    public class TimeFilter(string name) : AbstractFilter(name)
     {
 
         private TimeOnly _minTime = TimeOnly.MinValue;
@@ -31,8 +31,6 @@ namespace Zeiterfassungssoftware.Data.Filter
                 NotifySubscribers();
             }
         }
-
-        public TimeFilter(string name) : base(name) {}
 
         public override bool MatchesCriteria(object Input)
         {

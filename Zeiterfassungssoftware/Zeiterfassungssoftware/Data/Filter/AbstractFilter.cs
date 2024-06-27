@@ -1,19 +1,13 @@
 ﻿
 namespace Zeiterfassungssoftware.Data.Filter
 {
-    public abstract class AbstractFilter : IFilter
+    public abstract class AbstractFilter(string name) : IFilter
     {
-        public string Name { get; }
+        public string Name { get; } = name;
         public bool Enabled { get; set; } = false;
 
         public event EventHandler? FilterChanged;
         public bool PopUp { get; set; }
-
-
-        public AbstractFilter(string name)
-        {
-            Name = name;
-        }
 
         public abstract bool MatchesCriteria(object Input);
 

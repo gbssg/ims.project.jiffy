@@ -5,31 +5,31 @@ namespace Zeiterfassungssoftware.Services
 {
 	public class LocalActivityProvider : IActivityProvider
 	{
-		private List<ActivityTitle> _activityTitles = [];
-		private List<ActivityDescription> _activityDescriptions = [];
+		private readonly List<ActivityTitle> _activityTitles = [];
+		private readonly List<ActivityDescription> _activityDescriptions = [];
 
 		public LocalActivityProvider() 
 		{
-			_activityTitles = new List<ActivityTitle>()
-			{
-				new ActivityTitle("Arbeit"),
-				new ActivityTitle("Integrierte Praxisarbeit"),
-				new ActivityTitle("Englisch"),
-				new ActivityTitle("English BMS"),
-				new ActivityTitle("M122"),
-				new ActivityTitle("M431")
-			};
-			_activityDescriptions = new List<ActivityDescription>()
-			{
-				new ActivityDescription("Arbeit am Projekt Zeiterfassungssoftware"),
-				new ActivityDescription("Projekt"),
-				new ActivityDescription("Lernen für Prüfung in 2 Wochen"),
-				new ActivityDescription("Programmieren"),
-				new ActivityDescription("Prüfung"),
-				new ActivityDescription("BugFix in LocalTimeEntryProvider.cs"),
-                new ActivityDescription("Englisch Vokabular gelernt"),
-                new ActivityDescription("Selbstständige arbeit an der Website"),
-            };
+			_activityTitles =
+			[
+				new ("Arbeit"),
+				new ("Integrierte Praxisarbeit"),
+				new ("Englisch"),
+				new ("English BMS"),
+				new ("M122"),
+				new ("M431")
+			];
+			_activityDescriptions =
+			[
+				new ("Arbeit am Projekt Zeiterfassungssoftware"),
+				new ("Projekt"),
+				new ("Lernen für Prüfung in 2 Wochen"),
+				new ("Programmieren"),
+				new ("Prüfung"),
+				new ("BugFix in LocalTimeEntryProvider.cs"),
+                new ("Englisch Vokabular gelernt"),
+                new ("Selbstständige arbeit an der Website"),
+            ];
 		}
 
 		public bool IsLoaded => true;

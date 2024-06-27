@@ -6,26 +6,21 @@ using System.Threading.Tasks;
 
 namespace Zeiterfassungssoftware.SharedData.Activities
 {
-	public class ActivityTitle
+	public class ActivityTitle(string Title)
 	{
-		public string Value { get; set; } = string.Empty;
-		
-		public ActivityTitle(string Title)
-		{
-			Value = Title;
-		}
+		public string Value { get; set; } = Title;
 
-        public override bool Equals(object? obj)
+		public override bool Equals(object? obj)
         {
-            ActivityTitle? Other = obj as ActivityTitle;
+            if(obj is ActivityDescription Other)
+			{
+				string Value = Normalize(this.Value);
+				string OtherValue = Normalize(Other.Value);
 
-			if(Other is null)
-				return false;
+				return Value.Equals(OtherValue);
+			}
 
-			string Value = Normalize(this.Value);
-			string OtherValue = Normalize(Other.Value);
-
-			return Value.Equals(OtherValue);
+			return false;
         }
 
 		public override int GetHashCode()
@@ -49,16 +44,15 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 		}
 
         public override bool Equals(object? obj)
-        {
-            ActivityDescription? Other = obj as ActivityDescription;
+		{
+			if (obj is ActivityDescription Other)
+			{
+				string Value = Normalize(this.Value);
+				string OtherValue = Normalize(Other.Value);
 
-            if (Other is null)
-                return false;
-
-            string Value = Normalize(this.Value);
-            string OtherValue = Normalize(Other.Value);
-
-            return Value.Equals(OtherValue);
+				return Value.Equals(OtherValue);
+			}
+			return false;
         }
 
         public override int GetHashCode()
