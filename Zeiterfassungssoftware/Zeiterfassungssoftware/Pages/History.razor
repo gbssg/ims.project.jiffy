@@ -43,9 +43,10 @@
     {
         <FilterPopUp Filter="OpendFilter" />
     }
-
-
-    <table class="list" style="width: 100%">
+    
+    // Entry Size: 31.979
+    <div class="list-container" style="height: 319.79px; overflow-y: scroll;" @onwheel="OnScroll">
+        <table class="list" style="width: 100%">
         <tr>
             <th>
                 Time
@@ -66,17 +67,14 @@
                 Description
             </th>
         </tr>
-
-
-        @foreach (var Entry in TimeEntries.Where(e => DoFiltersApply(e)).Skip(Page*10).Take(10))
-        {
-            <HistoryEntry Entry="@Entry"/>
-        }
-    </table>
-    <p class="site-number">@(Page+1)/@(MaxPage+1)</p>
-    <Button CustomCssClass="@PreviousClass" Width="10%" Text="Previous" OnClick="OnPreviousClick" />
-    <Button CustomCssClass="@NextClass" Width="10%" Text="Next" OnClick="OnNextClick" />
+            @foreach (var Entry in TimeEntries.Where(e => DoFiltersApply(e)))
+            {
+                <HistoryEntry Entry="@Entry" />
+            }
+        </table>
+    </div>
     
+
     
 }
 else

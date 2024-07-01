@@ -34,19 +34,14 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 		}
     }
 
-	public class ActivityDescription
+	public class ActivityDescription(string Description)
 	{
-		public string Value { get; set; } = string.Empty;
+		public string Value { get; set; } = Description;
 
-		public ActivityDescription(string Description)
-		{
-			Value = Description;
-		}
-
-        public override bool Equals(object? obj)
+		public override bool Equals(object? obj)
 		{
 			if (obj is ActivityDescription Other)
-			{
+			{ 
 				string Value = Normalize(this.Value);
 				string OtherValue = Normalize(Other.Value);
 

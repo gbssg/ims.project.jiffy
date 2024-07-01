@@ -118,5 +118,14 @@ namespace Zeiterfassungssoftware.Pages
             RefreshTimer?.Dispose();
         }
 
+        public void OnScroll(WheelEventArgs Args)
+        {
+            // Scrolling down
+            if(Args.DeltaY > 0) 
+            { 
+
+            }
+        }
+
     }
 }
