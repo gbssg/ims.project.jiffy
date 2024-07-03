@@ -3,3 +3,9 @@
 @inject IJSRuntime JS
 
 <PageTitle>Home</PageTitle>
+
+<TextField PlaceHolder="Säg sali" @bind-Value="ValueFromTextField" />
+
+<p>@ValueFromTextField</p>
+
+<input type="text" @bind="ValueFromTextField" />

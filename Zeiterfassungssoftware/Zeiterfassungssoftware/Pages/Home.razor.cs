@@ -7,5 +7,6 @@ namespace Zeiterfassungssoftware.Pages
 {
     public partial class Home
     {
+        private string ValueFromTextField { get; set; }
     }
 }
