@@ -14,6 +14,8 @@
         public TimeSpan Time => (End != null ? End - Start : DateTime.Now-Start).Value;
         public bool Sick => Title.Equals("Krank");
 
+        public bool IsWeekend => (Start.DayOfWeek == DayOfWeek.Sunday || Start.DayOfWeek == DayOfWeek.Saturday);
+
         public string GetTimeString()
         {
             

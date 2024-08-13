@@ -6,7 +6,7 @@
         @Entry.Start.ToString(@"dd\ MMM\ yyyy")
     </td>
     <td class="list-start">
-        @Entry.GetStartString()
+        @Entry.GetStartString() @(Entry.IsWeekend ? "W" : "")
     </td>
     <td class="list-start">
         @Entry.GetEndString()
@@ -17,7 +17,6 @@
     <td class="list-description">
         @Entry.Description
     </td>
-
 </tr>
 
 

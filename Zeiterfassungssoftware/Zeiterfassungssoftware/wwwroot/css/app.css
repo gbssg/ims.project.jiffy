@@ -123,6 +123,7 @@ a, .btn-link {
     width: 150px;
     padding: 10px;
     margin: 5px;
+    cursor: pointer;
 }
 
 .filter-control-title {

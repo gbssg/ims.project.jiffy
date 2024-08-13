@@ -26,24 +26,7 @@ namespace Zeiterfassungssoftware.Pages
 
         public Timer? RefreshTimer;
         public int SearchResults => TimeEntries.Where(e => DoFiltersApply(e)).Count();
-
-
         public bool ShowFilters;
-
-        //public string PreviousClass => "btn-primary" + (Page == 0 ? " btn-primary-disabled" : "");
-        //public string NextClass => "btn-primary" + (Page == MaxPage ? " btn-primary-disabled" : "");
-        //public int _page = 0;
-        //public int Page { 
-        //    get 
-        //    {
-        //        return Math.Clamp(_page, 0, MaxPage);
-        //    }
-        //    set
-        //    {
-        //        _page = Math.Clamp(value, 0, MaxPage);
-        //    }
-        //}
-        //public int MaxPage => (int)(SearchResults / 10f);
 
         public IFilter? OpendFilter => Filters.FirstOrDefault(e => e.PopUp);
 
@@ -62,12 +45,22 @@ namespace Zeiterfassungssoftware.Pages
 
             foreach (var Day in Days)
             {
-                if (!Day.First().Title.Equals("Krank"))
+                if (!Day.First().Title.ToLower().Equals("krank"))
                 {
                     var TimeLeft = NeededDailyTime;
+                    var WeekEndOvertime = TimeSpan.FromSeconds(0);
+
                     foreach (var Entry in Day)
                     {
-                        TimeLeft -= Entry.Time;
+                        if (Entry.IsWeekend)
+                        {
+                            Overtime += Entry.Time;
+                            TimeLeft = TimeSpan.FromSeconds(0);
+                        }
+                        else
+                        {
+                            TimeLeft -= Entry.Time;
+                        }
                     }
                     Overtime -= TimeLeft;
                 }
@@ -98,16 +91,6 @@ namespace Zeiterfassungssoftware.Pages
                    Filters[2].MatchesCriteria(Entry.End ?? DateTime.Now) && Filters[3].MatchesCriteria(Entry.Title) &&
                    Filters[4].MatchesCriteria(Entry.Description);
         }
-
-        //public void OnNextClick()
-        //{
-        //    Page++;
-        //}
-
-        //public void OnPreviousClick()
-        //{
-        //    Page--;
-        //}
 
         public void UpdateTimer(object? State)
         {

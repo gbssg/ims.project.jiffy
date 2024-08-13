@@ -11,8 +11,9 @@ namespace Zeiterfassungssoftware.Services
 		public LocalActivityProvider() 
 		{
 			_activityTitles =
-			[
-				new ("Arbeit"),
+            [
+                new ("Krank"),
+                new ("Arbeit"),
 				new ("Integrierte Praxisarbeit"),
 				new ("Englisch"),
 				new ("English BMS"),

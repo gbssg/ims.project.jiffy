@@ -54,6 +54,24 @@ namespace Zeiterfassungssoftware.Pages
 			if (Disabled)
 				return;
 
+			if (Title.ToLower().Equals("krank"))
+			{
+                TimeEntry Entry = new()
+                {
+                    Start = DateTime.Now,
+                    Title = "Krank",
+                    Description = this.Description,
+                };
+
+                TimeEntrySource.Add(Entry);
+				ActivityTitleSelect = NEW_ACTIVITY_TITLE;
+                ActivityDescriptionSelect = NEW_ACTIVITY_DESCRIPTION;
+				ActivityTitle = string.Empty;
+				ActivityDescription = string.Empty;
+
+                return;
+			}
+
 			if (!Started)
 			{
 				if (ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE))
