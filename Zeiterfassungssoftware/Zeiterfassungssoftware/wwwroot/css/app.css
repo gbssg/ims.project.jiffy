@@ -48,6 +48,30 @@ a, .btn-link {
     height: 32px;
 }
 
+.textfield {
+    resize: none;
+    padding: 3px 0px 0px 9px;
+/*    padding: 0px;*/
+}
+
+.rounded {
+    border-radius: 12px;
+}
+
+.toprounded {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.bottomrounded {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.invisible {
+    display: none;
+}
+
 .enabled-filter {
     background-color: #3700B3;
     border: solid;
@@ -106,6 +130,8 @@ a, .btn-link {
     font-size: 18px;
     margin-top: 10px;
     margin-bottom: 0px;
+    cursor: pointer;
+    width: 150px;
 }
 
 .filter-control {
@@ -128,14 +154,14 @@ a, .btn-link {
 }
 
 textarea {
+    
     padding: 3px 0px 0px 9px;
     width: 40%;
-    height: 100px;
-    border-radius: 15px;
+    height: 100px
 }
 
 select {
-    border-radius: 12px;
+/*    border-radius: 12px;*/
     padding-left: 3px;
     width: 40%;
     height: 25px;
@@ -144,7 +170,22 @@ select {
 .centered-div-flex {
     display: flex;
     justify-content: center;
-    padding: 1px;
+    
+}
+
+.activity-textfield {
+    display: block;
+    margin: 0;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.activity-textfield::placeholder {
+    padding-left: 3px 0 0 9px;
+}
+
+.timepage-body {
 }
 
 .centered-div {
@@ -196,7 +237,7 @@ select {
 
 .btn-started {
     color: #ffffff;
-    background-color: #000000;
+    background-color: #121212;
     border-radius: 50%;
     font-weight: bold;
     font-size: 40px;

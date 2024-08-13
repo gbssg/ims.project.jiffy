@@ -16,8 +16,10 @@ namespace Zeiterfassungssoftware.Components
         public bool Started { get; set; }
         [Parameter]
         public bool Disabled { get; set; }
+		[Parameter]
+		public string AdditionalStyling { get; set; }
 
-        private void OnButtonClicked()
+		private void OnButtonClicked()
         {
             OnClick.InvokeAsync();
         }

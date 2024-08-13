@@ -15,8 +15,8 @@
         <Widget Title="Overtime" Text="@Overtime.ToString(@"dd\d\ hh\h\ mm\m")" />
     </div>
 
-    <p class="filter-control-title">Filter Settings</p>
-    <div class="filter-container">
+    <p class="filter-control-title" @onclick="() => ShowFilters = !ShowFilters">Filter Settings @(ShowFilters ? "▴" : "▾")</p>
+    <div class="filter-container" style="@(ShowFilters ? "" : "display: none;")">
         <p class="filter-control-title">Enabled</p>
         <div class="filter-control">
             @foreach(IFilter Filter in Filters.Where(e => e.Enabled))

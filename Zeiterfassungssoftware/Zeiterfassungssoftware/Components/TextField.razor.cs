@@ -11,7 +11,18 @@ namespace Zeiterfassungssoftware.Components
         [Parameter]
         public string Value { get; set; } = string.Empty;
 
-        [Parameter] public EventCallback<string> ValueChanged { get; set; }
+		[Parameter]
+		public string CssClass { get; set; } = "textfield";
+
+		[Parameter]
+		public string Style { get; set; } = string.Empty;
+
+
+		[Parameter]
+		public bool Multiline { get; set; }
+
+
+		[Parameter] public EventCallback<string> ValueChanged { get; set; }
 
 
         private void OnTextChanged(string value)

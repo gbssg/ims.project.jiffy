@@ -34,6 +34,7 @@ namespace Zeiterfassungssoftware.Pages
 
         public string ActivityDescriptionTextAreaStyle => ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "display: none;";
 		public string ActivityTitleTextAreaStyle => ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE)? "" : "display: none;";
+		public int Percent => (int)((PassedTime.TotalMinutes % 1) * 360);
 
 
 		protected override void OnInitialized()
