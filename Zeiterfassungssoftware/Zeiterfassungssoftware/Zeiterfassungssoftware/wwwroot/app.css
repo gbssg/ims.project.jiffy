@@ -89,8 +89,17 @@ body {
 .btn-div {
     display: flex;
     justify-content: center;
-    padding: 20px;
+/*    padding: 20px;*/
 }
+
+.activity-textfield {
+    display: block;
+    margin: 0;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 /* History Page */
     /* Filter */
@@ -204,4 +213,74 @@ body {
     border-radius: 20px;
     width: 150px;
     padding: 10px;
+}
+
+/* Select */
+select {
+    padding-left: 3px;
+    width: 40%;
+    height: 25px;
+    background-color: #ffffff
+}
+
+/* Buttons */
+.btn-round {
+    background-color: #BB86FC;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 40px;
+    border: none;
+    width: 276px;
+    height: 276px;
+    transition: 1s;
+}
+
+.btn-disabled {
+    background-color: #292929;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 40px;
+    border: none;
+    width: 276px;
+    height: 276px;
+    transition: 1s;
+}
+
+.btn-started {
+    color: #ffffff;
+    background-color: #121212;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 40px;
+    border: none;
+    width: 276px;
+    height: 276px;
+    border-style: solid;
+    border-color: #bb86fc;
+    transition: 1s;
+}
+
+/* Textfield */
+.textfield {
+    resize: none;
+    padding: 3px 0px 0px 9px;
+}
+
+/* Universal */
+.rounded {
+    border-radius: 12px;
+}
+
+.toprounded {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.bottomrounded {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.invisible {
+    display: none;
 }

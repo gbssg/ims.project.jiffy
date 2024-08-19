@@ -10,7 +10,7 @@
 
 <PageTitle>Time</PageTitle>
 
-<div class="timepage-body">
+ <div class="timepage-body">
 	<div class="btn-div">
 		<RoundButton OnClick="ToggleClock" Started="@Started" Disabled="@Disabled" />
 	</div>
@@ -29,7 +29,7 @@
 			</select>
 		</div>
 
-		<TextField Style=" width: 40%; height: 45px;" CssClass="@(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "textfield activity-textfield" : "invisible")" PlaceHolder="Activity Title..." @bind-Value="@ActivityTitle" Multiline="false"/>
+		<TextField Style="width: 40%; height: 45px;" Class="@(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "textfield activity-textfield" : "invisible")" PlaceHolder="Activity Title..." @bind-Value="@ActivityTitle" Multiline="false"/>
 	
 		<div class="centered-div-flex">
 			<select @bind="ActivityDescriptionSelect" class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "bottomrounded")">
@@ -41,12 +41,12 @@
 			</select>
 		</div>
 
-		<TextField Style=" width: 40%; height: 90px;" CssClass="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "textfield activity-textfield bottomrounded" : "invisible")" PlaceHolder="Activity Description..." @bind-Value="@ActivityDescription" Multiline="true" />
+		<TextField Style="width: 40%; height: 90px;" Class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "textfield activity-textfield bottomrounded" : "invisible")" PlaceHolder="Activity Description..." @bind-Value="@ActivityDescription" Multiline="true" />
 
 	}
 	else
 	{	
 		<div class="passed-time-text">@PassedTime.ToString(@"hh\:mm\:ss")</div>
 	}
-</div>
+ </div>
 
