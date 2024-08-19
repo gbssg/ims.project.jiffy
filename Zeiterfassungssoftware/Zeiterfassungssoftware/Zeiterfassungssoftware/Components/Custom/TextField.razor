@@ -1,0 +1,11 @@
+<div>
+    @if(Multiline)
+    {
+        <textarea style="@Style" class="@CssClass" @bind:get="@Value" @bind:set="OnTextChanged" placeholder="@PlaceHolder" />
+    }
+    else
+    {
+        <input style="@Style" class="@CssClass" type="text" @bind:get="@Value" @bind:set="OnTextChanged" placeholder="@PlaceHolder" />
+    }
+</div>
+
