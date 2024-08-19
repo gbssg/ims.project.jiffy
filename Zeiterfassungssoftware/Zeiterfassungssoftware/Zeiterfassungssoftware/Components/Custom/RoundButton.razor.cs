@@ -8,16 +8,16 @@ namespace Zeiterfassungssoftware.Components.Custom
 
         [Parameter]
         public EventCallback<OnButtonClick> OnClick { get; set; }
-
-        private string CssClass => Disabled ? "btn-disabled" : Started ? "btn-started" : "btn-round";
-        private string Text => Started ? "Stop" : "Start";
-
         [Parameter]
         public bool Started { get; set; }
         [Parameter]
         public bool Disabled { get; set; }
         [Parameter]
         public string AdditionalStyling { get; set; }
+
+
+        private string Class => Disabled ? "btn-disabled" : Started ? "btn-started" : "btn-round";
+        private string Text => Started ? "Stop" : "Start";
 
         private void OnButtonClicked()
         {

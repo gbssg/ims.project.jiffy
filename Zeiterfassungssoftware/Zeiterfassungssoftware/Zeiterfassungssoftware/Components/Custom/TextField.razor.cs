@@ -13,7 +13,7 @@ namespace Zeiterfassungssoftware.Components.Custom
         public string Value { get; set; } = string.Empty;
 
         [Parameter]
-        public string CssClass { get; set; } = "textfield";
+        public string Class { get; set; } = "textfield";
 
         [Parameter]
         public string Style { get; set; } = string.Empty;

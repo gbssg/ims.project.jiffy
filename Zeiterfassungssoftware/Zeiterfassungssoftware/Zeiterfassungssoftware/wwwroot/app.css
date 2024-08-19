@@ -49,3 +49,159 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
+
+
+
+
+/* Custom */
+
+/*  */
+body {
+    background-color: #121212;
+    color: #ffffff;
+} 
+
+
+/* div */
+
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.centered-div-flex {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-div-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-div-nowrap {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+/* Time Page */
+
+.btn-div {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* History Page */
+    /* Filter */
+    .filter-container {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 1px;
+        padding-left: 15px;
+        background-color: #292929;
+        border-radius: 10px;
+    }
+
+    .filter-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 700px;
+        height: 300px;
+        transform: translate(-50%, -50%);
+        z-index: 3;
+        background: #292929;
+        border-radius: 20px;
+    }
+
+    .filter-title {
+        margin-left: 20px;
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .filter-textarea {
+        margin-left: 20px;
+        width: 660px;
+        border-radius: 50px;
+        padding-left: 10px;
+        height: 32px;
+    }
+    
+    .filter-x {
+        left: 100%;
+    }
+
+    .filter-text {
+        margin-left: 20px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .filter-pick-date {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    .filter-date {
+        margin-left: 20px;
+        background-color: #191919;
+    }
+
+    .filter-x:hover {
+        background-color: red;
+    }
+
+    .filter-time {
+        margin-left: 20px;
+        background-color: #191919;
+    }
+
+    .filter-disabled {
+        background-color: #292929;
+        border: solid;
+        border-color: #191919;
+    }
+
+    .filter-enabled {
+        background-color: #3700B3;
+        border: solid;
+        border-color: #2d0091;
+    }
+
+    .filter-enabled:hover {
+        background-color: #2d0091;
+    }
+
+    .filter-control-element {
+        border-radius: 5px;
+        width: 150px;
+        padding: 10px;
+        margin: 5px;
+        cursor: pointer;
+    }
+
+    .filter-control-title {
+        font-weight: bold;
+        font-size: 18px;
+        margin-top: 10px;
+        margin-bottom: 0px;
+        cursor: pointer;
+        width: 150px;
+    }
+
+/* Widgets */
+
+.widget-title {
+    font-size: 20px;
+}
+
+.widget {
+    margin-right: 10px;
+    background-color: #292929;
+    border-radius: 20px;
+    width: 150px;
+    padding: 10px;
+}

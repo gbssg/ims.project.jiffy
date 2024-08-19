@@ -24,11 +24,11 @@ namespace Zeiterfassungssoftware.Components.Pages
 
         public Timer? RefreshTimer;
         public int SearchResults => TimeEntries.Where(e => DoFiltersApply(e)).Count();
-        public bool ShowFilters;
+        public bool ShowFilters = true;
 
         public IFilter? OpendFilter => Filters.FirstOrDefault(e => e.PopUp);
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             TimeEntries = new TimeEntry[TimeEntrySource.GetEntries().Count];
             TimeEntrySource.GetEntries().CopyTo(TimeEntries, 0);
@@ -76,6 +76,7 @@ namespace Zeiterfassungssoftware.Components.Pages
         {
             if (OpendFilter == null)
                 Filter.PopUp = true;
+
         }
 
         private void StopFilter(IFilter Filter)
@@ -108,5 +109,6 @@ namespace Zeiterfassungssoftware.Components.Pages
 
             }
         }
+
     }
 }
