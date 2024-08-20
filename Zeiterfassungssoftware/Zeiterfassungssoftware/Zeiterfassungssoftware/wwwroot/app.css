@@ -6,11 +6,13 @@ a, .btn-link {
     color: #006bb7;
 }
 
+/*
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
+*/
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
@@ -125,14 +127,12 @@ body {
     }
 
     .filter-title {
-        margin-left: 20px;
         margin-top: 20px;
         font-size: 20px;
         font-weight: bold;
     }
 
-    .filter-textarea {
-        margin-left: 20px;
+    .filter-textfield {
         width: 660px;
         border-radius: 50px;
         padding-left: 10px;
@@ -215,6 +215,41 @@ body {
     padding: 10px;
 }
 
+/* Filter-PopUp */
+.filter-popup-margin {
+    margin-left: 20px;
+}
+
+.filter-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 700px;
+    height: 300px;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    background: #292929;
+    border-radius: 20px;
+}
+
+
+.filter-popup-title {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.filter-popup-button-apply {
+    width: 660px;
+    margin-top: 60px;
+}
+
+.filter-popup-button-close {
+    width: 660px;
+    margin-top: 10px;
+}
+
 /* Select */
 select {
     padding-left: 3px;
@@ -224,6 +259,14 @@ select {
 }
 
 /* Buttons */
+.btn-primary {
+    background-color: #BB86FC;
+    border-radius: 25px;
+    font-size: 24px;
+    border: none;
+    transition: 1s;
+}
+
 .btn-round {
     background-color: #BB86FC;
     border-radius: 50%;
@@ -266,7 +309,19 @@ select {
     padding: 3px 0px 0px 9px;
 }
 
+/* Date Select */
+
 /* Universal */
+.dark-background-white-font {
+    color-scheme: dark;
+    color: white;
+    background-color: #191919;
+}
+
+.noborder {
+    border: none;
+}
+
 .rounded {
     border-radius: 12px;
 }

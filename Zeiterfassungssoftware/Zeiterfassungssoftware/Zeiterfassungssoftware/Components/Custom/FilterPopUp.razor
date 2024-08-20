@@ -1,7 +1,7 @@
 ﻿<div class="filter-popup">
-    <p class="filter-title">@Filter.Name</p>
+    <p class="filter-popup-margin filter-popup-title">@Filter.Name</p>
     <DynamicComponent Type="Type" Parameters="Parameters" />
-    <Button Width="660px; margin-top: 60px; margin-left: 20px" Text="Apply" OnClick="ApplyFilter" />
-    <Button Width="660px; margin-left: 20px; margin-top: 10px" Text="Close" OnClick="Cancel" />
+    <Button Class="btn-primary filter-popup-margin filter-popup-button-apply" Text="Apply" OnClick="ApplyFilter" />
+    <Button Class="btn-primary filter-popup-margin filter-popup-button-close" Text="Close" OnClick="Cancel" />
 </div>
 
