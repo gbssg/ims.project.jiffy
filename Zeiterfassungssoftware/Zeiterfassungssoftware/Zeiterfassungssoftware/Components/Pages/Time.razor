@@ -10,14 +10,13 @@
 <PageTitle>Time</PageTitle>
 
  <div class="timepage-body">
-	<div class="btn-div">
+	<div class="centered-div-flex">
 		<RoundButton OnClick="ToggleClock" Started="@Started" Disabled="@Disabled" />
 	</div>
 
  
 	@if (!Started)
 	{
-
 		<div class="centered-div-flex">
 			<select class="toprounded" @bind="ActivityTitleSelect">
 				<option>@NEW_ACTIVITY_TITLE</option>
@@ -45,6 +44,6 @@
 	}
 	else
 	{	
-		<div class="passed-time-text">@PassedTime.ToString(@"hh\:mm\:ss")</div>
+		<div class="text-passed-time">@PassedTime.ToString(@"hh\:mm\:ss")</div>
 	}
  </div>

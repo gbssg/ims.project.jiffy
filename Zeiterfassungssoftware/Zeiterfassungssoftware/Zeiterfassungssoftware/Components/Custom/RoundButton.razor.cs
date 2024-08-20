@@ -19,7 +19,7 @@ namespace Zeiterfassungssoftware.Components.Custom
         public string AdditionalStyling { get; set; }
 
 
-        private string CssClass => Disabled ? "btn-disabled" : Started ? "btn-started" : "btn-round";
+        private string Class => $"btn-round {(Disabled ? "btn-disabled" : Started ? "btn-started" : "btn-stopped")}";
         private string Text => Started ? "Stop" : "Start";
 
         private void OnButtonClicked()
