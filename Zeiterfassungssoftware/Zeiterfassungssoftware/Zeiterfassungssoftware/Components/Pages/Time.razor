@@ -1,12 +1,11 @@
 ﻿@page "/Time"
 
-@rendermode InteractiveAuto
-
 @inject ITimeEntryProvider TimeEntrySource
 @inject IActivityProvider ActivitySource
 
 @implements IDisposable
 
+@rendermode InteractiveServer
 
 <PageTitle>Time</PageTitle>
 
@@ -49,4 +48,3 @@
 		<div class="passed-time-text">@PassedTime.ToString(@"hh\:mm\:ss")</div>
 	}
  </div>
-
