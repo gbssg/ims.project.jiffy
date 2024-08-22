@@ -44,7 +44,7 @@ namespace Zeiterfassungssoftware
                 .AddSignInManager()
                 .AddDefaultTokenProviders();
 
-            builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+            builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityEmailSender>();
             builder.Services.AddSingleton<ITimeEntryProvider, RemoteTimeEntryProvider>();
             builder.Services.AddSingleton<IActivityProvider, RemoteActivityProvider>();
 
