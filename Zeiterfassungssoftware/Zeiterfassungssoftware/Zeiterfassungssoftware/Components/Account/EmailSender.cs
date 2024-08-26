@@ -9,8 +9,12 @@ namespace Zeiterfassungssoftware.Components.Account
     {
         public async Task SendEmailAsync(string receiver, string subject, string htmlMessage)
         {
+            var Builder = WebApplication.CreateBuilder();
+            var EmailPass = Builder.Configuration["EmailPass"];
+
             MailAddress to = new MailAddress(receiver);
             MailAddress from = new MailAddress("jiffy.gbs@niederer.swiss");
+            Console.WriteLine(EmailPass);
 
             MailMessage email = new MailMessage(from, to);
             email.Subject = subject;
@@ -20,7 +24,7 @@ namespace Zeiterfassungssoftware.Components.Account
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.servicehoster.ch";
             smtp.Port = 25;
-            smtp.Credentials = new NetworkCredential("jiffy.gbs@niederer.swiss", "smtp_password");
+            smtp.Credentials = new NetworkCredential("jiffy.gbs@niederer.swiss", EmailPass);
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.EnableSsl = true;
 
