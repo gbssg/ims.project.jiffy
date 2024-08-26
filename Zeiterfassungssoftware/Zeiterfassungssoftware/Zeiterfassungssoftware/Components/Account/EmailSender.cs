@@ -14,7 +14,6 @@ namespace Zeiterfassungssoftware.Components.Account
 
             MailAddress to = new MailAddress(receiver);
             MailAddress from = new MailAddress("jiffy.gbs@niederer.swiss");
-            Console.WriteLine(EmailPass);
 
             MailMessage email = new MailMessage(from, to);
             email.Subject = subject;
