@@ -16,7 +16,7 @@ namespace Zeiterfassungssoftware.Components.Custom
         public bool Disabled { get; set; }
 
         [Parameter]
-        public string AdditionalStyling { get; set; }
+        public string AdditionalStyling { get; set; } = string.Empty;
 
 
         private string Class => $"btn-round {(Disabled ? "btn-disabled" : Started ? "btn-started" : "btn-stopped")}";

@@ -10,7 +10,7 @@ namespace Zeiterfassungssoftware.Components.Custom
         [Parameter]
         public IFilter Filter { get; set; }
 
-        private Dictionary<string, object> Parameters => new Dictionary<string, object>
+        private Dictionary<string, object> Parameters => new()
         {
             { "Filter", Filter }
         };
