@@ -5,7 +5,6 @@ using Zeiterfassungssoftware.Client.Pages;
 using Zeiterfassungssoftware.Components;
 using Zeiterfassungssoftware.Components.Account;
 using Zeiterfassungssoftware.Data;
-using Zeiterfassungssoftware.Services;
 using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Time;
 
@@ -45,8 +44,6 @@ namespace Zeiterfassungssoftware
                 .AddDefaultTokenProviders();
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityEmailSender>();
-            builder.Services.AddSingleton<ITimeEntryProvider, RemoteTimeEntryProvider>();
-            builder.Services.AddSingleton<IActivityProvider, RemoteActivityProvider>();
 
             var app = builder.Build();
 

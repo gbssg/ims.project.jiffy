@@ -1,7 +1,7 @@
 ﻿using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Time;
 
-namespace Zeiterfassungssoftware.Services
+namespace Zeiterfassungssoftware.Client.Services
 {
     public class RemoteActivityProvider : IActivityProvider
     {

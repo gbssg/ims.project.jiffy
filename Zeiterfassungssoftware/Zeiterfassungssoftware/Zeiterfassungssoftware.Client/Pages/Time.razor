@@ -1,20 +1,19 @@
 ﻿@page "/Time"
 
+@implements IDisposable
 @inject ITimeEntryProvider TimeEntrySource
 @inject IActivityProvider ActivitySource
 
-@implements IDisposable
 
-@rendermode InteractiveServer
 
 <PageTitle>Time</PageTitle>
 
- <div class="timepage-body">
+<div class="timepage-body">
 	<div class="centered-div-flex">
 		<RoundButton OnClick="ToggleClock" Started="@Started" Disabled="@Disabled" />
 	</div>
 
- 
+
 	@if (!Started)
 	{
 		<div class="centered-div-flex">
@@ -27,8 +26,8 @@
 			</select>
 		</div>
 
-		<TextField Style="width: 40%; height: 45px;" Class="@(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "textfield activity-textfield" : "invisible")" PlaceHolder="Activity Title..." @bind-Value="@ActivityTitle" Multiline="false"/>
-	
+		<TextField Style="width: 40%; height: 45px;" Class="@(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "textfield activity-textfield" : "invisible")" PlaceHolder="Activity Title..." @bind-Value="@ActivityTitle" Multiline="false" />
+
 		<div class="centered-div-flex">
 			<select @bind="ActivityDescriptionSelect" class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "bottomrounded")">
 				<option>@NEW_ACTIVITY_DESCRIPTION</option>
@@ -43,7 +42,7 @@
 
 	}
 	else
-	{	
+	{
 		<div class="text-passed-time">@PassedTime.ToString(@"hh\:mm\:ss")</div>
 	}
- </div>
+</div>
