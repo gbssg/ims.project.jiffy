@@ -1,13 +1,12 @@
 using Microsoft.AspNetCore.Components.Web;
-using Zeiterfassungssoftware.Components.Data.Filter;
+using Zeiterfassungssoftware.Client.Data.Filter;
 using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Time;
 
-namespace Zeiterfassungssoftware.Components.Pages
+namespace Zeiterfassungssoftware.Client.Pages
 {
-
-	public partial class Time
-	{
+    public partial class Time
+    {
 		public bool Started => CurrentEntry != null && CurrentEntry.End == null;
 		public bool Disabled => !(Started || !((ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) && ActivityTitle.Trim().Equals("")) || (ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) && ActivityDescription.Trim().Equals(""))));
 		private TimeSpan PassedTime => (DateTime.Now - CurrentEntry?.Start) ?? TimeSpan.Zero;
@@ -122,11 +121,5 @@ namespace Zeiterfassungssoftware.Components.Pages
 		{
 			Timer?.Dispose();
 		}
-
-
 	}
-
-
-
-
 }
