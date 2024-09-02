@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Components;
 using Zeiterfassungssoftware.Client.Data.Filter;
 using Zeiterfassungssoftware.SharedData.Time;
 
 namespace Zeiterfassungssoftware.Client.Pages
 {
-	public partial class History
+    public partial class History : IDisposable
 	{
+		[Inject]
+		private ITimeEntryProvider TimeEntrySource { get; init; }
+
 		public TimeEntry[] TimeEntries { get; set; } = [];
 
 		public int SickDays => TimeEntrySource.GetEntries().Where(e => e.Title.ToLower().Trim().Equals("krank")).Count();
@@ -15,11 +18,11 @@ namespace Zeiterfassungssoftware.Client.Pages
 		private readonly IFilter[] Filters =
 		[
 			new DateFilter("Date"),
-		new TimeFilter("Start Time"),
-		new TimeFilter("Stop Time"),
-		new StringFilter("Activity"),
-		new StringFilter("Description"),
-	];
+			new TimeFilter("Start Time"),
+			new TimeFilter("Stop Time"),
+			new StringFilter("Activity"),
+			new StringFilter("Description"),
+		];
 
 		public Timer? RefreshTimer;
 		public int SearchResults => TimeEntries.Where(e => DoFiltersApply(e)).Count();
