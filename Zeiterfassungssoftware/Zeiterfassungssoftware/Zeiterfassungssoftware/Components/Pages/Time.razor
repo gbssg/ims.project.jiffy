@@ -8,42 +8,44 @@
 @rendermode InteractiveServer
 
 <PageTitle>Time</PageTitle>
-
- <div class="timepage-body">
-	<div class="centered-div-flex">
-		<RoundButton OnClick="ToggleClock" Started="@Started" Disabled="@Disabled" />
+<section class="section">
+	 <div class="timepage-body">
+		<div class="centered-div-flex">
+			<RoundButton OnClick="ToggleClock" Started="@Started" Disabled="@Disabled" />
+		</div>
 	</div>
 
- 
-	@if (!Started)
-	{
-		<div class="centered-div-flex">
-			<select class="toprounded" @bind="ActivityTitleSelect">
-				<option>@NEW_ACTIVITY_TITLE</option>
-				@foreach (var Activity in ActivitySource.GetActivityTitles())
-				{
-					<option value="@Activity.Value">@Activity.Value</option>
-				}
-			</select>
-		</div>
+</section>
+		@if (!Started)
+		{
+			<div class="centered-div-flex">
+				<select class="toprounded" @bind="ActivityTitleSelect">
+					<option>@NEW_ACTIVITY_TITLE</option>
+					@foreach (var Activity in ActivitySource.GetActivityTitles())
+					{
+						<option value="@Activity.Value">@Activity.Value</option>
+					}
+				</select>
+			</div>
 
-		<TextField Style="width: 40%; height: 45px;" Class="@(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "textfield activity-textfield" : "invisible")" PlaceHolder="Activity Title..." @bind-Value="@ActivityTitle" Multiline="false"/>
+			<TextField Style="width: 40%; height: 45px;" Class="@(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "textfield activity-textfield" : "invisible")" PlaceHolder="Activity Title..." @bind-Value="@ActivityTitle" Multiline="false"/>
 	
-		<div class="centered-div-flex">
-			<select @bind="ActivityDescriptionSelect" class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "bottomrounded")">
-				<option>@NEW_ACTIVITY_DESCRIPTION</option>
-				@foreach (var Activity in ActivitySource.GetActivityDescriptions())
-				{
-					<option value="@Activity.Value">@Activity.Value</option>
-				}
-			</select>
-		</div>
+			<div class="centered-div-flex">
+				<select @bind="ActivityDescriptionSelect" class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "bottomrounded")">
+					<option>@NEW_ACTIVITY_DESCRIPTION</option>
+					@foreach (var Activity in ActivitySource.GetActivityDescriptions())
+					{
+						<option value="@Activity.Value">@Activity.Value</option>
+					}
+				</select>
+			</div>
 
-		<TextField Style="width: 40%; height: 90px;" Class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "textfield activity-textfield bottomrounded" : "invisible")" PlaceHolder="Activity Description..." @bind-Value="@ActivityDescription" Multiline="true" />
+			<TextField Style="width: 40%; height: 90px;" Class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "textfield activity-textfield bottomrounded" : "invisible")" PlaceHolder="Activity Description..." @bind-Value="@ActivityDescription" Multiline="true" />
 
-	}
-	else
-	{	
-		<div class="text-passed-time">@PassedTime.ToString(@"hh\:mm\:ss")</div>
-	}
- </div>
+		}
+		else
+		{	
+			<div class="text-passed-time">@PassedTime.ToString(@"hh\:mm\:ss")</div>
+		}
+	 
+

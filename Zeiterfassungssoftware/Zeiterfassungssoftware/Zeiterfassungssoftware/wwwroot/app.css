@@ -3,8 +3,14 @@ html, body {
 }
 
 a, .btn-link {
-    color: #006bb7;
+    color: white;
+    text-decoration: none;
 }
+a:hover { 
+    text-decoration: underline;
+    color: white;
+}
+
 
 /*
 .btn-primary {
@@ -14,9 +20,10 @@ a, .btn-link {
 }
 */
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
+    .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus{
+        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+        color: black;
+    }
 
 .content {
     padding-top: 1.1rem;
@@ -63,7 +70,9 @@ body {
     color: #ffffff;
 } 
 
-
+p {
+    margin-bottom: 0px;
+}
 /* div */
 .centered-div-flex {
     display: flex;
@@ -80,8 +89,20 @@ body {
     flex-wrap: nowrap;
 }
 
+/* section-center*/
+.section {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    height: 50%;
+}
 /* Time Page */
-
+.timepage-body {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+}
 
 .text-passed-time {
     text-align: center;
@@ -297,8 +318,48 @@ select {
     padding: 3px 0px 0px 9px;
 }
 
+/* Login Page*/
+    /*Login Box*/
+.loginBox {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    flex-direction: column;
+    border-radius: 50px;
+    background-color: #191919a3;
+    width: 400px;
+    padding: 30px;
+}
+.form-control {
+    border-radius: 20px;
+    background-color: #00000063;
+    color: white;
+}
+.btn-login {
+    margin-top: 2rem;
+    width: 100%;
+    background-color: #BB86FC;
+    border-radius: 25px;
+    font-size: 24px;
+    border: none;
+    transition: 1s;
+    color: white;
+}
+.btn-login:hover{
+    background-color: white;
+}
+.page-background-class {
+    background-image: url("https://cdn.pixabay.com/photo/2021/08/06/05/04/mountain-6525356_960_720.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
 /* Date Select */
-
 /* Universal */
 .dark-background-white-font {
     color-scheme: dark;
