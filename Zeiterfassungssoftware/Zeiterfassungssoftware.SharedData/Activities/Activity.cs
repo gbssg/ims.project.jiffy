@@ -23,15 +23,8 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 			return false;
         }
 
-		public override int GetHashCode()
-		{
-			return Normalize(Value).GetHashCode();
-		}
-
-		private string Normalize(string Input)
-		{
-			return Input.ToLower().Trim();
-		}
+        public override int GetHashCode() => Normalize(Value).GetHashCode();
+        private string Normalize(string Input) => Input.ToLower().Trim();
     }
 
 	public class ActivityDescription(string Description)
@@ -50,14 +43,7 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 			return false;
         }
 
-        public override int GetHashCode()
-        {
-            return Normalize(Value).GetHashCode();
-        }
-
-        private string Normalize(string Input)
-        {
-            return Input.ToLower().Trim();
-        }
+        public override int GetHashCode() => Normalize(Value).GetHashCode();
+        private string Normalize(string Input) => Input.ToLower().Trim();
     }
 }

@@ -1,12 +1,14 @@
 ﻿using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Time;
 
-namespace Zeiterfassungssoftware.Services
+namespace Zeiterfassungssoftware.Client.Services
 {
     public class RemoteActivityProvider : IActivityProvider
     {
         private readonly List<ActivityTitle> _activityTitles = [];
         private readonly List<ActivityDescription> _activityDescriptions = [];
+
+        public bool IsLoaded => true;
 
         public RemoteActivityProvider()
         {
@@ -33,46 +35,36 @@ namespace Zeiterfassungssoftware.Services
             ];
         }
 
-        public bool IsLoaded => true;
-
-        public void Add(ActivityDescription ActivityDescription)
+        public void Add(object Obj)
         {
-            _activityDescriptions.Add(ActivityDescription);
+            if (Obj is ActivityTitle Title)
+                _activityTitles.Add(Title);
+
+            if (Obj is ActivityDescription Description)
+                _activityDescriptions.Add(Description);
+        }
+        public void Remove(object Obj)
+        {
+            if (Obj is ActivityTitle Title)
+                _activityTitles.Remove(Title);
+
+            if (Obj is ActivityDescription Description)
+                _activityDescriptions.Remove(Description);
         }
 
-        public void Add(ActivityTitle ActivityTitle)
+        public bool Contains(object Obj)
         {
-            _activityTitles.Add(ActivityTitle);
+            if(Obj is ActivityTitle Title)
+                return _activityTitles.Contains(Title);
+
+            if (Obj is ActivityDescription Description)
+                return _activityDescriptions.Contains(Description);
+
+            return false;
         }
 
-        public List<ActivityDescription> GetActivityDescriptions()
-        {
-            return _activityDescriptions;
-        }
+        public List<ActivityDescription> GetActivityDescriptions() => _activityDescriptions;
+        public List<ActivityTitle> GetActivityTitles() => _activityTitles;
 
-        public List<ActivityTitle> GetActivityTitles()
-        {
-            return _activityTitles;
-        }
-
-        public void Remove(ActivityDescription ActivityDescription)
-        {
-            _activityDescriptions.Remove(ActivityDescription);
-        }
-
-        public void Remove(ActivityTitle ActivityTitle)
-        {
-            _activityTitles.Remove(ActivityTitle);
-        }
-
-        public bool Contains(ActivityTitle ActivityTitle)
-        {
-            return _activityTitles.Contains(ActivityTitle);
-        }
-
-        public bool Contains(ActivityDescription ActivityDescription)
-        {
-            return _activityDescriptions.Contains(ActivityDescription);
-        }
     }
 }

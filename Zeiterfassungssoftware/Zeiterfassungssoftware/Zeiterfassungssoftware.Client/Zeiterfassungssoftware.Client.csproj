@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -11,6 +11,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="8.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Zeiterfassungssoftware.SharedData\Zeiterfassungssoftware.SharedData.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using Zeiterfassungssoftware.SharedData.Time;
 
-namespace Zeiterfassungssoftware.Components.Data.Filter
+namespace Zeiterfassungssoftware.Client.Data.Filter
 {
     public class StringFilter(string name) : AbstractFilter(name)
     {

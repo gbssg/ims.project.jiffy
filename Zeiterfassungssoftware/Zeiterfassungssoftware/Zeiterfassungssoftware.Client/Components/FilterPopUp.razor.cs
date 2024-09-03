@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
-using Zeiterfassungssoftware.Components.Data.Filter;
+using Zeiterfassungssoftware.Client.Data.Filter;
 
-namespace Zeiterfassungssoftware.Components.Custom
+namespace Zeiterfassungssoftware.Client.Components
 {
     public partial class FilterPopUp
     {
@@ -10,7 +10,7 @@ namespace Zeiterfassungssoftware.Components.Custom
         [Parameter]
         public IFilter Filter { get; set; }
 
-        private Dictionary<string, object> Parameters => new Dictionary<string, object>
+        private Dictionary<string, object> Parameters => new()
         {
             { "Filter", Filter }
         };

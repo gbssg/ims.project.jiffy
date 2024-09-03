@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
-using Zeiterfassungssoftware.Components.Data.Filter;
+using Zeiterfassungssoftware.Client.Data.Filter;
 
-namespace Zeiterfassungssoftware.Components.Custom
+namespace Zeiterfassungssoftware.Client.Components
 {
     public partial class StringFilterComponent
     {

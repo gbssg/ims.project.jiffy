@@ -10,14 +10,9 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 	{
 		public bool IsLoaded { get; }
 
-		public void Remove(ActivityDescription ActivityDescription);
-		public void Remove(ActivityTitle ActivityTitle);
-
-		public void Add(ActivityDescription ActivityDescription);
-		public void Add(ActivityTitle ActivityTitle);
-
-		public bool Contains(ActivityDescription ActivityDescription);
-        public bool Contains(ActivityTitle ActivityTitle);
+		public void Remove(object Obj);
+		public void Add(object Obj);
+		public bool Contains(object Obj);
 
         public List<ActivityDescription> GetActivityDescriptions();
 		public List<ActivityTitle> GetActivityTitles();

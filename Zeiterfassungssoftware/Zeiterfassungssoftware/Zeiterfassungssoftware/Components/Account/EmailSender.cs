@@ -7,29 +7,28 @@ namespace Zeiterfassungssoftware.Components.Account
 {
     public class EmailSender : IEmailSender
     {
-        public async Task SendEmailAsync(string receiver, string subject, string htmlMessage)
+        public async Task SendEmailAsync(string Receiver, string Subject, string HtmlMessage)
         {
             var Builder = WebApplication.CreateBuilder();
-            var EmailPass = Builder.Configuration["EmailPass"];
 
-            MailAddress to = new MailAddress(receiver);
-            MailAddress from = new MailAddress("jiffy.gbs@niederer.swiss");
+            var To = new MailAddress(Receiver);
+            var From = new MailAddress("jiffy.gbs@niederer.swiss");
 
-            MailMessage email = new MailMessage(from, to);
-            email.Subject = subject;
-            email.Body = htmlMessage;
-            email.IsBodyHtml = true;
+            var Email = new MailMessage(From, To);
+            Email.Subject = Subject;
+            Email.Body = HtmlMessage;
+            Email.IsBodyHtml = true;
 
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.servicehoster.ch";
-            smtp.Port = 25;
-            smtp.Credentials = new NetworkCredential("jiffy.gbs@niederer.swiss", EmailPass);
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtp.EnableSsl = true;
+            var Smtp = new SmtpClient();
+            Smtp.Host = "smtp.servicehoster.ch";
+            Smtp.Port = 25;
+            Smtp.Credentials = new NetworkCredential("jiffy.gbs@niederer.swiss", Builder.Configuration["EmailPass"]);
+            Smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            Smtp.EnableSsl = true;
 
             try
             {
-                smtp.Send(email);
+                Smtp.Send(Email);
             }
             catch (Exception ex) { }
         }

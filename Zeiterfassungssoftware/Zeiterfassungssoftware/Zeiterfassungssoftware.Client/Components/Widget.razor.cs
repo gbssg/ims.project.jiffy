@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace Zeiterfassungssoftware.Components.Custom
+namespace Zeiterfassungssoftware.Client.Components
 {
     public partial class Widget
     {
