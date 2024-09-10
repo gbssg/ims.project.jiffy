@@ -13,7 +13,8 @@
 <PageTitle>Time</PageTitle>
 
 <AuthorizeView>
-	<div class="timepage-body">
+	
+	<div style="display: flex; align-content: center; justify-content: center; flex-direction: column; height: 100%;">
 		<div class="centered-div-flex">
 			<RoundButton OnClick="ToggleClock" Started="@Started" Disabled="@Disabled" />
 		</div>
@@ -31,7 +32,7 @@
 				</select>
 			</div>
 
-			<TextField Style="width: 40%; height: 45px;" Class="@(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "textfield activity-textfield" : "invisible")" PlaceHolder="Activity Title..." @bind-Value="@ActivityTitle" Multiline="false" />
+			<TextField style="width: 40%; height: 45px;" Class="@(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "textfield activity-textfield" : "invisible")" PlaceHolder="Activity Title..." @bind-Value="@ActivityTitle" Multiline="false" />
 
 			<div class="centered-div-flex">
 				<select @bind="ActivityDescriptionSelect" class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "bottomrounded")">
@@ -43,7 +44,7 @@
 				</select>
 			</div>
 
-			<TextField Style="width: 40%; height: 90px;" Class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "textfield activity-textfield bottomrounded" : "invisible")" PlaceHolder="Activity Description..." @bind-Value="@ActivityDescription" Multiline="true" />
+			<TextField style="width: 40%; height: 45px;" Class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "textfield activity-textfield bottomrounded" : "invisible")" PlaceHolder="Activity Description..." @bind-Value="@ActivityDescription" Multiline="true" />
 
 		}
 		else
