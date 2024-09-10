@@ -89,19 +89,15 @@ p {
     flex-wrap: nowrap;
 }
 
-/* section-center*/
-.section {
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    height: 50%;
-}
+
 /* Time Page */
-.timepage-body {
+#timepage-body {
     display: flex;
     align-content: center;
     justify-content: center;
     flex-direction: column;
+    height: 100%;
+    background-color: pink;
 }
 
 .text-passed-time {
