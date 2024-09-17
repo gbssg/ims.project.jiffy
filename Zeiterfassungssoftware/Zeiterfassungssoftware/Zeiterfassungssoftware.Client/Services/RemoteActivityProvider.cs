@@ -33,16 +33,17 @@ namespace Zeiterfassungssoftware.Client.Services
 
 		public async void Add(object Obj)
 		{
+
+			string JsonData = JsonSerializer.Serialize(Obj);
+			var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
+
 			if (Obj is ActivityDescription Description)
 			{
-				string JsonData = JsonSerializer.Serialize(Description);
-				var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
-
-				HttpResponseMessage response = await HttpClient.PostAsync("https://localhost:7099/api/v1/activities/descriptions/new", Content);
+				HttpResponseMessage Response = await HttpClient.PostAsync("https://localhost:7099/api/v1/activities/descriptions/new", Content);
 
 				try
 				{
-					response.EnsureSuccessStatusCode();
+					Response.EnsureSuccessStatusCode();
 					_activityDescriptions.Add(Description);
 				}
 				catch (Exception e) { Console.WriteLine("Failed to Send Description"); }
@@ -52,14 +53,12 @@ namespace Zeiterfassungssoftware.Client.Services
 
 			if (Obj is ActivityTitle Title)
 			{
-				string JsonData = JsonSerializer.Serialize(Title);
-				var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
-
-				HttpResponseMessage response = await HttpClient.PostAsync("https://localhost:7099/api/v1/activities/titles/new", Content);
+				
+				HttpResponseMessage Response = await HttpClient.PostAsync("https://localhost:7099/api/v1/activities/titles/new", Content);
 
 				try
 				{
-					response.EnsureSuccessStatusCode();
+					Response.EnsureSuccessStatusCode();
 					_activityTitles.Add(Title);
 				}
 				catch (Exception e) { Console.WriteLine("Failed to Send Title"); }

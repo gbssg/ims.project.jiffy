@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Time;
 
 namespace Zeiterfassungssoftware.Services
@@ -32,6 +34,14 @@ namespace Zeiterfassungssoftware.Services
 			}
 
 			return Ok(Result);
+		}
+
+		// id
+		[HttpPost("new")]
+		public async Task<IActionResult> AddDescription([FromBody] TimeEntry Entry)
+		{
+			TimeEntrySource.Add(Entry);
+			return Ok();
 		}
 	}
 }

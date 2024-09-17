@@ -19,11 +19,6 @@ namespace Zeiterfassungssoftware.Controller
             this.ActivitySource = ActivitySource;
         }
 
-        [HttpGet("titles/all")]
-        public IActionResult GetAllTitles()
-        {
-            return Ok(ActivitySource.GetActivityTitles());
-        }
 
         [HttpGet("descriptions/all")]
         public IActionResult GetAllDescriptions()
@@ -31,23 +26,31 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ActivitySource.GetActivityDescriptions());
         }
 
-        //[HttpGet("descriptions/id/{Id}")]
-        //public IActionResult GetEntryById(int Id)
-        //{
-        //    TimeEntry? Result = ActivitySource.GetActivityDescriptions().Where(e => e.Id == Id).FirstOrDefault();
-
-        //    if (Result is null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(Result);
-        //}
-
-        [HttpPost("descriptions/new")]
+		//id
+		[HttpPost("descriptions/new")]
 		public async Task<IActionResult> AddDescription([FromBody] ActivityDescription Description)
+		{
+			if (string.IsNullOrWhiteSpace(Description.Value))
+				return BadRequest();
+
+			ActivitySource.Add(Description);
+            return Ok();
+        }
+
+        [HttpGet("titles/all")]
+        public IActionResult GetAllTitles()
         {
-            ActivitySource.Add(Description);
+            return Ok(ActivitySource.GetActivityTitles());
+        }
+
+        //id
+        [HttpPost("titles/new")]
+		public async Task<IActionResult> AddTitle([FromBody] ActivityTitle Title)
+        {
+            if (string.IsNullOrWhiteSpace(Title.Value))
+                return BadRequest();
+
+            ActivitySource.Add(Title);
             return Ok();
         }
 
