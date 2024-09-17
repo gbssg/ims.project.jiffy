@@ -1,0 +1,5 @@
+﻿@Zeiterfassungssoftware_HostAddress = https://localhost:7099
+
+POST {{Zeiterfassungssoftware_HostAddress}}/api/v1/activities/descriptions/new
+
+###

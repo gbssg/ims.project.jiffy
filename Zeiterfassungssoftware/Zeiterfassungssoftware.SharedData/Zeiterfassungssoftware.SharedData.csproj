@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Holidays\" />
+    <Compile Remove="Holidays\**" />
+    <EmbeddedResource Remove="Holidays\**" />
+    <None Remove="Holidays\**" />
   </ItemGroup>
 
 </Project>

@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace Zeiterfassungssoftware.SharedData.Activities
 {
-	public class ActivityTitle(string Title)
+	public class ActivityTitle
 	{
-		public string Value { get; set; } = Title;
+		public string Value { get; set; }
+
+		public ActivityTitle(string Value)
+		{
+			this.Value = Value;
+		}
 
 		public override bool Equals(object? obj)
         {
-            if(obj is ActivityDescription Other)
+            if(obj is ActivityTitle Other)
 			{
 				string Value = Normalize(this.Value);
 				string OtherValue = Normalize(Other.Value);
@@ -27,9 +32,14 @@ namespace Zeiterfassungssoftware.SharedData.Activities
         private string Normalize(string Input) => Input.ToLower().Trim();
     }
 
-	public class ActivityDescription(string Description)
+	public class ActivityDescription
 	{
-		public string Value { get; set; } = Description;
+		public string Value { get; set; }
+
+		public ActivityDescription(string Value)
+		{
+			this.Value = Value;
+		}
 
 		public override bool Equals(object? obj)
 		{

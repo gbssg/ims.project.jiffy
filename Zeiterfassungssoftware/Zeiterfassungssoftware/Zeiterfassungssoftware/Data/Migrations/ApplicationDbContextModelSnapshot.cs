@@ -10,6 +10,7 @@ using Zeiterfassungssoftware.Data;
 
 namespace Zeiterfassungssoftware.Migrations
 {
+
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {

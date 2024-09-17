@@ -13,5 +13,6 @@ namespace Zeiterfassungssoftware.SharedData.Time
         public void Add(TimeEntry Entry);
 		public void Remove(TimeEntry Entry);
 		public List<TimeEntry> GetEntries();
+
     }
 }

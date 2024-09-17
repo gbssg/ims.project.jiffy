@@ -1,13 +1,21 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Zeiterfassungssoftware.Components.Data.Filter;
+using Zeiterfassungssoftware.Client.Data.Filter;
 using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Time;
 
-namespace Zeiterfassungssoftware.Components.Pages
+namespace Zeiterfassungssoftware.Client.Pages
 {
+    public partial class Time : IDisposable
+    {
+		
+		[Inject]
+		private ITimeEntryProvider TimeEntrySource { get; init; }
 
-	public partial class Time
-	{
+		[Inject]
+		private IActivityProvider ActivitySource { get; init; }
+
+
 		public bool Started => CurrentEntry != null && CurrentEntry.End == null;
 		public bool Disabled => !(Started || !((ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) && ActivityTitle.Trim().Equals("")) || (ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) && ActivityDescription.Trim().Equals(""))));
 		private TimeSpan PassedTime => (DateTime.Now - CurrentEntry?.Start) ?? TimeSpan.Zero;
@@ -32,17 +40,30 @@ namespace Zeiterfassungssoftware.Components.Pages
 		public string ActivityTitleTextAreaStyle => ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "" : "display: none;";
 		public int Percent => (int)((PassedTime.TotalMinutes % 1) * 360);
 
+		public bool Loaded = false;
+
 
 		protected override void OnInitialized()
 		{
-			CurrentEntry = TimeEntrySource.GetEntries().Last();
+			//CurrentEntry = TimeEntrySource.GetEntries().Last();
 
-			if ((CurrentEntry != null) && (CurrentEntry.End != null))
-				CurrentEntry = null;
+			//if ((CurrentEntry != null) && (CurrentEntry.End != null))
+			//	CurrentEntry = null;
 
-			if (Started)
-				Timer = new Timer(UpdateTimer, null, 0, 1000);
+			//if (Started)
+			Timer = new Timer(UpdateTimer, null, 0, 1000);
 
+		}
+
+		public void Init()
+		{
+            CurrentEntry = TimeEntrySource.GetEntries().LastOrDefault();
+
+            if ((CurrentEntry != null) && (CurrentEntry.End != null))
+                CurrentEntry = null;
+
+            if (!Started)
+				Timer?.Dispose();
 		}
 
 		private void ToggleClock()
@@ -114,6 +135,12 @@ namespace Zeiterfassungssoftware.Components.Pages
 
 		public void UpdateTimer(object? obj)
 		{
+			if(TimeEntrySource.GetEntries() is not null && ActivitySource.GetActivityTitles() is null && !Loaded)
+			{
+				Loaded = true;
+				Init();
+			}
+
 			InvokeAsync(StateHasChanged);
 		}
 
@@ -122,11 +149,5 @@ namespace Zeiterfassungssoftware.Components.Pages
 		{
 			Timer?.Dispose();
 		}
-
-
 	}
-
-
-
-
 }
