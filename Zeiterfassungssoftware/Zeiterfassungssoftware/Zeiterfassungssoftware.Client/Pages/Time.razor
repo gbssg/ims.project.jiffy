@@ -1,4 +1,4 @@
-﻿@page "/Time"
+@page "/Time"
 @rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
 
 @using Microsoft.AspNetCore.Authorization
@@ -11,7 +11,8 @@
 <AuthorizeView>
 	@if(ActivitySource.GetActivityDescriptions() is not null)
 	{
-		<div class="timepage-body">
+		
+	<div style="display: flex; align-content: center; justify-content: center; flex-direction: column; height: 100%;">
 			<div class="centered-div-flex">
 				<RoundButton OnClick="ToggleClock" Started="@Started" Disabled="@Disabled" />
 			</div>

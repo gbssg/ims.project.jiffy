@@ -6,7 +6,6 @@ using Zeiterfassungssoftware.Client.Services;
 using Zeiterfassungssoftware.Components;
 using Zeiterfassungssoftware.Components.Account;
 using Zeiterfassungssoftware.Data;
-using Zeiterfassungssoftware.Services;
 using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Time;
 
