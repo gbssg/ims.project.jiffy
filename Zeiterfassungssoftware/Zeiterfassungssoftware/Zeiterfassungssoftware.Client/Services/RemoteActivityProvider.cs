@@ -1,70 +1,94 @@
-﻿using Zeiterfassungssoftware.SharedData.Activities;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Time;
 
 namespace Zeiterfassungssoftware.Client.Services
 {
-    public class RemoteActivityProvider : IActivityProvider
-    {
-        private readonly List<ActivityTitle> _activityTitles = [];
-        private readonly List<ActivityDescription> _activityDescriptions = [];
+	public class RemoteActivityProvider : IActivityProvider
+	{
 
+		public HttpClient HttpClient { get; set; } = new HttpClient();
+
+        private List<ActivityTitle> _activityTitles = [];
+        private List<ActivityDescription> _activityDescriptions = [];
         public bool IsLoaded => true;
 
-        public RemoteActivityProvider()
-        {
-            _activityTitles =
-            [
-                new ("Krank"),
-                new ("Arbeit"),
-                new ("Integrierte Praxisarbeit"),
-                new ("Englisch"),
-                new ("English BMS"),
-                new ("M122"),
-                new ("M431")
-            ];
-            _activityDescriptions =
-            [
-                new ("Arbeit am Projekt Zeiterfassungssoftware"),
-                new ("Projekt"),
-                new ("Lernen für Prüfung in 2 Wochen"),
-                new ("Programmieren"),
-                new ("Prüfung"),
-                new ("BugFix in LocalTimeEntryProvider.cs"),
-                new ("Englisch Vokabular gelernt"),
-                new ("Selbstständige arbeit an der Website"),
-            ];
+		public RemoteActivityProvider()
+		{
+			LoadData();
         }
 
-        public void Add(object Obj)
-        {
-            if (Obj is ActivityTitle Title)
-                _activityTitles.Add(Title);
+		public async void LoadData()
+		{
+			_activityTitles = await HttpClient.GetFromJsonAsync<List<ActivityTitle>>("https://localhost:7099/api/v1/activities/titles/all") ?? new();
 
-            if (Obj is ActivityDescription Description)
-                _activityDescriptions.Add(Description);
-        }
-        public void Remove(object Obj)
-        {
-            if (Obj is ActivityTitle Title)
-                _activityTitles.Remove(Title);
+			_activityDescriptions = await HttpClient.GetFromJsonAsync<List<ActivityDescription>>("https://localhost:7099/api/v1/activities/descriptions/all") ?? new();
 
-            if (Obj is ActivityDescription Description)
-                _activityDescriptions.Remove(Description);
-        }
+			
+		}
 
-        public bool Contains(object Obj)
-        {
-            if(Obj is ActivityTitle Title)
-                return _activityTitles.Contains(Title);
+		public async void Add(object Obj)
+		{
+
+			string JsonData = JsonSerializer.Serialize(Obj);
+			var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
+
+			if (Obj is ActivityDescription Description)
+			{
+				HttpResponseMessage Response = await HttpClient.PostAsync("https://localhost:7099/api/v1/activities/descriptions/new", Content);
+
+				try
+				{
+					Response.EnsureSuccessStatusCode();
+					_activityDescriptions.Add(Description);
+				}
+				catch (Exception e) { Console.WriteLine("Failed to Send Description"); }
+
+				return;
+			}
+
+			if (Obj is ActivityTitle Title)
+			{
+				
+				HttpResponseMessage Response = await HttpClient.PostAsync("https://localhost:7099/api/v1/activities/titles/new", Content);
+
+				try
+				{
+					Response.EnsureSuccessStatusCode();
+					_activityTitles.Add(Title);
+				}
+				catch (Exception e) { Console.WriteLine("Failed to Send Title"); }
+			}
+		}
+
+		public bool Contains(object Obj)
+		{
+			if(Obj is ActivityTitle Title)
+				return _activityTitles.Contains(Title);
 
             if (Obj is ActivityDescription Description)
                 return _activityDescriptions.Contains(Description);
 
             return false;
-        }
+		}
 
-        public List<ActivityDescription> GetActivityDescriptions() => _activityDescriptions;
-        public List<ActivityTitle> GetActivityTitles() => _activityTitles;
+		public List<ActivityDescription> GetActivityDescriptions()
+		{
+			return _activityDescriptions;
+		}
 
-    }
+		public List<ActivityTitle> GetActivityTitles()
+		{
+			return _activityTitles;
+		}
+
+		public void Remove(object Obj)
+		{
+			// delete
+		}
+	}
 }

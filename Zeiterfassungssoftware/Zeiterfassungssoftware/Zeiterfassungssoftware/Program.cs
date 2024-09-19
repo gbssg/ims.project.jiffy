@@ -12,8 +12,9 @@ using Zeiterfassungssoftware.SharedData.Time;
 namespace Zeiterfassungssoftware
 {
     public class Program
-    {
-        public static void Main(string[] args)
+	{
+
+		public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -46,7 +47,13 @@ namespace Zeiterfassungssoftware
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityEmailSender>();
 
-            var app = builder.Build();
+			builder.Services.AddSingleton<IActivityProvider, ServerActivityProvider>();
+			builder.Services.AddSingleton<ITimeEntryProvider, ServerTimeEntryProvider>();
+            
+			builder.Services.AddControllers();
+
+			var app = builder.Build();
+            
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -74,7 +81,14 @@ namespace Zeiterfassungssoftware
             // Add additional endpoints required by the Identity /Account Razor components.
             app.MapAdditionalIdentityEndpoints();
 
-            app.Run();
+
+
+			app.MapControllers();
+
+			app.Run();
         }
-    }
+
+		
+
+	}
 }

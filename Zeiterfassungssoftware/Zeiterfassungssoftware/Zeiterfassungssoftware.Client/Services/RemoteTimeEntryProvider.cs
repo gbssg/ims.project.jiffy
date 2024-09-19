@@ -1,70 +1,59 @@
-﻿using Zeiterfassungssoftware.SharedData.Activities;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text;
+using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Time;
 
 namespace Zeiterfassungssoftware.Client.Services
 {
 
-    public class RemoteTimeEntryProvider : ITimeEntryProvider
-    {
-        private List<TimeEntry> _timeEntries = [];
-        private IActivityProvider ActivitySource = new RemoteActivityProvider();
+	public class RemoteTimeEntryProvider : ITimeEntryProvider
+	{
 
-        public RemoteTimeEntryProvider()
-        {
-            int id = 0;
+        public HttpClient HttpClient { get; set; } = new HttpClient();
 
-            for (int day = 1; day <= 13; day++)
-            {
-                if (day % new Random().Next(1, 5) != 0)
-                {
-                    for (int i = 0; i < 8; i++)
-                    {
-                        TimeEntry Entry = new TimeEntry()
-                        {
-                            Start = new DateTime(2024, 6, day, 8 + i, 20, 0),
-                            End = new DateTime(2024, 6, day, 8 + i + 1, 20, 0),
-                            Title = ActivitySource.GetActivityTitles()[new Random().Next(0, ActivitySource.GetActivityTitles().Count)].Value,
-                            Description = ActivitySource.GetActivityDescriptions()[new Random().Next(0, ActivitySource.GetActivityDescriptions().Count)].Value
-                        };
+		private List<TimeEntry> _timeEntries = [];
+		public bool IsLoaded => true;
 
-                        _timeEntries.Add(Entry);
-                        id++;
-                    }
 
-                }
-                else
-                {
-                    TimeEntry Entry = new TimeEntry()
-                    {
-                        Start = new DateTime(2024, 6, day, 0, 0, 0),
-                        End = new DateTime(2024, 6, day, 23, 59, 59),
-                        Title = "Krank",
-                        Description = ""
-                    };
+		public RemoteTimeEntryProvider() 
+		{
+			LoadEntries();
+		}
 
-                    _timeEntries.Add(Entry);
-                    id++;
-                }
+		public async void LoadEntries()
+		{
+			_timeEntries = await HttpClient.GetFromJsonAsync<List<TimeEntry>>("https://localhost:7099/api/v1/entries/all") ?? new();
+		}
 
-            }
+		public async void Add(TimeEntry Entry)
+		{
 
-        }
+			string JsonData = JsonSerializer.Serialize(Entry);
+			var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
 
-        public bool IsLoaded => true;
+			HttpResponseMessage Response = await HttpClient.PostAsync("https://localhost:7099/api/v1/entries/new", Content);
 
-        public void Add(TimeEntry Entry)
-        {
-            _timeEntries.Add(Entry);
-        }
+			try
+			{
+				Response.EnsureSuccessStatusCode();
+				_timeEntries.Add(Entry);
+			}
+			catch (Exception e) { Console.WriteLine("Failed to Send Entry"); }
 
-        public void Remove(TimeEntry Entry)
-        {
-            _timeEntries.Remove(Entry);
-        }
+			return;
+			
+		}
 
-        public List<TimeEntry> GetEntries()
-        {
-            return _timeEntries;
-        }
-    }
+		public List<TimeEntry> GetEntries()
+		{
+			return _timeEntries;
+		}
+
+		public void Remove(TimeEntry Entry)
+		{
+			
+		}
+	}
 }

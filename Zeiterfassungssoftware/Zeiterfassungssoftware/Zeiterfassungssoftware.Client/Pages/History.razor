@@ -1,50 +1,52 @@
-﻿@page "/history"
+@page "/history"
 @rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
 
 @using Microsoft.AspNetCore.Authorization
-<div style="padding-left: 5px;">
+@attribute [Authorize]
 
-    <PageTitle>History</PageTitle>
+<PageTitle>History</PageTitle>
 
-    <h1>History</h1>
+<h1>History</h1>
 
-    <AuthorizeView>
-        @if (TimeEntries != null)
+<AuthorizeView>
+    @if (TimeEntries != null)
+    {
+        <div class="flex-div-nowrap">
+            <Widget Title="Sick Days" Text="@SickDays.ToString()" />
+            <Widget Title="Overtime" Text="@Overtime.ToString(@"dd\d\ hh\h\ mm\m")" />
+        </div>
+
+        <p class="filter-control-title" @onclick="() => ShowFilters = !ShowFilters">Filter Settings @(ShowFilters ? "▴" : "▾")</p>
+        <div class="filter-container" style="@(ShowFilters ? "" : "display: none;")">
+            <p class="filter-control-title">Enabled</p>
+            <div class="flex-div-wrap">
+                @foreach (IFilter Filter in Filters.Where(e => e.Enabled))
+                {
+                    <p class="filter-control-element filter-enabled" @onclick="() => OnFilterClick(Filter)">
+                        @Filter.Name
+                        <svg @onclick="() => StopFilter(Filter)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="filter-x" viewBox="0 0 16 16">
+                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                        </svg>
+                    </p>
+                }
+            </div>
+
+            <p class="filter-control-title">Disabled</p>
+            <div class="flex-div-wrap">
+                @foreach (IFilter Filter in Filters.Where(e => !e.Enabled))
+                {
+                    <p class="filter-control-element filter-disabled" @onclick="() => OnFilterClick(Filter)">@Filter.Name</p>
+                }
+            </div>
+            <p>@SearchResults results found</p>
+        </div>
+        @if (OpendFilter != null)
         {
-            <div class="flex-div-nowrap">
-                <Widget Title="Sick Days" Text="@SickDays.ToString()" />
-                <Widget Title="Overtime" Text="@Overtime.ToString(@"dd\d\ hh\h\ mm\m")" />
-            </div>
+            <FilterPopUp Filter="OpendFilter" />
+        }
 
-            <p class="filter-control-title" @onclick="() => ShowFilters = !ShowFilters">Filter Settings @(ShowFilters ? "▴" : "▾")</p>
-            <div class="filter-container" style="@(ShowFilters ? "" : "display: none;")">
-                <p class="filter-control-title">Enabled</p>
-                <div class="flex-div-wrap">
-                    @foreach (IFilter Filter in Filters.Where(e => e.Enabled))
-                    {
-                        <p class="filter-control-element filter-enabled" @onclick="() => OnFilterClick(Filter)">
-                            @Filter.Name
-                            <svg @onclick="() => StopFilter(Filter)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="filter-x" viewBox="0 0 16 16">
-                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                            </svg>
-                        </p>
-                    }
-                </div>
-
-                <p class="filter-control-title">Disabled</p>
-                <div class="flex-div-wrap">
-                    @foreach (IFilter Filter in Filters.Where(e => !e.Enabled))
-                    {
-                        <p class="filter-control-element filter-disabled" @onclick="() => OnFilterClick(Filter)">@Filter.Name</p>
-                    }
-                </div>
-                <p>@SearchResults results found</p>
-            </div>
-            @if (OpendFilter != null)
-            {
-                <FilterPopUp Filter="OpendFilter" />
-            }
-
+        @if(TimeEntries != null)
+        {   
             <div class="list-container" style="height: 319.79px; overflow-y: scroll;">
                 <table class="list" style="width: 100%">
                     <tr>
@@ -74,11 +76,10 @@
                 </table>
             </div>
         }
-        else
-        {
-            <p>Loading...</p>
-        }
-    </AuthorizeView>
+    }
+    else
+    {
+        <p>Loading...</p>
+    }
+</AuthorizeView>
 
-
-</div>

@@ -1,6 +1,7 @@
 ﻿namespace Zeiterfassungssoftware.Data.Jiffy
 {
-    public class JiffyContext
+    public class Jiffy
+      
     {
     }
 }

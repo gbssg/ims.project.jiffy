@@ -6,7 +6,8 @@
         private const string DURATION_FORMAT = @"h\h\ m\m\i\n\ s\s";
         private const string DATE_FORMAT = "dd MMM yyyy";
 
-        public Guid Id { get; init; } = Guid.NewGuid();
+        private static int Test = 0;
+        public int Id { get; init; } = ++Test;
         public DateTime Start { get; set; }
         public DateTime? End { get; set; }
         public string Title { get; set; } = string.Empty;
