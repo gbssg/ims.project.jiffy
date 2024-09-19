@@ -69,7 +69,7 @@
                             description
                         </th>
                     </tr>
-                    @foreach (var Entry in TimeEntrySource.GetEntries().Where(e => DoFiltersApply(e)))
+                    @foreach (var Entry in TimeEntries.Where(e => DoFiltersApply(e)))
                     {
                         <HistoryEntry Entry="@Entry" />
                     }
