@@ -36,7 +36,6 @@ namespace Zeiterfassungssoftware.Services
 			return Ok(Result);
 		}
 
-		// id
 		[HttpPost("new")]
 		public async Task<IActionResult> AddDescription([FromBody] TimeEntry Entry)
 		{

@@ -20,7 +20,6 @@ namespace Zeiterfassungssoftware.Client.Pages
 		public bool Disabled => !(Started || !((ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) && ActivityTitle.Trim().Equals("")) || (ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) && ActivityDescription.Trim().Equals(""))));
 		private TimeSpan PassedTime => (DateTime.Now - CurrentEntry?.Start) ?? TimeSpan.Zero;
 
-
 		public TimeEntry? CurrentEntry { get; set; }
 		private Timer? Timer;
 
@@ -38,7 +37,6 @@ namespace Zeiterfassungssoftware.Client.Pages
 
 		public string ActivityDescriptionTextAreaStyle => ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "display: none;";
 		public string ActivityTitleTextAreaStyle => ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "" : "display: none;";
-		public int Percent => (int)((PassedTime.TotalMinutes % 1) * 360);
 
 		public bool Loaded = false;
 
