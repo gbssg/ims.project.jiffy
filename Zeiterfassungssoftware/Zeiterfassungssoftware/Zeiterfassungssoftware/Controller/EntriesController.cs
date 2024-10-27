@@ -24,7 +24,7 @@ namespace Zeiterfassungssoftware.Services
 		}
 
 		[HttpGet("id/{Id}")]
-		public IActionResult GetEntryById(int Id)
+		public IActionResult GetEntryById(Guid Id)
 		{
 			TimeEntry? Result = TimeEntrySource.GetEntries().Where(e => e.Id == Id).FirstOrDefault();
 

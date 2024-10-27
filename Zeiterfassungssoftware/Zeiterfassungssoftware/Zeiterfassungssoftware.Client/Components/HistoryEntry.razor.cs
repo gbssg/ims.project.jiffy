@@ -5,10 +5,20 @@ namespace Zeiterfassungssoftware.Client.Components
 {
     public partial class HistoryEntry
     {
+        public delegate void OnButtonClick();
+        
         [Parameter]
         public TimeEntry Entry { get; set; } = new()
         {
 
         };
+
+        [Parameter]
+        public EventCallback<OnButtonClick> OnClick { get; set; }
+
+        private void OnEntryClicked()
+        {
+            OnClick.InvokeAsync();
+        }
     }
 }

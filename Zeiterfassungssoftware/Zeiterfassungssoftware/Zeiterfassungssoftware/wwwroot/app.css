@@ -115,6 +115,19 @@ p {
 
 
 /* History Page */
+    /* List */
+    .list-container {
+        background-color: #292929;
+    }
+
+    .list {
+    }
+
+    .list-entry:hover {
+        color: #d0acfc;
+        cursor: pointer;
+    }
+
     /* Filter */
     .filter-container {
         margin-top: 10px;
@@ -212,8 +225,69 @@ p {
         width: 150px;
     }
 
-/* Widgets */
 
+/* Edit Page */
+.edit-category-title {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.edit-info-container {
+    margin-left: 5px;
+    margin-bottom: 10px;
+    margin-top: -5px;
+}
+
+.edit-container {
+    background: #292929;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    height: min-content;
+    width: min-content;
+    justify-self: center;
+    align-self: center;
+    flex-direction: column;
+    flex-direction: column;
+}
+
+.btn-edit-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-edit {
+    width: 300px;
+    margin: 5px;
+}
+
+.btn-delete {
+    background-color: red;
+    border-radius: 25px;
+    font-size: 24px;
+    border: none;
+    transition: 1s;
+}
+
+.edit-textfield {
+    padding-left: 5px;
+    padding-top: 1px;
+}
+
+.edit-info-displays {
+    width: 100%;
+}
+
+.edit-textfield-singleline{
+
+}
+
+.edit-textfield-multiline {
+    height: 100px;
+    resize: none;
+}
+
+/* Widgets */
 .widget-title {
     font-size: 20px;
 }
@@ -356,11 +430,22 @@ select {
     height: 100%;
 }
 /* Date Select */
+
+
+
 /* Universal */
 .dark-background-white-font {
     color-scheme: dark;
     color: white;
     background-color: #191919;
+}
+
+.vertical-center {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
 }
 
 .noborder {
@@ -384,3 +469,48 @@ select {
 .invisible {
     display: none;
 }
+
+.back:hover {
+    color: #d0acfc;
+    cursor: pointer;
+}
+
+.error-title {
+    font-size: 100px;
+    color:red;
+}
+.error-message {
+    color: lightcoral;
+}
+
+
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes prixClipFix {
+    0% {
+        clip-path: polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)
+    }
+
+    25% {
+        clip-path: polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)
+    }
+
+    50% {
+        clip-path: polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)
+    }
+
+    75% {
+        clip-path: polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)
+    }
+
+    100% {
+        clip-path: polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)
+    }
+}
+
+

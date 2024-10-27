@@ -65,9 +65,8 @@ namespace Zeiterfassungssoftware.Services
 			_timeEntries.Remove(Entry);
 		}
 
-		public List<TimeEntry> GetEntries()
-		{
-			return _timeEntries;
-		}
-	}
+		public List<TimeEntry> GetEntries() => _timeEntries;
+        public Task<TimeEntry> GetEntryById(Guid Id) => null;
+        
+    }
 }
