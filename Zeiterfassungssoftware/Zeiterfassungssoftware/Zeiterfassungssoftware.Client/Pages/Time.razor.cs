@@ -133,7 +133,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 
 		public void UpdateTimer(object? obj)
 		{
-			if(TimeEntrySource.GetEntries() is not null && ActivitySource.GetActivityTitles() is null && !Loaded)
+			if(TimeEntrySource.IsLoaded && ActivitySource.IsLoaded && !Loaded)
 			{
 				Loaded = true;
 				Init();
