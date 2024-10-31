@@ -11,7 +11,8 @@ namespace Zeiterfassungssoftware.SharedData.Time
         public bool IsLoaded { get; }
 
         public void Add(TimeEntry Entry);
-		public void Remove(TimeEntry Entry);
+		public Task Remove(TimeEntry Entry);
+        public Task<TimeEntry> GetEntryById(Guid Id);
 		public List<TimeEntry> GetEntries();
 
     }

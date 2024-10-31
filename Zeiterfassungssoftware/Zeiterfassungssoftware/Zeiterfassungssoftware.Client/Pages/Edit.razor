@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Components.Web;
+@using System.Net.NetworkInformation;
+
+@page "/edit/{Id:guid}"
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
+
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<PageTitle>Edit Entry</PageTitle>
+@if(Entry is null)
+{
+    <p>Loading...</p>
+    return;
+}
+
+<div class="vertical-center">
+    <div class="edit-container">
+
+        
+
+        <p class="edit-category-title">Date</p>
+        <div class="edit-info-container">
+            <p>Start</p>
+            <input type="date" @bind="@StartDate" class="rounded edit-info-displays" />
+
+
+            <p class="@((StartDate != EndDate) ? "" : "invisible" )">End</p>
+            <input type="date" @bind="@EndDate" class=@((StartDate != EndDate) ? "rounded edit-info-displays" : "invisible") />
+
+        </div>
+
+        <p class="edit-category-title" >Time</p>
+        <div class="edit-info-container">
+            <p>Start</p>
+            <input type="time" @bind="@StartTime" class="rounded edit-info-displays" />
+            <p>End</p>
+            <input type="time" @bind="@EndTime" class="rounded edit-info-displays" />
+        </div>
+
+        <p class="edit-category-title">Details</p>
+        <div class="edit-info-container">
+            <p>Title</p>
+            <TextField @bind-Value="@Entry.Title" PlaceHolder="Title..." Class="rounded edit-info-displays edit-textfield edit-textfield-singleline" />
+            <p>Description</p>
+            <TextField @bind-Value="@Entry.Description" PlaceHolder="Description..." Multiline="true" Class="rounded edit-info-displays edit-textfield edit-textfield-multiline" />
+        </div>
+        <div class="btn-edit-container">
+            <Button Text="Save" Class="btn-primary btn-edit" />
+            <Button Text="Delete" Class="btn-delete btn-edit" OnClick="DeleteEntry"/>
+        </div>
+        <p class="back" @onclick="@(() => Navigation.NavigateTo("/history"))">🡐 Back</p>
+    </div>
+</div>
+
+
+

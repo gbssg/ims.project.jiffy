@@ -24,7 +24,7 @@ namespace Zeiterfassungssoftware.Services
 		}
 
 		[HttpGet("id/{Id}")]
-		public IActionResult GetEntryById(int Id)
+		public IActionResult GetEntryById(Guid Id)
 		{
 			TimeEntry? Result = TimeEntrySource.GetEntries().Where(e => e.Id == Id).FirstOrDefault();
 
@@ -37,10 +37,24 @@ namespace Zeiterfassungssoftware.Services
 		}
 
 		[HttpPost("new")]
-		public async Task<IActionResult> AddDescription([FromBody] TimeEntry Entry)
+		public IActionResult AddDescription([FromBody] TimeEntry Entry)
 		{
 			TimeEntrySource.Add(Entry);
 			return Ok();
 		}
-	}
+
+        [HttpDelete("delete/{id}")]
+        public IActionResult AddDescription(Guid Id)
+        {
+            TimeEntry? Entry = TimeEntrySource.GetEntries().Where(e => e.Id == Id).FirstOrDefault();
+
+            if (Entry is null)
+            {
+                return NotFound();
+            }
+
+            TimeEntrySource.Remove(Entry);
+            return Ok();
+        }
+    }
 }

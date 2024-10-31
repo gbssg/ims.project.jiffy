@@ -9,7 +9,11 @@ namespace Zeiterfassungssoftware.Client.Pages
 		[Inject]
 		private ITimeEntryProvider TimeEntrySource { get; init; }
 
-		public TimeEntry[] TimeEntries { get; set; }
+		[Inject]
+		private NavigationManager Navigation { get; set; }
+
+
+        public TimeEntry[] TimeEntries { get; set; }
 
 		public int SickDays => TimeEntrySource.GetEntries().Where(e => e.Title.ToLower().Trim().Equals("krank")).Count();
 		public TimeSpan Overtime = new(0, 0, 0);
@@ -37,6 +41,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 
 		public void Init()
 		{
+			Console.WriteLine("init");
             TimeEntries = new TimeEntry[TimeEntrySource.GetEntries().Count];
             TimeEntrySource.GetEntries().CopyTo(TimeEntries, 0);
             TimeEntries = TimeEntries.Reverse().ToArray();
@@ -100,7 +105,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 		{
 			Refresh();
 
-			if(TimeEntrySource.GetEntries().Count > 0 && TimeEntries == null)
+			if(TimeEntrySource.IsLoaded && (TimeEntries is null))
 			{
 				Init();
 			}
@@ -116,5 +121,10 @@ namespace Zeiterfassungssoftware.Client.Pages
 		{
 			InvokeAsync(StateHasChanged);
 		}
+
+		public void OnEntryClicked(TimeEntry Entry)
+		{
+			Navigation.NavigateTo($"edit/{Entry.Id}");
+        }
 	}
 }

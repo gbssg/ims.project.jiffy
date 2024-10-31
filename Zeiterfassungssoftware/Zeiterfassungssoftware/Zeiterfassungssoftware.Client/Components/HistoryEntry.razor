@@ -1,4 +1,4 @@
-﻿<tr class="list-entry">
+﻿<tr class="list-entry" @onclick="OnEntryClicked">
     <td class="list-time" style="white-space:nowrap">
         @Entry.GetTimeString()
     </td>
@@ -6,7 +6,7 @@
         @Entry.Start.ToString(@"dd\ MMM\ yyyy")
     </td>
     <td class="list-start">
-        @Entry.GetStartString() @(Entry.IsWeekend ? "W" : "")
+        @Entry.GetStartString()
     </td>
     <td class="list-start">
         @Entry.GetEndString()

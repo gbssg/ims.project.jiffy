@@ -11,11 +11,14 @@ namespace Zeiterfassungssoftware.Client.Services
 	public class RemoteActivityProvider : IActivityProvider
 	{
 
-		public HttpClient HttpClient { get; set; } = new HttpClient();
+		public HttpClient HttpClient { get; set; } = new HttpClient()
+		{
+			BaseAddress = new Uri("https://localhost:7099/api/v1/activities/")
+		};
 
         private List<ActivityTitle> _activityTitles = [];
         private List<ActivityDescription> _activityDescriptions = [];
-        public bool IsLoaded => true;
+		public bool IsLoaded { get; private set; }
 
 		public RemoteActivityProvider()
 		{
@@ -24,11 +27,10 @@ namespace Zeiterfassungssoftware.Client.Services
 
 		public async void LoadData()
 		{
-			_activityTitles = await HttpClient.GetFromJsonAsync<List<ActivityTitle>>("https://localhost:7099/api/v1/activities/titles/all") ?? new();
+			_activityTitles = await HttpClient.GetFromJsonAsync<List<ActivityTitle>>("titles/all") ?? new();
+			_activityDescriptions = await HttpClient.GetFromJsonAsync<List<ActivityDescription>>("descriptions/all") ?? new();
 
-			_activityDescriptions = await HttpClient.GetFromJsonAsync<List<ActivityDescription>>("https://localhost:7099/api/v1/activities/descriptions/all") ?? new();
-
-			
+			IsLoaded = true;
 		}
 
 		public async void Add(object Obj)
@@ -39,7 +41,7 @@ namespace Zeiterfassungssoftware.Client.Services
 
 			if (Obj is ActivityDescription Description)
 			{
-				HttpResponseMessage Response = await HttpClient.PostAsync("https://localhost:7099/api/v1/activities/descriptions/new", Content);
+				HttpResponseMessage Response = await HttpClient.PostAsync("descriptions/new", Content);
 
 				try
 				{
@@ -54,7 +56,7 @@ namespace Zeiterfassungssoftware.Client.Services
 			if (Obj is ActivityTitle Title)
 			{
 				
-				HttpResponseMessage Response = await HttpClient.PostAsync("https://localhost:7099/api/v1/activities/titles/new", Content);
+				HttpResponseMessage Response = await HttpClient.PostAsync("titles/new", Content);
 
 				try
 				{
