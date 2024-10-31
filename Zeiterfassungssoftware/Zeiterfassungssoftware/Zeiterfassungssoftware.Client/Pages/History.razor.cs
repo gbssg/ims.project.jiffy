@@ -41,6 +41,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 
 		public void Init()
 		{
+			Console.WriteLine("init");
             TimeEntries = new TimeEntry[TimeEntrySource.GetEntries().Count];
             TimeEntrySource.GetEntries().CopyTo(TimeEntries, 0);
             TimeEntries = TimeEntries.Reverse().ToArray();

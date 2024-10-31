@@ -60,13 +60,13 @@ namespace Zeiterfassungssoftware.Services
 			_timeEntries.Add(Entry);
 		}
 
-		public void Remove(TimeEntry Entry)
+		public async Task Remove(TimeEntry Entry)
 		{
 			_timeEntries.Remove(Entry);
 		}
 
 		public List<TimeEntry> GetEntries() => _timeEntries;
         public Task<TimeEntry> GetEntryById(Guid Id) => null;
-        
+
     }
 }

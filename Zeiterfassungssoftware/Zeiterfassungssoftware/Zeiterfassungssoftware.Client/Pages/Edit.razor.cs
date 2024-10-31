@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Web;
 using Zeiterfassungssoftware.Client.Services;
 using Zeiterfassungssoftware.SharedData.Time;
@@ -35,14 +36,9 @@ namespace Zeiterfassungssoftware.Client.Pages
             StartDate = new DateOnly(Entry.Start.Year, Entry.Start.Month, Entry.Start.Day);
             StartTime = new TimeOnly(Entry.Start.Hour, Entry.Start.Minute, Entry.Start.Second);
 
-            if (Entry.End is null)
-                Navigation.NavigateTo("/exception?msg=Hoppa you no can edit running entry beacuse me too lazy to write 5 lines of code :(&returnUrl=history");
-
-
-            EndDate = new DateOnly(Entry.End?.Year ?? 0, Entry.End?.Month ?? 0, Entry.End?.Day ?? 0);
-            EndTime = new TimeOnly(Entry.End?.Hour ?? 0, Entry.End?.Minute ?? 0, Entry.End?.Second ?? 0);
-            
-
+            DateTime End = Entry.End.GetValueOrDefault(DateTime.Now);
+            EndDate = new DateOnly(End.Year, End.Month, End.Day);
+            EndTime = new TimeOnly(End.Hour, End.Minute, End.Second);
         }
 
         private void UpdateEntry()
@@ -52,16 +48,28 @@ namespace Zeiterfassungssoftware.Client.Pages
 
             Entry.Start = new DateTime(StartDate, StartTime);
 
-            Entry.End = new DateTime(EndDate ?? DateOnly.FromDateTime, EndTime);
+            if (EndDate is null || EndTime is null)
+                Entry.End = DateTime.Now;
+            else
+                Entry.End = EndDate.Value.ToDateTime(EndTime.Value);
         }
 
         private void SaveChanges()
         {
-
+            UpdateEntry();
         }
+
         private void DeleteEntry()
         {
+            if (Entry is null)
+                return;
 
+            var task = Task.Run(async () => await TimeEntrySource.Remove(Entry));
+            task.GetAwaiter().GetResult();
+
+
+            Navigation.NavigateTo("/history");
+            
         }
 
 

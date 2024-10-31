@@ -30,7 +30,7 @@
 
         </div>
 
-        <p class="edit-category-title">Time</p>
+        <p class="edit-category-title" >Time</p>
         <div class="edit-info-container">
             <p>Start</p>
             <input type="time" @bind="@StartTime" class="rounded edit-info-displays" />
@@ -47,7 +47,7 @@
         </div>
         <div class="btn-edit-container">
             <Button Text="Save" Class="btn-primary btn-edit" />
-            <Button Text="Delete" Class="btn-delete btn-edit" />
+            <Button Text="Delete" Class="btn-delete btn-edit" OnClick="DeleteEntry"/>
         </div>
         <p class="back" @onclick="@(() => Navigation.NavigateTo("/history"))">🡐 Back</p>
     </div>

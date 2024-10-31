@@ -63,9 +63,17 @@ namespace Zeiterfassungssoftware.Client.Services
 			return await HttpClient.GetFromJsonAsync<TimeEntry>($"id/{Id}");
 		}
 
-		public void Remove(TimeEntry Entry)
+		public async Task Remove(TimeEntry Entry)
 		{
-			
+			try
+			{
+				HttpResponseMessage Message = await HttpClient.DeleteAsync($"delete/{Entry.Id}");
+				Message.EnsureSuccessStatusCode();
+				_timeEntries.Remove(Entry);
+			} catch(Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
 		}
 
     }
