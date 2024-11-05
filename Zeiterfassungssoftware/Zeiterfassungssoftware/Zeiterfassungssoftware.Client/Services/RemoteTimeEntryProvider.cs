@@ -24,7 +24,6 @@ namespace Zeiterfassungssoftware.Client.Services
 		public RemoteTimeEntryProvider() 
 		{
 			LoadEntries();
-			
 		}
 
 		public async void LoadEntries()
@@ -63,18 +62,56 @@ namespace Zeiterfassungssoftware.Client.Services
 			return await HttpClient.GetFromJsonAsync<TimeEntry>($"id/{Id}");
 		}
 
-		public async Task Remove(TimeEntry Entry)
+
+        public async Task Remove(TimeEntry Entry)
 		{
+			HttpResponseMessage Message = await HttpClient.DeleteAsync($"delete/{Entry.Id}");
+			
 			try
 			{
-				HttpResponseMessage Message = await HttpClient.DeleteAsync($"delete/{Entry.Id}");
 				Message.EnsureSuccessStatusCode();
-				_timeEntries.Remove(Entry);
-			} catch(Exception e)
+
+				Entry = _timeEntries.Where(e => e.Id == Entry.Id).FirstOrDefault();
+				if (Entry is not null)
+					_timeEntries.Remove(Entry);
+
+            } catch(Exception e)
 			{
 				Console.WriteLine(e.Message);
 			}
+			Console.WriteLine($"{Entry.Id} \n{Entry.Title}\n{Entry.Description}\n{Entry.IsWeekend}");
+			
 		}
 
+        public async Task Update(TimeEntry Entry)
+        {
+			string JsonData = JsonSerializer.Serialize(Entry);
+			var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
+
+			HttpResponseMessage Response = await HttpClient.PatchAsync("update", Content);
+
+			try
+			{
+				Response.EnsureSuccessStatusCode();
+
+				int i = 0;
+                foreach(var Ent in _timeEntries)
+				{
+					if (Ent.Id == Entry.Id)
+					{
+						_timeEntries[i] = Entry;
+						break;
+					}
+					i++;
+				}
+
+
+            }
+			catch (Exception e) { Console.WriteLine("Failed to Update Entry"); }
+
+			return;
+        }
+
+		
     }
 }

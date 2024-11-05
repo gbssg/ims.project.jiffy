@@ -33,12 +33,12 @@ namespace Zeiterfassungssoftware.Client.Pages
         protected override async Task OnInitializedAsync()
         {
             Entry = await TimeEntrySource.GetEntryById(Id);
-            StartDate = new DateOnly(Entry.Start.Year, Entry.Start.Month, Entry.Start.Day);
-            StartTime = new TimeOnly(Entry.Start.Hour, Entry.Start.Minute, Entry.Start.Second);
-
+            StartDate = DateOnly.FromDateTime(Entry.Start);
+            StartTime = TimeOnly.FromDateTime(Entry.Start);
+            
             DateTime End = Entry.End.GetValueOrDefault(DateTime.Now);
-            EndDate = new DateOnly(End.Year, End.Month, End.Day);
-            EndTime = new TimeOnly(End.Hour, End.Minute, End.Second);
+            EndDate = DateOnly.FromDateTime(End);
+            EndTime = TimeOnly.FromDateTime(End);
         }
 
         private void UpdateEntry()
@@ -52,24 +52,25 @@ namespace Zeiterfassungssoftware.Client.Pages
                 Entry.End = DateTime.Now;
             else
                 Entry.End = EndDate.Value.ToDateTime(EndTime.Value);
+
+            
         }
 
         private void SaveChanges()
         {
             UpdateEntry();
+            TimeEntrySource.Update(Entry);
+            Navigation.NavigateTo("/history");
         }
 
-        private void DeleteEntry()
+        private async void DeleteEntry()
         {
             if (Entry is null)
                 return;
 
-            var task = Task.Run(async () => await TimeEntrySource.Remove(Entry));
-            task.GetAwaiter().GetResult();
-
+            await TimeEntrySource.Remove(Entry);
 
             Navigation.NavigateTo("/history");
-            
         }
 
 

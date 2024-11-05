@@ -37,7 +37,7 @@ namespace Zeiterfassungssoftware.Services
 		}
 
 		[HttpPost("new")]
-		public IActionResult AddDescription([FromBody] TimeEntry Entry)
+		public IActionResult Add([FromBody] TimeEntry Entry)
 		{
 			TimeEntrySource.Add(Entry);
 			return Ok();
@@ -54,6 +54,24 @@ namespace Zeiterfassungssoftware.Services
             }
 
             TimeEntrySource.Remove(Entry);
+            return Ok();
+        }
+
+		[HttpPatch("update")]
+        public IActionResult PatchEntry([FromBody] TimeEntry Entry)
+        {
+            if(Entry is null)
+				return BadRequest();
+
+			try
+			{
+				TimeEntrySource.Update(Entry);
+			}
+			catch (Exception ex)
+			{
+				return NotFound();
+			}
+			
             return Ok();
         }
     }

@@ -46,8 +46,8 @@
             <TextField @bind-Value="@Entry.Description" PlaceHolder="Description..." Multiline="true" Class="rounded edit-info-displays edit-textfield edit-textfield-multiline" />
         </div>
         <div class="btn-edit-container">
-            <Button Text="Save" Class="btn-primary btn-edit" />
-            <Button Text="Delete" Class="btn-delete btn-edit" OnClick="DeleteEntry"/>
+            <Button Text="Save" Class="btn-primary btn-edit" OnClick="SaveChanges"  />
+            <Button Text="Delete" Class="btn-delete btn-edit" OnClick="DeleteEntry" />
         </div>
         <p class="back" @onclick="@(() => Navigation.NavigateTo("/history"))">🡐 Back</p>
     </div>

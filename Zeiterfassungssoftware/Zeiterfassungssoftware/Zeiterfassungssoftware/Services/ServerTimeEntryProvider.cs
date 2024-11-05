@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
 using Zeiterfassungssoftware.Client.Services;
 using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Time;
@@ -66,7 +67,28 @@ namespace Zeiterfassungssoftware.Services
 		}
 
 		public List<TimeEntry> GetEntries() => _timeEntries;
-        public Task<TimeEntry> GetEntryById(Guid Id) => null;
+		public async Task<TimeEntry> GetEntryById(Guid Id) => _timeEntries.Where(e => e.Id == Id).FirstOrDefault();
+		
+
+		public async Task<int> GetEntryIndexById(Guid Id)
+		{
+			var Entry = await GetEntryById(Id);
+
+			if (Entry is null)
+				return -1;
+
+			return _timeEntries.IndexOf(Entry);
+		}
+
+		public async Task Update(TimeEntry Entry)
+		{
+			var ExisitingIndex = await GetEntryIndexById(Entry.Id);
+
+			if (ExisitingIndex == -1)
+				throw new Exception("No Entry found.");
+
+			_timeEntries[ExisitingIndex] = Entry;		
+		}
 
     }
 }
