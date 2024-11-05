@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Time;
@@ -8,7 +9,8 @@ namespace Zeiterfassungssoftware.Services
 
 	[Route("api/v1/[controller]")]
 	[ApiController]
-	public class EntriesController : ControllerBase
+    [Authorize]
+    public class EntriesController : ControllerBase
 	{
         private ITimeEntryProvider TimeEntrySource;
 

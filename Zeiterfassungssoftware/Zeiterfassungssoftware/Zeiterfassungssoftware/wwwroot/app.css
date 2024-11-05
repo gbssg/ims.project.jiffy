@@ -118,10 +118,11 @@ p {
     /* List */
     .list-container {
         background-color: #292929;
+        border-radius: 20px;
     }
 
-    .list {
-    }
+.list {
+}
 
     .list-entry:hover {
         color: #d0acfc;
