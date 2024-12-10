@@ -6,10 +6,7 @@
         @Entry.Start.ToString(@"dd\ MMM\ yyyy")
     </td>
     <td class="list-start">
-        @Entry.GetStartString()
-    </td>
-    <td class="list-start">
-        @Entry.GetEndString()
+        @Entry.GetStartString() - @Entry.GetEndString()
     </td>
     <td class="list-title">
         @Entry.Title
@@ -17,6 +14,12 @@
     <td class="list-description">
         @Entry.Description
     </td>
+    @if(ShowNames)
+    {
+        <td class="list-description">
+            @Entry.Username
+        </td>
+    }
 </tr>
 
 

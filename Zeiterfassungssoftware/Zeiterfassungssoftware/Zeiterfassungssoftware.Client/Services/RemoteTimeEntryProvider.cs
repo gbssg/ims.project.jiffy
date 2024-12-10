@@ -40,10 +40,12 @@ namespace Zeiterfassungssoftware.Client.Services
 			var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
 
 			HttpResponseMessage Response = await HttpClient.PostAsync("new", Content);
-
+			
 			try
 			{
 				Response.EnsureSuccessStatusCode();
+				string Id = await Response.Content.ReadAsStringAsync();
+				Entry.Id = Guid.Parse(Id.Replace("\"", ""));
 				_timeEntries.Add(Entry);
 			}
 			catch (Exception e) { Console.WriteLine("Failed to Send Entry"); }

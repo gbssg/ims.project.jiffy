@@ -21,7 +21,6 @@ a:hover {
 */
 
     .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus{
-        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
         color: black;
     }
 
@@ -91,13 +90,12 @@ p {
 
 
 /* Time Page */
-#timepage-body {
+.timepage-body {
     display: flex;
     align-content: center;
     justify-content: center;
     flex-direction: column;
     height: 100%;
-    background-color: pink;
 }
 
 .text-passed-time {
@@ -111,18 +109,38 @@ p {
     box-sizing: border-box;
     margin-left: auto;
     margin-right: auto;
+    width: 40%;
+    height: 45px;
 }
 
 
-/* History Page */
+.activity-textfield {
+    width: 80%;
+}
+
+.activity-select{
+    width: 80%;
+}
+
+@media (min-width: 641px) {
+    .activity-select {
+        width: 40%;
+    }
+
+    .activity-textfield {
+        width: 40%;
+    }
+
+}
+    /* History Page */
     /* List */
     .list-container {
         background-color: #292929;
         border-radius: 20px;
     }
 
-.list {
-}
+    .list {
+    }
 
     .list-entry:hover {
         color: #d0acfc;
@@ -163,7 +181,7 @@ p {
         padding-left: 10px;
         height: 32px;
     }
-    
+
     .filter-x {
         left: 100%;
     }
@@ -205,9 +223,9 @@ p {
         border-color: #2d0091;
     }
 
-    .filter-enabled:hover {
-        background-color: #2d0091;
-    }
+        .filter-enabled:hover {
+            background-color: #2d0091;
+        }
 
     .filter-control-element {
         border-radius: 5px;
@@ -227,131 +245,136 @@ p {
     }
 
 
-/* Edit Page */
-.edit-category-title {
-    font-weight: bold;
-    font-size: 20px;
-}
+    /* Edit Page */
+    .edit-category-title {
+        font-weight: bold;
+        font-size: 20px;
+    }
 
-.edit-info-container {
-    margin-left: 5px;
-    margin-bottom: 10px;
-    margin-top: -5px;
-}
+    .edit-info-container {
+        margin-left: 5px;
+        margin-bottom: 10px;
+        margin-top: -5px;
+    }
 
-.edit-container {
-    background: #292929;
-    border-radius: 20px;
-    padding: 20px;
-    display: flex;
-    height: min-content;
-    width: min-content;
-    justify-self: center;
-    align-self: center;
-    flex-direction: column;
-    flex-direction: column;
-}
+    .edit-container {
+        background: #292929;
+        border-radius: 20px;
+        padding: 20px;
+        display: flex;
+        height: min-content;
+        width: min-content;
+        justify-self: center;
+        align-self: center;
+        flex-direction: column;
+        flex-direction: column;
+    }
 
-.btn-edit-container {
-    display: flex;
-    flex-direction: column;
-}
+    .btn-edit-container {
+        display: flex;
+        flex-direction: column;
+    }
 
-.btn-edit {
-    width: 300px;
-    margin: 5px;
-}
+    .btn-edit {
+        width: 300px;
+        margin: 5px;
+    }
 
-.btn-delete {
-    background-color: red;
-    border-radius: 25px;
-    font-size: 24px;
-    border: none;
-    transition: 1s;
-}
+    .btn-delete {
+        background-color: red;
+        border-radius: 25px;
+        font-size: 24px;
+        border: none;
+        transition: 1s;
+    }
 
-.edit-textfield {
-    padding-left: 5px;
-    padding-top: 1px;
-}
+    .edit-textfield {
+        padding-left: 5px;
+        padding-top: 1px;
+    }
 
-.edit-info-displays {
-    width: 100%;
-}
+    .edit-info-displays {
+        width: 100%;
+    }
 
-.edit-textfield-singleline{
+    .edit-textfield-singleline {
+    }
 
-}
+    .edit-textfield-multiline {
+        height: 100px;
+        resize: none;
+    }
 
-.edit-textfield-multiline {
-    height: 100px;
-    resize: none;
-}
+    /* Widgets */
+    .widget-title {
+        font-size: 16px;
+        color: #A4A4A4;
+    }
 
-/* Widgets */
-.widget-title {
-    font-size: 20px;
+.widget-text {
+    font-size: 48px;
 }
 
 .widget {
-    margin-right: 10px;
+    margin-left: auto;
+    margin-right: auto;
     background-color: #292929;
     border-radius: 20px;
-    width: 150px;
+    width: 45%;
     padding: 10px;
 }
 
-/* Filter-PopUp */
-.filter-popup-margin {
-    margin-left: 20px;
-}
+    /* Filter-PopUp */
+    .filter-popup-margin {
+        margin-left: 20px;
+    }
 
-.filter-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 700px;
-    height: 300px;
-    transform: translate(-50%, -50%);
-    z-index: 3;
-    background: #292929;
-    border-radius: 20px;
-}
-
-
-.filter-popup-title {
-    margin-top: 20px;
-    font-size: 20px;
-    font-weight: bold;
-}
+    .filter-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 700px;
+        height: 300px;
+        transform: translate(-50%, -50%);
+        z-index: 3;
+        background: #292929;
+        border-radius: 20px;
+    }
 
 
-.filter-popup-button-apply {
-    width: 660px;
-    margin-top: 60px;
-}
+    .filter-popup-title {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
 
-.filter-popup-button-close {
-    width: 660px;
-    margin-top: 10px;
-}
 
-/* Select */
-select {
-    padding-left: 3px;
-    width: 40%;
-    height: 25px;
-    background-color: #ffffff
-}
+    .filter-popup-button-apply {
+        width: 660px;
+        margin-top: 60px;
+    }
 
-/* Buttons */
-.btn-primary {
-    background-color: #BB86FC;
-    border-radius: 25px;
-    font-size: 24px;
-    border: none;
-    transition: 1s;
-}
+    .filter-popup-button-close {
+        width: 660px;
+        margin-top: 10px;
+    }
+
+    /* Select */
+    select {
+        padding-left: 3px;
+        width: 40%;
+        height: 25px;
+        background-color: #ffffff
+    }
+
+    /* Buttons */
+    .btn-primary {
+        background-color: #BB86FC;
+        border-radius: 25px;
+        font-size: 24px;
+        border: none;
+        transition: 1s;
+    }
 
     /* Rounded Button */
     .btn-round {
@@ -383,135 +406,185 @@ select {
 
 
 
-/* Textfield */
-.textfield {
-    resize: none;
-    padding: 3px 0px 0px 9px;
-}
+    /* Textfield */
+    .textfield {
+        resize: none;
+        padding: 3px 0px 0px 9px;
+    }
 
-/* Login Page*/
+    /* Login Page*/
     /*Login Box*/
-.loginBox {
-    display: flex;
-    justify-content: center; /* Centers horizontally */
-    align-items: center; /* Centers vertically */
-    flex-direction: column;
-    border-radius: 50px;
-    background-color: #191919a3;
-    width: 400px;
-    padding: 30px;
-}
-.form-control {
-    border-radius: 20px;
-    background-color: #00000063;
-    color: white;
-}
-.btn-login {
-    margin-top: 2rem;
-    width: 100%;
-    background-color: #BB86FC;
-    border-radius: 25px;
-    font-size: 24px;
-    border: none;
-    transition: 1s;
-    color: white;
-}
-.btn-login:hover{
-    background-color: white;
-}
-.page-background-class {
-    background-image: url("https://cdn.pixabay.com/photo/2021/08/06/05/04/mountain-6525356_960_720.jpg");
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
-/* Date Select */
 
-
-
-/* Universal */
-.dark-background-white-font {
-    color-scheme: dark;
-    color: white;
-    background-color: #191919;
-}
-
-.vertical-center {
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 100%;
-}
-
-.noborder {
-    border: none;
-}
-
-.rounded {
-    border-radius: 12px;
-}
-
-.toprounded {
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-}
-
-.bottomrounded {
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-}
-
-.invisible {
-    display: none;
-}
-
-.back:hover {
-    color: #d0acfc;
-    cursor: pointer;
-}
-
-.error-title {
-    font-size: 100px;
-    color:red;
-}
-.error-message {
-    color: lightcoral;
-}
-
-
-
-@keyframes rotate {
-    100% {
-        transform: rotate(360deg)
-    }
-}
-
-@keyframes prixClipFix {
-    0% {
-        clip-path: polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)
+    .form-control {
+        background-color: #ffffff;
+        border-radius: 30px;
+        width: 100%;
     }
 
-    25% {
-        clip-path: polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)
+    .btn-login {
+        width: 80%;
+        height: 40px;
+        position: fixed;
+        bottom: 20px;
     }
 
-    50% {
-        clip-path: polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)
+        .btn-login:hover {
+        }
+
+    .login-box {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
     }
 
-    75% {
-        clip-path: polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)
+    .links {
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
-    100% {
-        clip-path: polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)
+    .login-page-body {
+        width: 100%;
+        height: 100%;
     }
-}
+
+    .horizontal-center {
+    }
+
+    .login-page-title {
+        color: #bb86fc;
+        font-weight: bold;
+        font-size: 30px;
+        margin-top: 20px;
+    }
+
+    @media (min-width: 641px) {
+        .btn-login {
+            /*        width: 300px;
+        height: 40px;*/
+            position: relative;
+            left: auto;
+            top: auto;
+            bottom: auto;
+            width: 100%;
+        }
+
+        .login-box {
+            width: 25%;
+            border-radius: 20px;
+            padding: 20px;
+            padding-top: 5px;
+            background-color: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(12px);
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-page-title {
+            margin-top: 0;
+        }
+
+        .link:hover {
+            text-decoration: none;
+            color: #bb86fc;
+        }
+
+        .login-page-body {
+            width: 100%;
+            height: 100%;
+            background-image: url("https://www.petri-heil.ch/assets/cache/1920/1080/media/Artikel/2021/04/Vierwaldstaettersee/Luftaufnahme.jpg");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100%;
+        }
+    }
+
+    /* Date Select */
+
+
+
+    /* Universal */
+    .dark-background-white-font {
+        color-scheme: dark;
+        color: white;
+        background-color: #191919;
+    }
+
+    .vertical-center {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .noborder {
+        border: none;
+    }
+
+    .rounded {
+        border-radius: 12px;
+    }
+
+    .toprounded {
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
+    .bottomrounded {
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+
+    .invisible {
+        display: none;
+    }
+
+    .back:hover {
+        color: #d0acfc;
+        cursor: pointer;
+    }
+
+    .error-title {
+        font-size: 100px;
+        color: red;
+    }
+
+    .error-message {
+        color: lightcoral;
+    }
+
+
+
+    @keyframes rotate {
+        100% {
+            transform: rotate(360deg)
+        }
+    }
+
+    @keyframes prixClipFix {
+        0% {
+            clip-path: polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)
+        }
+
+        25% {
+            clip-path: polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)
+        }
+
+        50% {
+            clip-path: polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)
+        }
+
+        75% {
+            clip-path: polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)
+        }
+
+        100% {
+            clip-path: polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)
+        }
+    }
 
 

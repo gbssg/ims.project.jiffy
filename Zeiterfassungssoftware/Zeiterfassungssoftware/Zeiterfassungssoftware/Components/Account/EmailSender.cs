@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 
 namespace Zeiterfassungssoftware.Components.Account
 {
@@ -12,25 +13,33 @@ namespace Zeiterfassungssoftware.Components.Account
             var Builder = WebApplication.CreateBuilder();
 
             var To = new MailAddress(Receiver);
-            var From = new MailAddress("jiffy.gbs@niederer.swiss");
+            var From = new MailAddress(Builder.Configuration["EmailAddress"]);
 
-            var Email = new MailMessage(From, To);
-            Email.Subject = Subject;
-            Email.Body = HtmlMessage;
-            Email.IsBodyHtml = true;
+            var Email = new MailMessage(From, To)
+            {
+                Subject = Subject,
+                IsBodyHtml = true,
+                Body = HtmlMessage,
+                
+            };
 
-            var Smtp = new SmtpClient();
-            Smtp.Host = "smtp.servicehoster.ch";
-            Smtp.Port = 25;
-            Smtp.Credentials = new NetworkCredential("jiffy.gbs@niederer.swiss", Builder.Configuration["EmailPass"]);
-            Smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            Smtp.EnableSsl = true;
+            var Smtp = new SmtpClient()
+            {
+                Host = "smtp.servicehoster.ch",
+                Port = 25,
+                Credentials = new NetworkCredential(Builder.Configuration["EmailAddress"], Builder.Configuration["EmailPass"]),
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                EnableSsl = true
+            };
 
             try
             {
-                Smtp.Send(Email);
+                await Smtp.SendMailAsync(Email);
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error sending email: " + ex.Message);
+            }
         }
     }
 }

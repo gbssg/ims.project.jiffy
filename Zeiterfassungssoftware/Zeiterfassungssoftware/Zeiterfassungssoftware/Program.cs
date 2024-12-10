@@ -52,8 +52,9 @@ namespace Zeiterfassungssoftware
 			builder.Services.AddSingleton<ITimeEntryProvider, ServerTimeEntryProvider>();
             
 			builder.Services.AddControllers();
+            
 
-			var app = builder.Build();
+            var app = builder.Build();
             
 
             // Configure the HTTP request pipeline.

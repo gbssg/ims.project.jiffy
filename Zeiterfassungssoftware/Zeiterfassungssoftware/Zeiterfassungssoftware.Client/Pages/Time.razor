@@ -1,4 +1,4 @@
-@page "/time"
+@page "/"
 @rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
 
 @using Microsoft.AspNetCore.Authorization
@@ -12,7 +12,7 @@
 	@if(ActivitySource.GetActivityDescriptions() is not null)
 	{
 		
-	<div style="display: flex; align-content: center; justify-content: center; flex-direction: column; height: 100%;">
+	<div class="timepage-body">
 			<div class="centered-div-flex">
 				<RoundButton OnClick="ToggleClock" Started="@Started" Disabled="@Disabled" />
 			</div>
@@ -21,7 +21,7 @@
 			@if (ActivitySource != null && !Started)
 			{
 				<div class="centered-div-flex">
-					<select class="toprounded" @bind="ActivityTitleSelect">
+					<select class="activity-select toprounded" @bind="ActivityTitleSelect">
 						<option>@NEW_ACTIVITY_TITLE</option>
 						@foreach (var Activity in ActivitySource.GetActivityTitles())
 						{
@@ -30,10 +30,10 @@
 					</select>
 				</div>
 
-				<TextField Style="width: 40%; height: 45px;" Class="@(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "textfield activity-textfield" : "invisible")" PlaceHolder="Activity Title..." @bind-Value="@ActivityTitle" Multiline="false" />
+				<TextField Style="height: 45px;" Class="@(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "textfield activity-textfield" : "invisible")" PlaceHolder="Activity Title..." @bind-Value="@ActivityTitle" Multiline="false" />
 
 				<div class="centered-div-flex">
-					<select @bind="ActivityDescriptionSelect" class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "bottomrounded")">
+					<select @bind="ActivityDescriptionSelect" class="activity-select @(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "bottomrounded")">
 						<option>@NEW_ACTIVITY_DESCRIPTION</option>
 						@foreach (var Activity in ActivitySource.GetActivityDescriptions())
 						{
@@ -42,7 +42,7 @@
 					</select>
 				</div>
 
-				<TextField Style="width: 40%; height: 90px;" Class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "textfield activity-textfield bottomrounded" : "invisible")" PlaceHolder="Activity Description..." @bind-Value="@ActivityDescription" Multiline="true" />
+				<TextField Style="height: 90px;" Class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "textfield activity-textfield bottomrounded" : "invisible")" PlaceHolder="Activity Description..." @bind-Value="@ActivityDescription" Multiline="true" />
 
 			}
 			else

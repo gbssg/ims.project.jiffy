@@ -12,7 +12,7 @@
 }
 
 .navbar-toggler:checked {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(203, 161, 255, 0.5);
 }
 
 .top-row {
@@ -26,10 +26,13 @@
 
 .navbar-brand {
     font-size: 1.1rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+    color: #bb86fc;
 }
 
 .bi {
-    color: #BB86FC;
+    color: #bb86fc;
     position: relative;
     width: 1.25rem;
     height: 1.25rem;
@@ -71,7 +74,7 @@
 }
 .grid-column {
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     place-self: 
 }
 
@@ -79,12 +82,7 @@
     
 }
 
-.bottom-row {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding-bottom: 15px;
-}
+
 
     .nav-item ::deep .nav-link {
         color: #d7d7d7;
@@ -99,13 +97,15 @@
     }
 
 .nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.37);
+    background-color: rgba(203, 161, 255,0.37);
     color: white;
+    border-radius: 23px;
 }
 
 .nav-item ::deep .nav-link:hover {
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(203, 161, 255,0.1);
     color: white;
+    border-radius: 23px;
 }
 
 .nav-scrollable {
@@ -122,11 +122,22 @@
     }
 
     .nav-scrollable {
-        /* Never collapse the sidebar for wide screens */
         display: block;
-
-        /* Allow sidebar to scroll for tall menus */
-        height: calc(100vh - 3.5rem);
         overflow-y: auto;
+    }
+    
+    .bottom-row {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding-bottom: 15px;
+    }
+
+    .nav-center {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 85vh;
     }
 }

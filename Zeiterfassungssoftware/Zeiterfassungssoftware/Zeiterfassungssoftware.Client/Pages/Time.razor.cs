@@ -127,7 +127,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 			else
 			{
 				Timer?.Dispose();
-				throw new Exception("CurrenEntry was null even though the measuring was not started!");
+				throw new Exception("CurrentEntry was null even though the measuring was not started!");
 			}
 		}
 

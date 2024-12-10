@@ -11,46 +11,47 @@
 @inject IdentityRedirectManager RedirectManager
 
 <PageTitle>Log in</PageTitle>
-<div class="page-background-class">
-    <section class="loginBox">
+<div class="login-page-body">
+    <div class="login-box">
         <StatusMessage Message="@errorMessage" />
         <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login">
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert" />
-            <div style="text-align: center; margin-bottom: 1rem;">
-                <h1>Login</h1>
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <p class="login-page-title">Login</p>
             </div>
             <div>
                 <div class="form-floating mb-3">
-                    <InputText @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                    <label for="email" class="form-label" style="color:white;">Email</label>
+                    <InputText @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="max.muster@edu.gbssg.ch" />
+                    <label for="email" class="form-label" style="color:black;">Email</label>
                     <ValidationMessage For="() => Input.Email" class="text-danger" />
                 </div>
                 <div class="form-floating mb-1">
                     <InputText type="password" @bind-Value="Input.Password" class="form-control"  autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label for="password" class="form-label" style="color:white;">Password</label>
+                    <label for="password" class="form-label" style="color:black;">Password</label>
                     <ValidationMessage For="() => Input.Password" class="text-danger" />
                 </div>
-                <p>
-                    <a href="Account/ForgotPassword">Forgot your password?</a>
-                </p>
-                <p>
-                    <a href="@(NavigationManager.GetUriWithQueryParameters(" Account/Register", new Dictionary<string, object?> { ["ReturnUrl"] = ReturnUrl }))">Sign Up</a>
-                </p>
-                <div>
-                    <button type="submit" class="btn btn-lg btn-login ">Log in</button>
+                <div class="links">
+                    <p>
+                        <a class="link" href="Account/ForgotPassword">Forgot your password?</a>
+                    </p>
+                    <p>
+                        <a class="link" href="@(NavigationManager.GetUriWithQueryParameters(" Account/Register", new Dictionary<string, object?> { ["ReturnUrl"] = ReturnUrl }))">Don't own an Account?</a>
+                    </p>
                 </div>
-
+                <div>
+                    <button type="submit" class="btn-primary btn-login">Login</button>
+                </div>
             </div>
         </EditForm>
-    </section>
+    </div>
 </div>
     @*<div class="col-md-6 col-md-offset-2">
         <section>
             <h3>Use another service to log in.</h3>
             <hr />
             <ExternalLoginPicker />
-        </section>
+        </section>s
     </div>
     *@
 

@@ -16,6 +16,9 @@ namespace Zeiterfassungssoftware.Client.Components
         [Parameter]
         public EventCallback<OnButtonClick> OnClick { get; set; }
 
+        [Parameter]
+        public bool ShowNames { get; set; }
+
         private void OnEntryClicked()
         {
             OnClick.InvokeAsync();

@@ -15,7 +15,7 @@ namespace Zeiterfassungssoftware.Client.Services
 		{
 			BaseAddress = new Uri("https://localhost:7099/api/v1/activities/")
 		};
-
+		
         private List<ActivityTitle> _activityTitles = [];
         private List<ActivityDescription> _activityDescriptions = [];
 		public bool IsLoaded { get; private set; }
