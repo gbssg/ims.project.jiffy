@@ -48,8 +48,6 @@ namespace Zeiterfassungssoftware
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityEmailSender>();
 
-			builder.Services.AddSingleton<IActivityProvider, ServerActivityProvider>();
-			builder.Services.AddSingleton<ITimeEntryProvider, ServerTimeEntryProvider>();
             
 			builder.Services.AddControllers();
             

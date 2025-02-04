@@ -1,26 +1,47 @@
-﻿<tr class="list-entry" @onclick="OnEntryClicked">
-    <td class="list-time" style="white-space:nowrap">
-        @Entry.GetTimeString()
-    </td>
-    <td class="list-date">
-        @Entry.Start.ToString(@"dd\ MMM\ yyyy")
-    </td>
-    <td class="list-start">
+﻿@* <tr class="list-entry" @onclick="OnEntryClicked">
+     <td class="list-time" style="white-space:nowrap">
+         @Entry.GetTimeString()
+     </td>
+     <td class="list-date">
+         @Entry.Start.ToString(@"dd\ MMM\ yyyy")
+     </td>
+     <td class="list-start">
+         @Entry.GetStartString() - @Entry.GetEndString()
+     </td>
+     <td class="list-title">
+         @Entry.Title
+     </td>
+     <td class="list-description">
+         @Entry.Description
+     </td>
+     @if(ShowNames)
+     {
+         <td class="list-description">
+             @Entry.Username
+         </td>
+     }
+ </tr>
+ *@
+
+
+<div class="entry" @onclick="OnClick">
+    <div class="entry-date">
+        @Entry.Start.Date.ToString(@"dd\.MM\.yyyy")
+    </div>
+    <div class="entry-time">
         @Entry.GetStartString() - @Entry.GetEndString()
-    </td>
-    <td class="list-title">
+    </div>
+    <div class="entry-title">
         @Entry.Title
-    </td>
-    <td class="list-description">
+    </div>
+    <div class="entry-total">
+        <div>@Entry.GetTimeString()</div>
+        @if(ShowNames)
+        {
+            <div class="entry-username">@Entry.Username</div>
+        }
+    </div>
+    <div class="entry-description">
         @Entry.Description
-    </td>
-    @if(ShowNames)
-    {
-        <td class="list-description">
-            @Entry.Username
-        </td>
-    }
-</tr>
-
-
-
+    </div>
+</div>

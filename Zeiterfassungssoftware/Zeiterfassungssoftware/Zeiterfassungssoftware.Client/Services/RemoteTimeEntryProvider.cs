@@ -81,8 +81,6 @@ namespace Zeiterfassungssoftware.Client.Services
 			{
 				Console.WriteLine(e.Message);
 			}
-			Console.WriteLine($"{Entry.Id} \n{Entry.Title}\n{Entry.Description}\n{Entry.IsWeekend}");
-			
 		}
 
         public async Task Update(TimeEntry Entry)

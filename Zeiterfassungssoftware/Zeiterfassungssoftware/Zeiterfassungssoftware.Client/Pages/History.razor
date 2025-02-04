@@ -1,94 +1,59 @@
-@page "/history"
+﻿@page "/history"
 @rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
 
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
 
-<PageTitle>History</PageTitle>
+<PageTitle>New History</PageTitle>
 
 
 <AuthorizeView>
     <div class="history-page-body">
-        <div class="flex-div-nowrap">
-            <Widget Title="Overtime" Text=@((TimeEntries is null) ? "-" : $"{Overtime.ToString(@"hh\h")}") />
-            <Widget Title="Sick days" Text=@((TimeEntries is null) ? "-" : $"{SickDays.ToString()}") />
-        </div>
+        <div class="info-body">
+            <div class="flex-div-nowrap info-widgets">
+                <Widget Title="Overtime" Text=@(Overtime.TotalHours < 1 ? $"{Math.Floor(Overtime.TotalMinutes)}min" : $"{Math.Floor(Overtime.TotalHours)}h") />
+                <Widget Title="Sick days" Text=@($"{Sickdays}") />
+            </div>
+            <div class="history-filter-container">
+                <div class="history-filter-title" @onclick="() => ShowFilters = !ShowFilters">
+                    <p>Filter setting</p>
+                    <p class="extended-arrow">@(ShowFilters ? "▲" : "▼")</p>
+                </div>
 
+                <div class="history-filter-settings" style="display: @(ShowFilters ? "block" : "none");">
+                    <div class="flex-div-wrap">
+                        @foreach (IFilter Filter in Filters.OrderByDescending(e => e.Enabled))
+                        {
+                            @if (!context.User.IsInRole("Administrator") && string.Equals(Filter.Name, "Username"))
+                                continue;
 
-        <p class="filter-control-title" @onclick="() => ShowFilters = !ShowFilters">Filter Settings @(ShowFilters ? "▴" : "▾")</p>
-        <div class="filter-container" style="@(ShowFilters ? "" : "display: none;")">
-            <p class="filter-control-title">Enabled</p>
-            <div class="flex-div-wrap">
-                @foreach (IFilter Filter in Filters.Where(e => e.Enabled))
+                            <p @onclick="() => OnFilterClicked(Filter)" class="filter-control-element @(Filter.Enabled ? "filter-enabled" : "filter-disabled")">
+                                @Filter.Name
+                            </p>
+                            <p class="filter-x" @onclick="() => {Filter.Enabled = false; Filter.PopUp = false;}">@(Filter.Enabled ? "🞩" : "")</p>
+                        }
+                    </div>
+
+                </div>
+
+                @if (SelectedFilter is not null)
                 {
-                    <p class="filter-control-element filter-enabled" @onclick="() => OnFilterClick(Filter)">
-                        @Filter.Name
-                        <svg @onclick="() => StopFilter(Filter)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="filter-x" viewBox="0 0 16 16">
-                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                        </svg>
-                    </p>
+                    <FilterPopUp Filter="SelectedFilter" />
                 }
             </div>
-
-
-            <p class="filter-control-title">Disabled</p>
-            <div class="flex-div-wrap">
-                @foreach (IFilter Filter in Filters.Where(e => !e.Enabled))
-                {
-                    <p class="filter-control-element filter-disabled" @onclick="() => OnFilterClick(Filter)">@Filter.Name</p>
-                }
-            </div>
-
-            <p>@((TimeEntries is null) ? "0 results found" : $"{SearchResults} results found")</p>
-
         </div>
-        @if (OpendFilter != null)
-        {
-            <FilterPopUp Filter="OpendFilter" />
-        }
-
-
-        @if (TimeEntries != null)
-        {
-            <div class="list-container" style="padding: 10px; height: 100%; overflow-y: scroll; scrollbar-width: thin;">
-                <table class="list" style="width: 100%">
-                    <tr>
-                        <th>
-                            Duration
-                        </th>
-                        <th>
-                            Date
-                        </th>
-                        <th>
-                            Time
-                        </th>
-                        <th>
-                            Activity
-                        </th>
-                        <th>
-                            Description
-                        </th>
-                        @if (context.User.IsInRole("Administrator"))
-                        {
-                            <th>
-                                User
-                            </th>
-                        }
-
-                    </tr>
-                    @if (TimeEntries is not null)
-                    {
-                        @foreach (var Entry in TimeEntries.Where(e => DoFiltersApply(e)))
-                        {
-                            <HistoryEntry Entry="@Entry" OnClick="() => OnEntryClicked(Entry)" ShowNames="@context.User.IsInRole("Administrator")" />
-                        }
-
-                    }
-                </table>
-            </div>
-        }
+        
+        <div class="filter-dropdown-body">
+        </div>
+        <div class="entry-list-body">
+            @if (TimeEntrySource.IsLoaded)
+            {
+                @foreach (var Entry in TimeEntrySource.GetEntries().Where(e => DoFiltersApply(e)))
+                {
+                    <HistoryEntry Entry="@Entry" ShowNames="@context.User.IsInRole("Administrator")" />
+                }
+            }
+        </div>    
     </div>
 </AuthorizeView>
-    
-    
 

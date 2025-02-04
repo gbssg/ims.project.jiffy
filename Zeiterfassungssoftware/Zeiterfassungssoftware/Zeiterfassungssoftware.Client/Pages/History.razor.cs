@@ -1,129 +1,99 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System.Globalization;
 using Zeiterfassungssoftware.Client.Data.Filter;
 using Zeiterfassungssoftware.SharedData.Time;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Zeiterfassungssoftware.Client.Pages
 {
     public partial class History : IDisposable
-	{
-		[Inject]
-		private ITimeEntryProvider TimeEntrySource { get; init; }
+    {
+        [Inject]
+        public ITimeEntryProvider TimeEntrySource { get; set; }
+        
+        [Inject]
+        private NavigationManager Navigation { get; set; }
 
-		[Inject]
-		private NavigationManager Navigation { get; set; }
+        public Timer? Timer { get; set; }
+
+        public int Sickdays { get; set; } = 0;
+        public TimeSpan Overtime { get; set; } = new TimeSpan(0, 0, 0);
+        public readonly TimeSpan NeededWeeklyTime = new TimeSpan(14, 0, 0);
+        
+        public bool ShowFilters { get; set; }
+        public bool Loaded { get; set; }
+
+        [Inject]
+        private IJSRuntime js { get; set; }
 
 
-        public TimeEntry[] TimeEntries { get; set; }
+        private IFilter[] Filters =
+        [
+            new DateFilter("Date"),
+            new TimeFilter("Start Time"),
+            new TimeFilter("Stop Time"),
+            new StringFilter("Activity"),
+            new StringFilter("Description"),
+            new StringFilter("Username"),
+        ];
+        private IFilter SelectedFilter => Filters.FirstOrDefault(e => e.PopUp);
 
-		public int SickDays => TimeEntrySource.GetEntries().Where(e => e.Title.ToLower().Trim().Equals("krank")).Count();
-		public TimeSpan Overtime = new(0, 0, 0);
-		public TimeSpan NeededDailyTime = new(6, 30, 0);
+        
 
-		private readonly IFilter[] Filters =
-		[
-			new DateFilter("Date"),
-			new TimeFilter("Start Time"),
-			new TimeFilter("Stop Time"),
-			new StringFilter("Activity"),
-			new StringFilter("Description"),
-		];
+        protected override async Task OnInitializedAsync()
+        {
+            Timer = new Timer(UpdateTimer, null, 0, 100);
+        }
 
-		public Timer? RefreshTimer;
-		public int SearchResults => TimeEntries.Where(e => DoFiltersApply(e)).Count();
-		public bool ShowFilters = true;
+        protected async Task CalculateStats()
+        {
+            var Weeks = TimeEntrySource.GetEntries()
+                                       .GroupBy(e => CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(e.Start, CalendarWeekRule.FirstDay, DayOfWeek.Monday));
 
-		public IFilter? OpendFilter => Filters.FirstOrDefault(e => e.PopUp);
-
-		protected override void OnInitialized()
-		{
-			RefreshTimer = new Timer(UpdateTimer, null, 0, 1000);
-		}
-
-		public void Init()
-		{
-            TimeEntries = new TimeEntry[TimeEntrySource.GetEntries().Count];
-            TimeEntrySource.GetEntries().CopyTo(TimeEntries, 0);
-            TimeEntries = TimeEntries.Reverse().ToArray();
-
-            foreach (IFilter Filter in Filters)
+            foreach (var Week in Weeks)
             {
-                Filter.FilterChanged += FilterHasChanged;
-            }
-
-            var Days = TimeEntries.GroupBy(e => e.Start.Date);
-
-            foreach (var Day in Days)
-            {
-                if (!Day.First().Title.ToLower().Equals("krank"))
+                foreach (var Entry in Week)
                 {
-                    var TimeLeft = NeededDailyTime;
-                    var WeekEndOvertime = TimeSpan.FromSeconds(0);
-
-                    foreach (var Entry in Day)
-                    {
-                        if (Entry.IsWeekend)
-                        {
-                            Overtime += Entry.Time;
-                            TimeLeft = TimeSpan.FromSeconds(0);
-                        }
-                        else
-                        {
-                            TimeLeft -= Entry.Time;
-                        }
-                    }
-                    Overtime -= TimeLeft;
+                    if (Entry.Sick)
+                        Sickdays++;
+                    else
+                        Overtime += Entry.Time;
                 }
+                Overtime -= NeededWeeklyTime;
             }
         }
 
-		private void FilterHasChanged(object? sender, EventArgs e)
-		{
-			Refresh();
-		}
+        public void UpdateTimer(object? State)
+        {
+            InvokeAsync(StateHasChanged);
 
-		private void OnFilterClick(IFilter Filter)
-		{
-			if (OpendFilter == null)
-				Filter.PopUp = true;
+            if (TimeEntrySource.GetEntries().Any() && !Loaded)
+            {
+                CalculateStats();
+                Loaded = true;
+            }
+        }
 
-		}
+        public void OnFilterClicked(IFilter Filter)
+        {
+            if (SelectedFilter is null)
+                Filter.PopUp = true;
+        }
 
-		private void StopFilter(IFilter Filter)
-		{
-			Filter.Enabled = false;
-		}
+        public void Dispose()
+        { 
+            Timer?.Dispose();
+        }
 
-		public bool DoFiltersApply(TimeEntry Entry)
+        public bool DoFiltersApply(TimeEntry Entry)
 		{
 			return Filters[0].MatchesCriteria(Entry.Start) && Filters[1].MatchesCriteria(Entry.Start) &&
-							Filters[2].MatchesCriteria(Entry.End ?? DateTime.Now) && Filters[3].MatchesCriteria(Entry.Title) &&
-							Filters[4].MatchesCriteria(Entry.Description);
+				        Filters[2].MatchesCriteria(Entry.End ?? DateTime.Now) && Filters[3].MatchesCriteria(Entry.Title) &&
+				        Filters[4].MatchesCriteria(Entry.Description) && (Filters[5].MatchesCriteria(Entry.Username));
 		}
 
-		public void UpdateTimer(object? State)
-		{
-			Refresh();
-
-			if(TimeEntrySource.IsLoaded && (TimeEntries is null))
-			{
-				Init();
-			}
-		}
-
-		void IDisposable.Dispose()
-		{
-			RefreshTimer?.Dispose();
-		}
-
-
-		public void Refresh()
-		{
-			InvokeAsync(StateHasChanged);
-		}
-
-		public void OnEntryClicked(TimeEntry Entry)
-		{
-			Navigation.NavigateTo($"edit/{Entry.Id}");
-        }
-	}
+        
+    }
 }

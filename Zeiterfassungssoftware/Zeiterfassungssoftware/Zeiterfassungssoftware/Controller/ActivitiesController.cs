@@ -18,13 +18,6 @@ namespace Zeiterfassungssoftware.Controller
     [Authorize]
     public class ActivitiesController : ControllerBase
     {
-        private IActivityProvider ActivitySource;
-
-        public ActivitiesController(IActivityProvider ActivitySource)
-        {
-            this.ActivitySource = ActivitySource;
-        }
-
 
         [HttpGet("descriptions/all")]
         public IActionResult GetAllDescriptions()
@@ -55,6 +48,7 @@ namespace Zeiterfassungssoftware.Controller
 
                 var Temp = new Data.Jiffy.Models.ActivityDescription()
                 {
+                    Id = Guid.NewGuid(),
                     Value = Description.Value,
                     UserId = AspNetUser.Id,
                 };
@@ -93,6 +87,7 @@ namespace Zeiterfassungssoftware.Controller
 
                 var Temp = new Data.Jiffy.Models.ActivityTitle()
                 {
+                    Id = Guid.NewGuid(),
                     Value = Title.Value,
                     UserId = AspNetUser.Id,
                 };

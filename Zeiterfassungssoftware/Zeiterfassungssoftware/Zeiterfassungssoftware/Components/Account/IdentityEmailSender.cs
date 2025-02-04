@@ -62,7 +62,7 @@ namespace Zeiterfassungssoftware.Components.Account
                           display: inline-block;
                           padding: 15px 35px;
                           border-radius: 8px;
-                          background: #cc0;
+                          background: #bb86fc;
                           border: none;
                           color: #191919;
                           font-weight: 700;

@@ -1,27 +1,26 @@
 using Microsoft.AspNetCore.Components;
+using Zeiterfassungssoftware.Client.Pages;
 using Zeiterfassungssoftware.SharedData.Time;
 
 namespace Zeiterfassungssoftware.Client.Components
 {
     public partial class HistoryEntry
     {
-        public delegate void OnButtonClick();
-        
+        [Inject]
+        private NavigationManager Navigation { get; set; }
+
         [Parameter]
         public TimeEntry Entry { get; set; } = new()
         {
 
         };
-
-        [Parameter]
-        public EventCallback<OnButtonClick> OnClick { get; set; }
-
         [Parameter]
         public bool ShowNames { get; set; }
 
-        private void OnEntryClicked()
+        public void OnClick()
         {
-            OnClick.InvokeAsync();
+            Navigation.NavigateTo($"edit/{Entry.Id}");
         }
+
     }
 }

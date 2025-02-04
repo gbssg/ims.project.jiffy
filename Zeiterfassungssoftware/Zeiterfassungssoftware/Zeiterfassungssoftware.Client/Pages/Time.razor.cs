@@ -55,7 +55,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 
 		public void Init()
 		{
-            CurrentEntry = TimeEntrySource.GetEntries().LastOrDefault();
+            CurrentEntry = TimeEntrySource.GetEntries().FirstOrDefault();
 
             if ((CurrentEntry != null) && (CurrentEntry.End != null))
                 CurrentEntry = null;
@@ -121,8 +121,11 @@ namespace Zeiterfassungssoftware.Client.Pages
 				Timer?.Dispose();
 				CurrentEntry.End = DateTime.Now;
 
+
 				if (CurrentEntry.Time < new TimeSpan(0, 0, 1))
 					TimeEntrySource.Remove(CurrentEntry);
+				else
+					TimeEntrySource.Update(CurrentEntry);
 			}
 			else
 			{

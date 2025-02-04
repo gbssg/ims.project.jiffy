@@ -15,22 +15,25 @@
         public TimeSpan Time => (End != null ? End - Start : DateTime.Now-Start).Value;
         public bool Sick => Title.Equals("Krank");
 
-        public bool IsWeekend => (Start.DayOfWeek == DayOfWeek.Sunday || Start.DayOfWeek == DayOfWeek.Saturday);
-
+        
         public string GetTimeString()
         {
             if (Sick)
                 return "Krank";
 
+            var Hours = Math.Floor(Time.TotalHours);
+            var Minutes = Math.Floor((Time.TotalHours - Hours) * 60);
             string TimeString = "";
 
-            if (Time.Hours > 0)
-                TimeString += $"{Time.Hours}h ";
 
-            if (Time.Minutes > 0)
-                TimeString += $"{Time.Minutes}min ";
+            if (Hours > 0)
+                TimeString += $"{Hours}h ";
 
-            TimeString += $"{Time.Seconds}s";
+            if (Minutes > 0)
+                TimeString += $"{Minutes}min ";
+
+            if (Hours == 0 && Minutes == 0)
+                TimeString += $"{Time.Seconds}s";
 
             return TimeString;
         }

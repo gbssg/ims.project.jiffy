@@ -6,47 +6,89 @@
 
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
-
+ 
 <PageTitle>Edit Entry</PageTitle>
 
 
 <AuthorizeView>
     @if(Entry is null)
     {
-        <p>Loading...</p>
+        <div class="vertical-center">
+            <div class="centered-div-flex">
+                <div class="loader">
+                    <div class="box box-1">
+                        <div class="side-left"></div>
+                        <div class="side-right"></div>
+                        <div class="side-top"></div>
+                    </div>
+                    <div class="box box-2">
+                        <div class="side-left"></div>
+                        <div class="side-right"></div>
+                        <div class="side-top"></div>
+                    </div>
+                    <div class="box box-3">
+                        <div class="side-left"></div>
+                        <div class="side-right"></div>
+                        <div class="side-top"></div>
+                    </div>
+                    <div class="box box-4">
+                        <div class="side-left"></div>
+                        <div class="side-right"></div>
+                        <div class="side-top"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         return;
     }
 
     <div class="vertical-center">
         <div class="edit-container">
+
             <p class="edit-category-title">Date</p>
             <div class="edit-info-container">
-                <p>Start</p>
-                <input type="date" @bind="@StartDate" class="rounded edit-info-displays" />
-                <p class="@((StartDate != EndDate) ? "" : "invisible" )">End</p>
-                <input type="date" @bind="@EndDate" class=@((StartDate != EndDate) ? "rounded edit-info-displays" : "invisible") />
+
+                <div class="flex-div-nowrap">
+                    <p>Start</p>
+                    <input type="date" @bind="@StartDate" class="rounded edit-info-date" />
+                </div>
+
+                <div class="flex-div-nowrap">
+                    <p class="@((StartDate != EndDate) ? "" : "invisible" )">End</p>
+                    <input type="date" @bind="@EndDate" class=@((StartDate != EndDate) ? "rounded edit-info-date" : "invisible") />
+                </div>
 
             </div>
 
             <p class="edit-category-title" >Time</p>
             <div class="edit-info-container">
-                <p>Start</p>
-                <input type="time" @bind="@StartTime" class="rounded edit-info-displays" />
-                <p>End</p>
-                <input type="time" @bind="@EndTime" class="rounded edit-info-displays" />
+
+                <div class="flex-div-nowrap"> 
+                    <p>Start</p>
+                    <input type="time" @bind="@StartTime" class="rounded edit-info-time" />
+                </div>
+                <div class="flex-div-nowrap">
+                    <p>End</p>
+                    <input type="time" @bind="@EndTime" class="rounded edit-info-time" />
+                </div>
             </div>
 
             <p class="edit-category-title">Details</p>
             <div class="edit-info-container">
                 <p>Title</p>
-                <TextField @bind-Value="@Entry.Title" PlaceHolder="Title..." Class="rounded edit-info-displays edit-textfield edit-textfield-singleline" />
+                <TextField @bind-Value="@Entry.Title" PlaceHolder="Title..." Class="edit-info-text edit-info-displays edit-textfield edit-textfield-singleline" />
+                
                 <p>Description</p>
-                <TextField @bind-Value="@Entry.Description" PlaceHolder="Description..." Multiline="true" Class="rounded edit-info-displays edit-textfield edit-textfield-multiline" />
+                <TextField @bind-Value="@Entry.Description" PlaceHolder="Description..." Multiline="true" Class="edit-info-text edit-info-displays edit-textfield edit-textfield-multiline" />
+                
+                @if (!string.Equals(Entry.Username, context.User.Identity.Name.Split("@")[0]))
+                {
+                    <p class="edit-username">@Entry.Username</p>
+                }
             </div>
             <div class="btn-edit-container">
-                
-                <Button Text="Save" Class="btn-primary btn-edit" OnClick="SaveChanges"  />
                 <Button Text="Delete" Class="btn-delete btn-edit" OnClick="DeleteEntry" />
+                <Button Text="Save" Class="btn-primary btn-edit" OnClick="SaveChanges" />
             </div>
             <p class="back" @onclick="@(() => Navigation.NavigateTo("/history"))">🡐 Back</p>
         </div>
