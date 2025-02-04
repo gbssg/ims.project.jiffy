@@ -37,6 +37,7 @@ namespace Zeiterfassungssoftware.Services
                     return Unauthorized();
 
                 var Entries = Context.Entries.Where(e => e.UserId == AspNetUser.Id || User.IsInRole("Administrator"))
+                    .OrderByDescending(e => e.Start)
                     .Select(e => e.ToTimeEntry())
                     .ToList();
 
