@@ -46,7 +46,7 @@ namespace Zeiterfassungssoftware.Components.Account
                         .title {
                           font-weight: 700;
                           font-size: 28px;
-                          color: #cc0;
+                          color: #bb86fc;
                           margin: 0;
                           padding: 10px 0
                         }
@@ -73,7 +73,7 @@ namespace Zeiterfassungssoftware.Components.Account
                         }
       
                         .button:hover {
-                          background: #e6e600
+                          background: #9d4dff
                         }
       
                         .button:active {
@@ -105,8 +105,101 @@ namespace Zeiterfassungssoftware.Components.Account
             return EmailSender.SendEmailAsync(Email, Subject, Body);
         }
 
-        public Task SendPasswordResetLinkAsync(ApplicationUser User, string Email, string ResetLink) =>
-            EmailSender.SendEmailAsync(Email, "Reset your password", $"Please reset your password by <a href='{ResetLink}'>clicking here</a>.");
+        public Task SendPasswordResetLinkAsync(ApplicationUser User, string Email, string ResetLink)
+        {
+            var Subject = "Reset your password";
+            var Body = @"
+                <!DOCTYPE html>
+                <html lang=""en"">
+
+                <head>
+                    <meta content=""text/html; charset=utf-8"" http-equiv=""Content-Type"">
+                    <title>
+                        Confirm Your Email
+                    </title>
+                    <style type=""text/css"">
+                        body {
+                          background-color: #191919;
+                          color: #fff;
+                          font-family: Arial, Helvetica, sans-serif;
+                          margin: 0;
+                          padding: 0;
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          min-height: 100vh
+                        }
+      
+                        .container {
+                          background-color: #292929;
+                          padding: 20px 30px;
+                          border-radius: 12px;
+                          max-width: 400px;
+                          text-align: center;
+                          box-shadow: 0 4px 8px rgba(0, 0, 0, .5)
+                        }
+      
+                        .title {
+                          font-weight: 700;
+                          font-size: 28px;
+                          color: #bb86fc;
+                          margin: 0;
+                          padding: 10px 0
+                        }
+      
+                        .message {
+                          font-size: 16px;
+                          line-height: 1.6;
+                          color: #e0e0e0;
+                          margin: 15px 0 20px
+                        }
+      
+                        .button {
+                          display: inline-block;
+                          padding: 15px 35px;
+                          border-radius: 8px;
+                          background: #bb86fc;
+                          border: none;
+                          color: #191919;
+                          font-weight: 700;
+                          font-size: 16px;
+                          text-decoration: none;
+                          cursor: pointer;
+                          transition: background .3s ease, transform .2s ease
+                        }
+      
+                        .button:hover {
+                          background: #9d4dff
+                        }
+      
+                        .button:active {
+                          transform: scale(.95)
+                        }
+      
+                        .footer {
+                          font-size: 14px;
+                          color: #888;
+                          margin-top: 20px
+                        }
+                      </style>
+                </head>
+
+                <body>
+                      <div class=""container"">
+                        <p class=""title"">Jiffy
+                        <p class=""message"">Thank you for joining Jiffy! <br>
+                          <br>To reset your password click the link below.
+                        </p>
+                        <a class=""button"" href=""{ConfirmationLink}"">Reset Password</a>
+                        <p class=""footer"">
+                          <br>If you didn’t try to reset your password, please ignore this email.
+                      </div>
+                </body>
+
+                </html>
+            ".Replace("{ConfirmationLink}", ResetLink);
+            return EmailSender.SendEmailAsync(Email, Subject, Body);
+        }
 
         public Task SendPasswordResetCodeAsync(ApplicationUser User, string Email, string ResetCode) =>
             EmailSender.SendEmailAsync(Email, "Reset your password", $"Please reset your password using the following code: {ResetCode}");

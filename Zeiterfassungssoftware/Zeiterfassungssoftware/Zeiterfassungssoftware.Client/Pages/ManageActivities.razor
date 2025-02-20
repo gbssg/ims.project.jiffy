@@ -1,0 +1,25 @@
+﻿@page "/Account/Manage/ManageActivities"
+
+@inject IActivityProvider ActivitySource
+
+<PageTitle>Manage Activities</PageTitle>
+
+<h3>Profile</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <p>Activities</p>
+        <select size="5" style="height:100px;">
+            @foreach(var Title in ActivitySource.GetActivityTitles()) {
+                <option>@Title</option>
+            }
+        </select>
+    </div>
+</div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+}

@@ -11,7 +11,9 @@ a:hover {
     color: white;
 }
 
-
+    a:hover {
+        text-decoration: none;
+    }
 /*
 .btn-primary {
     color: #fff;
@@ -244,12 +246,21 @@ p {
     right: 20px;
 }
 
+.history-filter-display-block {
+    display: block;
+}
+.history-filter-display-none {
+    display: none;
+}
+
 @media (min-width: 1282px) {
     .filter-popup {
         position: relative;
     }
 
-
+    .history-filter-display-none {
+        display: block;
+    }
 
     .history-page-body {
         margin: 2.5vh;
@@ -265,7 +276,6 @@ p {
     .info-widgets {
         margin: 0;
         align-items: flex-start;
-        
     }
 
 
@@ -274,6 +284,10 @@ p {
         width: 40vw;
         margin-top: 10px;
         height: calc(100vh - 116px - 5vh);
+    }
+
+    .history-filter-title {
+        margin-left: 10px;
     }
 
     .extended-arrow {
@@ -301,7 +315,6 @@ p {
         top: 50%;
         left: 50%;
         width: 700px;
-        height: 300px;
         transform: translate(-50%, -50%);
         z-index: 3;
         background: #292929;
@@ -444,6 +457,7 @@ p {
 input[type="time"]::-webkit-calendar-picker-indicator {
     filter: invert(100%);
 }
+
 input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(100%);
 }
@@ -519,6 +533,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .widget {
         width: 50%;
     }
+    .info-widgets {
+        gap: 10px;
+    }
 }
 
     /* Filter-PopUp */
@@ -556,12 +573,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 .filter-popup-button-apply {
-    width: 25%;
-    margin-left: calc(75% - 10px);
+    margin-left: calc(100% - 81px);
     margin-top: 10px;
+    padding: 2px 10px 2px 10px;
     margin-bottom: 15px;
     border-radius: 25px;
-    font-size: 24px;
+    font-size: 18px;
     border: 2px solid green;
     transition: 1s;
     color: green;
@@ -570,31 +587,33 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .filter-popup-button-close {
         position: absolute;
-        top: 0px;
-        right: 10px;
-        width: 31px;
+        top: -5px;
+        right: 5px;
+        width: 32px;
         margin-top: 10px;
         margin-bottom: 15px;
         margin-left: 2%;
-        background-color: red;
         border-radius: 25px;
-        font-size: 16px;
-        border: 2px solid red;
-        color: red;
+        font-size: 18px;
+        border: none;
+        color: gray;
         background-color:transparent;
         transition: 1s;
     }
 
+        .filter-popup-button-close:hover{
+            color: red;
+        }
+        /* Select */
+        select {
+            padding-left: 3px;
+            width: 40%;
+            height: 25px;
+            background-color: #ffffff
+        }
 
-    /* Select */
-    select {
-        padding-left: 3px;
-        width: 40%;
-        height: 25px;
-        background-color: #ffffff
-    }
 
-    /* Buttons */
+/* Buttons */
 .btn-primary {
     background-color: transparent;
     border: 2px solid #bb86fc;
@@ -602,18 +621,35 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 24px;
     color: #bb86fc;
     transition: 1s;
+    text-decoration: none;
 }
 
-    /* Rounded Button */
-    .btn-round {
-        border-radius: 50%;
-        font-weight: bold;
-        font-size: 40px;
-        width: 276px;
-        height: 276px;
-        transition: 1s;
-        margin: 20px;
+.btn-reset-authenticator {
+    background-color: transparent;
+    border: 2px solid red;
+    border-radius: 25px;
+    font-size: 24px;
+    color: red;
+    transition: 1s;
+    text-decoration: none;
+}
+
+
+    .btn-reset-authenticator:hover {
+        background-color: red;
+        color: white;
+        text-decoration: none;
     }
+/* Rounded Button */
+.btn-round {
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 40px;
+    width: 276px;
+    height: 276px;
+    transition: 1s;
+    margin: 20px;
+}
 
     .btn-stopped {
         background-color: #BB86FC;
@@ -857,7 +893,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 /* From Uiverse.io by vinodjangid07 */
-.Btn {
+.download-button {
     width: 50px;
     height: 50px;
     border: none;

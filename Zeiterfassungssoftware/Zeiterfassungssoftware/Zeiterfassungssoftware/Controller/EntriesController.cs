@@ -63,6 +63,9 @@ namespace Zeiterfassungssoftware.Services
         [HttpPost("new")]
         public async Task<IActionResult> Add([FromBody] TimeEntry Entry)
         {
+            if (string.IsNullOrWhiteSpace(Entry.Title) || string.IsNullOrWhiteSpace(Entry.Description))
+                return BadRequest();
+
             using (var Context = new JiffyContext())
             {
                 AspNetUser? AspNetUser = Context.AspNetUsers.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));

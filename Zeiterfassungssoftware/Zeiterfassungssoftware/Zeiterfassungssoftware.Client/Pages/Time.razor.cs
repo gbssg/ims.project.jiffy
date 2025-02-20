@@ -43,14 +43,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 
 		protected override void OnInitialized()
 		{
-			//CurrentEntry = TimeEntrySource.GetEntries().Last();
-
-			//if ((CurrentEntry != null) && (CurrentEntry.End != null))
-			//	CurrentEntry = null;
-
-			//if (Started)
 			Timer = new Timer(UpdateTimer, null, 0, 1000);
-
 		}
 
 		public void Init()

@@ -17,16 +17,18 @@
 
 <PageTitle>Register</PageTitle>
 
-<h1>Register</h1>
 
-<div class="row">
-    <div>
+
+<div class="login-page-body">
+    <div class="login-box">
         <StatusMessage Message="@Message" />
         <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register">
             <DataAnnotationsValidator />
-            <h2>Create a new account.</h2>
-            <hr />
             <ValidationSummary class="text-danger" role="alert" />
+
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <p class="login-page-title">Register</p>
+            </div>
             <div class="form-floating mb-3">
                 <InputText @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                 <label for="email" style="color:black;" >Email</label>
@@ -42,8 +44,16 @@
                 <label for="confirm-password" style="color:black;">Confirm Password</label>
                 <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
             </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <div class="links">
+                <p>
+                    <a class="link" href="Account/Login">Already registred? Sign in</a>
+                </p>
+            </div>
+            <button type="submit" class="btn-primary btn-login">Register</button>
         </EditForm>
+    </div>
+    <div>
+
     </div>
     @*
     <div class="col-md-6 col-md-offset-2">

@@ -40,11 +40,15 @@ namespace Zeiterfassungssoftware.Controller
         [HttpPost("descriptions/new")]
         public async Task<IActionResult> AddDescription([FromBody] ActivityDescription Description)
         {
+            if (string.IsNullOrWhiteSpace(Description.Value))
+                return BadRequest();
+
+            if (!User.Identity.IsAuthenticated)
+                return Unauthorized();
+            
             using (var Context = new JiffyContext())
             {
                 var AspNetUser = Context.AspNetUsers.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
-                if (AspNetUser is null || !User.Identity.IsAuthenticated)
-                    return Unauthorized();
 
                 var Temp = new Data.Jiffy.Models.ActivityDescription()
                 {
@@ -69,7 +73,9 @@ namespace Zeiterfassungssoftware.Controller
                 if (AspNetUser is null || !User.Identity.IsAuthenticated)
                     return Unauthorized();
 
-                var Titles = Context.ActivityTitles.Where(e => (e.UserId == AspNetUser.Id));
+                var Titles = Context.ActivityTitles.Where(e => (e.UserId == AspNetUser.Id))
+                                                   .Select(t => new ActivityTitle(t.Value));
+
 
                 return Ok(Titles.ToList());
             }
@@ -79,6 +85,9 @@ namespace Zeiterfassungssoftware.Controller
         [HttpPost("titles/new")]
 		public async Task<IActionResult> AddTitle([FromBody] ActivityTitle Title)
         {
+            if (string.IsNullOrWhiteSpace(Title.Value))
+                return BadRequest();
+
             using (var Context = new JiffyContext())
             {
                 var AspNetUser = Context.AspNetUsers.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));

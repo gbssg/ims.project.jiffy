@@ -20,7 +20,7 @@
                     <p class="extended-arrow">@(ShowFilters ? "▲" : "▼")</p>
                 </div>
 
-                <div class="history-filter-settings" style="display: @(ShowFilters ? "block" : "none");">
+                <div class="history-filter-settings history-filter-display-@(ShowFilters ? "block" : "none")">
                     <div class="flex-div-wrap">
                         @foreach (IFilter Filter in Filters.OrderByDescending(e => e.Enabled))
                         {
