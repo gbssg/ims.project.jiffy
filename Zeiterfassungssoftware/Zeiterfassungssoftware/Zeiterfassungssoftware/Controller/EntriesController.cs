@@ -1,36 +1,34 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections;
-using System.Diagnostics;
-using System.Security.Claims;
 using Zeiterfassungssoftware.Data;
-using Zeiterfassungssoftware.Data.Jiffy;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
-using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Time;
 
 namespace Zeiterfassungssoftware.Services
 {
 
-	[Route("api/v1/[controller]")]
+    [Route("api/v1/[controller]")]
 	[ApiController]
     [Authorize]
     public class EntriesController : ControllerBase
 	{
+        private ApplicationDbContext _context;
+
+        public EntriesController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet("all")]
 		public IActionResult GetAllEntries()
 		{
-            using (var Context = new JiffyContext())
             {
-                AspNetUser? AspNetUser = Context.AspNetUsers.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
+                var AspNetUser = _context.Users.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
 
                 if (AspNetUser is null || !User.Identity.IsAuthenticated )
                     return Unauthorized();
 
-                var Entries = Context.Entries.Where(e => e.UserId == AspNetUser.Id || User.IsInRole("Administrator"))
+                var Entries = _context.Entries.Where(e => e.UserId == AspNetUser.Id || User.IsInRole("Administrator"))
                     .OrderByDescending(e => e.Start)
                     .Select(e => e.ToTimeEntry())
                     .ToList();
@@ -42,14 +40,13 @@ namespace Zeiterfassungssoftware.Services
 		[HttpGet("id/{Id}")]
 		public IActionResult GetEntryById(Guid Id)
 		{
-            using (var Context = new JiffyContext())
             {
-                AspNetUser? AspNetUser = Context.AspNetUsers.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
+                var AspNetUser = _context.Users.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
 
                 if (AspNetUser is null || !User.Identity.IsAuthenticated)
                     return Unauthorized();
 
-                Entry? Result = Context.Entries.FirstOrDefault(e => e.Id == Id && ((e.UserId == AspNetUser.Id) || (User.IsInRole("Administrator"))));
+                Entry? Result = _context.Entries.FirstOrDefault(e => e.Id == Id && ((e.UserId == AspNetUser.Id) || (User.IsInRole("Administrator"))));
                 
                 if (Result is null)
                 {
@@ -66,9 +63,8 @@ namespace Zeiterfassungssoftware.Services
             if (string.IsNullOrWhiteSpace(Entry.Title) || string.IsNullOrWhiteSpace(Entry.Description))
                 return BadRequest();
 
-            using (var Context = new JiffyContext())
             {
-                AspNetUser? AspNetUser = Context.AspNetUsers.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
+                var AspNetUser = _context.Users.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
 
                 if (AspNetUser is null || !User.Identity.IsAuthenticated)
                     return Unauthorized();
@@ -86,8 +82,8 @@ namespace Zeiterfassungssoftware.Services
                     UserId = AspNetUser.Id,
                     User = AspNetUser
                 };
-                Context.Entries.Add(NewEntry);
-                Context.SaveChanges();
+                _context.Entries.Add(NewEntry);
+                _context.SaveChanges();
 
                 return Ok(NewEntry.Id);
             }
@@ -96,20 +92,19 @@ namespace Zeiterfassungssoftware.Services
         [HttpDelete("delete/{id}")]
         public IActionResult AddDescription(Guid Id)
         {
-            using (var Context = new JiffyContext())
             {
-                AspNetUser? AspNetUser = Context.AspNetUsers.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
+                var AspNetUser = _context.Users.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
 
                 if (AspNetUser is null || !User.Identity.IsAuthenticated)
                     return Unauthorized();
 
-                Entry? Entry = Context.Entries.FirstOrDefault(e => (e.Id == Id) && ((e.UserId == AspNetUser.Id) || (User.IsInRole("Administrator"))));
+                Entry? Entry = _context.Entries.FirstOrDefault(e => (e.Id == Id) && ((e.UserId == AspNetUser.Id) || (User.IsInRole("Administrator"))));
 
                 if (Entry is null)
                     return NotFound();
 
-                Context.Entries.Remove(Entry);
-                Context.SaveChanges();
+                _context.Entries.Remove(Entry);
+                _context.SaveChanges();
 
                 return Ok();
             }
@@ -118,14 +113,13 @@ namespace Zeiterfassungssoftware.Services
 		[HttpPatch("update")]
         public IActionResult PatchEntry([FromBody] TimeEntry Entry)
         {
-            using (var Context = new JiffyContext())
             {
-                AspNetUser? AspNetUser = Context.AspNetUsers.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
+                var AspNetUser = _context.Users.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
 
                 if (AspNetUser is null || !User.Identity.IsAuthenticated)
                     return Unauthorized();
 
-                Entry? DbEntry = Context.Entries.FirstOrDefault(e => (e.Id == Entry.Id) && ((e.UserId == AspNetUser.Id) || (User.IsInRole("Administrator"))));
+                Entry? DbEntry = _context.Entries.FirstOrDefault(e => (e.Id == Entry.Id) && ((e.UserId == AspNetUser.Id) || (User.IsInRole("Administrator"))));
 
                 if (DbEntry is null)
                     return NotFound();
@@ -136,7 +130,7 @@ namespace Zeiterfassungssoftware.Services
                 DbEntry.Description = Entry.Description;
 
 
-                Context.SaveChanges();
+                _context.SaveChanges();
 
                 return Ok();
             }

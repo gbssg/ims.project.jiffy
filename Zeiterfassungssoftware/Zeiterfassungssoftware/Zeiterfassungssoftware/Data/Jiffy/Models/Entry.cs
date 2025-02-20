@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using Zeiterfassungssoftware.SharedData.Time;
 
@@ -18,7 +19,7 @@ public partial class Entry
 
     public string UserId { get; set; } = null!;
 
-    public virtual AspNetUser User { get; set; } = null!;
+    public virtual ApplicationUser User { get; set; } = null!;
 
     public TimeEntry ToTimeEntry()
     {

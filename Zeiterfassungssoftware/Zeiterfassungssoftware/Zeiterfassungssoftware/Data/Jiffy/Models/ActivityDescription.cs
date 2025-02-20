@@ -15,5 +15,5 @@ public partial class ActivityDescription
     public string UserId { get; set; } = null!;
 
     [JsonIgnore]
-    public virtual AspNetUser User { get; set; } = null!;
+    public virtual ApplicationUser User { get; set; } = null!;
 }

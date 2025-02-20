@@ -1,13 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.Buffers;
-using System.IO.Pipelines;
-using System.Text;
-using Zeiterfassungssoftware.Data.Jiffy;
+using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
-using Zeiterfassungssoftware.SharedData.Activities;
 using ActivityDescription = Zeiterfassungssoftware.SharedData.Activities.ActivityDescription;
 using ActivityTitle = Zeiterfassungssoftware.SharedData.Activities.ActivityTitle;
 
@@ -18,22 +12,23 @@ namespace Zeiterfassungssoftware.Controller
     [Authorize]
     public class ActivitiesController : ControllerBase
     {
+        private ApplicationDbContext _context;
+
+        public ActivitiesController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet("descriptions/all")]
         public IActionResult GetAllDescriptions()
         {
-            using (var Context = new JiffyContext())
-            {
-                AspNetUser? AspNetUser = Context.AspNetUsers.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
-                if (AspNetUser is null || !User.Identity.IsAuthenticated)
-                    return Unauthorized();
+            var dbUser = _context.Users.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
+            if (dbUser is null || !User.Identity.IsAuthenticated)
+                return Unauthorized();
 
-                var Descriptions = Context.ActivityDescriptions.Where(e => (e.UserId == AspNetUser.Id));
+            var Descriptions = _context.ActivityDescriptions.Where(e => (e.UserId == dbUser.Id));
 
-
-
-                return Ok(Descriptions.ToList());
-            }
+            return Ok(Descriptions.ToList());            
         }
 
         
@@ -45,40 +40,33 @@ namespace Zeiterfassungssoftware.Controller
 
             if (!User.Identity.IsAuthenticated)
                 return Unauthorized();
-            
-            using (var Context = new JiffyContext())
+            var dbUser = _context.Users.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
+
+            var Temp = new Data.Jiffy.Models.ActivityDescription()
             {
-                var AspNetUser = Context.AspNetUsers.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
+                Id = Guid.NewGuid(),
+                Value = Description.Value,
+                UserId = dbUser.Id,
+            };
 
-                var Temp = new Data.Jiffy.Models.ActivityDescription()
-                {
-                    Id = Guid.NewGuid(),
-                    Value = Description.Value,
-                    UserId = AspNetUser.Id,
-                };
+            _context.ActivityDescriptions.Add(Temp);
+            _context.SaveChanges();
 
-                Context.ActivityDescriptions.Add(Temp);
-                Context.SaveChanges();
-
-                return Ok();
-            }
+            return Ok();
         }
 
         [HttpGet("titles/all")]
         public IActionResult GetAllTitles()
         {
-            using (var Context = new JiffyContext())
-            {
-                AspNetUser? AspNetUser = Context.AspNetUsers.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
-                if (AspNetUser is null || !User.Identity.IsAuthenticated)
-                    return Unauthorized();
+            var dbUser = _context.Users.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
+            if (dbUser is null || !User.Identity.IsAuthenticated)
+                return Unauthorized();
 
-                var Titles = Context.ActivityTitles.Where(e => (e.UserId == AspNetUser.Id))
-                                                   .Select(t => new ActivityTitle(t.Value));
+            var Titles = _context.ActivityTitles.Where(e => (e.UserId == dbUser.Id))
+                                                .Select(t => new ActivityTitle(t.Value));
 
 
-                return Ok(Titles.ToList());
-            }
+            return Ok(Titles.ToList());
         }
 
         //id
@@ -88,26 +76,21 @@ namespace Zeiterfassungssoftware.Controller
             if (string.IsNullOrWhiteSpace(Title.Value))
                 return BadRequest();
 
-            using (var Context = new JiffyContext())
+            var AspNetUser = _context.Users.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
+            if (AspNetUser is null || !User.Identity.IsAuthenticated)
+                return Unauthorized();
+
+            var Temp = new Data.Jiffy.Models.ActivityTitle()
             {
-                var AspNetUser = Context.AspNetUsers.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
-                if (AspNetUser is null || !User.Identity.IsAuthenticated)
-                    return Unauthorized();
+                Id = Guid.NewGuid(),
+                Value = Title.Value,
+                UserId = AspNetUser.Id,
+            };
 
-                var Temp = new Data.Jiffy.Models.ActivityTitle()
-                {
-                    Id = Guid.NewGuid(),
-                    Value = Title.Value,
-                    UserId = AspNetUser.Id,
-                };
+            _context.ActivityTitles.Add(Temp);
+            _context.SaveChanges();
 
-                Context.ActivityTitles.Add(Temp);
-                Context.SaveChanges();
-
-                return Ok();
-            }
+            return Ok();
         }
-
-
     }
 }
