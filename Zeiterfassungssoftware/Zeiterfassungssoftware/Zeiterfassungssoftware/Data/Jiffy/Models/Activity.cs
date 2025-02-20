@@ -1,10 +1,10 @@
 ﻿namespace Zeiterfassungssoftware.Data.Jiffy.Models;
 
-public partial class ActivityTitle
+public partial class Activity
 {
     public Guid Id { get; set; }
 
-    public string Value { get; set; } = null!;
+    public string Title { get; set; } = null!;
 
     public string UserId { get; set; } = null!;
 

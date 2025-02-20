@@ -63,7 +63,7 @@ namespace Zeiterfassungssoftware.Controller
                 return Unauthorized();
 
             var Titles = _context.ActivityTitles.Where(e => (e.UserId == dbUser.Id))
-                                                .Select(t => new ActivityTitle(t.Value));
+                                                .Select(t => new ActivityTitle(t.Title));
 
 
             return Ok(Titles.ToList());
@@ -80,10 +80,10 @@ namespace Zeiterfassungssoftware.Controller
             if (AspNetUser is null || !User.Identity.IsAuthenticated)
                 return Unauthorized();
 
-            var Temp = new Data.Jiffy.Models.ActivityTitle()
+            var Temp = new Data.Jiffy.Models.Activity()
             {
                 Id = Guid.NewGuid(),
-                Value = Title.Value,
+                Title = Title.Value,
                 UserId = AspNetUser.Id,
             };
 

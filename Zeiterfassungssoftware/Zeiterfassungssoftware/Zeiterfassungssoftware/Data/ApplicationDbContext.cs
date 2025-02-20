@@ -9,7 +9,7 @@ namespace Zeiterfassungssoftware.Data
     {
         public virtual DbSet<ActivityDescription> ActivityDescriptions { get; set; }
 
-        public virtual DbSet<ActivityTitle> ActivityTitles { get; set; }
+        public virtual DbSet<Activity> ActivityTitles { get; set; }
 
         public virtual DbSet<Entry> Entries { get; set; }
 
@@ -34,7 +34,7 @@ namespace Zeiterfassungssoftware.Data
                     .HasConstraintName("FK_ActivityDescription_AspNetUsers");
             });
 
-            modelBuilder.Entity<ActivityTitle>(entity =>
+            modelBuilder.Entity<Activity>(entity =>
             {
                 entity.ToTable("ActivityTitle");
 
