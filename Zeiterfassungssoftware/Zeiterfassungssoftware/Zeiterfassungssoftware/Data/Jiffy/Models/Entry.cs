@@ -21,7 +21,7 @@ public partial class Entry
 
     public virtual ApplicationUser User { get; set; } = null!;
 
-    public TimeEntry ToTimeEntry()
+    public TimeEntry ToTimeEntry(string UserName)
     {
         return new TimeEntry()
         {
@@ -30,7 +30,9 @@ public partial class Entry
             End = this.End,
             Title = this.Title,
             Description = this.Description,
-            Username = this.User.UserName.Split("@")[0]
+            Username = UserName,
         };
     }
+
+    
 }

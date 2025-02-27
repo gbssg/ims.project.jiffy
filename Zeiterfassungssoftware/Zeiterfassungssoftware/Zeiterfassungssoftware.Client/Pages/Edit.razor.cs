@@ -52,8 +52,6 @@ namespace Zeiterfassungssoftware.Client.Pages
                 Entry.End = DateTime.Now;
             else
                 Entry.End = EndDate.Value.ToDateTime(EndTime.Value);
-
-            
         }
 
         private void SaveChanges()

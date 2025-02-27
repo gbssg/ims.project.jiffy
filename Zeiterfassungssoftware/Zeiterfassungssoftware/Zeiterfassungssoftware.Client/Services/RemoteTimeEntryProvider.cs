@@ -28,7 +28,7 @@ namespace Zeiterfassungssoftware.Client.Services
 
 		public async void LoadEntries()
 		{
-			_timeEntries = await HttpClient.GetFromJsonAsync<List<TimeEntry>>("all") ?? new();
+			_timeEntries = await HttpClient.GetFromJsonAsync<List<TimeEntry>>("") ?? new();
 
 			IsLoaded = true;
 		}
@@ -39,13 +39,13 @@ namespace Zeiterfassungssoftware.Client.Services
 			string JsonData = JsonSerializer.Serialize(Entry);
 			var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
 
-			HttpResponseMessage Response = await HttpClient.PostAsync("new", Content);
+			HttpResponseMessage Response = await HttpClient.PostAsync("", Content);
 			
 			try
 			{
 				Response.EnsureSuccessStatusCode();
-				string Id = await Response.Content.ReadAsStringAsync();
-				Entry.Id = Guid.Parse(Id.Replace("\"", ""));
+				string ReponseContent = await Response.Content.ReadAsStringAsync();
+				Entry = JsonSerializer.Deserialize<TimeEntry>(ReponseContent);
 				_timeEntries.Add(Entry);
 			}
 			catch (Exception e) { Console.WriteLine("Failed to Send Entry"); }
@@ -61,13 +61,13 @@ namespace Zeiterfassungssoftware.Client.Services
 
 		public async Task<TimeEntry> GetEntryById(Guid Id)
 		{
-			return await HttpClient.GetFromJsonAsync<TimeEntry>($"id/{Id}");
+			return await HttpClient.GetFromJsonAsync<TimeEntry>($"{Id}");
 		}
 
 
         public async Task Remove(TimeEntry Entry)
 		{
-			HttpResponseMessage Message = await HttpClient.DeleteAsync($"delete/{Entry.Id}");
+			HttpResponseMessage Message = await HttpClient.DeleteAsync($"{Entry.Id}");
 			
 			try
 			{
@@ -88,7 +88,7 @@ namespace Zeiterfassungssoftware.Client.Services
 			string JsonData = JsonSerializer.Serialize(Entry);
 			var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
 
-			HttpResponseMessage Response = await HttpClient.PatchAsync("update", Content);
+			HttpResponseMessage Response = await HttpClient.PatchAsync("", Content);
 
 			try
 			{

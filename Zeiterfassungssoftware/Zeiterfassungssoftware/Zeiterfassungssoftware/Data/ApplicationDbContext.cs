@@ -9,7 +9,7 @@ namespace Zeiterfassungssoftware.Data
     {
         public virtual DbSet<ActivityDescription> ActivityDescriptions { get; set; }
 
-        public virtual DbSet<Activity> ActivityTitles { get; set; }
+        public virtual DbSet<Activity> Activitys { get; set; }
 
         public virtual DbSet<Entry> Entries { get; set; }
 
@@ -36,7 +36,7 @@ namespace Zeiterfassungssoftware.Data
 
             modelBuilder.Entity<Activity>(entity =>
             {
-                entity.ToTable("ActivityTitle");
+                entity.ToTable("Activity");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
                 entity.Property(e => e.UserId)

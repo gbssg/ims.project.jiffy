@@ -84,7 +84,10 @@ namespace Zeiterfassungssoftware.Client.Pages
 			{
 				if (ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE))
 				{
-					var Title = new ActivityTitle(ActivityTitle);
+					var Title = new ActivityTitle()
+					{
+						Value = ActivityTitle,
+					};
 
 					if (!ActivitySource.Contains(Title))
 						ActivitySource.Add(Title);
@@ -93,9 +96,12 @@ namespace Zeiterfassungssoftware.Client.Pages
 
 				if (ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION))
 				{
-					var Description = new ActivityDescription(ActivityDescription);
+                    var Description = new ActivityDescription()
+                    {
+                        Value = ActivityDescription,
+                    };
 
-					if (!ActivitySource.Contains(Description))
+                    if (!ActivitySource.Contains(Description))
 						ActivitySource.Add(Description);
 				}
 

@@ -8,12 +8,8 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 {
 	public class ActivityTitle
 	{
+		public Guid Id { get; set; }
 		public string Value { get; set; }
-
-		public ActivityTitle(string Value)
-		{
-			this.Value = Value;
-		}
 
 		public override bool Equals(object? obj)
         {
@@ -34,18 +30,14 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 
 	public class ActivityDescription
 	{
+        public Guid Id { get; set; }
 		public string Value { get; set; }
-
-		public ActivityDescription(string Value)
-		{
-			this.Value = Value;
-		}
 
 		public override bool Equals(object? obj)
 		{
 			if (obj is ActivityDescription Other)
 			{ 
-				string Value = Normalize(this.Value);
+				string Value = Normalize(this.Value); 
 				string OtherValue = Normalize(Other.Value);
 
 				return Value.Equals(OtherValue);

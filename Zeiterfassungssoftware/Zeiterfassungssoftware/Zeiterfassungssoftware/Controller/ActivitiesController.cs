@@ -19,78 +19,93 @@ namespace Zeiterfassungssoftware.Controller
             _context = context;
         }
 
-        [HttpGet("descriptions/all")]
+        [HttpGet("descriptions")]
         public IActionResult GetAllDescriptions()
         {
-            var dbUser = _context.Users.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
-            if (dbUser is null || !User.Identity.IsAuthenticated)
+            string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
+
+            if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
 
-            var Descriptions = _context.ActivityDescriptions.Where(e => (e.UserId == dbUser.Id));
+            var Descriptions = _context.ActivityDescriptions.Where(e => (e.UserId == UserId))
+                                                            .Select(e => e.ToActivityDescription());
 
             return Ok(Descriptions.ToList());            
         }
 
         
-        [HttpPost("descriptions/new")]
+        [HttpPost("descriptions")]
         public async Task<IActionResult> AddDescription([FromBody] ActivityDescription Description)
         {
-            if (string.IsNullOrWhiteSpace(Description.Value))
-                return BadRequest();
+            if (!IsValid(Description))
+                return BadRequest("Invalid data");
 
-            if (!User.Identity.IsAuthenticated)
+            string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
+
+            if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
-            var dbUser = _context.Users.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
 
-            var Temp = new Data.Jiffy.Models.ActivityDescription()
+            var DbDescription = new Data.Jiffy.Models.ActivityDescription()
             {
                 Id = Guid.NewGuid(),
                 Value = Description.Value,
-                UserId = dbUser.Id,
+                UserId = UserId,
             };
 
-            _context.ActivityDescriptions.Add(Temp);
+            _context.ActivityDescriptions.Add(DbDescription);
             _context.SaveChanges();
 
-            return Ok();
+            return Ok(DbDescription.ToActivityDescription());
         }
 
-        [HttpGet("titles/all")]
+        [HttpGet("titles")]
         public IActionResult GetAllTitles()
         {
-            var dbUser = _context.Users.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
-            if (dbUser is null || !User.Identity.IsAuthenticated)
+            string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
+
+            if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
 
-            var Titles = _context.ActivityTitles.Where(e => (e.UserId == dbUser.Id))
-                                                .Select(t => new ActivityTitle(t.Title));
-
+            var Titles = _context.Activitys.Where(e => (e.UserId == UserId))
+                                           .Select(e => e.ToActivityTitle());
 
             return Ok(Titles.ToList());
         }
 
         //id
-        [HttpPost("titles/new")]
+        [HttpPost("titles")]
 		public async Task<IActionResult> AddTitle([FromBody] ActivityTitle Title)
         {
-            if (string.IsNullOrWhiteSpace(Title.Value))
-                return BadRequest();
+            if (!IsValid(Title))
+                return BadRequest("Invalid data");
 
-            var AspNetUser = _context.Users.FirstOrDefault(e => string.Equals(e.Email, User.Identity.Name));
-            if (AspNetUser is null || !User.Identity.IsAuthenticated)
+            string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
+
+            if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
 
-            var Temp = new Data.Jiffy.Models.Activity()
+            var DbTitle = new Data.Jiffy.Models.Activity()
             {
                 Id = Guid.NewGuid(),
                 Title = Title.Value,
-                UserId = AspNetUser.Id,
+                UserId = UserId,
             };
 
-            _context.ActivityTitles.Add(Temp);
+            _context.Activitys.Add(DbTitle);
             _context.SaveChanges();
 
-            return Ok();
+            return Ok(DbTitle.ToActivityTitle());
+        }
+
+        public bool IsValid(object Obj)
+        {
+            if (Obj is ActivityDescription Description)
+                return !string.IsNullOrWhiteSpace(Description.Value);
+            
+            if (Obj is ActivityTitle Title)
+                return !string.IsNullOrWhiteSpace(Title.Value);
+            
+            return false;
         }
     }
 }

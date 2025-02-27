@@ -27,8 +27,8 @@ namespace Zeiterfassungssoftware.Client.Services
 
 		public async void LoadData()
 		{
-			_activityTitles = await HttpClient.GetFromJsonAsync<List<ActivityTitle>>("titles/all") ?? new();
-			_activityDescriptions = await HttpClient.GetFromJsonAsync<List<ActivityDescription>>("descriptions/all") ?? new();
+			_activityTitles = await HttpClient.GetFromJsonAsync<List<ActivityTitle>>("titles") ?? new();
+			_activityDescriptions = await HttpClient.GetFromJsonAsync<List<ActivityDescription>>("descriptions") ?? new();
 
 			IsLoaded = true;
 		}
@@ -41,7 +41,7 @@ namespace Zeiterfassungssoftware.Client.Services
 
 			if (Obj is ActivityDescription Description)
 			{
-				HttpResponseMessage Response = await HttpClient.PostAsync("descriptions/new", Content);
+				HttpResponseMessage Response = await HttpClient.PostAsync("descriptions", Content);
 
 				try
 				{
@@ -56,7 +56,7 @@ namespace Zeiterfassungssoftware.Client.Services
 			if (Obj is ActivityTitle Title)
 			{
 				
-				HttpResponseMessage Response = await HttpClient.PostAsync("titles/new", Content);
+				HttpResponseMessage Response = await HttpClient.PostAsync("titles", Content);
 
 				try
 				{
