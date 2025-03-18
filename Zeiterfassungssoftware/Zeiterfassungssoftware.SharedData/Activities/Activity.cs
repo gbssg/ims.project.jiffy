@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,8 +12,10 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 	{
 		public Guid Id { get; set; }
 		public string Value { get; set; }
+		public bool Favorite { get; set; }
 
-		public override bool Equals(object? obj)
+
+        public override bool Equals(object? obj)
         {
             if(obj is ActivityTitle Other)
 			{
@@ -26,14 +30,17 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 
         public override int GetHashCode() => Normalize(Value).GetHashCode();
         private string Normalize(string Input) => Input.ToLower().Trim();
+		public override string ToString() => Value;
+		
     }
 
 	public class ActivityDescription
 	{
         public Guid Id { get; set; }
 		public string Value { get; set; }
+        public bool Favorite { get; set; }
 
-		public override bool Equals(object? obj)
+        public override bool Equals(object? obj)
 		{
 			if (obj is ActivityDescription Other)
 			{ 
@@ -47,5 +54,6 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 
         public override int GetHashCode() => Normalize(Value).GetHashCode();
         private string Normalize(string Input) => Input.ToLower().Trim();
+        public override string ToString() => Value;
     }
 }

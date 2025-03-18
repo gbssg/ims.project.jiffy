@@ -11,6 +11,10 @@ namespace Zeiterfassungssoftware.Client.Services
 
 	public class RemoteTimeEntryProvider : ITimeEntryProvider
 	{
+		public static readonly JsonSerializerOptions Options = new JsonSerializerOptions()
+        {
+            PropertyNameCaseInsensitive = true
+        };
 
         public HttpClient HttpClient { get; set; } = new HttpClient()
 		{
@@ -29,7 +33,6 @@ namespace Zeiterfassungssoftware.Client.Services
 		public async void LoadEntries()
 		{
 			_timeEntries = await HttpClient.GetFromJsonAsync<List<TimeEntry>>("") ?? new();
-
 			IsLoaded = true;
 		}
 
@@ -45,8 +48,8 @@ namespace Zeiterfassungssoftware.Client.Services
 			{
 				Response.EnsureSuccessStatusCode();
 				string ReponseContent = await Response.Content.ReadAsStringAsync();
-				Entry = JsonSerializer.Deserialize<TimeEntry>(ReponseContent);
-				_timeEntries.Add(Entry);
+				Entry = JsonSerializer.Deserialize<TimeEntry>(ReponseContent, Options) ?? new();
+                _timeEntries.Add(Entry);
 			}
 			catch (Exception e) { Console.WriteLine("Failed to Send Entry"); }
 
@@ -93,19 +96,7 @@ namespace Zeiterfassungssoftware.Client.Services
 			try
 			{
 				Response.EnsureSuccessStatusCode();
-
-				int i = 0;
-                foreach(var Ent in _timeEntries)
-				{
-					if (Ent.Id == Entry.Id)
-					{
-						_timeEntries[i] = Entry;
-						break;
-					}
-					i++;
-				}
-
-
+				_timeEntries[_timeEntries.IndexOf(_timeEntries.FirstOrDefault(e => e.Id == Entry.Id) ?? new())] = Entry;
             }
 			catch (Exception e) { Console.WriteLine("Failed to Update Entry"); }
 

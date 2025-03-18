@@ -16,6 +16,8 @@
 
 
 
+
+
   <ItemGroup>
     <ProjectReference Include="..\..\Zeiterfassungssoftware.SharedData\Zeiterfassungssoftware.SharedData.csproj" />
     <ProjectReference Include="..\Zeiterfassungssoftware.Client\Zeiterfassungssoftware.Client.csproj" />

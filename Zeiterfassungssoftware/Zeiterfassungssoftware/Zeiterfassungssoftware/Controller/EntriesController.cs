@@ -86,7 +86,7 @@ namespace Zeiterfassungssoftware.Services
         }
 
         [HttpDelete("{id}")]
-        public IActionResult AddDescription(Guid Id)
+        public IActionResult DeleteEntry(Guid Id)
         {
             string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
 

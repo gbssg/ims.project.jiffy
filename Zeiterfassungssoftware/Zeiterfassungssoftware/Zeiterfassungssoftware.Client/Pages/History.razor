@@ -11,7 +11,7 @@
     <div class="history-page-body">
         <div class="info-body">
             <div class="flex-div-nowrap info-widgets">
-                <Widget Title="Overtime" Text=@(Overtime.TotalHours < 1 ? $"{Math.Floor(Overtime.TotalMinutes)}min" : $"{Math.Floor(Overtime.TotalHours)}h") />
+                <Widget Title="Overtime" Text=@(Math.Abs(Overtime.TotalHours) < 1 ? $"{Math.Floor(Overtime.TotalMinutes)}min" : $"{Math.Floor(Overtime.TotalHours)}h") />
                 <Widget Title="Sick days" Text=@($"{Sickdays}") />
             </div>
             <div class="history-filter-container">

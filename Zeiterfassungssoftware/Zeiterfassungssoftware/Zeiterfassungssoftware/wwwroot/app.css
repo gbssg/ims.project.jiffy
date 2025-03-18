@@ -26,6 +26,17 @@ a:hover {
         color: black;
     }
 
+.activity-edit-button {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    background-color: #bb86fc;
+}
+
+.activity-select-list {
+    width: 100%;
+}
+
 .content {
     padding-top: 1.1rem;
 }
@@ -60,11 +71,10 @@ h1:focus {
     border-color: #929292;
 }
 
-
-
-
+.activity-page-body {
+    width: 80%;
+}
 /* Custom */
-
 /*  */
 body {
     background-color: #121212;
