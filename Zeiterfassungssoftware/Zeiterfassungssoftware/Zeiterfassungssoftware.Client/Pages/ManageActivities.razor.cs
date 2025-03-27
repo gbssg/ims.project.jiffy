@@ -22,12 +22,33 @@ namespace Zeiterfassungssoftware.Client.Pages
 
         public void UpdateTimer(object? state)
         {
-            if (ActivitySource.IsLoaded)
-                Timer?.Dispose();
+            //if (ActivitySource.IsLoaded)
+            //    Timer?.Dispose();
             
             InvokeAsync(StateHasChanged);
         }
 
+        public void Delete(object Obj)
+        {
+            ActivitySource.Remove(Obj);
+        }
+
+        public void Favorize(object Obj)
+        {
+            if(Obj is ActivityDescription Description)
+            {
+                Description.Favorite = true;
+                ActivitySource.Update(Description);
+                return;
+            }
+
+            if (Obj is ActivityTitle Title)
+            {
+                Title.Favorite = true;
+                ActivitySource.Update(Title);
+                return;
+            }
+        }
 
         void IDisposable.Dispose()
         {

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -11,7 +12,13 @@ namespace Zeiterfassungssoftware.Client.Services
 	public class RemoteActivityProvider : IActivityProvider
 	{
 
-		public HttpClient HttpClient { get; set; } = new HttpClient()
+        public static readonly JsonSerializerOptions Options = new JsonSerializerOptions()
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
+
+        public HttpClient HttpClient { get; set; } = new HttpClient()
 		{
 			BaseAddress = new Uri("https://localhost:7099/api/v1/activities/")
 		};
@@ -67,7 +74,45 @@ namespace Zeiterfassungssoftware.Client.Services
 			}
 		}
 
-		public bool Contains(object Obj)
+        public async Task<object> Update(object Obj)
+        {
+
+            string JsonData = JsonSerializer.Serialize(Obj);
+            var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
+
+            if (Obj is ActivityDescription Description)
+            {
+                HttpResponseMessage Response = await HttpClient.PatchAsync("descriptions", Content);
+
+                try
+                {
+                    Response.EnsureSuccessStatusCode();
+                    string ReponseContent = await Response.Content.ReadAsStringAsync();
+                    ActivityDescription ResponseDescription = JsonSerializer.Deserialize<ActivityDescription>(ReponseContent, Options) ?? new();
+                    return ResponseDescription;
+                }
+                catch (Exception e) { Console.WriteLine("Failed to Send Description"); }
+
+            }
+
+            if (Obj is ActivityTitle Title)
+            {
+
+                HttpResponseMessage Response = await HttpClient.PatchAsync("titles", Content);
+
+                try
+                {
+                    Response.EnsureSuccessStatusCode();
+                    string ReponseContent = await Response.Content.ReadAsStringAsync();
+                    ActivityTitle ResponseTitle = JsonSerializer.Deserialize<ActivityTitle>(ReponseContent, Options) ?? new();
+					return ResponseTitle;
+				}
+                catch (Exception e) { Console.WriteLine("Failed to Send Title"); }
+            }
+            return null;
+        }
+
+        public bool Contains(object Obj)
 		{
 			if(Obj is ActivityTitle Title)
 				return _activityTitles.Contains(Title);
@@ -88,9 +133,33 @@ namespace Zeiterfassungssoftware.Client.Services
 			return _activityTitles;
 		}
 
-		public void Remove(object Obj)
+		public async void Remove(object Obj)
 		{
-			// delete
-		}
+            if (Obj is ActivityDescription Description)
+            {
+                HttpResponseMessage Response = await HttpClient.DeleteAsync($"descriptions/{Description.Id}");
+
+                try
+                {
+                    Response.EnsureSuccessStatusCode();
+                    _activityDescriptions.Remove(Description);
+                }
+                catch (Exception e) { Console.WriteLine("Failed to Send Description"); }
+
+            }
+
+            if (Obj is ActivityTitle Title)
+            {
+
+                HttpResponseMessage Response = await HttpClient.DeleteAsync($"titles/{Title.Id}");
+
+                try
+                {
+                    Response.EnsureSuccessStatusCode();
+					_activityTitles.Remove(Title);
+                }
+                catch (Exception e) { Console.WriteLine("Failed to Send Title"); }
+            }
+        }
 	}
 }

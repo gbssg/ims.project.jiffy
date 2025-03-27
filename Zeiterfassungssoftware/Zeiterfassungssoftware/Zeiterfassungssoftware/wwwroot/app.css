@@ -72,7 +72,11 @@ h1:focus {
 }
 
 .activity-page-body {
-    width: 80%;
+    width: 90%;
+}
+
+.activity-select-list {
+    height: 100px;
 }
 /* Custom */
 /*  */

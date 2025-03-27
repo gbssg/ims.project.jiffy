@@ -45,7 +45,7 @@ namespace Zeiterfassungssoftware.Data
 
                 entity.HasOne(d => d.User).WithMany(p => p.ActivityTitles)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.ClientSetNull)  
                     .HasConstraintName("FK_ActivityTitle_AspNetUsers");
             });
 

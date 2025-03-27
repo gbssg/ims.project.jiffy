@@ -62,8 +62,8 @@ namespace Zeiterfassungssoftware.Client.Pages
 			if (Disabled)
 				return;
 
-			if (Title.ToLower().Equals("krank"))
-			{
+			if (string.Equals(Title, "Krank"))
+            {
 				TimeEntry Entry = new()
 				{
 					Start = DateTime.Now,

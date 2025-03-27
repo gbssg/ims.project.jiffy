@@ -23,9 +23,17 @@
 				<div class="centered-div-flex">
 					<select class="activity-select toprounded" @bind="ActivityTitleSelect">
 						<option>@NEW_ACTIVITY_TITLE</option>
-						@foreach (var Activity in ActivitySource.GetActivityTitles())
+						@foreach (var Activity in ActivitySource.GetActivityTitles().OrderByDescending(e => !e.Favorite))
 						{
-							<option value="@Activity.Value">@Activity.Value</option>
+							<option value="@Activity.Value">
+								<div style="width: 100%;">
+									@if (Activity.Favorite)
+									{
+										<p>&starf; </p>
+									}
+									<p>@Activity.Value</p>
+								</div>
+							</option>
 						}
 					</select>
 				</div>
@@ -35,9 +43,17 @@
 				<div class="centered-div-flex">
 					<select @bind="ActivityDescriptionSelect" class="activity-select @(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "bottomrounded")">
 						<option>@NEW_ACTIVITY_DESCRIPTION</option>
-						@foreach (var Activity in ActivitySource.GetActivityDescriptions())
+						@foreach (var Activity in ActivitySource.GetActivityDescriptions().OrderByDescending(e => !e.Favorite))
 						{
-							<option value="@Activity.Value">@Activity.Value</option>
+							<option value="@Activity.Value">
+								<div style="width: 100%;">
+									@if (Activity.Favorite)
+									{
+										<p>&starf; </p>
+									}
+									<p>@Activity.Value</p>
+								</div>
+							</option>
 						}
 					</select>
 				</div>

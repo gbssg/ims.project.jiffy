@@ -7,6 +7,7 @@ public partial class Activity
     public Guid Id { get; set; }
     public string Title { get; set; } = null!;
     public string UserId { get; set; } = null!;
+    public bool Favorite { get; set; }
     public virtual ApplicationUser User { get; set; } = null!;
 
     public ActivityTitle ToActivityTitle()
@@ -15,6 +16,7 @@ public partial class Activity
         {
             Id = this.Id,
             Value = this.Title,
+            Favorite = this.Favorite,
         };
     }
 

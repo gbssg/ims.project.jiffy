@@ -11,8 +11,8 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 	public class ActivityTitle
 	{
 		public Guid Id { get; set; }
-		public string Value { get; set; }
-		public bool Favorite { get; set; }
+		public string Value { get; set; } = string.Empty;
+        public bool Favorite { get; set; }
 
 
         public override bool Equals(object? obj)
@@ -37,7 +37,7 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 	public class ActivityDescription
 	{
         public Guid Id { get; set; }
-		public string Value { get; set; }
+		public string Value { get; set; } = string.Empty;
         public bool Favorite { get; set; }
 
         public override bool Equals(object? obj)
