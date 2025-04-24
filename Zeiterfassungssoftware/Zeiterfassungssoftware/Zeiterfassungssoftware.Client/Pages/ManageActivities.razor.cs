@@ -9,8 +9,11 @@ namespace Zeiterfassungssoftware.Client.Pages
         
         private string ActivityTitle { get; set; } = string.Empty;
         private string ActivityDescription { get; set; } = string.Empty;
-        private ActivityTitle SelectedTitle => ActivitySource.GetActivityTitles().FirstOrDefault(e => e.Value == ActivityTitle) ?? new ActivityTitle();
-        private ActivityDescription SelectedDescription => ActivitySource.GetActivityDescriptions().FirstOrDefault(e => e.Value == ActivityDescription) ?? new ActivityDescription();
+        private ActivityTitle SelectedTitle => ActivitySource.GetActivityTitles().FirstOrDefault(e => string.Equals(e.Id.ToString(), ActivityTitle)) ?? new ActivityTitle();
+        private ActivityDescription SelectedDescription => ActivitySource.GetActivityDescriptions().FirstOrDefault(e => string.Equals(e.Id.ToString(), ActivityDescription)) ?? new ActivityDescription();
+        private ActivityTitle? EditingTitle { get; set; }
+        private ActivityDescription? EditingDescription { get; set; }
+
 
         private Timer? Timer { get; set; }
 
@@ -33,18 +36,83 @@ namespace Zeiterfassungssoftware.Client.Pages
             ActivitySource.Remove(Obj);
         }
 
+        public void Edit(object Obj)
+        {
+
+            if ((Obj is ActivityDescription) ? (EditingDescription is null) : (EditingTitle is null))
+            {
+                StartEditing(Obj);
+            }
+            else
+            {
+                StopEditing(Obj);
+            }
+        }
+
+        public void StartEditing(object Obj)
+        {
+            if(Obj is ActivityTitle Title)
+            {
+                EditingTitle = new()
+                {
+                    Id = Title.Id,
+                    Value = Title.Value
+                };
+            } 
+            
+            if(Obj is ActivityDescription Description)
+            {
+                EditingDescription = new()
+                {
+                    Id = Description.Id,
+                    Value = Description.Value
+                };
+            }
+        }
+
+        public void StopEditing(object Obj)
+        {
+            if (Obj is ActivityTitle Title)
+            {
+                if(!Title.Id.Equals(EditingTitle.Id))
+                {
+                    Title = ActivitySource.GetActivityTitles().FirstOrDefault(e => e.Id.Equals(EditingTitle.Id));
+                    if (Title is null)
+                        return;
+                }
+                Title.Value = EditingTitle?.Value;
+                EditingTitle = null;
+                ActivitySource.Update(Title);
+            }
+
+            if (Obj is ActivityDescription Description)
+            {
+                if (!Description.Id.Equals(EditingDescription.Id))
+                {
+                    Description = ActivitySource.GetActivityDescriptions().FirstOrDefault(e => e.Id.Equals(EditingDescription.Id));
+                    if (Description is null)
+                        return;
+                }
+
+                Description.Value = EditingDescription?.Value;
+                EditingDescription = null;
+                ActivitySource.Update(Description);
+            }
+        }
+
+
         public void Favorize(object Obj)
         {
             if(Obj is ActivityDescription Description)
             {
-                Description.Favorite = true;
+                Description.Favorite = !Description.Favorite;
                 ActivitySource.Update(Description);
                 return;
             }
 
             if (Obj is ActivityTitle Title)
             {
-                Title.Favorite = true;
+                Title.Favorite = !Title.Favorite;
                 ActivitySource.Update(Title);
                 return;
             }

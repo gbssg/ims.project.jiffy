@@ -26,11 +26,42 @@ a:hover {
         color: black;
     }
 
+.activity-edit-button-first {
+    border-top-left-radius: 24px;
+    border-bottom-left-radius: 24px;
+}
+
+.activity-edit-button-mid {
+    margin: -6px;
+}
+
+.activity-edit-button-last {
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
+    
+}
 .activity-edit-button {
+    background-color: #292929;
     height: 48px;
-    width: 48px;
-    border-radius: 50%;
-    background-color: #bb86fc;
+    width: 30.8vw;
+    border: none;
+    margin: -5px;
+    padding: 0;
+    transition: 1s;
+}
+
+.activity-edit-button:hover {
+    background-color: #191919;
+}
+
+.activity-edit-buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    gap: 0;
+    padding: 0;
+    margin-top: 10px;
+    margin-left: 5px;
 }
 
 .activity-select-list {
@@ -76,14 +107,42 @@ h1:focus {
 }
 
 .activity-select-list {
-    height: 100px;
+    scrollbar-width: none;
+    border-radius: 20px;
+    background-color: #292929;
+    color: white;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 36vh;
 }
-/* Custom */
-/*  */
-body {
-    background-color: #121212;
-    color: #ffffff;
-} 
+
+.activity-edit-textfield-description {
+    width: 100%;
+    border-radius: 15px;
+    padding-left: 10px;
+    height: 100px;
+    margin-top: 5px;
+}
+
+.activity-edit-textfield-title {
+    width: 100%;
+    border-radius: 15px;
+    padding-left: 10px;
+}
+
+.activity-edit-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 1vh;
+    margin-bottom: 0.5vh;
+}
+    /* Custom */
+    /*  */
+    body {
+        background-color: #121212;
+        color: #ffffff;
+    } 
 
 p {
     margin-bottom: 0px;
