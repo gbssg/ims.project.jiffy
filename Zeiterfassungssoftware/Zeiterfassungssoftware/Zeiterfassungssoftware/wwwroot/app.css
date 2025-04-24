@@ -50,6 +50,15 @@ a:hover {
     transition: 1s;
 }
 
+
+@media (min-width: 641px) {
+
+
+    .activity-edit-button {
+        width: calc(100% / 3 + 5px);
+    }
+}
+
 .activity-edit-button:hover {
     background-color: #191919;
 }
