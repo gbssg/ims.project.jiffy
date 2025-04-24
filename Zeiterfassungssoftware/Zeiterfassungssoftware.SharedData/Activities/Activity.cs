@@ -13,7 +13,7 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 		public Guid Id { get; set; }
 		public string Value { get; set; } = string.Empty;
         public bool Favorite { get; set; }
-
+		 
 
         public override bool Equals(object? obj)
         {
@@ -30,7 +30,7 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 
         public override int GetHashCode() => Normalize(Value).GetHashCode();
         private string Normalize(string Input) => Input.ToLower().Trim();
-		public override string ToString() => Value;
+		public override string ToString() => Id.ToString();
 		
     }
 
@@ -54,6 +54,6 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 
         public override int GetHashCode() => Normalize(Value).GetHashCode();
         private string Normalize(string Input) => Input.ToLower().Trim();
-        public override string ToString() => Value;
+        public override string ToString() => Id.ToString();
     }
 }
