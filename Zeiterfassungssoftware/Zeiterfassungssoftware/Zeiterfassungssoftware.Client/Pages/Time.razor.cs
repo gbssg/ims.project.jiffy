@@ -66,18 +66,16 @@ namespace Zeiterfassungssoftware.Client.Pages
             {
 				TimeEntry Entry = new()
 				{
-					Start = DateTime.Now,
+					Start = new DateTime(DateOnly.FromDateTime(DateTime.Now), new TimeOnly(0,0,0)),
+					End = new DateTime(DateOnly.FromDateTime(DateTime.Now), new TimeOnly(23, 59, 59)),
 					Title = "Krank",
 					Description = this.Description,
 				};
 
 				TimeEntrySource.Add(Entry);
-				ActivityTitleSelect = NEW_ACTIVITY_TITLE;
-				ActivityDescriptionSelect = NEW_ACTIVITY_DESCRIPTION;
-				ActivityTitle = string.Empty;
-				ActivityDescription = string.Empty;
-
-				return;
+				
+                ResetValues();
+                return;
 			}
 
 			if (!Started)
@@ -125,6 +123,8 @@ namespace Zeiterfassungssoftware.Client.Pages
 					TimeEntrySource.Remove(CurrentEntry);
 				else
 					TimeEntrySource.Update(CurrentEntry);
+
+				ResetValues();
 			}
 			else
 			{
@@ -132,6 +132,14 @@ namespace Zeiterfassungssoftware.Client.Pages
 				throw new Exception("CurrentEntry was null even though the measuring was not started!");
 			}
 		}
+
+		public void ResetValues()
+		{
+            ActivityTitleSelect = NEW_ACTIVITY_TITLE;
+            ActivityDescriptionSelect = NEW_ACTIVITY_DESCRIPTION;
+            ActivityTitle = string.Empty;
+            ActivityDescription = string.Empty;
+        }
 
 		public void UpdateTimer(object? obj)
 		{
