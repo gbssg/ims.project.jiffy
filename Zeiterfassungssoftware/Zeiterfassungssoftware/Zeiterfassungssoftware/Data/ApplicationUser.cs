@@ -11,6 +11,7 @@ namespace Zeiterfassungssoftware.Data
         public virtual ICollection<Activity> ActivityTitles { get; set; } = new List<Activity>();
 
         public virtual ICollection<Entry> Entries { get; set; } = new List<Entry>();
+        public Guid ClassId { get; set; }
     }
 
 }

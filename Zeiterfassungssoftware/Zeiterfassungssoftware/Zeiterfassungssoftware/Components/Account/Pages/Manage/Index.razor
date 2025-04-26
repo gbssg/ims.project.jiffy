@@ -8,6 +8,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject IdentityUserAccessor UserAccessor
 @inject IdentityRedirectManager RedirectManager
+@inject ApplicationDbContext _context
 
 <PageTitle>Profile</PageTitle>
 
@@ -28,6 +29,16 @@
                 <label for="phone-number" class="form-label">Phone number</label>
                 <ValidationMessage For="() => Input.PhoneNumber" class="text-danger" />
             </div>
+
+            <div class="form-floating mb-3">
+                <select>
+                    @foreach(var Class in Classes) {
+                        <option value="@Class.Id">@Class.Name</option>
+                    }
+                </select>
+                <label for="class" class="form-label">Class</label>
+            </div>
+
             <button type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </EditForm>
     </div>
@@ -37,6 +48,7 @@
     private ApplicationUser user = default!;
     private string? username;
     private string? phoneNumber;
+    public List<Data.Jiffy.Models.Class> Classes = new();
 
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
@@ -51,6 +63,8 @@
         phoneNumber = await UserManager.GetPhoneNumberAsync(user);
 
         Input.PhoneNumber ??= phoneNumber;
+
+        Classes = _context.Classes.ToList();
     }
 
     private async Task OnValidSubmitAsync()

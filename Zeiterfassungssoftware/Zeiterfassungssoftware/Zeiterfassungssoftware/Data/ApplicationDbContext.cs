@@ -13,7 +13,7 @@ namespace Zeiterfassungssoftware.Data
 
         public virtual DbSet<Entry> Entries { get; set; }
 
-        public virtual DbSet<Klasse> Klasses { get; set; }
+        public virtual DbSet<Class> Classes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -66,13 +66,17 @@ namespace Zeiterfassungssoftware.Data
                     .HasConstraintName("FK_Entry_AspNetUsers");
             });
 
-            modelBuilder.Entity<Klasse>(entity =>
+            modelBuilder.Entity<Class>(entity =>
             {
-                entity.ToTable("Klasse");
+                entity.ToTable("Class");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
-                entity.Property(e => e.Name).HasMaxLength(250);
-                entity.Property(e => e.StartJahr).HasColumnName("Start_Jahr");
+                entity.Property(e => e.Name).HasMaxLength(250); 
+                entity.Property(e => e.ShouldTimeMonday).HasColumnType("time");
+                entity.Property(e => e.ShouldTimeTuesday).HasColumnType("time");
+                entity.Property(e => e.ShouldTimeWednesday).HasColumnType("time");
+                entity.Property(e => e.ShouldTimeThursday).HasColumnType("time");
+                entity.Property(e => e.ShouldTimeFriday).HasColumnType("time");
             });
         }
     }
