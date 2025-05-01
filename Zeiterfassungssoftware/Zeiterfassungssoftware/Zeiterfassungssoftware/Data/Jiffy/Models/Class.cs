@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Zeiterfassungssoftware.SharedData.Classes;
 
 namespace Zeiterfassungssoftware.Data.Jiffy.Models;
 
@@ -12,6 +13,5 @@ public partial class Class
     public TimeSpan ShouldTimeWednesday { get; set; }
     public TimeSpan ShouldTimeThursday { get; set; }
     public TimeSpan ShouldTimeFriday { get; set; }
-
 
 }
