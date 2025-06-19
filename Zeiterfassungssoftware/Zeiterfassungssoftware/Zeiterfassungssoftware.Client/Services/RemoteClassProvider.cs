@@ -22,12 +22,19 @@ namespace Zeiterfassungssoftware.Client.Services
         
         public RemoteClassProvider()
         {
-            _classes = HttpClient.GetFromJsonAsync<List<Class>>("").GetAwaiter().GetResult() ?? new();
+            LoadData();
+        }
+
+        public async void LoadData()
+        {
+            _classes = await HttpClient.GetFromJsonAsync<List<Class>>("") ?? new();
             IsLoaded = true;
         }
+
         public void Add(Class Class)
         {
             string JsonData = JsonSerializer.Serialize(Class);
+            Console.WriteLine(JsonData);
             var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
 
             HttpResponseMessage Response = HttpClient.PostAsync("", Content).GetAwaiter().GetResult();

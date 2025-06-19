@@ -11,36 +11,23 @@ namespace Zeiterfassungssoftware.Mapper
             {
                 Id = Class.Id,
                 Name = Class.Name,
-                ShouldTimeMonday = Class.ShouldTimes[0],
-                ShouldTimeTuesday = Class.ShouldTimes[1],
-                ShouldTimeWednesday = Class.ShouldTimes[2],
-                ShouldTimeThursday = Class.ShouldTimes[3],
-                ShouldTimeFriday = Class.ShouldTimes[4]
+                ShouldTimes = Class.ShouldTimes.Select(e => ShouldTimeMapper.FromDTO(e)).ToList()
             };
         }
 
         public static SharedData.Classes.Class ToDTO(Class Class)
         {
-            var ShouldTimes = new TimeSpan[5]
-            {
-                Class.ShouldTimeMonday,
-                Class.ShouldTimeTuesday,
-                Class.ShouldTimeWednesday,
-                Class.ShouldTimeThursday,
-                Class.ShouldTimeFriday
-            };
-
             return new SharedData.Classes.Class()
             {
                 Id = Class.Id,
                 Name = Class.Name,
-                ShouldTimes = ShouldTimes
+                ShouldTimes = Class.ShouldTimes.Select(e => ShouldTimeMapper.ToDTO(e)).ToList()
             };
         }
 
         public static bool ValidateDTO(SharedData.Classes.Class Class)
         {
-            return (!string.IsNullOrEmpty(Class.Name) && (Class.ShouldTimes.Length == 5));
+            return (!string.IsNullOrEmpty(Class.Name));
         }
     }
 }

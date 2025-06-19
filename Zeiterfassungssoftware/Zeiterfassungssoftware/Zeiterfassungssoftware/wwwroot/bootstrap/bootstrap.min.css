@@ -4066,7 +4066,6 @@ textarea.form-control-lg {
     }
 
 .nav-item:hover {
-    background-color: rgba(203, 161, 255,0.6);
     transition: 1s;
 }
 .nav-item {

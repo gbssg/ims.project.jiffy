@@ -6,14 +6,12 @@ using Zeiterfassungssoftware.Data.Jiffy.Models;
 namespace Zeiterfassungssoftware.Data
 {
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
-    {
+    { 
         public virtual DbSet<ActivityDescription> ActivityDescriptions { get; set; }
-
         public virtual DbSet<Activity> Activitys { get; set; }
-
         public virtual DbSet<Entry> Entries { get; set; }
-
         public virtual DbSet<Class> Classes { get; set; }
+        public virtual DbSet<ShouldTime> ShouldTimes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -71,12 +69,7 @@ namespace Zeiterfassungssoftware.Data
                 entity.ToTable("Class");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
-                entity.Property(e => e.Name).HasMaxLength(250); 
-                entity.Property(e => e.ShouldTimeMonday).HasColumnType("time");
-                entity.Property(e => e.ShouldTimeTuesday).HasColumnType("time");
-                entity.Property(e => e.ShouldTimeWednesday).HasColumnType("time");
-                entity.Property(e => e.ShouldTimeThursday).HasColumnType("time");
-                entity.Property(e => e.ShouldTimeFriday).HasColumnType("time");
+                entity.Property(e => e.Name).HasMaxLength(250);
             });
         }
     }

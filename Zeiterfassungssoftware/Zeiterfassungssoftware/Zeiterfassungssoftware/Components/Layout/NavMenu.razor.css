@@ -82,28 +82,28 @@
     
 }
 
-
-
-    .nav-item ::deep .nav-link {
-        color: #d7d7d7;
-        background: none;
-        border: none;
-        border-radius: 4px;
-        height: 3rem;
-        display: flex;
-        align-items: center;
-        line-height: 3rem;
-        width: 100%;
-    }
+.nav-item ::deep .nav-link {
+    color: #d7d7d7;
+    background: none;
+    border: none;
+    border-radius: 23px;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    line-height: 3rem;
+    width: 100%;
+    transition: 1s;
+}
 
 .nav-item ::deep a.active {
-    background-color: rgba(203, 161, 255,0.37);
+    background-color: rgba(203, 161, 255,0.2);
     color: white;
     border-radius: 23px;
 }
 
 .nav-item ::deep .nav-link:hover {
-    background-color: rgba(203, 161, 255,0.1);
+    background-color: rgba(203, 161, 255, 0.37);
+    transition: 1s;
     color: white;
     border-radius: 23px;
 }

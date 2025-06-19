@@ -50,16 +50,46 @@ a:hover {
     transition: 1s;
 }
 
-
-@media (min-width: 641px) {
-
-
-    .activity-edit-button {
-        width: calc(100% / 3 + 5px);
-    }
+.shouldtimes-body {
+    background-color: #121212;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 15px;
+    padding: 10px;
 }
 
-.activity-edit-button:hover {
+.shouldtime {
+    position: relative;
+    background-color: #292929;
+    border-radius: 25px;
+    padding: 5px;
+}
+
+.remove-shouldtime {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    color: #595959;
+}
+
+.remove-shouldtime:hover {
+    color: red;
+}
+
+.shouldtime-info {
+    margin: 5px;
+}
+
+@media (min-width: 641px) {
+    .activity-edit-button {
+            width: calc(100% / 3 + 5px);
+        }
+    }
+
+    .activity-edit-button:hover {
     background-color: #191919;
 }
 
@@ -1053,92 +1083,105 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         animation: slide-in-top 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     }
 
-
-
-@keyframes slide-in-top {
-    0% {
-        transform: translateY(-10px);
-        opacity: 0;
-    }
-
-    100% {
-        transform: translateY(0px);
-        opacity: 1;
-    }
+.class-edit-page {
+    width: 95%;
+    background-color: #292929;
+    border-radius: 20px;
 }
 
 
-@keyframes from-left {
-    0% {
-        z-index: 20;
-        opacity: 0;
-        translate: -20px -6px;
-    }
-
-    20% {
-        z-index: 10;
-        opacity: 1;
-        translate: 0px 0px;
-    }
-
-    40% {
-        z-index: 9;
-        translate: 0px 4px;
-    }
-
-    60% {
-        z-index: 8;
-        translate: 0px 8px;
-    }
-
-    80% {
-        z-index: 7;
-        opacity: 1;
-        translate: 0px 12px;
-    }
-
-    100% {
-        z-index: 5;
-        translate: 0px 30px;
-        opacity: 0;
+@media (min-width: 1282px) {
+    .class-edit-page {
+        width: 60%;
+        background-color: #292929;
+        border-radius: 20px;
     }
 }
 
-@keyframes from-right {
-    0% {
-        z-index: 20;
-        opacity: 0;
-        translate: 20px -6px;
+    @keyframes slide-in-top {
+        0% {
+            transform: translateY(-10px);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translateY(0px);
+            opacity: 1;
+        }
     }
 
-    20% {
-        z-index: 10;
-        opacity: 1;
-        translate: 0px 0px;
+
+    @keyframes from-left {
+        0% {
+            z-index: 20;
+            opacity: 0;
+            translate: -20px -6px;
+        }
+
+        20% {
+            z-index: 10;
+            opacity: 1;
+            translate: 0px 0px;
+        }
+
+        40% {
+            z-index: 9;
+            translate: 0px 4px;
+        }
+
+        60% {
+            z-index: 8;
+            translate: 0px 8px;
+        }
+
+        80% {
+            z-index: 7;
+            opacity: 1;
+            translate: 0px 12px;
+        }
+
+        100% {
+            z-index: 5;
+            translate: 0px 30px;
+            opacity: 0;
+        }
     }
 
-    40% {
-        z-index: 9;
-        translate: 0px 4px;
-    }
+    @keyframes from-right {
+        0% {
+            z-index: 20;
+            opacity: 0;
+            translate: 20px -6px;
+        }
 
-    60% {
-        z-index: 8;
-        translate: 0px 8px;
-    }
+        20% {
+            z-index: 10;
+            opacity: 1;
+            translate: 0px 0px;
+        }
 
-    80% {
-        z-index: 7;
-        opacity: 1;
-        translate: 0px 12px;
-    }
+        40% {
+            z-index: 9;
+            translate: 0px 4px;
+        }
 
-    100% {
-        z-index: 5;
-        translate: 0px 30px;
-        opacity: 0;
+        60% {
+            z-index: 8;
+            translate: 0px 8px;
+        }
+
+        80% {
+            z-index: 7;
+            opacity: 1;
+            translate: 0px 12px;
+        }
+
+        100% {
+            z-index: 5;
+            translate: 0px 30px;
+            opacity: 0;
+        }
     }
-}
 
     @keyframes rotate {
         100% {
