@@ -42,12 +42,12 @@ namespace Zeiterfassungssoftware.Client.Pages
 
         
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             Timer = new Timer(UpdateTimer, null, 0, 100);
         }
 
-        protected async Task CalculateStats()
+        protected void CalculateStats()
         {
             var Weeks = TimeEntrySource.GetEntries()
                                        .GroupBy(e => CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(e.Start, CalendarWeekRule.FirstDay, DayOfWeek.Monday));
@@ -82,7 +82,7 @@ namespace Zeiterfassungssoftware.Client.Pages
                 Filter.PopUp = true;
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         { 
             Timer?.Dispose();
         }

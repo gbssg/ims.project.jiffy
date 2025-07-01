@@ -26,8 +26,12 @@ namespace Zeiterfassungssoftware.Controller
         [HttpGet]
         public IActionResult GetAllClasses()
         {
-            var Class = _context.Classes;
-            return Ok(Class.Select(e => ClassMapper.ToDTO(e)).ToList());
+            var Classes = _context.Classes;
+            foreach(var Class in Classes)
+            {
+                Class.ShouldTimes = _context.ShouldTimes.Where(e => e.ClassId == Class.Id).ToList();
+            }
+            return Ok(Classes.Select(e => ClassMapper.ToDTO(e)).ToList());
         }
 
         [HttpGet("{Id}")]
@@ -36,6 +40,8 @@ namespace Zeiterfassungssoftware.Controller
             var Class = _context.Classes.FirstOrDefault(e => e.Id.Equals(Id));
             if (Class is null)
                 return NotFound();
+
+            Class.ShouldTimes = _context.ShouldTimes.Where(e => e.ClassId == Class.Id).ToList();
 
             return Ok(ClassMapper.ToDTO(Class));
         }
@@ -55,15 +61,17 @@ namespace Zeiterfassungssoftware.Controller
             var Class = _context.Classes.FirstOrDefault(e => e.Id.Equals(DbUser.ClassId));
             if (Class is null)
                 return NotFound();
+
+            Class.ShouldTimes = _context.ShouldTimes.Where(e => e.ClassId == Class.Id).ToList();
             
             return Ok(ClassMapper.ToDTO(Class));
         }
-
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{Id}")]
         public IActionResult DeleteClassById(Guid Id)
         {
-            if(!User.IsInRole("Administrator"))
-                return Unauthorized();
+            if (Id.Equals(Guid.Empty))
+                return Forbid();
 
             var Class = _context.Classes.FirstOrDefault(e => e.Id.Equals(Id));
             if (Class is null)
@@ -74,27 +82,37 @@ namespace Zeiterfassungssoftware.Controller
 
             return NoContent();
         }
-
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public async Task<IActionResult> AddClass([FromBody] SharedData.Classes.Class Class)
         {
-            if (!User.IsInRole("Administrator"))
-                return Unauthorized();
 
             if (!ClassMapper.ValidateDTO(Class))
                 return BadRequest("Invalid data");
 
             var DbClass = ClassMapper.FromDTO(Class);
             DbClass.Id = Guid.NewGuid();
+
+            foreach(var ShouldTime in DbClass.ShouldTimes)
+            {
+                ShouldTime.Id = Guid.NewGuid();
+                ShouldTime.ClassId = DbClass.Id;
+                _context.ShouldTimes.Add(ShouldTime);
+            }
+
             _context.Classes.Add(DbClass);
             _context.SaveChanges();
 
             return Ok(ClassMapper.ToDTO(DbClass));
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPatch]
         public IActionResult UpdateClass([FromBody] SharedData.Classes.Class Class)
         {
+            if (Class.Id.Equals(Guid.Empty))
+                return Forbid();
+
             if (!ClassMapper.ValidateDTO(Class))
                 return BadRequest("Invalid data");
 

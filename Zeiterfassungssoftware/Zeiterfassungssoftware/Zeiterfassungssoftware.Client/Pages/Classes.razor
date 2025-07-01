@@ -1,0 +1,58 @@
+﻿@page "/classes"
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
+
+@using Microsoft.AspNetCore.Authorization
+@using Zeiterfassungssoftware.SharedData.Classes
+@attribute [Authorize(Roles = "Administrator")]
+
+
+<div class="vertical-center">
+    <div class="centered-div-flex">
+        <div class="class-edit-page">
+            @if(ClassSource.IsLoaded) {
+                <div style="display:flex; justify-content: center">
+                    <div>
+                        <div>
+                            <select style="width: 90%;" @onchange="@SelectedClassChanged">
+                                @foreach(var Class in ClassSource.GetClasses()) {
+                                    <option value="@Class.Id">@Class.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <TextField Multiline="false" PlaceHolder="Class name" @bind-Value="SelectedClass.Name" />
+                        
+                        <div class="shouldtimes-body">
+                            @foreach(var ShouldTime in SelectedClass.ShouldTimes)
+                            {
+                                <div class="shouldtime">
+                                    <button class="remove-shouldtime" @onclick="() => SelectedClass.ShouldTimes.Remove(ShouldTime)" >X</button>
+                                    <div class="shouldtime-info">
+                                        <select @bind="ShouldTime.DayOfWeek">
+                                            @foreach (var Weekday in Enum.GetValues(typeof(DayOfWeek)))
+                                            {
+                                                <option>@Weekday</option>
+                                            }
+                                        </select>
+                                        <input type="time" value="@ShouldTime.Should.ToString()" @onchange="(e) => ShouldTime.Should = TimeSpan.Parse(e.Value as string)" />
+                                    </div>
+                                </div>
+                            }
+                            <svg @onclick="() => SelectedClass.ShouldTimes.Add(new ShouldTime())" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </div>
+                        <div>
+                            @if(SelectedGuid.Equals(Guid.Empty)) {
+                                <Button Text="Create" OnClick="SaveClass" />
+                            } else {
+                                <Button Text="Save" OnClick="SaveClass" />
+                                <Button Text="Delete" OnClick="DeleteClass" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

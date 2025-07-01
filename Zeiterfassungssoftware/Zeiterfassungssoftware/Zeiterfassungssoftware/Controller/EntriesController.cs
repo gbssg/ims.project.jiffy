@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using Zeiterfassungssoftware.Client.Data.Filter;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.SharedData.Time;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Zeiterfassungssoftware.Services
 {
@@ -141,6 +143,13 @@ namespace Zeiterfassungssoftware.Services
                 return false;
 
             return true;
+        }
+
+        
+
+        public bool IsHoliday(DateTime Date)
+        {
+            return false;
         }
 
     }

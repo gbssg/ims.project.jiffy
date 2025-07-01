@@ -112,7 +112,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 				};
 
 				TimeEntrySource.Add(CurrentEntry);
-			}
+            }
 			else if (CurrentEntry != null)
 			{
 				Timer?.Dispose();

@@ -48,8 +48,9 @@ namespace Zeiterfassungssoftware.Client.Services
 			{
 				Response.EnsureSuccessStatusCode();
 				string ReponseContent = await Response.Content.ReadAsStringAsync();
-				Entry = JsonSerializer.Deserialize<TimeEntry>(ReponseContent, Options) ?? new();
-                _timeEntries.Add(Entry);
+				var ConfirmedEntry = JsonSerializer.Deserialize<TimeEntry>(ReponseContent, Options) ?? new();
+				Entry.Id = ConfirmedEntry.Id;
+                _timeEntries.Add(ConfirmedEntry);
 			}
 			catch (Exception e) { Console.WriteLine("Failed to Send Entry"); }
 

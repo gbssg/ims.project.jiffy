@@ -14,6 +14,10 @@
     <None Remove="Components\Data\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\Zeiterfassungssoftware.Client\Pages\Classes.razor.cs" Link="Classes.razor.cs" />
+  </ItemGroup>
+
 
 
 
@@ -26,6 +30,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8" />
+  </ItemGroup>
+
+
+
+
+
+  <ItemGroup>
+    <Folder Include="Service\" />
   </ItemGroup>
 
 </Project>

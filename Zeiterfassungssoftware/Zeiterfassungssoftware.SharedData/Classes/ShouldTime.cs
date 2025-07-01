@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Zeiterfassungssoftware.SharedData.Classes
 {
-    public class Class
+    public class ShouldTime
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public List<ShouldTime> ShouldTimes { get; set; } = new();
+        public Guid ClassId { get; set; }
+        public DayOfWeek DayOfWeek { get; set; }
+        public TimeSpan Should { get; set; }
     }
 }
