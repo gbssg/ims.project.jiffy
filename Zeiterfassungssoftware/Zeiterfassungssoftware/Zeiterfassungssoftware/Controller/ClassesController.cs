@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
@@ -50,8 +51,6 @@ namespace Zeiterfassungssoftware.Controller
         public IActionResult GetOwnClass()
         {
             var UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
-            if (string.IsNullOrEmpty(UserId))
-                return Unauthorized();
             
             var DbUser = _context.Users.FirstOrDefault(e => string.Equals(e.Id, UserId));
             if (DbUser is null)
@@ -66,6 +65,7 @@ namespace Zeiterfassungssoftware.Controller
             
             return Ok(ClassMapper.ToDTO(Class));
         }
+
         [Authorize(Roles = "Administrator")]
         [HttpDelete("{Id}")]
         public IActionResult DeleteClassById(Guid Id)
@@ -77,14 +77,20 @@ namespace Zeiterfassungssoftware.Controller
             if (Class is null)
                 return NotFound();
 
+            foreach(var ShouldTime in Class.ShouldTimes)
+            {
+                _context.Remove(ShouldTime);
+            }
+
             _context.Classes.Remove(Class);
             _context.SaveChanges();
 
             return NoContent();
         }
+
         [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public async Task<IActionResult> AddClass([FromBody] SharedData.Classes.Class Class)
+        public IActionResult AddClass([FromBody] SharedData.Classes.Class Class)
         {
 
             if (!ClassMapper.ValidateDTO(Class))
@@ -120,7 +126,20 @@ namespace Zeiterfassungssoftware.Controller
             if (DbClass is null)
                 return NotFound();
 
+            foreach(var ShouldTime in _context.ShouldTimes.Where(e => e.ClassId == Class.Id))
+            {
+                _context.Remove(ShouldTime);
+            }
+
             DbClass = ClassMapper.FromDTO(Class);
+
+            foreach (var ShouldTime in DbClass.ShouldTimes)
+            {
+                ShouldTime.Id = Guid.NewGuid();
+                ShouldTime.ClassId = DbClass.Id;
+                _context.ShouldTimes.Add(ShouldTime);
+            }
+
             _context.SaveChanges();
 
             return Ok(ClassMapper.ToDTO(DbClass));

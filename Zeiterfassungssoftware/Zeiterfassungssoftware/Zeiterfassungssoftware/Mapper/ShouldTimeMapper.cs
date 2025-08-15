@@ -8,6 +8,7 @@ namespace Zeiterfassungssoftware.Mapper
         {
             return new()
             {
+                Id = ShouldTime.Id,
                 ClassId = ShouldTime.ClassId,
                 Should = ShouldTime.Should,
                 DayOfWeek = ShouldTime.DayOfWeek,
@@ -18,6 +19,7 @@ namespace Zeiterfassungssoftware.Mapper
         {
             return new()
             {
+                Id = ShouldTime.Id,
                 ClassId = ShouldTime.ClassId,
                 Should = ShouldTime.Should,
                 DayOfWeek = ShouldTime.DayOfWeek,

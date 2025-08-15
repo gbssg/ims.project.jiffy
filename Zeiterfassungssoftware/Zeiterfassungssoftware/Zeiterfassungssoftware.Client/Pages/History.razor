@@ -48,7 +48,7 @@
         <div class="entry-list-body">
             @if (TimeEntrySource.IsLoaded)
             {
-                @foreach (var Entry in TimeEntrySource.GetEntries().Where(e => DoFiltersApply(e)).OrderByDescending(e => e.Start))
+                @foreach (var Entry in TimeEntrySource.GetEntries().Take(LastCount).Where(e => DoFiltersApply(e)).OrderByDescending(e => e.Start))
                 {
                     <HistoryEntry Entry="@Entry" ShowNames="@context.User.IsInRole("Administrator")" />
                 }

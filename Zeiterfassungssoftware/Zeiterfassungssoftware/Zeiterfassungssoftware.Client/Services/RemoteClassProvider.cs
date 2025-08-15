@@ -31,22 +31,22 @@ namespace Zeiterfassungssoftware.Client.Services
             IsLoaded = true;
         }
 
-        public void Add(Class Class)
+        public async void Add(Class Class)
         {
             string JsonData = JsonSerializer.Serialize(Class);
-            Console.WriteLine(JsonData);
             var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
-
-            HttpResponseMessage Response = HttpClient.PostAsync("", Content).GetAwaiter().GetResult();
 
             try
             {
+                HttpResponseMessage Response = await HttpClient.PostAsync("", Content);
                 Response.EnsureSuccessStatusCode();
-                string ReponseContent = Response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                string ReponseContent = await Response.Content.ReadAsStringAsync();
                 Class = JsonSerializer.Deserialize<Class>(ReponseContent, Options) ?? new();
                 _classes.Add(Class);
             }
-            catch (Exception e) { Console.WriteLine("Failed to Send Class"); }
+            catch (Exception e) { 
+                Console.WriteLine(e.Message);
+            }
 
             return;
         }
@@ -61,12 +61,12 @@ namespace Zeiterfassungssoftware.Client.Services
             return await HttpClient.GetFromJsonAsync<Class>($"{Id}");
         }
 
-        public void Remove(Class Class)
+        public async void Remove(Class Class)
         {
-            HttpResponseMessage Message = HttpClient.DeleteAsync($"{Class.Id}").GetAwaiter().GetResult();
 
             try
             {
+                HttpResponseMessage Message = await HttpClient.DeleteAsync($"{Class.Id}");
                 Message.EnsureSuccessStatusCode();
 
                 Class = _classes.FirstOrDefault(e => e.Id == Class.Id);
@@ -97,5 +97,9 @@ namespace Zeiterfassungssoftware.Client.Services
             return;
         }
 
+        public async Task<Class> GetOwnClass()
+        {
+            return await HttpClient.GetFromJsonAsync<Class>($"own") ?? new();
+        }
     }
 }

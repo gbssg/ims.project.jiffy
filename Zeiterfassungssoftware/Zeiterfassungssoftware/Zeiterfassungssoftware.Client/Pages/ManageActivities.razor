@@ -1,14 +1,14 @@
 ﻿@page "/Account/Manage/ManageActivities"
 
 @inject IActivityProvider ActivitySource
-
+@using Microsoft.AspNetCore.Authorization
 @rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
+@attribute [Authorize]  
 
 <PageTitle>Manage Activities</PageTitle>
 
 
 
-@* <h3>Activities</h3> *@
 
 @if (ActivitySource.IsLoaded)
 {

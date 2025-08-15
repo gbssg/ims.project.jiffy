@@ -15,7 +15,7 @@ namespace Zeiterfassungssoftware.SharedData.Classes
         public Task<Class> GetClassById(Guid Id);
         public List<Class> GetClasses();
         public Task Update(Class Class);
-
+        public Task<Class> GetOwnClass();
 
     }
 }
