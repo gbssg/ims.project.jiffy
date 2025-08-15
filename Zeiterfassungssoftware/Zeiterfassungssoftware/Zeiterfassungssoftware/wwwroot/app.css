@@ -75,6 +75,7 @@ a:hover {
     color: #595959;
 }
 
+
 .remove-shouldtime:hover {
     color: red;
 }
@@ -717,12 +718,26 @@ input[type="date"]::-webkit-calendar-picker-indicator {
             color: red;
         }
         /* Select */
-        select {
-            padding-left: 3px;
-            width: 40%;
-            height: 25px;
-            background-color: #ffffff
-        }
+select {
+    padding-left: 3px;
+    width: 40%;
+    height: 25px;
+    background-color: #3a3a3a;
+    color: #ffffff; 
+    border: none;
+}
+
+input {
+    color: white;
+    background-color: #3a3a3a;
+    border:none;
+}
+
+textarea {
+    border: none;
+    color: white;
+    background-color: #3a3a3a;
+}
 
 
 /* Buttons */
@@ -1004,7 +1019,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     animation-delay: 3s;
 }
 
-/* From Uiverse.io by vinodjangid07 */
 .download-button {
     width: 50px;
     height: 50px;
@@ -1084,15 +1098,229 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
 .class-edit-page {
-    width: 95%;
+    width: fit-content;
     background-color: #292929;
     border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+}
+
+.class-edit-page select {
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 1.5rem;
+    background-color: #3a3a3a;
+    border: 2px solid #444;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 16px;
+    appearance: none;
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: 40px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.class-edit-page select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    transform: translateY(-2px);
+}
+.class-name-input {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.shouldtime-dayofweek-select {
+    height: 41px;
+}
+
+.class-edit-page select option {
+    background-color: #3a3a3a;
+    color: #ffffff;
+}
+
+.shouldtimes-body {
+    background-color: #333;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    margin-top: 0;
+    border: 1px solid #444;
+}
+
+.shouldtime {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+    background-color: #3a3a3a;
+    border-radius: 12px;
+    border: 1px solid #4a4a4a;
+    transition: all 0.3s ease;
+}
+
+    .shouldtime:hover {
+        background-color: #404040;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .shouldtime:last-of-type {
+        margin-bottom: 0;
+    }
+
+.remove-shouldtime {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+    .remove-shouldtime:hover {
+        background-color: #c82333;
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+    }
+
+.shouldtime-info {
+    display: flex;
+    gap: 12px;
+    flex: 1;
+    align-items: center;
+}
+
+    .shouldtime-info select {
+        flex: 1;
+        margin-bottom: 0;
+        min-width: 120px;
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .shouldtime-info input[type="time"] {
+        padding: 8px 12px;
+        background-color: #404040;
+        border: 2px solid #4a4a4a;
+        border-radius: 8px;
+        color: #ffffff;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        min-width: 120px;
+    }
+
+        .shouldtime-info input[type="time"]:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+
+.bi-plus-circle {
+    cursor: pointer;
+    color: #28a745;
+    transition: all 0.3s ease;
+    margin: 0 auto;
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+    .bi-plus-circle:hover {
+        color: #34ce57;
+        transform: scale(1.2) rotate(90deg);
+        filter: drop-shadow(0 4px 8px rgba(40, 167, 69, 0.4));
+    }
+
+.class-edit-page > div > div > div:last-child {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #444;
+}
+
+.classes-button {
+    width: 200px;
+}
+
+.classes-button-create {
+    width: 400px;
+}
+
+@media (max-width: 641px) {
+    .class-edit-page {
+        padding: 1.5rem;
+        width: 80%;
+    }
+
+    .classes-button-create {
+        width: 100%;
+    }
+
+
+    .classes-button {
+        width: 100%;
+    }
+
+    .shouldtime {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .shouldtime-info {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .remove-shouldtime {
+        align-self: flex-end;
+    }
+
+    .class-edit-page > div > div > div:last-child {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #444;
+    }
+}
+
+.shouldtimes-body:empty::before {
+    content: "No schedule times added yet. Click the + button to add one.";
+    display: block;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 2rem;
+}
+
+* {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+select:focus,
+input:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
 }
 
 
 @media (min-width: 1282px) {
     .class-edit-page {
-        width: 60%;
+        width: fit-content;
         background-color: #292929;
         border-radius: 20px;
     }

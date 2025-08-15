@@ -23,7 +23,8 @@ namespace Zeiterfassungssoftware.Client.Pages
         public readonly TimeSpan NeededWeeklyTime = new TimeSpan(14, 0, 0);
         
         public bool ShowFilters { get; set; }
-        public bool Loaded { get; set; }
+        public int LastCount { get; set; }
+
 
         [Inject]
         private IJSRuntime js { get; set; }
@@ -44,24 +45,24 @@ namespace Zeiterfassungssoftware.Client.Pages
 
         protected override void OnInitialized()
         {
+            LastCount = 0;
             Timer = new Timer(UpdateTimer, null, 0, 100);
         }
 
         protected void CalculateStats()
         {
-            var Weeks = TimeEntrySource.GetEntries()
-                                       .GroupBy(e => CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(e.Start, CalendarWeekRule.FirstDay, DayOfWeek.Monday));
+            var Days = TimeEntrySource.GetEntries()
+                                       .GroupBy(e => e.Start.Date);
 
-            foreach (var Week in Weeks)
+            
+            foreach(var Day in Days)
             {
-                foreach (var Entry in Week)
+                foreach(var Entry in Day)
                 {
-                    if (Entry.Sick)
-                        Sickdays++;
-                    else
-                        Overtime += Entry.Time;
+                    Overtime += Entry.Time;
                 }
-                Overtime -= NeededWeeklyTime;
+                Overtime -= Day.FirstOrDefault().ShouldTime;
+                    Console.WriteLine(Day.FirstOrDefault().ShouldTime.ToString("g"));
             }
         }
 
@@ -69,10 +70,11 @@ namespace Zeiterfassungssoftware.Client.Pages
         {
             InvokeAsync(StateHasChanged);
 
-            if (TimeEntrySource.GetEntries().Any() && !Loaded)
+            if(TimeEntrySource.GetEntries().Count > LastCount)
             {
+                Console.WriteLine("A");
                 CalculateStats();
-                Loaded = true;
+                LastCount += 30;
             }
         }
 

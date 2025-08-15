@@ -37,6 +37,10 @@ namespace Zeiterfassungssoftware.Client.Pages
             if (SelectedGuid.Equals(Guid.Empty))
             {
                 ClassSource.Add(SelectedClass);
+                SelectedClassChanged(new ChangeEventArgs()
+                {
+                    Value = Guid.Empty.ToString()
+                });
             }
             else
             {
@@ -47,8 +51,11 @@ namespace Zeiterfassungssoftware.Client.Pages
         public void DeleteClass()
         {
             ClassSource.Remove(SelectedClass);
-            SelectedGuid = Guid.Empty;
-            
+
+            SelectedClassChanged(new ChangeEventArgs()
+            {
+                Value = Guid.Empty.ToString()
+            });
         }
 
         void IDisposable.Dispose()

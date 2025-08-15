@@ -30,10 +30,20 @@ namespace Zeiterfassungssoftware.Client.Services
 			LoadEntries();
 		}
 
-		public async void LoadEntries()
+		public async Task LoadEntries()
 		{
-			_timeEntries = await HttpClient.GetFromJsonAsync<List<TimeEntry>>("") ?? new();
-			IsLoaded = true;
+			int i = 0;
+			while(true)
+			{
+				var Entries = await HttpClient.GetFromJsonAsync<List<TimeEntry>>($"?start={30*i}&limit=30") ?? new();
+				IsLoaded = true;
+
+				if (!Entries.Any())
+					break;
+
+                _timeEntries.AddRange(Entries);
+                i++;
+			}
 		}
 
 		public async void Add(TimeEntry Entry)

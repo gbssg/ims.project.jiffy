@@ -8,6 +8,7 @@ namespace Zeiterfassungssoftware.SharedData.Classes
 {
     public class ShouldTime
     {
+        public Guid Id { get; set; }
         public Guid ClassId { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
         public TimeSpan Should { get; set; }

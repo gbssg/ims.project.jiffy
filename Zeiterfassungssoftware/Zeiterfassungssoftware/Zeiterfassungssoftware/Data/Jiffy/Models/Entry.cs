@@ -31,6 +31,7 @@ public partial class Entry
             Title = this.Title,
             Description = this.Description,
             Username = UserName,
+            ShouldTime = this.ShouldTime
         };
     }
 

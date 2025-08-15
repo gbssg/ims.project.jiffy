@@ -8,7 +8,6 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject IdentityUserAccessor UserAccessor
 @inject IdentityRedirectManager RedirectManager
-@inject ApplicationDbContext _context
 
 <PageTitle>Profile</PageTitle>
 
@@ -29,16 +28,6 @@
                 <label for="phone-number" class="form-label">Phone number</label>
                 <ValidationMessage For="() => Input.PhoneNumber" class="text-danger" />
             </div>
-
-            <div class="form-floating mb-3">
-                <p>Class</p>
-                <select class="form-control" style="padding-top: 12px;" @bind="@ClassId">
-                    @foreach (var Class in Classes)
-                    {
-                        <option value="@Class.Id">@Class.Name</option>
-                    }
-                </select>
-            </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </EditForm>
 
@@ -49,8 +38,6 @@
     private ApplicationUser user = default!;
     private string? username;
     private string? phoneNumber;
-    public List<Data.Jiffy.Models.Class> Classes = new();
-    public Guid ClassId { get; set; }
 
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
@@ -66,23 +53,10 @@
 
         Input.PhoneNumber ??= phoneNumber;
 
-        Classes = _context.Classes.ToList();
-        ClassId = user.ClassId;
     }
 
     private async Task OnValidSubmitAsync()
     {
-
-        if (ClassId != user.ClassId)
-        {
-            user.ClassId = ClassId;
-            var SetClassResult = await UserManager.UpdateAsync(user);
-            if (!SetClassResult.Succeeded)
-            {
-                RedirectManager.RedirectToCurrentPageWithStatus("Error: Failed to set class.", HttpContext);
-            }
-        }
-
         if (Input.PhoneNumber != phoneNumber)
         {
             var setPhoneResult = await UserManager.SetPhoneNumberAsync(user, Input.PhoneNumber);

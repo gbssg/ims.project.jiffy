@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using Zeiterfassungssoftware.Client.Data.Filter;
@@ -16,14 +17,16 @@ namespace Zeiterfassungssoftware.Services
     public class EntriesController : ControllerBase
 	{
         private ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public EntriesController(ApplicationDbContext context)
+        public EntriesController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [HttpGet]
-		public IActionResult GetAllEntries()
+        public IActionResult GetEntries([FromQuery] int start, [FromQuery] int limit)
 		{
             string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
 
@@ -34,6 +37,8 @@ namespace Zeiterfassungssoftware.Services
 
             var Entries = _context.Entries.Where(e => e.UserId == UserId || User.IsInRole("Administrator"))
                 .OrderByDescending(e => e.Start)
+                .Skip(start)
+                .Take(limit)
                 .Select(e => e.ToTimeEntry(Username))
                 .ToList();
 
@@ -65,9 +70,15 @@ namespace Zeiterfassungssoftware.Services
                 return BadRequest("Invalid data");
 
             string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
-
             if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
+
+            var DbUser = await _userManager.GetUserAsync(User);
+            var ShouldTimes = _context.ShouldTimes.Where(e => e.ClassId == DbUser.ClassId);
+            var Day = DateTime.Now.DayOfWeek;
+            var ShouldTime = ShouldTimes.FirstOrDefault(e => e.DayOfWeek == Day);
+            var Time = ShouldTime is null ? TimeSpan.Zero : ShouldTime.Should;
+
 
             Entry DbEntry = new()
             {
@@ -77,6 +88,7 @@ namespace Zeiterfassungssoftware.Services
                 Title = Entry.Title,
                 Description = Entry.Description,
                 UserId = UserId,
+                ShouldTime = Time,
             };
 
             _context.Entries.Add(DbEntry);
