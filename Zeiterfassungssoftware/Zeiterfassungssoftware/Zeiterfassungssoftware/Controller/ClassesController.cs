@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.Mapper;
@@ -17,7 +18,7 @@ namespace Zeiterfassungssoftware.Controller
     [Authorize]
     public class ClassesController : ControllerBase
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
         public ClassesController(ApplicationDbContext context)
         {
@@ -25,72 +26,73 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpGet]
-        public IActionResult GetAllClasses()
+        public async Task<IActionResult> GetAllClasses()
         {
-            var Classes = _context.Classes;
-            foreach(var Class in Classes)
-            {
-                Class.ShouldTimes = _context.ShouldTimes.Where(e => e.ClassId == Class.Id).ToList();
-            }
+            var Classes = await _context.Classes
+                 .Include(e => e.ShouldTimes)
+                 .ToListAsync();
+
             return Ok(Classes.Select(e => ClassMapper.ToDTO(e)).ToList());
         }
 
         [HttpGet("{Id}")]
-        public IActionResult GetClassById(Guid Id)
+        public async Task<IActionResult> GetClassById(Guid Id)
         {
-            var Class = _context.Classes.FirstOrDefault(e => e.Id.Equals(Id));
+            var Class = await _context.Classes
+                .Include(e => e.ShouldTimes)
+                .FirstOrDefaultAsync(e => e.Id == Id);
+
             if (Class is null)
                 return NotFound();
-
-            Class.ShouldTimes = _context.ShouldTimes.Where(e => e.ClassId == Class.Id).ToList();
 
             return Ok(ClassMapper.ToDTO(Class));
         }
 
         [HttpGet("own")]
-        public IActionResult GetOwnClass()
+        public async Task<IActionResult> GetOwnClass()
         {
-            var UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
-            
-            var DbUser = _context.Users.FirstOrDefault(e => string.Equals(e.Id, UserId));
-            if (DbUser is null)
+            var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var DbUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == UserId);
+            if (DbUser == null)
                 return Unauthorized();
 
+            var Class = await _context.Classes
+                //.Include(e => e.ShouldTimes)
+                .FirstOrDefaultAsync(e => e.Id == DbUser.ClassId);
 
-            var Class = _context.Classes.FirstOrDefault(e => e.Id.Equals(DbUser.ClassId));
             if (Class is null)
                 return NotFound();
 
-            Class.ShouldTimes = _context.ShouldTimes.Where(e => e.ClassId == Class.Id).ToList();
-            
             return Ok(ClassMapper.ToDTO(Class));
         }
 
         [Authorize(Roles = "Administrator")]
         [HttpDelete("{Id}")]
-        public IActionResult DeleteClassById(Guid Id)
+        public async Task<IActionResult> DeleteClassById(Guid Id)
         {
-            if (Id.Equals(Guid.Empty))
-                return Forbid();
+            if (Id == Guid.Empty)
+                return BadRequest();
 
-            var Class = _context.Classes.FirstOrDefault(e => e.Id.Equals(Id));
+            var Class = await _context.Classes
+                .Include(c => c.ShouldTimes)
+                .FirstOrDefaultAsync(c => c.Id == Id);
+
             if (Class is null)
                 return NotFound();
 
-            foreach(var ShouldTime in Class.ShouldTimes)
-            {
-                _context.Remove(ShouldTime);
-            }
 
+            _context.ShouldTimes.RemoveRange(Class.ShouldTimes);
             _context.Classes.Remove(Class);
-            _context.SaveChanges();
+
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public IActionResult AddClass([FromBody] SharedData.Classes.Class Class)
+        public async Task<IActionResult> AddClass([FromBody] SharedData.Classes.Class Class)
         {
 
             if (!ClassMapper.ValidateDTO(Class))
@@ -103,44 +105,47 @@ namespace Zeiterfassungssoftware.Controller
             {
                 ShouldTime.Id = Guid.NewGuid();
                 ShouldTime.ClassId = DbClass.Id;
-                _context.ShouldTimes.Add(ShouldTime);
             }
 
             _context.Classes.Add(DbClass);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Ok(ClassMapper.ToDTO(DbClass));
         }
 
         [Authorize(Roles = "Administrator")]
-        [HttpPatch]
-        public IActionResult UpdateClass([FromBody] SharedData.Classes.Class Class)
+        [HttpPatch("{Id}")]
+        public async Task<IActionResult> UpdateClass(Guid Id, [FromBody] SharedData.Classes.Class ClassDto)
         {
-            if (Class.Id.Equals(Guid.Empty))
-                return Forbid();
+            if (Id == Guid.Empty)
+                return BadRequest();
 
-            if (!ClassMapper.ValidateDTO(Class))
+            if (!ClassMapper.ValidateDTO(ClassDto))
                 return BadRequest("Invalid data");
 
-            Class? DbClass = _context.Classes.FirstOrDefault(e => e.Id.Equals(Class.Id));
+            var DbClass = await _context.Classes
+                .Include(c => c.ShouldTimes)
+                .FirstOrDefaultAsync(c => c.Id == Id);
+
             if (DbClass is null)
                 return NotFound();
 
-            foreach(var ShouldTime in _context.ShouldTimes.Where(e => e.ClassId == Class.Id))
-            {
-                _context.Remove(ShouldTime);
-            }
+            // Bad practice consider making a Controller for ShouldTimes
+            _context.ShouldTimes.RemoveRange(DbClass.ShouldTimes);
+            
+            var Class = ClassMapper.FromDTO(ClassDto);
 
-            DbClass = ClassMapper.FromDTO(Class);
+            DbClass.Name = Class.Name;
 
-            foreach (var ShouldTime in DbClass.ShouldTimes)
+            var ShouldTimes = Class.ShouldTimes;
+            foreach (var ShouldTime in ShouldTimes)
             {
                 ShouldTime.Id = Guid.NewGuid();
-                ShouldTime.ClassId = DbClass.Id;
-                _context.ShouldTimes.Add(ShouldTime);
+                ShouldTime.ClassId = Id;
+                DbClass.ShouldTimes.Add(ShouldTime);
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Ok(ClassMapper.ToDTO(DbClass));
         }

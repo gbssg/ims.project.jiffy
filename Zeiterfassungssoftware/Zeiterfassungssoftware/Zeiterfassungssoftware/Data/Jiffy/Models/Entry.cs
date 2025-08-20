@@ -14,26 +14,9 @@ public partial class Entry
     public TimeSpan ShouldTime { get; set; }
 
     public string Title { get; set; } = null!;
-
     public string Description { get; set; } = null!;
 
     public string UserId { get; set; } = null!;
-
     public virtual ApplicationUser User { get; set; } = null!;
-
-    public TimeEntry ToTimeEntry(string UserName)
-    {
-        return new TimeEntry()
-        {
-            Id = this.Id,
-            Start = this.Start,
-            End = this.End,
-            Title = this.Title,
-            Description = this.Description,
-            Username = UserName,
-            ShouldTime = this.ShouldTime
-        };
-    }
-
     
 }

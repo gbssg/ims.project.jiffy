@@ -50,7 +50,7 @@
             {
                 @foreach (var Entry in TimeEntrySource.GetEntries().Take(LastCount).Where(e => DoFiltersApply(e)).OrderByDescending(e => e.Start))
                 {
-                    <HistoryEntry Entry="@Entry" ShowNames="@context.User.IsInRole("Administrator")" />
+                    <HistoryEntry Entry="@Entry" />
                 }
             }
         </div>    

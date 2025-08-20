@@ -82,7 +82,7 @@ namespace Zeiterfassungssoftware.Client.Services
 
             if (Obj is ActivityDescription Description)
             {
-                HttpResponseMessage Response = await HttpClient.PatchAsync("descriptions", Content);
+                HttpResponseMessage Response = await HttpClient.PatchAsync($"descriptions/{Description.Id}", Content);
 
                 try
                 {
@@ -98,7 +98,7 @@ namespace Zeiterfassungssoftware.Client.Services
             if (Obj is ActivityTitle Title)
             {
 
-                HttpResponseMessage Response = await HttpClient.PatchAsync("titles", Content);
+                HttpResponseMessage Response = await HttpClient.PatchAsync($"titles/{Title.Id}", Content);
 
                 try
                 {

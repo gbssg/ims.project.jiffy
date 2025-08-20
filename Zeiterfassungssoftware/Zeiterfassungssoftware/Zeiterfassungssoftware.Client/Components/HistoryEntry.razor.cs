@@ -10,12 +10,7 @@ namespace Zeiterfassungssoftware.Client.Components
         private NavigationManager Navigation { get; set; }
 
         [Parameter]
-        public TimeEntry Entry { get; set; } = new()
-        {
-
-        };
-        [Parameter]
-        public bool ShowNames { get; set; }
+        public TimeEntry Entry { get; set; } = new();
 
         public void OnClick()
         {

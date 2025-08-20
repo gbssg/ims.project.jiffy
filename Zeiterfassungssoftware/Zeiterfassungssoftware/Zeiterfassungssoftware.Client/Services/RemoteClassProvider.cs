@@ -85,7 +85,7 @@ namespace Zeiterfassungssoftware.Client.Services
             string JsonData = JsonSerializer.Serialize(Class);
             var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage Response = await HttpClient.PatchAsync("", Content);
+            HttpResponseMessage Response = await HttpClient.PatchAsync($"{Class.Id}", Content);
 
             try
             {

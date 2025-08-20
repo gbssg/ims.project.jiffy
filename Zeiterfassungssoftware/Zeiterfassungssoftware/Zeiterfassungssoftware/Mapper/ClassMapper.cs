@@ -7,6 +7,9 @@ namespace Zeiterfassungssoftware.Mapper
     {
         public static Class FromDTO(SharedData.Classes.Class Class)
         {
+            if (Class is null)
+                throw new ArgumentNullException();
+
             return new()
             {
                 Id = Class.Id,
@@ -17,6 +20,9 @@ namespace Zeiterfassungssoftware.Mapper
 
         public static SharedData.Classes.Class ToDTO(Class Class)
         {
+            if (Class is null)
+                throw new ArgumentNullException();
+
             return new SharedData.Classes.Class()
             {
                 Id = Class.Id,
@@ -27,6 +33,9 @@ namespace Zeiterfassungssoftware.Mapper
 
         public static bool ValidateDTO(SharedData.Classes.Class Class)
         {
+            if (Class is null)
+                return false;
+
             return (!string.IsNullOrEmpty(Class.Name));
         }
     }

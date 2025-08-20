@@ -57,12 +57,19 @@ namespace Zeiterfassungssoftware.Client.Pages
             
             foreach(var Day in Days)
             {
-                foreach(var Entry in Day)
+                var CurrentDay = Day.FirstOrDefault();
+                if(!CurrentDay.Sick)
                 {
-                    Overtime += Entry.Time;
+                    foreach (var Entry in Day)
+                    {
+                        Overtime += Entry.Time;
+                    }
+                    Overtime -= CurrentDay.ShouldTime;
+                } 
+                else
+                {
+                    Sickdays++;
                 }
-                Overtime -= Day.FirstOrDefault().ShouldTime;
-                    Console.WriteLine(Day.FirstOrDefault().ShouldTime.ToString("g"));
             }
         }
 
@@ -72,7 +79,6 @@ namespace Zeiterfassungssoftware.Client.Pages
 
             if(TimeEntrySource.GetEntries().Count > LastCount)
             {
-                Console.WriteLine("A");
                 CalculateStats();
                 LastCount += 30;
             }

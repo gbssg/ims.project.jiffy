@@ -19,7 +19,7 @@ namespace Zeiterfassungssoftware.Client.Services
 
         public async void UpdateClass(Guid ClassId)
         {
-            HttpResponseMessage Response = await HttpClient.PatchAsync($"{ClassId}", null);
+            HttpResponseMessage Response = await HttpClient.PatchAsync($"set-class/{ClassId}", null);
             try
             {
                 Response.EnsureSuccessStatusCode();

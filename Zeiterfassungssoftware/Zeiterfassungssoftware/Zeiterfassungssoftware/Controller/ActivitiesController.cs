@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
+using Zeiterfassungssoftware.Mapper;
 using Zeiterfassungssoftware.SharedData.Activities;
 using ActivityDescription = Zeiterfassungssoftware.SharedData.Activities.ActivityDescription;
 using ActivityTitle = Zeiterfassungssoftware.SharedData.Activities.ActivityTitle;
@@ -20,28 +23,29 @@ namespace Zeiterfassungssoftware.Controller
             _context = context;
         }
 
+        #region Descriptions
+
         [HttpGet("descriptions")]
-        public IActionResult GetAllDescriptions()
+        public async Task<IActionResult> GetAllDescriptions()
         {
-            string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
+            var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (string.IsNullOrEmpty(UserId))
-                return Unauthorized();
+            var Descriptions = await _context.ActivityDescriptions
+                .Where(e => e.UserId == UserId)
+                .Select(e => ActivityMapper.ToDescriptionDTO(e))
+                .ToListAsync();
 
-            var Descriptions = _context.ActivityDescriptions.Where(e => (e.UserId == UserId))
-                                                            .Select(e => e.ToActivityDescription());
-
-            return Ok(Descriptions.ToList());            
+            return Ok(Descriptions);            
         }
 
         
         [HttpPost("descriptions")]
         public async Task<IActionResult> AddDescription([FromBody] ActivityDescription Description)
         {
-            if (!IsValid(Description))
+            if (!ActivityMapper.ValidateDescriptionDTO(Description))
                 return BadRequest("Invalid data");
 
-            string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
+            var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
@@ -51,151 +55,135 @@ namespace Zeiterfassungssoftware.Controller
                 Id = Guid.NewGuid(),
                 Value = Description.Value,
                 UserId = UserId,
+                Favorite = Description.Favorite
             };
 
             _context.ActivityDescriptions.Add(DbDescription);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            return Ok(DbDescription.ToActivityDescription());
+            return Ok(ActivityMapper.ToDescriptionDTO(DbDescription));
         }
 
-        [HttpGet("titles")]
-        public IActionResult GetAllTitles()
+        [HttpDelete("descriptions/{Id}")]
+        public async Task<IActionResult> DeleteDescription(Guid Id)
         {
-            string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
+            var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var DbDescription = await _context.ActivityDescriptions
+                .FirstOrDefaultAsync(e => e.UserId == UserId && e.Id == Id);
+
+            if (DbDescription is null)
+                return NotFound();
+
+            _context.ActivityDescriptions.Remove(DbDescription);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPatch("descriptions/{Id}")]
+        public async Task<IActionResult> UpdateDescription(Guid Id, [FromBody] ActivityDescription Description)
+        {
+            if (!ActivityMapper.ValidateDescriptionDTO(Description))
+                return BadRequest("Invalid data");
+
+            var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
 
-            var Titles = _context.Activitys.Where(e => (e.UserId == UserId))
-                                           .Select(e => e.ToActivityTitle());
+            var DbDescription = await _context.ActivityDescriptions
+                .FirstOrDefaultAsync(e => e.Id == Id && e.UserId == UserId);
 
-            return Ok(Titles.ToList());
+            if (DbDescription is null)
+                return NotFound();
+
+            DbDescription.Favorite = Description.Favorite;
+            DbDescription.Value = Description.Value;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(ActivityMapper.ToDescriptionDTO(DbDescription));
         }
 
-        //id
+        #endregion
+
+        #region Titles
+
+        [HttpGet("titles")]
+        public async Task<IActionResult> GetAllTitles()
+        {
+            var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var Titles = await _context.Activitys
+                .Where(e => e.UserId == UserId)
+                .Select(e => ActivityMapper.ToTitleDTO(e))
+                .ToListAsync();
+
+            return Ok(Titles);
+        }
+
         [HttpPost("titles")]
 		public async Task<IActionResult> AddTitle([FromBody] ActivityTitle Title)
         {
-            if (!IsValid(Title))
+            if (!ActivityMapper.ValidateTitleDTO(Title))
                 return BadRequest("Invalid data");
 
-            string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
-
-            if (string.IsNullOrEmpty(UserId))
-                return Unauthorized();
+            var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             var DbTitle = new Data.Jiffy.Models.Activity()
             {
                 Id = Guid.NewGuid(),
                 Title = Title.Value,
                 UserId = UserId,
+                Favorite = Title.Favorite
             };
 
             _context.Activitys.Add(DbTitle);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            return Ok(DbTitle.ToActivityTitle());
+            return Ok(ActivityMapper.ToTitleDTO(DbTitle));
         }
 
         [HttpDelete("titles/{Id}")]
         public async Task<IActionResult> DeleteTitle(Guid Id)
         {
-            string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
+            var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (string.IsNullOrEmpty(UserId))
-                return Unauthorized();
+            var DbTitle = await _context.Activitys
+                .FirstOrDefaultAsync(e => e.UserId == UserId && e.Id == Id);
 
-            Activity? Activity = _context.Activitys.FirstOrDefault(e => (e.UserId == UserId) && Id.Equals(e.Id));
-            
-            if(Activity is null)
+            if (DbTitle is null)
                 return NotFound();
 
-            
-            _context.Activitys.Remove(Activity);
-            _context.SaveChanges();
+            _context.Activitys.Remove(DbTitle);
+            await _context.SaveChangesAsync();
 
-            return Ok();
+            return NoContent();
         }
 
-        [HttpPatch("titles")]
-        public async Task<IActionResult> UpdateTitle([FromBody] ActivityTitle Title)
+        [HttpPatch("titles/{Id}")]
+        public async Task<IActionResult> UpdateTitle(Guid Id, [FromBody] ActivityTitle Title)
         {
-            if (!IsValid(Title))
+            if (!ActivityMapper.ValidateTitleDTO(Title))
                 return BadRequest("Invalid data");
 
-            string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
+            var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (string.IsNullOrEmpty(UserId))
-                return Unauthorized();
+            var DbTitle = await _context.Activitys
+                .FirstOrDefaultAsync(e => e.Id == Id && e.UserId == UserId);
 
-            Activity? DbTitle = _context.Activitys.FirstOrDefault(e => (e.Id == Title.Id) && (e.UserId == UserId));
-
-            if (DbTitle is null) 
+            if (DbTitle == null)
                 return NotFound();
 
             DbTitle.Favorite = Title.Favorite;
             DbTitle.Title = Title.Value;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            return Ok(DbTitle.ToActivityTitle());
+            return Ok(ActivityMapper.ToTitleDTO(DbTitle));
         }
 
-
-        [HttpDelete("descriptions/{Id}")]
-        public async Task<IActionResult> DeleteDescription(Guid Id)
-        {
-            string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
-
-            if (string.IsNullOrEmpty(UserId))
-                return Unauthorized();
-
-            Data.Jiffy.Models.ActivityDescription? Activity = _context.ActivityDescriptions.FirstOrDefault(e => (e.UserId == UserId) && Id.Equals(e.Id));
-
-            if (Activity is null)
-                return NotFound();
-
-
-            _context.Remove(Activity);
-            _context.SaveChanges();
-
-            return Ok();
-        }
-
-        [HttpPatch("descriptions")]
-        public async Task<IActionResult> UpdateDescription([FromBody] ActivityTitle Title)
-        {
-            if (!IsValid(Title))
-                return BadRequest("Invalid data");
-
-            string UserId = User.Claims.FirstOrDefault()?.Value ?? string.Empty;
-
-            if (string.IsNullOrEmpty(UserId))
-                return Unauthorized();
-
-            Data.Jiffy.Models.ActivityDescription? DbDescription = _context.ActivityDescriptions.FirstOrDefault(e => (e.Id == Title.Id) && (e.UserId == UserId));
-
-            if (DbDescription is null)
-                return NotFound();
-
-            DbDescription.Favorite = Title.Favorite;
-            DbDescription.Value = Title.Value;
-
-            _context.SaveChanges();
-
-            return Ok(DbDescription.ToActivityDescription());
-        }
-
-        public bool IsValid(object Obj)
-        {
-            if (Obj is ActivityDescription Description)
-                return !string.IsNullOrWhiteSpace(Description.Value);
-            
-            if (Obj is ActivityTitle Title)
-                return !string.IsNullOrWhiteSpace(Title.Value);
-            
-            return false;
-        }
+        #endregion
     }
 }

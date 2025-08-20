@@ -6,6 +6,9 @@ namespace Zeiterfassungssoftware.Mapper
     {
         public static ShouldTime FromDTO(SharedData.Classes.ShouldTime ShouldTime)
         {
+            if (ShouldTime is null)
+                throw new ArgumentNullException();
+
             return new()
             {
                 Id = ShouldTime.Id,
@@ -17,6 +20,9 @@ namespace Zeiterfassungssoftware.Mapper
 
         public static SharedData.Classes.ShouldTime ToDTO(ShouldTime ShouldTime)
         {
+            if (ShouldTime is null)
+                throw new ArgumentNullException();
+
             return new()
             {
                 Id = ShouldTime.Id,
