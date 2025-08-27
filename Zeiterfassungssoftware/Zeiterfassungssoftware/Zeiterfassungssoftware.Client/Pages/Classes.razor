@@ -37,7 +37,7 @@
                                                     <option>@Weekday</option>
                                                 }
                                             </select>
-                                            <input type="time" value="@ShouldTime.Should.ToString()" @onchange="(e) => ShouldTime.Should = TimeSpan.Parse(e.Value as string)" />
+                                            <input type="time" value="@ShouldTime.Should.ToString()" @onchange="(e) => ShouldTime.Should = TimeSpan.Parse(e.Value as string ?? string.Empty)" />
                                         </div>
                                     </div>
                                 }

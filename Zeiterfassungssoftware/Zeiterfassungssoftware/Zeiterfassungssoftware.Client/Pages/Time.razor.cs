@@ -50,7 +50,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 		{
             CurrentEntry = TimeEntrySource.GetEntries().FirstOrDefault();
 
-            if ((CurrentEntry != null) && (CurrentEntry.End != null))
+            if ((CurrentEntry is not null) && (CurrentEntry.End is not null))
                 CurrentEntry = null;
 
             if (!Started)

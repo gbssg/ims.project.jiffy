@@ -55,7 +55,6 @@ namespace Zeiterfassungssoftware.Client.Services
         {
             return _classes;
         }
-
         public async Task<Class> GetClassById(Guid Id)
         {
             return await HttpClient.GetFromJsonAsync<Class>($"{Id}");
@@ -92,7 +91,7 @@ namespace Zeiterfassungssoftware.Client.Services
                 Response.EnsureSuccessStatusCode();
                 _classes[_classes.IndexOf(_classes.FirstOrDefault(e => e.Id == Class.Id) ?? new())] = Class;
             }
-            catch (Exception e) { Console.WriteLine("Failed to Update Class"); }
+            catch (Exception e) { Console.WriteLine($"Failed to Update Class: {e.Message}"); }
 
             return;
         }

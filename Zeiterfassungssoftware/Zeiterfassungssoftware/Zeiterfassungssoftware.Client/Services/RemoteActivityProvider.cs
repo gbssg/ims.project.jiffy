@@ -55,7 +55,7 @@ namespace Zeiterfassungssoftware.Client.Services
 					Response.EnsureSuccessStatusCode();
 					_activityDescriptions.Add(Description);
 				}
-				catch (Exception e) { Console.WriteLine("Failed to Send Description"); }
+				catch (Exception e) { Console.WriteLine($"Failed to Send Description: {e.Message}"); }
 
 				return;
 			}
@@ -70,7 +70,7 @@ namespace Zeiterfassungssoftware.Client.Services
 					Response.EnsureSuccessStatusCode();
 					_activityTitles.Add(Title);
 				}
-				catch (Exception e) { Console.WriteLine("Failed to Send Title"); }
+				catch (Exception e) { Console.WriteLine($"Failed to Send Title: {e.Message}"); }
 			}
 		}
 
@@ -91,7 +91,7 @@ namespace Zeiterfassungssoftware.Client.Services
                     ActivityDescription ResponseDescription = JsonSerializer.Deserialize<ActivityDescription>(ReponseContent, Options) ?? new();
                     return ResponseDescription;
                 }
-                catch (Exception e) { Console.WriteLine("Failed to Send Description"); }
+                catch (Exception e) { Console.WriteLine($"Failed to Send Description: {e.Message}"); }
 
             }
 
@@ -107,7 +107,7 @@ namespace Zeiterfassungssoftware.Client.Services
                     ActivityTitle ResponseTitle = JsonSerializer.Deserialize<ActivityTitle>(ReponseContent, Options) ?? new();
 					return ResponseTitle;
 				}
-                catch (Exception e) { Console.WriteLine("Failed to Send Title"); }
+                catch (Exception e) { Console.WriteLine($"Failed to Send Title: {e.Message}"); }
             }
             return null;
         }
@@ -144,7 +144,7 @@ namespace Zeiterfassungssoftware.Client.Services
                     Response.EnsureSuccessStatusCode();
                     _activityDescriptions.Remove(Description);
                 }
-                catch (Exception e) { Console.WriteLine("Failed to Send Description"); }
+                catch (Exception e) { Console.WriteLine($"Failed to Send Description: {e.Message}"); }
 
             }
 
@@ -158,7 +158,7 @@ namespace Zeiterfassungssoftware.Client.Services
                     Response.EnsureSuccessStatusCode();
 					_activityTitles.Remove(Title);
                 }
-                catch (Exception e) { Console.WriteLine("Failed to Send Title"); }
+                catch (Exception e) { Console.WriteLine($"Failed to Send Title: {e.Message}"); }
             }
         }
 	}

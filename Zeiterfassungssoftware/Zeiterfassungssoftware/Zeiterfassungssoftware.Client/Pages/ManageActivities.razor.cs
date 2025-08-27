@@ -18,16 +18,13 @@ namespace Zeiterfassungssoftware.Client.Pages
         private Timer? Timer { get; set; }
 
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             Timer = new Timer(UpdateTimer, null, 0, 200);
         }
 
         public void UpdateTimer(object? state)
         {
-            //if (ActivitySource.IsLoaded)
-            //    Timer?.Dispose();
-            
             InvokeAsync(StateHasChanged);
         }
 
@@ -74,27 +71,27 @@ namespace Zeiterfassungssoftware.Client.Pages
         {
             if (Obj is ActivityTitle Title)
             {
-                if(!Title.Id.Equals(EditingTitle.Id))
+                if(!Title.Id.Equals(EditingTitle?.Id))
                 {
-                    Title = ActivitySource.GetActivityTitles().FirstOrDefault(e => e.Id.Equals(EditingTitle.Id));
+                    Title = ActivitySource.GetActivityTitles().FirstOrDefault(e => e.Id.Equals(EditingTitle?.Id));
                     if (Title is null)
                         return;
                 }
-                Title.Value = EditingTitle?.Value;
+                Title.Value = EditingTitle?.Value ?? string.Empty;
                 EditingTitle = null;
                 ActivitySource.Update(Title);
             }
 
             if (Obj is ActivityDescription Description)
             {
-                if (!Description.Id.Equals(EditingDescription.Id))
+                if (!Description.Id.Equals(EditingDescription?.Id))
                 {
                     Description = ActivitySource.GetActivityDescriptions().FirstOrDefault(e => e.Id.Equals(EditingDescription.Id));
                     if (Description is null)
                         return;
                 }
 
-                Description.Value = EditingDescription?.Value;
+                Description.Value = EditingDescription?.Value ?? string.Empty;
                 EditingDescription = null;
                 ActivitySource.Update(Description);
             }

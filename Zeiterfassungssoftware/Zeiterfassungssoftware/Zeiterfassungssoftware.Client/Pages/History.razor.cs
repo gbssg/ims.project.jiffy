@@ -58,18 +58,18 @@ namespace Zeiterfassungssoftware.Client.Pages
             foreach(var Day in Days)
             {
                 var CurrentDay = Day.FirstOrDefault();
-                if(!CurrentDay.Sick)
-                {
-                    foreach (var Entry in Day)
-                    {
-                        Overtime += Entry.Time;
-                    }
-                    Overtime -= CurrentDay.ShouldTime;
-                } 
-                else
+
+                if(CurrentDay.Sick)
                 {
                     Sickdays++;
+                    continue;
                 }
+                
+                foreach (var Entry in Day)
+                {
+                    Overtime += Entry.Time;
+                }
+                Overtime -= CurrentDay.ShouldTime;
             }
         }
 

@@ -62,7 +62,7 @@ namespace Zeiterfassungssoftware.Client.Services
 				Entry.Id = ConfirmedEntry.Id;
                 _timeEntries.Add(ConfirmedEntry);
 			}
-			catch (Exception e) { Console.WriteLine("Failed to Send Entry"); }
+			catch (Exception e) { Console.WriteLine($"Failed to Send Entry: {e.Message}"); }
 
 			return;
 			
@@ -109,7 +109,7 @@ namespace Zeiterfassungssoftware.Client.Services
 				Response.EnsureSuccessStatusCode();
 				_timeEntries[_timeEntries.IndexOf(_timeEntries.FirstOrDefault(e => e.Id == Entry.Id) ?? new())] = Entry;
             }
-			catch (Exception e) { Console.WriteLine("Failed to Update Entry"); }
+			catch (Exception e) { Console.WriteLine($"Failed to Update Entry: {e.Message}"); }
 
 			return;
         }

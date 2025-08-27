@@ -26,7 +26,7 @@ namespace Zeiterfassungssoftware.Client.Services
             }
             catch (Exception e) 
             { 
-                Console.WriteLine("Failed to Update Class"); 
+                Console.WriteLine($"Failed to Update Class: {e.Message}"); 
             }
 
             return;

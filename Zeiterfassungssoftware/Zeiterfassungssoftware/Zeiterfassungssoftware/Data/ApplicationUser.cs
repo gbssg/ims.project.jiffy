@@ -12,7 +12,7 @@ namespace Zeiterfassungssoftware.Data
 
         public virtual ICollection<Entry> Entries { get; set; } = new List<Entry>();
         public Guid ClassId { get; set; }
-        public virtual Class Class { get; set; }
+        public virtual Class Class { get; set; } = null!;
     }
 
 }

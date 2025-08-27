@@ -22,6 +22,7 @@ a:hover {
 }
 */
 
+
     .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus{
         color: black;
     }
