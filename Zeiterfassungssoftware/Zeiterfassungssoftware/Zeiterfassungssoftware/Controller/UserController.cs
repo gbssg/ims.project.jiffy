@@ -24,6 +24,8 @@ namespace Zeiterfassungssoftware.Controller
         public async Task<IActionResult> SetClass(Guid Id)
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(UserId))
+                return Unauthorized();
 
             var Class = await _context.Classes.FirstOrDefaultAsync(e => e.Id == Id);
             if (Class is null)

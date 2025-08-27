@@ -29,6 +29,8 @@ namespace Zeiterfassungssoftware.Controller
         public async Task<IActionResult> GetAllDescriptions()
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(UserId))
+                return Unauthorized();
 
             var Descriptions = await _context.ActivityDescriptions
                 .Where(e => e.UserId == UserId)
@@ -46,7 +48,6 @@ namespace Zeiterfassungssoftware.Controller
                 return BadRequest("Invalid data");
 
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
             if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
 
@@ -68,6 +69,8 @@ namespace Zeiterfassungssoftware.Controller
         public async Task<IActionResult> DeleteDescription(Guid Id)
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(UserId))
+                return Unauthorized();
 
             var DbDescription = await _context.ActivityDescriptions
                 .FirstOrDefaultAsync(e => e.UserId == UserId && e.Id == Id);
@@ -88,6 +91,8 @@ namespace Zeiterfassungssoftware.Controller
                 return BadRequest("Invalid data");
 
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(UserId))
+                return Unauthorized();
 
             if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
@@ -114,6 +119,8 @@ namespace Zeiterfassungssoftware.Controller
         public async Task<IActionResult> GetAllTitles()
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(UserId))
+                return Unauthorized();
 
             var Titles = await _context.Activitys
                 .Where(e => e.UserId == UserId)
@@ -130,6 +137,8 @@ namespace Zeiterfassungssoftware.Controller
                 return BadRequest("Invalid data");
 
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(UserId))
+                return Unauthorized();
 
             var DbTitle = new Data.Jiffy.Models.Activity()
             {
@@ -149,6 +158,8 @@ namespace Zeiterfassungssoftware.Controller
         public async Task<IActionResult> DeleteTitle(Guid Id)
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(UserId))
+                return Unauthorized();
 
             var DbTitle = await _context.Activitys
                 .FirstOrDefaultAsync(e => e.UserId == UserId && e.Id == Id);
@@ -169,6 +180,8 @@ namespace Zeiterfassungssoftware.Controller
                 return BadRequest("Invalid data");
 
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(UserId))
+                return Unauthorized();
 
             var DbTitle = await _context.Activitys
                 .FirstOrDefaultAsync(e => e.Id == Id && e.UserId == UserId);

@@ -52,6 +52,8 @@ namespace Zeiterfassungssoftware.Controller
         public async Task<IActionResult> GetOwnClass()
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(UserId))
+                return Unauthorized();
 
             var DbUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == UserId);
             if (DbUser == null)
@@ -75,12 +77,17 @@ namespace Zeiterfassungssoftware.Controller
                 return BadRequest();
 
             var Class = await _context.Classes
-                .Include(c => c.ShouldTimes)
-                .FirstOrDefaultAsync(c => c.Id == Id);
+                .Include(e => e.ShouldTimes)
+                .FirstOrDefaultAsync(e => e.Id == Id);
 
             if (Class is null)
                 return NotFound();
 
+
+            foreach(var User in _context.Users.Where(e => e.ClassId == Class.Id))
+            {
+                User.ClassId = Guid.Empty;
+            }
 
             _context.ShouldTimes.RemoveRange(Class.ShouldTimes);
             _context.Classes.Remove(Class);

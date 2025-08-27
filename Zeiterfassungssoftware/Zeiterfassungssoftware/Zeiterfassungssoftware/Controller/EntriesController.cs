@@ -38,6 +38,8 @@ namespace Zeiterfassungssoftware.Services
                 Limit = 50;
 
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(UserId))
+                return Unauthorized();
 
             if (User.IsInRole("Administrator"))
             {
@@ -80,6 +82,8 @@ namespace Zeiterfassungssoftware.Services
 		public IActionResult GetEntryById(Guid Id)
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(UserId))
+                return Unauthorized();
 
             Entry? DbEntry = _context.Entries.FirstOrDefault(e => e.Id == Id && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
                 
@@ -88,8 +92,10 @@ namespace Zeiterfassungssoftware.Services
 
             string Username = User.IsInRole("Administrator") ? User.Identity.Name.Split("@")[0] : string.Empty;
 
-            // SET THE NAME
-            return Ok(EntryMapper.ToDTO(DbEntry));            
+            TimeEntry Entry = EntryMapper.ToDTO(DbEntry);
+            Entry.Username = Username;
+
+            return Ok(Entry);
         }
 
         [HttpPost]
@@ -99,6 +105,8 @@ namespace Zeiterfassungssoftware.Services
                 return BadRequest("Invalid data");
 
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(UserId))
+                return Unauthorized();
 
             var DbUser = await _userManager.GetUserAsync(User);
             var ShouldTimes = _context.ShouldTimes.Where(e => e.ClassId == DbUser.ClassId);
@@ -123,14 +131,18 @@ namespace Zeiterfassungssoftware.Services
 
             string Username = User.IsInRole("Administrator") ? User.Identity.Name.Split("@")[0] : string.Empty;
 
-            // SET THE USERNAME
-            return Ok(EntryMapper.ToDTO(DbEntry));
+            TimeEntry EntryDto = EntryMapper.ToDTO(DbEntry);
+            Entry.Username = Username;
+
+            return Ok(EntryDto);
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteEntry(Guid Id)
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(UserId))
+                return Unauthorized();
 
             Entry? Entry = _context.Entries.FirstOrDefault(e => (e.Id == Id) && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
 
@@ -150,6 +162,8 @@ namespace Zeiterfassungssoftware.Services
                 return BadRequest("Invalid data");
 
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(UserId))
+                return Unauthorized();
 
             Entry? DbEntry = _context.Entries.FirstOrDefault(e => (e.Id == Entry.Id) && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
 
