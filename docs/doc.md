@@ -38,7 +38,15 @@ Mit Jiffy soll dieser Prozess deutlich einfacher und einheitlicher gestaltet wer
 
 
 ## Use Cases
+
+### Aktivitätenverwaltung
 ![Aktivitätenverwaltung](../assets/UseCase_Aktivitätenverwaltung.svg)
+
+### Klassenverwaltung
 ![Klassenverwaltung](../assets/UseCase_Klassenverwaltung.svg)
+
+### Auswertung
 ![Auswertung](../assets/UseCase_Auswertung.svg)
+
+### Zeiterfassung
 ![Zeiterfassung](../assets/UseCase_Zeiterfassung.svg)
