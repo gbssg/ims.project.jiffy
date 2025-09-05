@@ -1,3 +1,17 @@
+# Inhaltsverzeichnis
+
+- [Warum gibt es Jiffy?](#warum-gibt-es-jiffy)
+- [Anforderungen](#was-soll-jiffy-können)
+  - [Zeiterfassung](#zeiterfassung)
+  - [Auswertung](#auswertung)
+  - [Klassen](#klassen)
+  - [Aktivitäten](#aktivitäten)
+- [Use Cases](#use-cases)
+  - [Zeiterfassung](#zeiterfassung-1)
+  - [Aktivitätenverwaltung](#aktivitätenverwaltung)
+  - [Klassenverwaltung](#klassenverwaltung)
+  - [Aktivitäten](#aktivitäten)
+
 ## Warum gibt es Jiffy?
 Der Zweck von Jiffy ist es, den Zeitaufschrieb an der IMS-T so weit wie möglich zu vereinfachen und die unnötige Komplexität zu eliminieren, die durch die vielen individuell von den Schülern erstellten Excel-Sheets zur Zeiterfassung entstanden ist. Jeden Monat müssen die Schüler ihre Stunden abgeben, was häufig zu Problemen führt: Für die Schüler ist es mühsam, die Stunden immer wieder einzureichen, und für die Lehrpersonen ist es ebenso anstrengend, da sie viele unterschiedliche Designs der Zeitaufschriebe verstehen und jede einzelne Datei separat öffnen müssen.
 
@@ -9,7 +23,7 @@ Mit Jiffy soll dieser Prozess deutlich einfacher und einheitlicher gestaltet wer
 
 - **Löschen von einträgen**: Versehentlich eingetragene Einträge sollten wieder gelöscht werden können.
 
-- **Bearbeiten**: inträge, die nicht der Realität entsprechen, sei dies durch versehentliches stoppen, falsche Aktivitäten oder weil vergessen wurde, den Eintrag zu stoppen, sollten alle Eigenschaften bearbeitet werden können.
+- **Bearbeiten**: Einträge, die nicht der Realität entsprechen, sei dies durch versehentliches stoppen, falsche Aktivitäten oder weil vergessen wurde, den Eintrag zu stoppen, sollten alle Eigenschaften bearbeitet werden können.
 
 ### **Auswertung**
 - **Überzeiten**: Die Über- oder Unterstunden sollen automatisch aus den erfassten Zeiten und der Tagessollzeit berechnet werden, die im jeweiligen Eintrag hinterlegt ist. Das Ergebnis sollte einfach und übersichtlich dargestellt werden.
@@ -39,6 +53,9 @@ Mit Jiffy soll dieser Prozess deutlich einfacher und einheitlicher gestaltet wer
 
 ## Use Cases
 
+### Zeiterfassung
+![Zeiterfassung](../assets/UseCase_Zeiterfassung.svg)
+
 ### Aktivitätenverwaltung
 ![Aktivitätenverwaltung](../assets/UseCase_Aktivitätenverwaltung.svg)
 
@@ -47,6 +64,3 @@ Mit Jiffy soll dieser Prozess deutlich einfacher und einheitlicher gestaltet wer
 
 ### Auswertung
 ![Auswertung](../assets/UseCase_Auswertung.svg)
-
-### Zeiterfassung
-![Zeiterfassung](../assets/UseCase_Zeiterfassung.svg)
