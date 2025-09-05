@@ -19,9 +19,9 @@ Mit Jiffy soll dieser Prozess deutlich einfacher und einheitlicher gestaltet wer
 
 ## Was soll Jiffy können?
 ### **Zeiterfassung**
-- **Stopuhr-prinzip**: Die Zeit sollte so einfach wie möglich erfasst werden, idealerweise nach dem Stoppuhr-Prinzip. Man drückt einfach auf Start und auf Stop, sobald man fertig ist.
+- **Stoppuhr-prinzip**: Die Zeit sollte so einfach wie möglich erfasst werden, idealerweise nach dem Stoppuhr-Prinzip. Man drückt einfach auf Start und auf Stop, sobald man fertig ist.
 
-- **Löschen von einträgen**: Versehentlich eingetragene Einträge sollten wieder gelöscht werden können.
+- **Löschen von Einträgen**: Versehentlich eingetragene Einträge sollten wieder gelöscht werden können.
 
 - **Bearbeiten**: Einträge, die nicht der Realität entsprechen, sei dies durch versehentliches stoppen, falsche Aktivitäten oder weil vergessen wurde, den Eintrag zu stoppen, sollten alle Eigenschaften bearbeitet werden können.
 
@@ -53,14 +53,4 @@ Mit Jiffy soll dieser Prozess deutlich einfacher und einheitlicher gestaltet wer
 
 ## Use Cases
 
-### Zeiterfassung
-![Zeiterfassung](../assets/UseCase_Zeiterfassung.svg)
-
-### Aktivitätenverwaltung
-![Aktivitätenverwaltung](../assets/UseCase_Aktivitätenverwaltung.svg)
-
-### Klassenverwaltung
-![Klassenverwaltung](../assets/UseCase_Klassenverwaltung.svg)
-
-### Auswertung
-![Auswertung](../assets/UseCase_Auswertung.svg)
+![Use Cases](../assets/UseCases.svg)
