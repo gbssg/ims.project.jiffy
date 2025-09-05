@@ -1,8 +1,22 @@
 # Inhaltsverzeichnis
 
+- [Inhaltsverzeichnis](#inhaltsverzeichnis)
 - [Generell](#generell)
   - [Repo-Aufbau](#repo-aufbau)
 - [Sourcecode](#sourcecode)
+  - [Instanzvariablen](#instanzvariablen)
+    - [Private Instanzvariablen](#private-instanzvariablen)
+    - [Public Instanzvariablen](#public-instanzvariablen)
+    - [Klassenvariablen](#klassenvariablen)
+    - [Konstanten](#konstanten)
+    - [Methoden namen](#methoden-namen)
+    - [Argumente](#argumente)
+    - [Namespaces](#namespaces)
+    - [Klassen](#klassen)
+      - [Normale Klassen](#normale-klassen)
+      - [Abstrakte Klassen](#abstrakte-klassen)
+      - [Interfaces](#interfaces)
+        - [Dateinamen](#dateinamen)
 - [Datenmodell](#datenmodell)
   - [Entitäten](#entitäten)
   - [Schlüssel](#schlüssel)
@@ -13,6 +27,7 @@
   - [Namenskoventionen](#namenskoventionen)
     - [HTTP-Methoden](#http-methoden)
     - [Response-Statuscodes](#response-statuscodes)
+
 
 
 # Generell
@@ -48,7 +63,47 @@ Root
 
 
 # Sourcecode
-to be defined
+- Für alles muss ein sinnvoller, klarer und aussagekräftiger Name vorhanden sein. 
+- Pro Datei darf maximal eine Klasse vorhanden sein.
+
+## Instanzvariablen
+### Private Instanzvariablen
+- Immer **camelCase**.
+- Immer davor ein Unterstrich `_`.
+
+### Public Instanzvariablen
+- Immer** **PascalCase**
+
+## Klassenvariablen
+Bei Klassenvariablen wird **PascalCase** verwendet.
+
+## Konstanten
+- Konstanten werden mit dem **SCREAMING_SNAKE_CASE** benannt.
+
+
+## Methoden namen
+- Methoden werden **immer** in **PascalCase** benannt.
+- Methoden sollten **beschreibende** Namen haben.
+
+## Argumente
+Argumente werden **immer** in **camelCase** benannt.
+
+## Namespaces
+Namespaces werden **immer** im **PascalCase** benannt.
+
+## Klassen
+### Normale Klassen
+Normale Klassen müssen mit **PascalCase** benannt werden.
+
+### Abstrakte Klassen 
+Abstrakte Klassen müssen das Schlüsselwort `Abstract` vor ihrem Namen haben und befolgen ansonsten die gleichen Konventionen wie eine Klasse.
+
+### Interfaces
+Interfaces beginnen immer mit einem grossen `I` und folgen ansonsten den gleichen Naming-Conventions wie eine normale Klasse.
+
+## Dateinamen
+Dateinamen sind **immer gleich** dem **Klassennamen**
+
 
 # Datenmodell
 ## Entitäten
