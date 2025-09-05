@@ -1,39 +1,36 @@
 # Inhaltsverzeichnis
 
-- [Inhaltsverzeichnis](#inhaltsverzeichnis)
-- [Generell](#generell)
-  - [Repo-Aufbau](#repo-aufbau)
-- [Sourcecode](#sourcecode)
-  - [Instanzvariablen](#instanzvariablen)
-    - [Private Instanzvariablen](#private-instanzvariablen)
-    - [Public Instanzvariablen](#public-instanzvariablen)
-    - [Klassenvariablen](#klassenvariablen)
-    - [Konstanten](#konstanten)
-    - [Methoden namen](#methoden-namen)
-    - [Argumente](#argumente)
-    - [Namespaces](#namespaces)
-    - [Klassen](#klassen)
-      - [Normale Klassen](#normale-klassen)
-      - [Abstrakte Klassen](#abstrakte-klassen)
-      - [Interfaces](#interfaces)
-        - [Dateinamen](#dateinamen)
-- [Datenmodell](#datenmodell)
-  - [Entitäten](#entitäten)
-  - [Schlüssel](#schlüssel)
-    - [Primärschlussel](#primärschlussel)
-    - [Fremdschlüssel](#fremdschlüssel)
-- [API](#api)
-  - [Struktur](#struktur)
-  - [Namenskoventionen](#namenskoventionen)
-    - [HTTP-Methoden](#http-methoden)
-    - [Response-Statuscodes](#response-statuscodes)
+- [1 Generell](#1-generell)
+  - [1.1 Repo-Aufbau](#11-repo-aufbau)
+- [2 Sourcecode](#2-sourcecode)
+  - [2.1 Instanzvariablen](#21-instanzvariablen)
+    - [2.1.1 Private Instanzvariablen](#211-private-instanzvariablen)
+    - [2.1.2 Public Instanzvariablen](#212-public-instanzvariablen)
+    - [2.2 Klassenvariablen](#22-klassenvariablen)
+    - [2.3 Konstanten](#23-konstanten)
+    - [2.4 Methoden namen](#24-methoden-namen)
+    - [2.5 Argumente](#25-argumente)
+    - [2.6 Namespaces](#26-namespaces)
+    - [2.7 Klassen](#27-klassen)
+      - [2.7.1 Normale Klassen](#271-normale-klassen)
+      - [2.7.2 Abstrakte Klassen](#272-abstrakte-klassen)
+      - [2.7.3 Interfaces](#273-interfaces)
+        - [2.8 Dateinamen](#28-dateinamen)
+- [3 Datenmodell](#3-datenmodell)
+  - [3.1 Entitäten](#31-entitäten)
+  - [3.2 Schlüssel](#32-schlüssel)
+    - [3.2.1 Primärschlussel](#321-primärschlussel)
+    - [3.2.2 Fremdschlüssel](#322-fremdschlüssel)
+- [4 API](#4-api)
+  - [4.1 Struktur](#41-struktur)
+  - [4.2 Namenskoventionen](#42-namenskoventionen)
+  - [4.3 HTTP-Methoden](#43-http-methoden)
+  - [4.4 Response-Statuscodes](#44-response-statuscodes)
 
-
-
-# Generell
+# 1 Generell
 In Jiffy gilt generell für alles ausser der Dokumentation, dass nur Englisch zulässig ist.
 
-## Repo-Aufbau
+## 1.1 Repo-Aufbau
 ```
 Root
 ├─assets
@@ -62,61 +59,61 @@ Root
 ```
 
 
-# Sourcecode
+# 2 Sourcecode
 - Für alles muss ein sinnvoller, klarer und aussagekräftiger Name vorhanden sein. 
 - Pro Datei darf maximal eine Klasse vorhanden sein.
 
-## Instanzvariablen
-### Private Instanzvariablen
+## 2.1 Instanzvariablen
+### 2.1.1 Private Instanzvariablen
 - Immer **camelCase**.
 - Immer davor ein Unterstrich `_`.
 
-### Public Instanzvariablen
+### 2.1.2 Public Instanzvariablen
 - Immer** **PascalCase**
 
-## Klassenvariablen
+## 2.2 Klassenvariablen
 Bei Klassenvariablen wird **PascalCase** verwendet.
 
-## Konstanten
+## 2.3 Konstanten
 - Konstanten werden mit dem **SCREAMING_SNAKE_CASE** benannt.
 
 
-## Methoden namen
+## 2.4 Methoden namen
 - Methoden werden **immer** in **PascalCase** benannt.
 - Methoden sollten **beschreibende** Namen haben.
 
-## Argumente
+## 2.5 Argumente
 Argumente werden **immer** in **camelCase** benannt.
 
-## Namespaces
+## 2.6 Namespaces
 Namespaces werden **immer** im **PascalCase** benannt.
 
-## Klassen
-### Normale Klassen
+## 2.7 Klassen
+### 2.7.1 Normale Klassen
 Normale Klassen müssen mit **PascalCase** benannt werden.
 
-### Abstrakte Klassen 
+### 2.7.2 Abstrakte Klassen 
 Abstrakte Klassen müssen das Schlüsselwort `Abstract` vor ihrem Namen haben und befolgen ansonsten die gleichen Konventionen wie eine Klasse.
 
-### Interfaces
+### 2.7.3 Interfaces
 Interfaces beginnen immer mit einem grossen `I` und folgen ansonsten den gleichen Naming-Conventions wie eine normale Klasse.
 
-## Dateinamen
+## 2.8 Dateinamen
 Dateinamen sind **immer gleich** dem **Klassennamen**
 
 
-# Datenmodell
-## Entitäten
+# 3 Datenmodell
+## 3.1 Entitäten
 - Entitäten **immer** im **Singular** benennen.
 - Entitäten haben immer im PascalCase zu sein.
 
-## Schlüssel
-### Primärschlussel
+## 3.2 Schlüssel
+### 3.2.1 Primärschlussel
 - Jeder Datensatz muss über einen eindeutigen Primärschlüssel verfügen.
 - Der Primärschlüssel **muss** eine **GUID** sein.
 - Der Primärschlüssel **muss** immer den Namen `Id` tragen.
 
-### Fremdschlüssel
+### 3.2.2 Fremdschlüssel
 - Fremdschlüssel müssen **PascalCase** verwenden.
 - Es dürfen **keine Sonderzeichen** oder Trennzeichen verwendet werden.
 - Fremdschlüssel müssen immer folgendes schema befolgen: `{TABELLEN_NAME}Id`
@@ -127,9 +124,9 @@ Dateinamen sind **immer gleich** dem **Klassennamen**
 | EntryId    | entryid    |
 | ActivityId | activityId |
 
-# API
+# 4 API
 
-### Struktur
+## 4.1 Struktur
 
 Alle Endpunkte folgen diesem Schema:
 
@@ -141,7 +138,7 @@ Alle Endpunkte folgen diesem Schema:
 | `API_VERSION`    | Aktuelle API-Version               | `v1`               |
 | `CONTROLLER`     | Ressource, **immer** im **Plural** | `entries`          |
 
-## Namenskoventionen
+## 4.2 Namenskoventionen
 Controller sind **immer** im Plural und werden kleingeschrieben. Müssen zwei Wörter benutzt werden, werden diese mit einem Bindestrich getrennt.
 
 | Datenmodell | Controller          |
@@ -150,7 +147,7 @@ Controller sind **immer** im Plural und werden kleingeschrieben. Müssen zwei W�
 | `Activity`  | `api/v1/activities` |
 | `Class`     | `api/v1/classes`    | 
 
-### HTTP-Methoden  
+## 4.3 HTTP-Methoden  
 In Jiffy's api sind folgende HTTP-Methoden zulässig:
 
 | Methode  | Zweck                               |
@@ -161,7 +158,7 @@ In Jiffy's api sind folgende HTTP-Methoden zulässig:
 | `DELETE` | Ressourcen löschen                  | 
 
 
-### Response-Statuscodes
+## 4.4 Response-Statuscodes
 In Jiffy's API dürfen grundsätzlich alle HTTP-Statuscodes verwendet werden, sofern die hier aufgelisteten für die zu gebende Antwort keinen Sinn ergeben.
 
 
