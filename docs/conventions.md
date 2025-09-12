@@ -3,19 +3,19 @@
 - [1 Generell](#1-generell)
   - [1.1 Repo-Aufbau](#11-repo-aufbau)
 - [2 Sourcecode](#2-sourcecode)
-  - [2.1 Instanzvariablen](#21-instanzvariablen)
-    - [2.1.1 Private Instanzvariablen](#211-private-instanzvariablen)
-    - [2.1.2 Public Instanzvariablen](#212-public-instanzvariablen)
-    - [2.2 Klassenvariablen](#22-klassenvariablen)
-    - [2.3 Konstanten](#23-konstanten)
-    - [2.4 Methoden namen](#24-methoden-namen)
-    - [2.5 Argumente](#25-argumente)
-    - [2.6 Namespaces](#26-namespaces)
-    - [2.7 Klassen](#27-klassen)
-      - [2.7.1 Normale Klassen](#271-normale-klassen)
-      - [2.7.2 Abstrakte Klassen](#272-abstrakte-klassen)
-      - [2.7.3 Interfaces](#273-interfaces)
-        - [2.8 Dateinamen](#28-dateinamen)
+  - [2.1 Instanzvariablen / Properties](#21-instanzvariablen--properties)
+    - [2.1.1 Private Instanzvariablen / Properties](#211-private-instanzvariablen--properties)
+    - [2.1.2 Public Instanzvariablen / Properties](#212-public-instanzvariablen--properties)
+  - [2.2 Klassenvariablen](#22-klassenvariablen)
+  - [2.3 Konstanten](#23-konstanten)
+  - [2.4 Methoden namen](#24-methoden-namen)
+  - [2.5 Argumente](#25-argumente)
+  - [2.6 Namespaces](#26-namespaces)
+  - [2.7 Klassen](#27-klassen)
+    - [2.7.1 Normale Klassen](#271-normale-klassen)
+    - [2.7.2 Abstrakte Klassen](#272-abstrakte-klassen)
+    - [2.7.3 Interfaces](#273-interfaces)
+      - [2.8 Dateinamen](#28-dateinamen)
 - [3 Datenmodell](#3-datenmodell)
   - [3.1 Entitäten](#31-entitäten)
   - [3.2 Schlüssel](#32-schlüssel)
@@ -63,12 +63,12 @@ Root
 - Für alles muss ein sinnvoller, klarer und aussagekräftiger Name vorhanden sein. 
 - In einer Datei darf maximal eine Klasse vorhanden sein.
 
-## 2.1 Instanzvariablen
-### 2.1.1 Private Instanzvariablen
+## 2.1 Instanzvariablen / Properties
+### 2.1.1 Private Instanzvariablen / Properties
 - Immer **camelCase**.
 - Immer davor ein Unterstrich `_`.
 
-### 2.1.2 Public Instanzvariablen
+### 2.1.2 Public Instanzvariablen / Properties
 - Immer **PascalCase**
 
 ## 2.2 Klassenvariablen
@@ -139,34 +139,13 @@ Alle Endpunkte folgen diesem Schema:
 | `CONTROLLER`     | Ressource, **immer** im **Plural** | `entries`          |
 
 ## 4.2 Namenskoventionen
-Controller sind **immer** im Plural und werden kleingeschrieben. Müssen zwei Wörter benutzt werden, werden diese mit einem Bindestrich getrennt.
+Routen sind **immer** im Plural und werden kleingeschrieben. Müssen zwei Wörter benutzt werden, werden diese mit einem Bindestrich getrennt.
 
-| Datenmodell | Controller          |
+| Datenmodell | Route               |
 |----------   |---------------------|
 | `Entry`     | `api/v1/entries`    | 
 | `Activity`  | `api/v1/activities` |
 | `Class`     | `api/v1/classes`    | 
 
-## 4.3 HTTP-Methoden  
-In Jiffy's api sind folgende HTTP-Methoden zulässig:
-
-| Methode  | Zweck                               |
-|----------|-------------------------------------|
-| `GET`    | Resourcen abrufen                   | 
-| `POST`   | Neue Ressourcen erstellen           |
-| `PATCH`  | Anderungen an Resourcen vornehmen   | 
-| `DELETE` | Ressourcen löschen                  | 
-
-
-## 4.4 Response-Statuscodes
-In Jiffy's API dürfen grundsätzlich alle HTTP-Statuscodes verwendet werden, sofern die hier aufgelisteten für die zu gebende Antwort keinen Sinn ergeben.
-
-
-| Code | Bedeutung   | Verwendung               |
-|------|-------------|--------------------------|
-| 200  | OK          | Erfolgreicher Abruf      |
-| 201  | Created     | Erfolgreiche Erstellung  |
-| 204  | No Content  | Erfolgreiches Löschen    |
-| 403  | Forbidden   | Keine Berechtigung       |
-| 400  | Bad Request | Ungültige Daten          |
-| 404  | Not Found   | Ressource nicht gefunden |
+## 4.3 HTTP-Methoden 
+In Jiffys API ist die Methode **PUT** nicht zulässig. Für jegliche Veränderungen an einer Ressource muss zwingend die Methode **PATCH** verwendet werden.
