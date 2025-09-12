@@ -104,7 +104,7 @@ Dateinamen sind **immer gleich** dem **Klassennamen**
 
 # 3 Datenmodell
 ## 3.1 Entitäten
-- Entitäten **immer** im **Singular** benennen.
+- Entitäten **immer** im **Plural** benennen.
 - Entitäten haben immer im PascalCase zu sein.
 
 ## 3.2 Schlüssel
