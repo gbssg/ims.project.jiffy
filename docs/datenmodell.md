@@ -2,7 +2,7 @@
 
 - [1 ERD](#1-erd)
 - [2 Tabellen](#2-tabellen)
- - [2.1 Framework](#21-framework)
+  - [2.1 Framework](#21-framework)
     - [2.1.1 AspNetRoleClaims](#211-aspnetroleclaims)
     - [2.1.2 AspNetRoles](#212-aspnetroles)
     - [2.1.3 AspNetUserClaims](#213-aspnetuserclaims)
@@ -18,7 +18,7 @@
 
 
 # 1 ERD
-![ERD](../assets/ERD.jpg)
+![ERD](../assets/ERD_Minimal.jpg)
 
 # 2 Tabellen
 
