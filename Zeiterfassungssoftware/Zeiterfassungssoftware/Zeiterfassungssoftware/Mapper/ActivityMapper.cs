@@ -6,7 +6,7 @@ namespace Zeiterfassungssoftware.Mapper
 {
     public class ActivityMapper
     {
-        public static Activity FromTitleDTO(ActivityTitle ActivityTitle)
+        public static Data.Jiffy.Models.ActivityTitle FromTitleDTO(SharedData.Activities.ActivityTitle ActivityTitle)
         {
             if (ActivityTitle is null)
                 throw new ArgumentNullException();
@@ -32,7 +32,7 @@ namespace Zeiterfassungssoftware.Mapper
             };
         }
 
-        public static ActivityTitle ToTitleDTO(Activity ActivityTitle)
+        public static SharedData.Activities.ActivityTitle ToTitleDTO(Data.Jiffy.Models.ActivityTitle ActivityTitle)
         {
             if (ActivityTitle is null)
                 throw new ArgumentNullException();
@@ -58,7 +58,7 @@ namespace Zeiterfassungssoftware.Mapper
             };
         }
 
-        public static bool ValidateTitleDTO(ActivityTitle ActivityTitle)
+        public static bool ValidateTitleDTO(SharedData.Activities.ActivityTitle ActivityTitle)
         {
             if (ActivityTitle is null)
                 return false;

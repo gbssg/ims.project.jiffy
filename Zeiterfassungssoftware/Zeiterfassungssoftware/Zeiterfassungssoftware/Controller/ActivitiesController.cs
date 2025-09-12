@@ -140,7 +140,7 @@ namespace Zeiterfassungssoftware.Controller
             if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
 
-            var DbTitle = new Data.Jiffy.Models.Activity()
+            var DbTitle = new Data.Jiffy.Models.ActivityTitle()
             {
                 Id = Guid.NewGuid(),
                 Title = Title.Value,

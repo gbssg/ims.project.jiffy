@@ -8,7 +8,7 @@ namespace Zeiterfassungssoftware.Data
     {
         public virtual ICollection<ActivityDescription> ActivityDescriptions { get; set; } = new List<ActivityDescription>();
 
-        public virtual ICollection<Activity> ActivityTitles { get; set; } = new List<Activity>();
+        public virtual ICollection<ActivityTitle> ActivityTitles { get; set; } = new List<ActivityTitle>();
 
         public virtual ICollection<Entry> Entries { get; set; } = new List<Entry>();
         public Guid ClassId { get; set; }

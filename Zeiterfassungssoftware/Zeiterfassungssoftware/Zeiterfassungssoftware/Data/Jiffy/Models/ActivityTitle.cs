@@ -2,7 +2,7 @@
 
 namespace Zeiterfassungssoftware.Data.Jiffy.Models;
 
-public partial class Activity
+public partial class ActivityTitle
 {
     public Guid Id { get; set; }
 

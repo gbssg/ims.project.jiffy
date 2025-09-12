@@ -8,7 +8,7 @@ namespace Zeiterfassungssoftware.Data
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
     { 
         public virtual DbSet<ActivityDescription> ActivityDescriptions { get; set; }
-        public virtual DbSet<Activity> Activitys { get; set; }
+        public virtual DbSet<ActivityTitle> Activitys { get; set; }
         public virtual DbSet<Entry> Entries { get; set; }
         public virtual DbSet<Class> Classes { get; set; }
         public virtual DbSet<ShouldTime> ShouldTimes { get; set; }
@@ -32,7 +32,7 @@ namespace Zeiterfassungssoftware.Data
                     .HasConstraintName("FK_ActivityDescription_AspNetUsers");
             });
 
-            modelBuilder.Entity<Activity>(entity =>
+            modelBuilder.Entity<ActivityTitle>(entity =>
             {
                 entity.ToTable("Activity");
 
