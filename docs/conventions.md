@@ -61,7 +61,7 @@ Root
 
 # 2 Sourcecode
 - Für alles muss ein sinnvoller, klarer und aussagekräftiger Name vorhanden sein. 
-- Pro Datei darf maximal eine Klasse vorhanden sein.
+- In einer Datei darf maximal eine Klasse vorhanden sein.
 
 ## 2.1 Instanzvariablen
 ### 2.1.1 Private Instanzvariablen
@@ -69,10 +69,10 @@ Root
 - Immer davor ein Unterstrich `_`.
 
 ### 2.1.2 Public Instanzvariablen
-- Immer** **PascalCase**
+- Immer **PascalCase**
 
 ## 2.2 Klassenvariablen
-Bei Klassenvariablen wird **PascalCase** verwendet.
+- Bei Klassenvariablen wird **PascalCase** verwendet.
 
 ## 2.3 Konstanten
 - Konstanten werden mit dem **SCREAMING_SNAKE_CASE** benannt.
@@ -83,23 +83,23 @@ Bei Klassenvariablen wird **PascalCase** verwendet.
 - Methoden sollten **beschreibende** Namen haben.
 
 ## 2.5 Argumente
-Argumente werden **immer** in **camelCase** benannt.
+- Argumente werden **immer** in **camelCase** benannt.
 
 ## 2.6 Namespaces
-Namespaces werden **immer** im **PascalCase** benannt.
+- Namespaces werden **immer** im **PascalCase** benannt.
 
 ## 2.7 Klassen
 ### 2.7.1 Normale Klassen
-Normale Klassen müssen mit **PascalCase** benannt werden.
+- Normale Klassen müssen mit **PascalCase** benannt werden.
 
 ### 2.7.2 Abstrakte Klassen 
-Abstrakte Klassen müssen das Schlüsselwort `Abstract` vor ihrem Namen haben und befolgen ansonsten die gleichen Konventionen wie eine Klasse.
+- Abstrakte Klassen müssen das Schlüsselwort `Abstract` vor ihrem Namen haben und befolgen ansonsten die gleichen Konventionen wie eine Klasse.
 
 ### 2.7.3 Interfaces
-Interfaces beginnen immer mit einem grossen `I` und folgen ansonsten den gleichen Naming-Conventions wie eine normale Klasse.
+- Interfaces beginnen immer mit einem grossen `I` und folgen ansonsten den gleichen Naming-Conventions wie eine normale Klasse.
 
 ## 2.8 Dateinamen
-Dateinamen sind **immer gleich** dem **Klassennamen**
+- Dateinamen sind **immer gleich** dem **Klassennamen**
 
 
 # 3 Datenmodell
