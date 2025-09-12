@@ -15,7 +15,7 @@
     - [2.7.1 Normale Klassen](#271-normale-klassen)
     - [2.7.2 Abstrakte Klassen](#272-abstrakte-klassen)
     - [2.7.3 Interfaces](#273-interfaces)
-      - [2.8 Dateinamen](#28-dateinamen)
+  - [2.8 Dateinamen](#28-dateinamen)
 - [3 Datenmodell](#3-datenmodell)
   - [3.1 Entitäten](#31-entitäten)
   - [3.2 Schlüssel](#32-schlüssel)
@@ -25,7 +25,6 @@
   - [4.1 Struktur](#41-struktur)
   - [4.2 Namenskoventionen](#42-namenskoventionen)
   - [4.3 HTTP-Methoden](#43-http-methoden)
-  - [4.4 Response-Statuscodes](#44-response-statuscodes)
 
 # 1 Generell
 In Jiffy gilt generell für alles ausser der Dokumentation, dass nur Englisch zulässig ist.
