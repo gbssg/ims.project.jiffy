@@ -18,7 +18,7 @@
 
 
 # 1 ERD
-![ERD](../assets/ERD_Minimal.jpg)
+![ERD](../assets/erd.drawio.svg)
 
 # 2 Tabellen
 
