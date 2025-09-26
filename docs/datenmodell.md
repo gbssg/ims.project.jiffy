@@ -9,6 +9,7 @@
     - [2.1.4 UserLogins](#214-userlogins)
     - [2.1.5 UserRoles](#215-userroles)
     - [2.1.6 UserTokens](#216-usertokens)
+    - [2.1.7 Users](#217-users)
   - [2.2 Applikation](#22-applikation)
     - [2.2.1 ActivityTitles](#221-activitytitles)
     - [2.2.2 ActivityDescriptions](#222-activitydescriptions)
