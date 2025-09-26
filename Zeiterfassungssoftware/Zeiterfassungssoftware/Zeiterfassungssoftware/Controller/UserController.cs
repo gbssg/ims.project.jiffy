@@ -27,26 +27,6 @@ namespace Zeiterfassungssoftware.Controller
             _context = context;
         }
 
-        [HttpPatch("set-class/{Id}")]
-        public async Task<IActionResult> SetClass(Guid Id)
-        {
-            var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(UserId))
-                return Unauthorized();
-
-            var Class = await _context.Classes.FirstOrDefaultAsync(e => e.Id == Id);
-            if (Class is null)
-                return NotFound("Class not found");
-
-            var DbUser = await _context.Users.FirstOrDefaultAsync(e => e.Id == UserId);
-            if (DbUser is null)
-                return Unauthorized();
-            
-            DbUser.ClassId = Id;
-
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
 
         [Authorize(Roles = "Administrator")]
         [HttpGet]
@@ -112,6 +92,8 @@ namespace Zeiterfassungssoftware.Controller
             applicationUser.LockoutEnabled = user.LockoutEnabled;
             applicationUser.AccessFailedCount = user.AccessFailedCount;
             applicationUser.EmailConfirmed = user.EmailConfirmed;
+
+            applicationUser.ClassId = user.ClassId;
 
             if (user.LockoutEnd > DateTime.MinValue)
                 applicationUser.LockoutEnd = user.LockoutEnd;
