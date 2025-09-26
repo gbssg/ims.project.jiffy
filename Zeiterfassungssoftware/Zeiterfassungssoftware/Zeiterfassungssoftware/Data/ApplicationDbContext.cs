@@ -51,54 +51,54 @@ namespace Zeiterfassungssoftware.Data
 
             modelBuilder.Entity<ActivityDescription>(entity =>
             {
-                entity.ToTable("ActivityDescription");
+                entity.ToTable("ActivityDescriptions");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
                 entity.Property(e => e.UserId)
                     .HasMaxLength(450)
-                    .HasColumnName("User_Id");
+                    .HasColumnName("UserId");
 
                 entity.HasOne(d => d.User).WithMany(p => p.ActivityDescriptions)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ActivityDescription_AspNetUsers");
+                    .HasConstraintName("FK_ActivityDescription_Users");
             });
 
             modelBuilder.Entity<ActivityTitle>(entity =>
             {
-                entity.ToTable("Activity");
+                entity.ToTable("ActivityTitles");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
                 entity.Property(e => e.UserId)
                     .HasMaxLength(450)
-                    .HasColumnName("User_Id");
+                    .HasColumnName("UserId");
 
                 entity.HasOne(d => d.User).WithMany(p => p.ActivityTitles)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)  
-                    .HasConstraintName("FK_ActivityTitle_AspNetUsers");
+                    .HasConstraintName("FK_ActivityTitle_Users");
             });
 
             modelBuilder.Entity<Entry>(entity =>
             {
-                entity.ToTable("Entry");
+                entity.ToTable("Entries");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
                 entity.Property(e => e.End).HasColumnType("datetime");
                 entity.Property(e => e.Start).HasColumnType("datetime");
                 entity.Property(e => e.UserId)
                     .HasMaxLength(450)
-                    .HasColumnName("User_id");
+                    .HasColumnName("UserId");
 
                 entity.HasOne(d => d.User).WithMany(p => p.Entries)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Entry_AspNetUsers");
+                    .HasConstraintName("FK_Entry_Users");
             });
 
             modelBuilder.Entity<Class>(entity =>
             {
-                entity.ToTable("Class");
+                entity.ToTable("Classes");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
                 entity.Property(e => e.Name).HasMaxLength(250);

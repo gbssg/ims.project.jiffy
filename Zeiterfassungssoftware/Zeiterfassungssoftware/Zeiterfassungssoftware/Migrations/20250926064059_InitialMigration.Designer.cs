@@ -9,11 +9,11 @@ using Zeiterfassungssoftware.Data;
 
 #nullable disable
 
-namespace Zeiterfassungssoftware.Data.Migrations
+namespace Zeiterfassungssoftware.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250429112833_EntryShouldTime")]
-    partial class EntryShouldTime
+    [Migration("20250926064059_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,7 +49,7 @@ namespace Zeiterfassungssoftware.Data.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -74,7 +74,7 @@ namespace Zeiterfassungssoftware.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
+                    b.ToTable("RoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -99,7 +99,7 @@ namespace Zeiterfassungssoftware.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.ToTable("UserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -121,7 +121,7 @@ namespace Zeiterfassungssoftware.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
+                    b.ToTable("UserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -136,7 +136,7 @@ namespace Zeiterfassungssoftware.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
+                    b.ToTable("UserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -155,7 +155,7 @@ namespace Zeiterfassungssoftware.Data.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("UserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Zeiterfassungssoftware.Data.ApplicationUser", b =>
@@ -215,6 +215,8 @@ namespace Zeiterfassungssoftware.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClassId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -223,10 +225,35 @@ namespace Zeiterfassungssoftware.Data.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("Zeiterfassungssoftware.Data.Jiffy.Models.Activity", b =>
+            modelBuilder.Entity("Zeiterfassungssoftware.Data.Jiffy.Models.ActivityDescription", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Favorite")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("UserId");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ActivityDescriptions", (string)null);
+                });
+
+            modelBuilder.Entity("Zeiterfassungssoftware.Data.Jiffy.Models.ActivityTitle", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -242,38 +269,13 @@ namespace Zeiterfassungssoftware.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("User_Id");
+                        .HasColumnName("UserId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Activity", (string)null);
-                });
-
-            modelBuilder.Entity("Zeiterfassungssoftware.Data.Jiffy.Models.ActivityDescription", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Favorite")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("User_Id");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ActivityDescription", (string)null);
+                    b.ToTable("ActivityTitles", (string)null);
                 });
 
             modelBuilder.Entity("Zeiterfassungssoftware.Data.Jiffy.Models.Class", b =>
@@ -286,24 +288,9 @@ namespace Zeiterfassungssoftware.Data.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<TimeSpan>("ShouldTimeFriday")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("ShouldTimeMonday")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("ShouldTimeThursday")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("ShouldTimeTuesday")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("ShouldTimeWednesday")
-                        .HasColumnType("time");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Class", (string)null);
+                    b.ToTable("Classes", (string)null);
                 });
 
             modelBuilder.Entity("Zeiterfassungssoftware.Data.Jiffy.Models.Entry", b =>
@@ -332,13 +319,35 @@ namespace Zeiterfassungssoftware.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("User_id");
+                        .HasColumnName("UserId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Entry", (string)null);
+                    b.ToTable("Entries", (string)null);
+                });
+
+            modelBuilder.Entity("Zeiterfassungssoftware.Data.Jiffy.Models.ShouldTime", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ClassId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("Should")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
+
+                    b.ToTable("ShouldTimes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -392,15 +401,15 @@ namespace Zeiterfassungssoftware.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Zeiterfassungssoftware.Data.Jiffy.Models.Activity", b =>
+            modelBuilder.Entity("Zeiterfassungssoftware.Data.ApplicationUser", b =>
                 {
-                    b.HasOne("Zeiterfassungssoftware.Data.ApplicationUser", "User")
-                        .WithMany("ActivityTitles")
-                        .HasForeignKey("UserId")
-                        .IsRequired()
-                        .HasConstraintName("FK_ActivityTitle_AspNetUsers");
+                    b.HasOne("Zeiterfassungssoftware.Data.Jiffy.Models.Class", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Class");
                 });
 
             modelBuilder.Entity("Zeiterfassungssoftware.Data.Jiffy.Models.ActivityDescription", b =>
@@ -409,7 +418,18 @@ namespace Zeiterfassungssoftware.Data.Migrations
                         .WithMany("ActivityDescriptions")
                         .HasForeignKey("UserId")
                         .IsRequired()
-                        .HasConstraintName("FK_ActivityDescription_AspNetUsers");
+                        .HasConstraintName("FK_ActivityDescription_Users");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Zeiterfassungssoftware.Data.Jiffy.Models.ActivityTitle", b =>
+                {
+                    b.HasOne("Zeiterfassungssoftware.Data.ApplicationUser", "User")
+                        .WithMany("ActivityTitles")
+                        .HasForeignKey("UserId")
+                        .IsRequired()
+                        .HasConstraintName("FK_ActivityTitle_Users");
 
                     b.Navigation("User");
                 });
@@ -420,9 +440,20 @@ namespace Zeiterfassungssoftware.Data.Migrations
                         .WithMany("Entries")
                         .HasForeignKey("UserId")
                         .IsRequired()
-                        .HasConstraintName("FK_Entry_AspNetUsers");
+                        .HasConstraintName("FK_Entry_Users");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Zeiterfassungssoftware.Data.Jiffy.Models.ShouldTime", b =>
+                {
+                    b.HasOne("Zeiterfassungssoftware.Data.Jiffy.Models.Class", "Class")
+                        .WithMany("ShouldTimes")
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
                 });
 
             modelBuilder.Entity("Zeiterfassungssoftware.Data.ApplicationUser", b =>
@@ -432,6 +463,11 @@ namespace Zeiterfassungssoftware.Data.Migrations
                     b.Navigation("ActivityTitles");
 
                     b.Navigation("Entries");
+                });
+
+            modelBuilder.Entity("Zeiterfassungssoftware.Data.Jiffy.Models.Class", b =>
+                {
+                    b.Navigation("ShouldTimes");
                 });
 #pragma warning restore 612, 618
         }
