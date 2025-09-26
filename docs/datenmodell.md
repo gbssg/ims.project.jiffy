@@ -8,7 +8,7 @@
     - [2.1.3 UserClaims](#213-userclaims)
     - [2.1.4 UserLogins](#214-userlogins)
     - [2.1.5 UserRoles](#215-userroles)
-    - [2.1.6 UsetTokens](#216-usettokens)
+    - [2.1.6 UserTokens](#216-usertokens)
   - [2.2 Applikation](#22-applikation)
     - [2.2.1 ActivityTitles](#221-activitytitles)
     - [2.2.2 ActivityDescriptions](#222-activitydescriptions)
@@ -75,7 +75,7 @@ Speichert die Rollen, die einzelnen Benutzern zugewiesen sind.
 | UserId | nvarchar(450) | Users       | -            |
 | RoleId | nvarchar(450) | Roles       | -            |
 
-### 2.1.6 UsetTokens
+### 2.1.6 UserTokens
 Speichert Tokens für Benutzer.
 
 **Primärschlüssel:** Kombination aus **UserId**, **LoginProvider** und **Name**
@@ -86,6 +86,28 @@ Speichert Tokens für Benutzer.
 | LoginProvider | nvarchar(450) | -           | Anbieter     |
 | Name          | nvarchar(450) | -           | Tokentyp     |
 | Value         | nvarchar(MAX) | -           | Token        |
+
+### 2.1.7 Users
+Speichert Benutzer.
+
+| Name                 | Typ               | Schlüssel | Beschreibung |
+|----------------------|-------------------|-----------|--------------|
+| Id                   | nvarchar(450)     | Primär    | -            |
+| ClassId              | uniqueidentifier  | Classes   | -            |
+| UserName             | nvarchar(256)     | -         | -            |
+| NormalizedUserName   | nvarchar(256)     | -         | -            |
+| Email                | nvarchar(256)     | -         | -            |
+| NormalizedEmail      | nvarchar(256)     | -         | -            |
+| EmailConfirmed       | bit               | -         | -            |
+| PasswordHash         | nvarchar(MAX)     | -         | -            |
+| SecurityStamp        | nvarchar(MAX)     | -         | -            |
+| ConcurrencyStamp     | nvarchar(MAX)     | -         | -            |
+| PhoneNumber          | nvarchar(MAX)     | -         | -            |
+| PhoneNumberConfirmed | bit               | -         | -            |
+| TwoFactorEnabled     | bit               | -         | -            |
+| LockoutEnd           | datetimeoffset(7) | -         | -            |
+| LockoutEnabled       | bit               | -         | -            |
+| AccessFailedCount    | int               | -         | -            |
 
 ## 2.2 Applikation 
 ### 2.2.1 ActivityTitles
