@@ -143,15 +143,15 @@ Speichert alle Klassen
 ### 2.2.4 Entries
 Speichert die Einträge der Nutzer.
 
-| Name        | Typ              | Schlüssel | Beschreibung                    |
-|-------------|------------------|-----------|---------------------------------|
-| Id          | uniqueidentifier | Primär    | -                               |
-| Start       | datetime         | -         | -                               |
-| End         | datetime         | -         | -                               |
-| Title       | nvarchar(MAX)    | -         | -                               |
-| Description | nvarchar(MAX)    | -         | -                               |
-| UserId      | nvarchar(450)    | -         | -                               |
-| ShouldTime  | time(7)          | -         | Soll-Arbeitszeit für diesen Tag |
+| Name         | Typ              | Schlüssel   | Beschreibung                    |
+|--------------|------------------|-------------|---------------------------------|
+| Id           | uniqueidentifier | Primär      | -                               |
+| Start        | datetime         | -           | -                               |
+| End          | datetime         | -           | -                               |
+| Title        | nvarchar(MAX)    | -           | -                               |
+| Description  | nvarchar(MAX)    | -           | -                               |
+| UserId       | nvarchar(450)    | -           | -                               |
+| ShouldTimeId | uniqueidentifier | ShouldTimes | Soll-Arbeitszeit für diesen Tag |
 
 ### 2.2.5 ShouldTimes
 Speichert die Soll-Arbeitszeit pro Tag für eine Klasse.
@@ -161,4 +161,5 @@ Speichert die Soll-Arbeitszeit pro Tag für eine Klasse.
 | Id        | uniqueidentifier | Primär    | -                                        |
 | DayOfWeek | int              | -         | Wochentag (0 = Sonntag, 1 = Montag, ...) |
 | Should    | time(7)          | -         | Erwartete Arbeitszeit an diesem Tag      |
+| ValidUntil| datetime         | -         | Bis wann dieser Soll-Zeit gültig ist.    |
 | ClassId   | uniqueidentifier | Class     | -                                        |
