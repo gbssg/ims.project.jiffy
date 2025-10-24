@@ -72,7 +72,7 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [Authorize(Roles = "Administrator")]
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(string id, [FromBody] Zeiterfassungssoftware.SharedData.Users.User user)
         {
             var applicationUser = await _userManager.FindByIdAsync(id);
