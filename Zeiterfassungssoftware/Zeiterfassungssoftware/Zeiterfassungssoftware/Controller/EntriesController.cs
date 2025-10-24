@@ -8,7 +8,7 @@ using Zeiterfassungssoftware.Client.Data.Filter;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.Mapper;
-using Zeiterfassungssoftware.SharedData.Time;
+using Zeiterfassungssoftware.SharedData.Times;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Zeiterfassungssoftware.Services
@@ -47,6 +47,7 @@ namespace Zeiterfassungssoftware.Services
                     .OrderByDescending(e => e.Start)
                     .Skip(Start)
                     .Take(Limit)
+                    .Include(e => e.ShouldTime)
                     .ToListAsync();
 
                 var UserIds = Entries.Select(e => e.UserId).Distinct().ToList();
@@ -85,7 +86,7 @@ namespace Zeiterfassungssoftware.Services
             if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
 
-            Entry? DbEntry = _context.Entries.FirstOrDefault(e => e.Id == Id && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
+            Entry? DbEntry = _context.Entries.Include(e => e.ShouldTime).FirstOrDefault(e => e.Id == Id && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
                 
             if (DbEntry is null)
                 return NotFound();
@@ -111,9 +112,8 @@ namespace Zeiterfassungssoftware.Services
             var DbUser = await _userManager.GetUserAsync(User);
             var ShouldTimes = _context.ShouldTimes.Where(e => e.ClassId == DbUser.ClassId);
             var Day = DateTime.Now.DayOfWeek;
-            var ShouldTime = ShouldTimes.FirstOrDefault(e => e.DayOfWeek == Day);
-            var Time = ShouldTime is null ? TimeSpan.Zero : ShouldTime.Should;
-
+            var ShouldTime = ShouldTimes.FirstOrDefault(e => e.DayOfWeek == Day && e.ValidUntil > DateTime.Now);
+            var ShouldTimeId = ShouldTime.Id;
 
             Entry DbEntry = new()
             {
@@ -123,7 +123,7 @@ namespace Zeiterfassungssoftware.Services
                 Title = Entry.Title,
                 Description = Entry.Description,
                 UserId = UserId,
-                ShouldTime = Time,
+                ShouldTimeId = ShouldTimeId,
             };
 
             _context.Entries.Add(DbEntry);

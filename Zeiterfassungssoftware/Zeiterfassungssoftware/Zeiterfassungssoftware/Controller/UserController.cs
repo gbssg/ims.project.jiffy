@@ -8,8 +8,8 @@ using System.Security.Claims;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.Mapper;
-using Zeiterfassungssoftware.SharedData.Time;
-using Zeiterfassungssoftware.SharedData.User;
+using Zeiterfassungssoftware.SharedData.Times;
+using Zeiterfassungssoftware.SharedData.Users;
 
 namespace Zeiterfassungssoftware.Controller
 {
@@ -73,7 +73,7 @@ namespace Zeiterfassungssoftware.Controller
 
         [Authorize(Roles = "Administrator")]
         [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdateUser(string id, [FromBody] Zeiterfassungssoftware.SharedData.User.User user)
+        public async Task<IActionResult> UpdateUser(string id, [FromBody] Zeiterfassungssoftware.SharedData.Users.User user)
         {
             var applicationUser = await _userManager.FindByIdAsync(id);
             if (applicationUser == null)

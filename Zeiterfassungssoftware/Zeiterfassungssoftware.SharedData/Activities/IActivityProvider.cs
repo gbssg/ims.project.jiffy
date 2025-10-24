@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Zeiterfassungssoftware.SharedData.Time;
+using Zeiterfassungssoftware.SharedData.Times;
 
 namespace Zeiterfassungssoftware.SharedData.Activities
 {

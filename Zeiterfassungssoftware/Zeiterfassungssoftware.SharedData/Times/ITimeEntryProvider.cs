@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zeiterfassungssoftware.SharedData.Time
+namespace Zeiterfassungssoftware.SharedData.Times
 {
     public interface ITimeEntryProvider
     {

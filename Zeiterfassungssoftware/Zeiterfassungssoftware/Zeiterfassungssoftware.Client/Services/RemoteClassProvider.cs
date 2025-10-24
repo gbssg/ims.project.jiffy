@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using Zeiterfassungssoftware.SharedData.Classes;
-using Zeiterfassungssoftware.SharedData.Time;
+using Zeiterfassungssoftware.SharedData.Times;
 
 namespace Zeiterfassungssoftware.Client.Services
 {

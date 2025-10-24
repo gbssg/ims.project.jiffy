@@ -1,5 +1,5 @@
 ﻿using Zeiterfassungssoftware.Data.Jiffy.Models;
-using Zeiterfassungssoftware.SharedData.Time;
+using Zeiterfassungssoftware.SharedData.Times;
 
 namespace Zeiterfassungssoftware.Mapper
 {
@@ -18,8 +18,7 @@ namespace Zeiterfassungssoftware.Mapper
                 Start = TimeEntry.Start,
                 End = TimeEntry.End,
                 Title = TimeEntry.Title,
-                Description = TimeEntry.Description,
-                ShouldTime = TimeEntry.ShouldTime,
+                Description = TimeEntry.Description
             };
         }
 
@@ -36,7 +35,7 @@ namespace Zeiterfassungssoftware.Mapper
                 End = Entry.End,
                 Title = Entry.Title,
                 Description = Entry.Description,
-                ShouldTime = Entry.ShouldTime
+                ShouldTime = Entry.ShouldTime.Should
             };
         }
 

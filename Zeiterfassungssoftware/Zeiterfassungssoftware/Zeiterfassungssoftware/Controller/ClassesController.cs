@@ -7,7 +7,7 @@ using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.Mapper;
 using Zeiterfassungssoftware.SharedData.Activities;
-using Zeiterfassungssoftware.SharedData.Time;
+using Zeiterfassungssoftware.SharedData.Times;
 using ActivityDescription = Zeiterfassungssoftware.SharedData.Activities.ActivityDescription;
 using ActivityTitle = Zeiterfassungssoftware.SharedData.Activities.ActivityTitle;
 

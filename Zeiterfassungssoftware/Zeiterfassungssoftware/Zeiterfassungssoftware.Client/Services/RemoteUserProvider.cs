@@ -2,7 +2,7 @@
 using System.Text.Json;
 using Zeiterfassungssoftware.Client.Pages;
 using Zeiterfassungssoftware.SharedData.Classes;
-using Zeiterfassungssoftware.SharedData.User;
+using Zeiterfassungssoftware.SharedData.Users;
 
 namespace Zeiterfassungssoftware.Client.Services
 {

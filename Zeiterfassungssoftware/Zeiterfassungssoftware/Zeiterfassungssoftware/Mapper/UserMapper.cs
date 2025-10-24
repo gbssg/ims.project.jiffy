@@ -1,5 +1,5 @@
 ﻿using Zeiterfassungssoftware.Data;
-using Zeiterfassungssoftware.SharedData.User;
+using Zeiterfassungssoftware.SharedData.Users;
 
 namespace Zeiterfassungssoftware.Mapper
 {

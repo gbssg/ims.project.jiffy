@@ -8,7 +8,7 @@ using Zeiterfassungssoftware.Components.Account;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Services;
 using Zeiterfassungssoftware.SharedData.Activities;
-using Zeiterfassungssoftware.SharedData.Time;
+using Zeiterfassungssoftware.SharedData.Times;
 
 namespace Zeiterfassungssoftware
 {

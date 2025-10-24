@@ -4,7 +4,7 @@ namespace Zeiterfassungssoftware.Mapper
 {
     public class ShouldTimeMapper
     {
-        public static ShouldTime FromDTO(SharedData.Classes.ShouldTime ShouldTime)
+        public static ShouldTime FromDTO(SharedData.ShouldTimes.ShouldTime ShouldTime)
         {
             if (ShouldTime is null)
                 throw new ArgumentNullException();
@@ -18,7 +18,7 @@ namespace Zeiterfassungssoftware.Mapper
             };
         }
 
-        public static SharedData.Classes.ShouldTime ToDTO(ShouldTime ShouldTime)
+        public static SharedData.ShouldTimes.ShouldTime ToDTO(ShouldTime ShouldTime)
         {
             if (ShouldTime is null)
                 throw new ArgumentNullException();

@@ -6,7 +6,7 @@
 
         public DayOfWeek DayOfWeek { get; set; }
         public TimeSpan Should { get; set; }
-
+        public DateTime ValidUntil { get; set; }
         public Guid ClassId { get; set; }
         public virtual Class Class { get; set; } = null!;
     }

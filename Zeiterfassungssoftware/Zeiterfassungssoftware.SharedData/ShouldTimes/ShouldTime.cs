@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zeiterfassungssoftware.SharedData.Classes
+namespace Zeiterfassungssoftware.SharedData.ShouldTimes
 {
     public class ShouldTime
     {

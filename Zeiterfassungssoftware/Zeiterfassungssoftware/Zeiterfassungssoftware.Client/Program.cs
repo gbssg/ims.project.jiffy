@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Zeiterfassungssoftware.Client.Services;
 using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Classes;
-using Zeiterfassungssoftware.SharedData.Time;
-using Zeiterfassungssoftware.SharedData.User;
+using Zeiterfassungssoftware.SharedData.Times;
+using Zeiterfassungssoftware.SharedData.Users;
 
 namespace Zeiterfassungssoftware.Client
 {

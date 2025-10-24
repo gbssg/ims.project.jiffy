@@ -1,4 +1,4 @@
-﻿using Zeiterfassungssoftware.SharedData.Time;
+﻿using Zeiterfassungssoftware.SharedData.Times;
 
 namespace Zeiterfassungssoftware.Client.Data.Filter
 {
