@@ -40,10 +40,37 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ShouldTimeMapper.ToDTO(ShouldTime));
         }
 
-        [HttpPatch("/{Id}")]
-        public async Task<IActionResult> UpdateShouldTime([FromBody] ShouldTime ShouldTime)
+        [HttpPut("/{Id}")]
+        public async Task<IActionResult> UpdateShouldTime(Guid Id, [FromBody] ShouldTime ShouldTime)
         {
-            return Ok();
+            if (!ShouldTimeMapper.ValidateDto(ShouldTime))
+                return BadRequest();
+
+            var OldShouldTime = _context.ShouldTimes.FirstOrDefault(e => e.Id == Id);
+            if (OldShouldTime is null)
+                return NotFound();
+
+            OldShouldTime.ValidUntil = DateTime.Now;
+
+            var NewShouldTime = ShouldTimeMapper.FromDTO(ShouldTime);
+            NewShouldTime.Id = Guid.NewGuid();
+            _context.ShouldTimes.Add(NewShouldTime);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(ShouldTimeMapper.ToDTO(NewShouldTime));
+        }
+
+        [HttpDelete("{id}")] 
+        public async Task<IActionResult> DeleteShouldTime(Guid id)
+        {
+            var ShouldTime = await _context.ShouldTimes.FirstOrDefaultAsync(e => e.Id == id);
+            if (ShouldTime is null)
+                return NotFound();
+
+            ShouldTime.ValidUntil = DateTime.Now;
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
     }
 }

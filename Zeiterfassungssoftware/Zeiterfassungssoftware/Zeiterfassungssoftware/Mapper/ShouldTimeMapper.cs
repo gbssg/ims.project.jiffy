@@ -31,5 +31,13 @@ namespace Zeiterfassungssoftware.Mapper
                 DayOfWeek = ShouldTime.DayOfWeek,
             };
         }
+
+        public static bool ValidateDto(SharedData.ShouldTimes.ShouldTime ShouldTime)
+        {
+            if(ShouldTime.Should <= TimeSpan.FromSeconds(0))
+                return false;
+
+            return true;
+        }
     }
 }
