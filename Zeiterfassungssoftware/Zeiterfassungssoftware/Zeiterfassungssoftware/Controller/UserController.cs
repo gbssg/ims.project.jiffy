@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net.WebSockets;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
@@ -34,6 +35,18 @@ namespace Zeiterfassungssoftware.Controller
         {
             var Users = await _context.Users.Select(e => UserMapper.ToDTO(e)).ToListAsync();
             return Ok(Users);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpGet]
+        public async Task<IActionResult> GetUserById(string Id)
+        {
+            var User = await _userManager.FindByIdAsync(Id);
+
+            if (User is null)
+                return NotFound();
+
+            return Ok(UserMapper.ToDTO(User));
         }
 
         [Authorize(Roles = "Administrator")]
@@ -71,7 +84,6 @@ namespace Zeiterfassungssoftware.Controller
             return NoContent();
         }
 
-        [Authorize(Roles = "Administrator")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(string id, [FromBody] Zeiterfassungssoftware.SharedData.Users.User user)
         {
@@ -79,40 +91,56 @@ namespace Zeiterfassungssoftware.Controller
             if (applicationUser == null)
                 return NotFound();
 
-            if (!string.IsNullOrWhiteSpace(user.UserName))
-                applicationUser.UserName = user.UserName;
-
-            if (!string.IsNullOrWhiteSpace(user.Email))
-                applicationUser.Email = user.Email;
-
-            applicationUser.PhoneNumber = user.PhoneNumber ?? applicationUser.PhoneNumber;
-            applicationUser.PhoneNumberConfirmed = user.PhoneNumberConfirmed;
-            applicationUser.TwoFactorEnabled = user.TwoFactorEnabled;
-
-            applicationUser.LockoutEnabled = user.LockoutEnabled;
-            applicationUser.AccessFailedCount = user.AccessFailedCount;
-            applicationUser.EmailConfirmed = user.EmailConfirmed;
-
-            applicationUser.ClassId = user.ClassId;
-
-            if (user.LockoutEnd > DateTime.MinValue)
-                applicationUser.LockoutEnd = user.LockoutEnd;
-            else
-                applicationUser.LockoutEnd = null;
-
-            var result = await _userManager.UpdateAsync(applicationUser);
-            if (!result.Succeeded)
-                return BadRequest(result.Errors);
-
-            if (!string.IsNullOrWhiteSpace(user.Password))
+            if(User.IsInRole("Administrator"))
             {
-                var token = await _userManager.GeneratePasswordResetTokenAsync(applicationUser);
-                var passResult = await _userManager.ResetPasswordAsync(applicationUser, token, user.Password);
-                if (!passResult.Succeeded)
-                    return BadRequest(passResult.Errors);
+                if (!string.IsNullOrWhiteSpace(user.UserName))
+                    applicationUser.UserName = user.UserName;
+
+                if (!string.IsNullOrWhiteSpace(user.Email))
+                    applicationUser.Email = user.Email;
+
+                applicationUser.PhoneNumber = user.PhoneNumber ?? applicationUser.PhoneNumber;
+                applicationUser.PhoneNumberConfirmed = user.PhoneNumberConfirmed;
+                applicationUser.TwoFactorEnabled = user.TwoFactorEnabled;
+
+                applicationUser.LockoutEnabled = user.LockoutEnabled;
+                applicationUser.AccessFailedCount = user.AccessFailedCount;
+                applicationUser.EmailConfirmed = user.EmailConfirmed;
+
+                applicationUser.ClassId = user.ClassId;
+
+                if (user.LockoutEnd > DateTime.MinValue)
+                    applicationUser.LockoutEnd = user.LockoutEnd;
+                else
+                    applicationUser.LockoutEnd = null;
+
+                var result = await _userManager.UpdateAsync(applicationUser);
+                if (!result.Succeeded)
+                    return BadRequest(result.Errors);
+
+                if (!string.IsNullOrWhiteSpace(user.Password))
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(applicationUser);
+                    var passResult = await _userManager.ResetPasswordAsync(applicationUser, token, user.Password);
+                    if (!passResult.Succeeded)
+                        return BadRequest(passResult.Errors);
+                }
+
+                return Ok(UserMapper.ToDTO(applicationUser));
             }
 
-            return Ok(UserMapper.ToDTO(applicationUser));
+            if(id == User.Claims.FirstOrDefault().Value)
+            {
+                applicationUser.ClassId = user.ClassId;
+
+                var result = await _userManager.UpdateAsync(applicationUser);
+                if (!result.Succeeded)
+                    return BadRequest(result.Errors);
+
+                return Ok(UserMapper.ToDTO(applicationUser));
+            }
+
+            return BadRequest();
         }
 
     }
