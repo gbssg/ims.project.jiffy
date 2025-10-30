@@ -30,9 +30,10 @@ namespace Zeiterfassungssoftware.Controller
         {
             var Classes = await _context.Classes
                  .Include(e => e.ShouldTimes)
+                 .Select(e => ClassMapper.ToDTO(e))
                  .ToListAsync();
 
-            return Ok(Classes.Select(e => ClassMapper.ToDTO(e)).ToList());
+            return Ok(Classes);
         }
 
         [HttpGet("{Id}")]
@@ -48,26 +49,26 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ClassMapper.ToDTO(Class));
         }
 
-        [HttpGet("own")]
-        public async Task<IActionResult> GetOwnClass()
-        {
-            var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(UserId))
-                return Unauthorized();
+        //[HttpGet("own")]
+        //public async Task<IActionResult> GetOwnClass()
+        //{
+        //    var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        //    if (string.IsNullOrEmpty(UserId))
+        //        return Unauthorized();
 
-            var DbUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == UserId);
-            if (DbUser == null)
-                return Unauthorized();
+        //    var DbUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == UserId);
+        //    if (DbUser == null)
+        //        return Unauthorized();
 
-            var Class = await _context.Classes
-                //.Include(e => e.ShouldTimes)
-                .FirstOrDefaultAsync(e => e.Id == DbUser.ClassId);
+        //    var Class = await _context.Classes
+        //        //.Include(e => e.ShouldTimes)
+        //        .FirstOrDefaultAsync(e => e.Id == DbUser.ClassId);
 
-            if (Class is null)
-                return NotFound();
+        //    if (Class is null)
+        //        return NotFound();
 
-            return Ok(ClassMapper.ToDTO(Class));
-        }
+        //    return Ok(ClassMapper.ToDTO(Class));
+        //}
 
         [Authorize(Roles = "Administrator")]
         [HttpDelete("{Id}")]
@@ -84,12 +85,18 @@ namespace Zeiterfassungssoftware.Controller
                 return NotFound();
 
 
+            var ShouldTime = _context.ShouldTimes
+                .Where(e => e.ClassId == Id && e.ValidUntil > DateTime.Now);
+
+            if (ShouldTime.Any())
+                return Conflict("There are still ShouldTimes connected to this Class");
+
+
             foreach(var User in _context.Users.Where(e => e.ClassId == Class.Id))
             {
                 User.ClassId = Guid.Empty;
             }
 
-            _context.ShouldTimes.RemoveRange(Class.ShouldTimes);
             _context.Classes.Remove(Class);
 
             await _context.SaveChangesAsync();
@@ -101,18 +108,11 @@ namespace Zeiterfassungssoftware.Controller
         [HttpPost]
         public async Task<IActionResult> AddClass([FromBody] SharedData.Classes.Class Class)
         {
-
             if (!ClassMapper.ValidateDTO(Class))
                 return BadRequest("Invalid data");
 
             var DbClass = ClassMapper.FromDTO(Class);
             DbClass.Id = Guid.NewGuid();
-
-            foreach(var ShouldTime in DbClass.ShouldTimes)
-            {
-                ShouldTime.Id = Guid.NewGuid();
-                ShouldTime.ClassId = DbClass.Id;
-            }
 
             _context.Classes.Add(DbClass);
             await _context.SaveChangesAsync();
@@ -137,20 +137,9 @@ namespace Zeiterfassungssoftware.Controller
             if (DbClass is null)
                 return NotFound();
 
-            // Bad practice consider making a Controller for ShouldTimes
-            _context.ShouldTimes.RemoveRange(DbClass.ShouldTimes);
             
             var Class = ClassMapper.FromDTO(ClassDto);
-
             DbClass.Name = Class.Name;
-
-            var ShouldTimes = Class.ShouldTimes;
-            foreach (var ShouldTime in ShouldTimes)
-            {
-                ShouldTime.Id = Guid.NewGuid();
-                ShouldTime.ClassId = Id;
-                DbClass.ShouldTimes.Add(ShouldTime);
-            }
 
             await _context.SaveChangesAsync();
 
