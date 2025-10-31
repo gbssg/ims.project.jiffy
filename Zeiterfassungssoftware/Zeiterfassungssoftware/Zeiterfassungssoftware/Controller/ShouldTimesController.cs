@@ -11,11 +11,11 @@ namespace Zeiterfassungssoftware.Controller
     [Route("api/v1/[controller]")]
     [ApiController]
     [Authorize(Roles = "Administrator")]
-    public class ShouldTimeController : ControllerBase
+    public class ShouldTimesController : ControllerBase
     {
         private ApplicationDbContext _context;
 
-        public ShouldTimeController(ApplicationDbContext context)
+        public ShouldTimesController(ApplicationDbContext context)
         {
             _context = context;
         }

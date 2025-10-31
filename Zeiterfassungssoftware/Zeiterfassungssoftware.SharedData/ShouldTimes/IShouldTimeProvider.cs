@@ -11,8 +11,8 @@ namespace Zeiterfassungssoftware.SharedData.ShouldTimes
     {
         public bool IsLoaded { get; set; }
         public void Add(ShouldTime ShouldTime);
-        public void Remove(ShouldTime Entry);
-        public Task<ShouldTime> GetShouldTimeById(ShouldTime Id);
+        public void Remove(ShouldTime ShouldTime);
+        public ShouldTime GetShouldTimeById(ShouldTime Id);
         public List<ShouldTime> GetShouldTimes();
         public Task Update(ShouldTime ShouldTime);
 

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Security.Claims;
 using System.Text.Json;
 using Zeiterfassungssoftware.SharedData.Classes;
+using Zeiterfassungssoftware.SharedData.ShouldTimes;
 
 namespace Zeiterfassungssoftware.Client.Pages
 {
@@ -11,6 +12,8 @@ namespace Zeiterfassungssoftware.Client.Pages
     {
         [Inject]
         public IClassProvider ClassSource { get; set; }
+        [Inject]
+        public IShouldTimeProvider ShouldTimeSource { get; set; }
 
         public Class SelectedClass { get; set; } = new();
         public Guid SelectedGuid { get; set; }
@@ -37,6 +40,12 @@ namespace Zeiterfassungssoftware.Client.Pages
             if (SelectedGuid.Equals(Guid.Empty))
             {
                 ClassSource.Add(SelectedClass);
+
+                foreach (var ShouldTime in SelectedClass.ShouldTimes)
+                {
+                    ShouldTimeSource.Add(ShouldTime);
+                }
+
                 SelectedClassChanged(new ChangeEventArgs()
                 {
                     Value = Guid.Empty.ToString()
@@ -50,6 +59,11 @@ namespace Zeiterfassungssoftware.Client.Pages
 
         public void DeleteClass()
         {
+            foreach (var ShouldTime in SelectedClass.ShouldTimes)
+            {
+                ShouldTimeSource.Remove(ShouldTime);
+            }
+
             ClassSource.Remove(SelectedClass);
 
             SelectedClassChanged(new ChangeEventArgs()
