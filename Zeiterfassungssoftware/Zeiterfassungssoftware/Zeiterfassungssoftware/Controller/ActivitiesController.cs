@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Mapper;
@@ -39,7 +40,7 @@ namespace Zeiterfassungssoftware.Controller
 
         
         [HttpPost("descriptions")]
-        public async Task<IActionResult> AddDescription([FromBody] ActivityDescriptionDto descriptionDto)
+        public async Task<IActionResult> AddDescription([FromBody, Required] ActivityDescriptionDto descriptionDto)
         {
             if (!ActivityMapper.ValidateDescriptionDTO(descriptionDto))
                 return BadRequest("Invalid data");
@@ -78,7 +79,7 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpPut("descriptions/{id}")]
-        public async Task<IActionResult> UpdateDescription(Guid id, [FromBody] ActivityDescriptionDto descriptionDto)
+        public async Task<IActionResult> UpdateDescription(Guid id, [FromBody, Required] ActivityDescriptionDto descriptionDto)
         {
             if (!ActivityMapper.ValidateDescriptionDTO(descriptionDto))
                 return BadRequest("Invalid data");
@@ -124,7 +125,7 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpPost("titles")]
-		public async Task<IActionResult> AddTitle([FromBody] ActivityTitleDto titleDto)
+		public async Task<IActionResult> AddTitle([FromBody, Required] ActivityTitleDto titleDto)
         {
             if (!ActivityMapper.ValidateTitleDTO(titleDto))
                 return BadRequest("Invalid data");
@@ -163,7 +164,7 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpPut("titles/{id}")]
-        public async Task<IActionResult> UpdateTitle(Guid id, [FromBody] ActivityTitleDto titleDto)
+        public async Task<IActionResult> UpdateTitle(Guid id, [FromBody, Required] ActivityTitleDto titleDto)
         {
             if (!ActivityMapper.ValidateTitleDTO(titleDto))
                 return BadRequest("Invalid data");

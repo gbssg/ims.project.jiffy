@@ -50,5 +50,10 @@ namespace Zeiterfassungssoftware.Mapper
 
             return true;
         }
+
+        public static bool IsHoliday(DateTime date)
+        {
+            return false;
+        }
     }
 }

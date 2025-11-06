@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
@@ -97,7 +98,7 @@ namespace Zeiterfassungssoftware.Services
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEntry([FromBody] TimeEntryDto entryDto)
+        public async Task<IActionResult> AddEntry([FromBody, Required] TimeEntryDto entryDto)
         {
             if (!EntryMapper.ValidateDTO(entryDto))
                 return BadRequest("Invalid data");
@@ -115,7 +116,7 @@ namespace Zeiterfassungssoftware.Services
             Entry.UserId = UserId;
 
             var ShouldTime = await _context.ShouldTimes.FirstOrDefaultAsync(e => e.DayOfWeek == DateTime.Now.DayOfWeek && e.ValidUntil > DateTime.Now);
-            if ((ShouldTime is not null) && !IsHoliday(DateTime.Now))
+            if ((ShouldTime is not null) && !EntryMapper.IsHoliday(DateTime.Now))
                 Entry.ShouldTimeId = ShouldTime.Id;
             else
                 Entry.ShouldTimeId = Guid.Empty;
@@ -150,7 +151,7 @@ namespace Zeiterfassungssoftware.Services
         }
 
 		[HttpPut("{id}")]
-        public IActionResult PatchEntry(Guid id, [FromBody] TimeEntryDto entryDto)
+        public IActionResult PatchEntry(Guid id, [FromBody, Required] TimeEntryDto entryDto)
         {
             if (!EntryMapper.ValidateDTO(entryDto))
                 return BadRequest("Invalid data");
@@ -174,11 +175,6 @@ namespace Zeiterfassungssoftware.Services
             string Username = User.IsInRole("Administrator") ? User.Identity.Name.Split("@")[0] : string.Empty;
 
             return Ok(EntryMapper.ToDTO(Entry));
-        }
-
-        public bool IsHoliday(DateTime Date)
-        {
-            return false;
         }
 
     }

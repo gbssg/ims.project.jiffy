@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.Mapper;
@@ -80,7 +81,7 @@ namespace Zeiterfassungssoftware.Controller
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public async Task<IActionResult> AddClass([FromBody] SharedData.Classes.ClassDto classDto)
+        public async Task<IActionResult> AddClass([FromBody, Required] SharedData.Classes.ClassDto classDto)
         {
             if (!ClassMapper.ValidateDTO(classDto))
                 return BadRequest("Invalid data");
@@ -96,7 +97,7 @@ namespace Zeiterfassungssoftware.Controller
 
         [Authorize(Roles = "Administrator")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateClass(Guid id, [FromBody] SharedData.Classes.ClassDto classDto)
+        public async Task<IActionResult> UpdateClass(Guid id, [FromBody, Required] SharedData.Classes.ClassDto classDto)
         {
             if (id == Guid.Empty)
                 return BadRequest();

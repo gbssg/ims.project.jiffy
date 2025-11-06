@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Mapper;
 using Zeiterfassungssoftware.SharedData.ShouldTimes;
@@ -40,7 +41,7 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpPut("{Id}")]
-        public async Task<IActionResult> UpdateShouldTime(Guid id, [FromBody] ShouldTimeDto shouldTimeDto)
+        public async Task<IActionResult> UpdateShouldTime(Guid id, [FromBody, Required] ShouldTimeDto shouldTimeDto)
         {
             if (!ShouldTimeMapper.ValidateDto(shouldTimeDto))
                 return BadRequest();

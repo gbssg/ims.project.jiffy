@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Mapper;
 using Zeiterfassungssoftware.SharedData.Users;
@@ -45,7 +46,7 @@ namespace Zeiterfassungssoftware.Controller
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public async Task<IActionResult> AddUsers([FromBody] UserDto user)
+        public async Task<IActionResult> AddUsers([FromBody, Required] UserDto user)
         {
             if(string.IsNullOrWhiteSpace(user.Password) || user.Password.Length < 6)
                 return BadRequest();
@@ -79,7 +80,7 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(string id, [FromBody] Zeiterfassungssoftware.SharedData.Users.UserDto user)
+        public async Task<IActionResult> UpdateUser(string id, [FromBody, Required] UserDto user)
         {
             var applicationUser = await _userManager.FindByIdAsync(id);
             if (applicationUser == null)

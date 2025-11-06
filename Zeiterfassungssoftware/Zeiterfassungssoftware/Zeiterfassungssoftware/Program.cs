@@ -46,7 +46,9 @@ namespace Zeiterfassungssoftware
 
             
 			builder.Services.AddControllers();
-            
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
             
@@ -54,6 +56,8 @@ namespace Zeiterfassungssoftware
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.UseSwagger();
+                app.UseSwaggerUI();
                 app.UseWebAssemblyDebugging();
                 app.UseMigrationsEndPoint();
             }
