@@ -1,11 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Zeiterfassungssoftware.Mapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Zeiterfassungssoftware.Data;
+﻿using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.SharedData.Users;
 
 namespace Zeiterfassungssoftware.Mapper.Tests
@@ -150,7 +143,7 @@ namespace Zeiterfassungssoftware.Mapper.Tests
         {
             var applicationUser = new ApplicationUser()
             {
-                Id = "asdfasdfasdf",
+                Id = Guid.NewGuid().ToString(),
                 ClassId = Guid.Empty,
                 UserName = "asdf@gmail.com",
                 NormalizedUserName = "asdf@gmail.com",
@@ -167,7 +160,7 @@ namespace Zeiterfassungssoftware.Mapper.Tests
 
             var userDto = new UserDto()
             {
-                Id = "sdfsadfasd",
+                Id = Guid.NewGuid().ToString(),
                 ClassId = Guid.Empty,
                 UserName = "hallo@gmail.com",
                 NormalizedUserName = "hallo@gmail.com",

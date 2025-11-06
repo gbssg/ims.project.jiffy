@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zeiterfassungssoftware", "Z
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zeiterfassungssoftware.Client", "Zeiterfassungssoftware\Zeiterfassungssoftware.Client\Zeiterfassungssoftware.Client.csproj", "{6754E9B0-1EB5-445D-A56F-0DE739DB9DE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeiterfassungssoftwareTests", "Zeiterfassungssoftware\ZeiterfassungssoftwareTests\ZeiterfassungssoftwareTests.csproj", "{CE6DAD71-4B07-44F2-84FE-CC514C628D5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6754E9B0-1EB5-445D-A56F-0DE739DB9DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6754E9B0-1EB5-445D-A56F-0DE739DB9DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6754E9B0-1EB5-445D-A56F-0DE739DB9DE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE6DAD71-4B07-44F2-84FE-CC514C628D5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE6DAD71-4B07-44F2-84FE-CC514C628D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE6DAD71-4B07-44F2-84FE-CC514C628D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE6DAD71-4B07-44F2-84FE-CC514C628D5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
