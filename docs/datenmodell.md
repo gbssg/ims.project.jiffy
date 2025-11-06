@@ -1,5 +1,5 @@
-# Inhaltsverzeichnis
-
+# Datenmodell
+## Inhaltsverzeichnis
 - [1 ERD](#1-erd)
 - [2 Tabellen](#2-tabellen)
   - [2.1 Authentication](#21-authentication)
@@ -18,14 +18,14 @@
     - [2.2.5 ShouldTimes](#225-shouldtimes)
 
 
-# 1 ERD
+## 1 ERD
 ![ERD](../assets/erd.drawio.svg)
 
-# 2 Tabellen
+## 2 Tabellen
 
-## 2.1 Authentication
+### 2.1 Authentication
 
-### 2.1.1 RoleClaims
+#### 2.1.1 RoleClaims
 Speichert Claims, die einer bestimmten Rolle zugeordnet sind.
 
 | Name       | Typ           | Schlüssel   | Beschreibung |
@@ -35,7 +35,7 @@ Speichert Claims, die einer bestimmten Rolle zugeordnet sind.
 | ClaimType  | nvarchar(MAX) | -           | -            |
 | ClaimValue | nvarchar(MAX) | -           | -            |
 
-### 2.1.2 Roles
+#### 2.1.2 Roles
 Speichert Rollen.
 
 | Name             | Typ           | Schlüssel | Beschreibung |
@@ -46,7 +46,7 @@ Speichert Rollen.
 | ConcurrencyStamp | nvarchar(MAX) | -         | -            |
 
 
-### 2.1.3 UserClaims
+#### 2.1.3 UserClaims
 Speichert Claims, die einzelnen Benutzern zugewisen sind.
 
 | Name       | Typ           | Schlüssel   | Beschreibung |
@@ -56,7 +56,7 @@ Speichert Claims, die einzelnen Benutzern zugewisen sind.
 | ClaimType  | nvarchar(MAX) | -           | -            |
 | ClaimValue | nvarchar(MAX) | -           | -            |
 
-### 2.1.4 UserLogins
+#### 2.1.4 UserLogins
 **Primärschlüssel:** Kombination aus **LoginProvider** und **ProviderKey**
 
 | Name                | Typ           | Schlüssel   | Beschreibung             |
@@ -66,7 +66,7 @@ Speichert Claims, die einzelnen Benutzern zugewisen sind.
 | ProviderDisplayName | nvarchar(MAX) | -           | Anbietername             |
 | UserId              | nvarchar(450) | Users       | -                        |
 
-### 2.1.5 UserRoles
+#### 2.1.5 UserRoles
 Speichert die Rollen, die einzelnen Benutzern zugewiesen sind.
 
 **Primärschlüssel:** Kombination aus **UserId** und **RoleId**
@@ -76,7 +76,7 @@ Speichert die Rollen, die einzelnen Benutzern zugewiesen sind.
 | UserId | nvarchar(450) | Users       | -            |
 | RoleId | nvarchar(450) | Roles       | -            |
 
-### 2.1.6 UserTokens
+#### 2.1.6 UserTokens
 Speichert Tokens für Benutzer.
 
 **Primärschlüssel:** Kombination aus **UserId**, **LoginProvider** und **Name**
@@ -88,7 +88,7 @@ Speichert Tokens für Benutzer.
 | Name          | nvarchar(450) | -           | Tokentyp     |
 | Value         | nvarchar(MAX) | -           | Token        |
 
-### 2.1.7 Users
+#### 2.1.7 Users
 Speichert Benutzer.
 
 | Name                 | Typ               | Schlüssel | Beschreibung |
@@ -110,8 +110,8 @@ Speichert Benutzer.
 | LockoutEnabled       | bit               | -         | -            |
 | AccessFailedCount    | int               | -         | -            |
 
-## 2.2 Applikation 
-### 2.2.1 ActivityTitles
+### 2.2 Applikation 
+#### 2.2.1 ActivityTitles
 Speichert die Aktivitäten der Nutzer.
 
 |  Name    | Typ              | Schlüssel   | Beschreibung |
@@ -121,7 +121,7 @@ Speichert die Aktivitäten der Nutzer.
 | UserId   | nvarchar(450)    | Users       | -            |
 | Favorite | bit              | -           | -            |
 
-### 2.2.2 ActivityDescriptions
+#### 2.2.2 ActivityDescriptions
 Speichert die Aktivitäten beschreibungen der Nutzer.
 
 |  Name    | Typ              | Schlüssel   | Beschreibung |
@@ -131,7 +131,7 @@ Speichert die Aktivitäten beschreibungen der Nutzer.
 | UserId   | nvarchar(450)    | Users       | -            |
 | Favorite | bit              | -           | -            |
 
-### 2.2.3 Classes
+#### 2.2.3 Classes
 Speichert alle Klassen
 
 | Name     | Typ              | Schlüssel   | Beschreibung |
@@ -140,7 +140,7 @@ Speichert alle Klassen
 | Name     | nvarchar(250)    | -           | -            |
 
 
-### 2.2.4 Entries
+#### 2.2.4 Entries
 Speichert die Einträge der Nutzer.
 
 | Name         | Typ              | Schlüssel   | Beschreibung                    |
@@ -153,7 +153,7 @@ Speichert die Einträge der Nutzer.
 | UserId       | nvarchar(450)    | -           | -                               |
 | ShouldTimeId | uniqueidentifier | ShouldTimes | Soll-Arbeitszeit für diesen Tag |
 
-### 2.2.5 ShouldTimes
+#### 2.2.5 ShouldTimes
 Speichert die Soll-Arbeitszeit pro Tag für eine Klasse.
 
 | Name      | Typ              | Schlüssel | Beschreibung                             |

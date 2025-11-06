@@ -1,4 +1,5 @@
-# Inhaltsverzeichnis
+# Dokumentation
+## Inhaltsverzeichnis
 
 - [1 Warum gibt es Jiffy?](#1-warum-gibt-es-jiffy)
 - [2 Was soll Jiffy können?](#2-was-soll-jiffy-können)
@@ -17,14 +18,14 @@ Jiffy wurde entwickelt, um den Zeitaufschrieb an der IMS-T so einfach wie mögli
 Mit Jiffy soll dieser Prozess deutlich einfacher und einheitlicher gestaltet werden. Alle Zeitaufschriebe können zentral erfasst und ausgewertet werden, ohne dass für jeden Schüler eine neue Excel-Tabelle erforderlich ist. Stattdessen kann direkt nach dem jeweiligen Schüler gesucht werden, wodurch der gesamte Ablauf effizienter und übersichtlicher wird. Zudem bietet Jiffy die Möglichkeit, statt mühsam Start- und Endzeiten manuell einzutragen, einfach zu beschreiben, was man gerade macht, auf „Start” zu drücken und am Schluss auf „Stopp” zu klicken.
 
 ## 2 Was soll Jiffy können?
-### **2.1 Zeiterfassung**
+### 2.1 Zeiterfassung
 - **Stoppuhr-Prinzip**: Die Zeit sollte so einfach wie möglich erfasst werden, idealerweise nach dem Stoppuhr-Prinzip. Man drückt einfach auf Start und auf Stop, sobald man fertig ist.
 
 - **Löschen von Einträgen**: Versehentlich eingetragene Einträge sollten wieder gelöscht werden können.
 
 - **Bearbeiten**: Einträge, die nicht der Realität entsprechen, sei dies durch versehentliches stoppen, falsche Aktivitäten oder weil vergessen wurde, den Eintrag zu stoppen, sollten alle Eigenschaften bearbeitet werden können.
 
-### **2.2 Auswertung**
+### 2.2 Auswertung
 - **Überzeiten**: Die Über- oder Unterstunden sollen automatisch aus den erfassten Zeiten und der Tagessollzeit berechnet werden, die im jeweiligen Eintrag hinterlegt ist. Das Ergebnis sollte einfach und übersichtlich dargestellt werden.
 
 - **Krankheitstage**: Krankheitstage sollen gezählt, dargestellt und bei der Berechnung der Über- oder Unterstunden nicht berücksichtigt werden.
@@ -35,14 +36,14 @@ Mit Jiffy soll dieser Prozess deutlich einfacher und einheitlicher gestaltet wer
 
 - **Administrator-Ansicht**: Administratoren sollen die Zeiterfassung aller Nutzer einsehen können und dabei auch Zugriff auf alle weiteren Funktionen der Auswertungsseite haben.
 
-### **2.3 Klassen**
+### 2.3 Klassen
 - **Klasseauswahl**: Die Nutzer sollten sich ihre eigene Klasse aussuchen können.
 
 - **Tagessollzeiten**: Die Klassen sollen eine Tagessollzeit hinterlegen können. Bei der Erstellung eines neuen Eintrags wird die Sollzeit, die zur Klasse des Nutzers sowie zum aktuellen Datum bzw. Wochentag gehört, im Eintrag gespeichert. So wird sichergestellt, dass die Berechnung der Über- oder Unterstunden auch dann korrekt bleibt, wenn sich die Sollzeiten (z. B. nach den Sommerferien durch bearbeitung der Klasse) ändern.
 
 - **Klassenverwaltung**: Der Administrator soll Klassen erstellen, bearbeiten und löschen können. Dabei soll es möglich sein, diesen Klassen entsprechende Tagessollzeiten zuzuweisen.
 
-### **2.4 Aktivitäten**
+### 2.4 Aktivitäten
 - **Verlauf**: Beim Erstellen eines neuen Eintrags soll der Nutzer die Möglichkeit haben, auszuwählen, ob er einen neuen Titel/eine neue Beschreibung für seine Aktivitäten erstellen oder eine bereits verwendete auswählen möchte. Beim Erstellen des Eintrags werden automatisch die neue Titel/Beschreibungen hinzugefügt, falls diese noch nicht vorhanden sind.
 
 - **Favorisierung**: Es soll möglich sein, bestimmte Aktivitäten als Favoriten zu markieren. Diese sollten dann im Verlauf ganz oben angezeigt werden.

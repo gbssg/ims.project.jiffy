@@ -1,4 +1,6 @@
-# Inhaltsverzeichnis
+# Konventionen
+
+## Inhaltsverzeichnis
 
 - [1 Generell](#1-generell)
   - [1.1 Repo-Aufbau](#11-repo-aufbau)
@@ -26,10 +28,10 @@
   - [4.2 Namenskoventionen](#42-namenskoventionen)
   - [4.3 HTTP-Methoden](#43-http-methoden)
 
-# 1 Generell
+## 1 Generell
 In Jiffy gilt generell für alles ausser der Dokumentation, dass nur Englisch zulässig ist.
 
-## 1.1 Repo-Aufbau
+### 1.1 Repo-Aufbau
 ```
 Root
 ├─assets
@@ -58,61 +60,61 @@ Root
 ```
 
 
-# 2 Sourcecode
+## 2 Sourcecode
 - Für alles muss ein sinnvoller, klarer und aussagekräftiger Name vorhanden sein. 
 - In einer Datei darf maximal eine Klasse vorhanden sein.
 
-## 2.1 Instanzvariablen / Properties
-### 2.1.1 Private Instanzvariablen / Properties
+### 2.1 Instanzvariablen / Properties
+#### 2.1.1 Private Instanzvariablen / Properties
 - Immer **camelCase**.
 - Immer davor ein Unterstrich `_`.
 
-### 2.1.2 Public Instanzvariablen / Properties
+#### 2.1.2 Public Instanzvariablen / Properties
 - Immer **PascalCase**
 
-## 2.2 Klassenvariablen
+### 2.2 Klassenvariablen
 - Bei Klassenvariablen wird **PascalCase** verwendet.
 
-## 2.3 Konstanten
+### 2.3 Konstanten
 - Konstanten werden mit dem **SCREAMING_SNAKE_CASE** benannt.
 
 
-## 2.4 Methoden namen
+### 2.4 Methoden namen
 - Methoden werden **immer** in **PascalCase** benannt.
 - Methoden sollten **beschreibende** Namen haben.
 
-## 2.5 Argumente
+### 2.5 Argumente
 - Argumente werden **immer** in **camelCase** benannt.
 
-## 2.6 Namespaces
+### 2.6 Namespaces
 - Namespaces werden **immer** im **PascalCase** benannt.
 
-## 2.7 Klassen
-### 2.7.1 Normale Klassen
+### 2.7 Klassen
+#### 2.7.1 Normale Klassen
 - Normale Klassen müssen mit **PascalCase** benannt werden.
 
-### 2.7.2 Abstrakte Klassen 
+#### 2.7.2 Abstrakte Klassen 
 - Abstrakte Klassen müssen das Schlüsselwort `Abstract` vor ihrem Namen haben und befolgen ansonsten die gleichen Konventionen wie eine Klasse.
 
-### 2.7.3 Interfaces
+#### 2.7.3 Interfaces
 - Interfaces beginnen immer mit einem grossen `I` und folgen ansonsten den gleichen Naming-Conventions wie eine normale Klasse.
 
-## 2.8 Dateinamen
+### 2.8 Dateinamen
 - Dateinamen sind **immer gleich** dem **Klassennamen**
 
 
-# 3 Datenmodell
-## 3.1 Entitäten
+## 3 Datenmodell
+### 3.1 Entitäten
 - Entitäten **immer** im **Plural** benennen.
 - Entitäten haben immer im PascalCase zu sein.
 
-## 3.2 Schlüssel
-### 3.2.1 Primärschlussel
+### 3.2 Schlüssel
+#### 3.2.1 Primärschlussel
 - Jeder Datensatz muss über einen eindeutigen Primärschlüssel verfügen.
 - Der Primärschlüssel **muss** eine **GUID** sein.
 - Der Primärschlüssel **muss** immer den Namen `Id` tragen.
 
-### 3.2.2 Fremdschlüssel
+#### 3.2.2 Fremdschlüssel
 - Fremdschlüssel müssen **PascalCase** verwenden.
 - Es dürfen **keine Sonderzeichen** oder Trennzeichen verwendet werden.
 - Fremdschlüssel müssen immer folgendes schema befolgen: `{TABELLEN_NAME}Id`
@@ -123,9 +125,9 @@ Root
 | EntryId    | entryid    |
 | ActivityId | activityId |
 
-# 4 API
+## 4 API
 
-## 4.1 Struktur
+### 4.1 Struktur
 
 Alle Endpunkte folgen diesem Schema:
 
@@ -137,7 +139,7 @@ Alle Endpunkte folgen diesem Schema:
 | `API_VERSION`    | Aktuelle API-Version               | `v1`               |
 | `CONTROLLER`     | Ressource, **immer** im **Plural** | `entries`          |
 
-## 4.2 Namenskoventionen
+### 4.2 Namenskoventionen
 Routen sind **immer** im Plural und werden kleingeschrieben. Müssen zwei Wörter benutzt werden, werden diese mit einem Bindestrich getrennt.
 
 | Datenmodell | Route               |
@@ -146,5 +148,5 @@ Routen sind **immer** im Plural und werden kleingeschrieben. Müssen zwei Wörte
 | `Activity`  | `api/v1/activities` |
 | `Class`     | `api/v1/classes`    | 
 
-## 4.3 HTTP-Methoden 
+### 4.3 HTTP-Methoden 
 In Jiffys API ist die Methode **PUT** nicht zulässig. Für jegliche Veränderungen an einer Ressource muss zwingend die Methode **PATCH** verwendet werden.

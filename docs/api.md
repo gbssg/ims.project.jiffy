@@ -3,12 +3,23 @@
 
 ## Inhaltsverzeichnis
 
+
 - [1 User](#1-user)
-  - [1.1 PATCH ClassId](#11-patch-classid)
-  - [1.2 GET Users](#12-get-users)
-  - [1.3 POST User](#13-post-user)
-  - [1.4 DELETE User](#14-delete-user)
-  - [1.5 PATCH User](#15-patch-user)
+   - [1.1 PATCH ClassId](#11-patch-classid)
+      - [1.1.1 Parameter](#111-parameter)
+      - [1.1.2 Antworten](#112-antworten)
+   - [1.2 GET Users](#12-get-users)
+      - [1.2.1 Antworten](#121-antworten)
+   - [1.3 POST User](#13-post-user)
+      - [1.3.1 Request Body](#131-request-body)
+      - [1.3.2 Antworten](#132-antworten)
+   - [1.4 DELETE User](#14-delete-user)
+      - [1.4.1 Parameter](#141-parameter)
+      - [1.4.2 Antworten](#142-antworten)
+   - [1.5 PATCH User](#15-patch-user)
+      - [1.5.1 Parameter](#151-parameter)
+      - [1.5.2 Request Body](#152-request-body)
+      - [1.5.3 Antworten](#153-antworten)
 
 ## 1 User
 
@@ -19,13 +30,13 @@
 
 Setzt die Klasse des aktuell angemeldeten Benutzers.
 
-- **Parameter**
+#### 1.1.1 Parameter
 
   | Name | Typ  | Beschreibung  |
   | ---- | ---- | ------------- |
   | id   | Guid | Id der Klasse |
 
-- **Antworten**
+#### 1.1.2 Antworten
 
   | Code | Beschreibung                   |
   | ---- | ------------------------------ |
@@ -41,7 +52,7 @@ Setzt die Klasse des aktuell angemeldeten Benutzers.
 
 Gibt alle Benutzer im System zurück.
 
-- **Antworten**
+#### 1.2.1 Antworten
 
   | Code | Beschreibung                          |
   | ---- | ------------------------------------- |
@@ -55,7 +66,7 @@ Gibt alle Benutzer im System zurück.
 
 Erstellt einen neuen Benutzer.
 
-- **Request Body (Beispiel)**
+#### 1.3.1 Request Body
 
   ```json
   {
@@ -71,7 +82,7 @@ Erstellt einen neuen Benutzer.
   }
   ```
 
-- **Antworten**
+#### 1.3.2 Antworten
 
   | Code | Beschreibung                                     |
   | ---- | ------------------------------------------------ |
@@ -87,13 +98,13 @@ Erstellt einen neuen Benutzer.
 
 Löscht einen Benutzer anhand seiner Id.
 
-- **Parameter**
+#### 1.4.1 Parameter
 
   | Name | Typ    | Beschreibung |
   | ---- | ------ | ------------ |
   | id   | string | Benutzer-Id  |
 
-- **Antworten**
+#### 1.4.2 Antworten
 
   | Code | Beschreibung                  |
   | ---- | ----------------------------- |
@@ -109,13 +120,13 @@ Löscht einen Benutzer anhand seiner Id.
 
 Aktualisiert die Daten eines Benutzers.
 
-- **Parameter**
+#### 1.5.1 Parameter
 
   | Name | Typ    | Beschreibung |
   | ---- | ------ | ------------ |
   | id   | string | Benutzer-Id  |
 
-- **Request Body (Beispiel)**
+#### 1.5.2 Request Body
 
   ```json
   {
@@ -132,7 +143,7 @@ Aktualisiert die Daten eines Benutzers.
   }
   ```
 
-- **Antworten**
+#### 1.5.3 Antworten
 
   | Code | Beschreibung                                         |
   | ---- | ---------------------------------------------------- |

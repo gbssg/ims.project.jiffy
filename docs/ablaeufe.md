@@ -1,7 +1,9 @@
-# Inhaltsverzeichnis
+# Abläufe
+
+## Inhaltsverzeichnis
 - [1 Zeiterfassung](#1-zeiterfassung)
 
-## 1 Zeiterfassung
+### 1 Zeiterfassung
 ![Ablauf Zeiterfassung](../assets/Zeiterfassung.drawio.svg)
 
 Wenn ein Nutzer die **Zeiterfassungsseite** aufruft giebt es folgende möglichkeiten:
