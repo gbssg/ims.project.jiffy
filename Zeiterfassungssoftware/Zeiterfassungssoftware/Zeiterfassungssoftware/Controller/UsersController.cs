@@ -11,12 +11,12 @@ namespace Zeiterfassungssoftware.Controller
     [Route("api/v1/[controller]")]
     [ApiController]
     [Authorize]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
+        public UsersController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _context = context;
@@ -32,7 +32,7 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [Authorize(Roles = "Administrator")]
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(string Id)
         {
             var User = await _userManager.FindByIdAsync(Id);
