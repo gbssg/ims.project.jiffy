@@ -3,11 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Zeiterfassungssoftware.Data;
-using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.Mapper;
 using Zeiterfassungssoftware.SharedData.Activities;
-using ActivityDescription = Zeiterfassungssoftware.SharedData.Activities.ActivityDescription;
-using ActivityTitle = Zeiterfassungssoftware.SharedData.Activities.ActivityTitle;
 
 namespace Zeiterfassungssoftware.Controller
 {
@@ -42,7 +39,7 @@ namespace Zeiterfassungssoftware.Controller
 
         
         [HttpPost("descriptions")]
-        public async Task<IActionResult> AddDescription([FromBody] ActivityDescription descriptionDto)
+        public async Task<IActionResult> AddDescription([FromBody] ActivityDescriptionDto descriptionDto)
         {
             if (!ActivityMapper.ValidateDescriptionDTO(descriptionDto))
                 return BadRequest("Invalid data");
@@ -81,7 +78,7 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpPut("descriptions/{id}")]
-        public async Task<IActionResult> UpdateDescription(Guid id, [FromBody] ActivityDescription descriptionDto)
+        public async Task<IActionResult> UpdateDescription(Guid id, [FromBody] ActivityDescriptionDto descriptionDto)
         {
             if (!ActivityMapper.ValidateDescriptionDTO(descriptionDto))
                 return BadRequest("Invalid data");
@@ -127,7 +124,7 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpPost("titles")]
-		public async Task<IActionResult> AddTitle([FromBody] ActivityTitle titleDto)
+		public async Task<IActionResult> AddTitle([FromBody] ActivityTitleDto titleDto)
         {
             if (!ActivityMapper.ValidateTitleDTO(titleDto))
                 return BadRequest("Invalid data");
@@ -166,7 +163,7 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpPut("titles/{id}")]
-        public async Task<IActionResult> UpdateTitle(Guid id, [FromBody] ActivityTitle titleDto)
+        public async Task<IActionResult> UpdateTitle(Guid id, [FromBody] ActivityTitleDto titleDto)
         {
             if (!ActivityMapper.ValidateTitleDTO(titleDto))
                 return BadRequest("Invalid data");

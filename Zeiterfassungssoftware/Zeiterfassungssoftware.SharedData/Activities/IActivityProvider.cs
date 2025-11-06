@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Zeiterfassungssoftware.SharedData.Times;
-
-namespace Zeiterfassungssoftware.SharedData.Activities
+﻿namespace Zeiterfassungssoftware.SharedData.Activities
 {
 	public interface IActivityProvider
 	{
@@ -16,7 +9,7 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 		public bool Contains(object Obj);
         public Task<object> Update(object Obj);
 
-        public List<ActivityDescription> GetActivityDescriptions();
-		public List<ActivityTitle> GetActivityTitles();
+        public List<ActivityDescriptionDto> GetActivityDescriptions();
+		public List<ActivityTitleDto> GetActivityTitles();
 	}
 }

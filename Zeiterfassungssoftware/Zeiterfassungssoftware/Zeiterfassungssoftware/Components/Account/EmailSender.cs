@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
 
 namespace Zeiterfassungssoftware.Components.Account
 {

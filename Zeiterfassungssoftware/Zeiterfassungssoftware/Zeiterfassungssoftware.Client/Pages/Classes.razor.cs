@@ -1,8 +1,4 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using System.Diagnostics;
-using System.Security.Claims;
-using System.Text.Json;
 using Zeiterfassungssoftware.SharedData.Classes;
 using Zeiterfassungssoftware.SharedData.ShouldTimes;
 

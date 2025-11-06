@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Zeiterfassungssoftware.SharedData.Classes;
-
-namespace Zeiterfassungssoftware.SharedData.ShouldTimes
+﻿namespace Zeiterfassungssoftware.SharedData.ShouldTimes
 {
     public interface IShouldTimeProvider
     {

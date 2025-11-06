@@ -1,5 +1,4 @@
-﻿
-namespace Zeiterfassungssoftware.Client.Data.Filter
+﻿namespace Zeiterfassungssoftware.Client.Data.Filter
 {
     public abstract class AbstractFilter(string name) : IFilter
     {

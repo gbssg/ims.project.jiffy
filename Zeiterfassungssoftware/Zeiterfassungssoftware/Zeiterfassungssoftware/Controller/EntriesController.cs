@@ -2,14 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
 using System.Security.Claims;
-using Zeiterfassungssoftware.Client.Data.Filter;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.Mapper;
 using Zeiterfassungssoftware.SharedData.Times;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Zeiterfassungssoftware.Services
 {

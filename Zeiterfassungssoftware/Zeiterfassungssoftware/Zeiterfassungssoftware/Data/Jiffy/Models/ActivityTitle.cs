@@ -1,6 +1,4 @@
-﻿using Zeiterfassungssoftware.SharedData.Activities;
-
-namespace Zeiterfassungssoftware.Data.Jiffy.Models;
+﻿namespace Zeiterfassungssoftware.Data.Jiffy.Models;
 
 public partial class ActivityTitle
 {

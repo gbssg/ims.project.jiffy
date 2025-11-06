@@ -1,11 +1,7 @@
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Zeiterfassungssoftware.SharedData.Activities;
-using Zeiterfassungssoftware.SharedData.Times;
 
 namespace Zeiterfassungssoftware.Client.Services
 {
@@ -23,8 +19,8 @@ namespace Zeiterfassungssoftware.Client.Services
 			BaseAddress = new Uri("https://localhost:7099/api/v1/activities/")
 		};
 		
-        private List<ActivityTitle> _activityTitles = [];
-        private List<ActivityDescription> _activityDescriptions = [];
+        private List<ActivityTitleDto> _activityTitles = [];
+        private List<ActivityDescriptionDto> _activityDescriptions = [];
 		public bool IsLoaded { get; private set; }
 
 		public RemoteActivityProvider()
@@ -34,8 +30,8 @@ namespace Zeiterfassungssoftware.Client.Services
 
 		public async void LoadData()
 		{
-			_activityTitles = await HttpClient.GetFromJsonAsync<List<ActivityTitle>>("titles") ?? new();
-			_activityDescriptions = await HttpClient.GetFromJsonAsync<List<ActivityDescription>>("descriptions") ?? new();
+			_activityTitles = await HttpClient.GetFromJsonAsync<List<ActivityTitleDto>>("titles") ?? new();
+			_activityDescriptions = await HttpClient.GetFromJsonAsync<List<ActivityDescriptionDto>>("descriptions") ?? new();
 
 			IsLoaded = true;
 		}
@@ -46,7 +42,7 @@ namespace Zeiterfassungssoftware.Client.Services
 			string JsonData = JsonSerializer.Serialize(Obj);
 			var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
 
-			if (Obj is ActivityDescription Description)
+			if (Obj is ActivityDescriptionDto Description)
 			{
 				HttpResponseMessage Response = await HttpClient.PostAsync("descriptions", Content);
 
@@ -60,7 +56,7 @@ namespace Zeiterfassungssoftware.Client.Services
 				return;
 			}
 
-			if (Obj is ActivityTitle Title)
+			if (Obj is ActivityTitleDto Title)
 			{
 				
 				HttpResponseMessage Response = await HttpClient.PostAsync("titles", Content);
@@ -80,7 +76,7 @@ namespace Zeiterfassungssoftware.Client.Services
             string JsonData = JsonSerializer.Serialize(Obj);
             var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
 
-            if (Obj is ActivityDescription Description)
+            if (Obj is ActivityDescriptionDto Description)
             {
                 HttpResponseMessage Response = await HttpClient.PatchAsync($"descriptions/{Description.Id}", Content);
 
@@ -88,14 +84,14 @@ namespace Zeiterfassungssoftware.Client.Services
                 {
                     Response.EnsureSuccessStatusCode();
                     string ReponseContent = await Response.Content.ReadAsStringAsync();
-                    ActivityDescription ResponseDescription = JsonSerializer.Deserialize<ActivityDescription>(ReponseContent, Options) ?? new();
+                    ActivityDescriptionDto ResponseDescription = JsonSerializer.Deserialize<ActivityDescriptionDto>(ReponseContent, Options) ?? new();
                     return ResponseDescription;
                 }
                 catch (Exception e) { Console.WriteLine($"Failed to Send Description: {e.Message}"); }
 
             }
 
-            if (Obj is ActivityTitle Title)
+            if (Obj is ActivityTitleDto Title)
             {
 
                 HttpResponseMessage Response = await HttpClient.PatchAsync($"titles/{Title.Id}", Content);
@@ -104,7 +100,7 @@ namespace Zeiterfassungssoftware.Client.Services
                 {
                     Response.EnsureSuccessStatusCode();
                     string ReponseContent = await Response.Content.ReadAsStringAsync();
-                    ActivityTitle ResponseTitle = JsonSerializer.Deserialize<ActivityTitle>(ReponseContent, Options) ?? new();
+                    ActivityTitleDto ResponseTitle = JsonSerializer.Deserialize<ActivityTitleDto>(ReponseContent, Options) ?? new();
 					return ResponseTitle;
 				}
                 catch (Exception e) { Console.WriteLine($"Failed to Send Title: {e.Message}"); }
@@ -114,28 +110,28 @@ namespace Zeiterfassungssoftware.Client.Services
 
         public bool Contains(object Obj)
 		{
-			if(Obj is ActivityTitle Title)
+			if(Obj is ActivityTitleDto Title)
 				return _activityTitles.Contains(Title);
 
-            if (Obj is ActivityDescription Description)
+            if (Obj is ActivityDescriptionDto Description)
                 return _activityDescriptions.Contains(Description);
 
             return false;
 		}
 
-		public List<ActivityDescription> GetActivityDescriptions()
+		public List<ActivityDescriptionDto> GetActivityDescriptions()
 		{
 			return _activityDescriptions;
 		}
 
-		public List<ActivityTitle> GetActivityTitles()
+		public List<ActivityTitleDto> GetActivityTitles()
 		{
 			return _activityTitles;
 		}
 
 		public async void Remove(object Obj)
 		{
-            if (Obj is ActivityDescription Description)
+            if (Obj is ActivityDescriptionDto Description)
             {
                 HttpResponseMessage Response = await HttpClient.DeleteAsync($"descriptions/{Description.Id}");
 
@@ -148,7 +144,7 @@ namespace Zeiterfassungssoftware.Client.Services
 
             }
 
-            if (Obj is ActivityTitle Title)
+            if (Obj is ActivityTitleDto Title)
             {
 
                 HttpResponseMessage Response = await HttpClient.DeleteAsync($"titles/{Title.Id}");

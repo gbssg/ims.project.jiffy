@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Identity;
-using System.Diagnostics;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
 
 namespace Zeiterfassungssoftware.Data

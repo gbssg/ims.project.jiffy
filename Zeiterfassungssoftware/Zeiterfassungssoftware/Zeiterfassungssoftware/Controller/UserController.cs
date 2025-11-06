@@ -1,15 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Net.WebSockets;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Claims;
 using Zeiterfassungssoftware.Data;
-using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.Mapper;
-using Zeiterfassungssoftware.SharedData.Times;
 using Zeiterfassungssoftware.SharedData.Users;
 
 namespace Zeiterfassungssoftware.Controller

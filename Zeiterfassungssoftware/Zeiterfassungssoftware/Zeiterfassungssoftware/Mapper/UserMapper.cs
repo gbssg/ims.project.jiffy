@@ -46,7 +46,7 @@ namespace Zeiterfassungssoftware.Mapper
                 PhoneNumber = userDto.PhoneNumber,
                 PhoneNumberConfirmed = userDto.PhoneNumberConfirmed,
                 TwoFactorEnabled = userDto.TwoFactorEnabled,
-                LockoutEnd = userDto.LockoutEnd == DateTime.MinValue ? null : new DateTimeOffset(user.LockoutEnd),
+                LockoutEnd = userDto.LockoutEnd == DateTime.MinValue ? null : new DateTimeOffset(userDto.LockoutEnd),
                 LockoutEnabled = userDto.LockoutEnabled,
                 AccessFailedCount = userDto.AccessFailedCount
             };

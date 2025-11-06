@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Zeiterfassungssoftware.SharedData.Classes;
-
-namespace Zeiterfassungssoftware.Data.Jiffy.Models;
+﻿namespace Zeiterfassungssoftware.Data.Jiffy.Models;
 
 public partial class Class
 {

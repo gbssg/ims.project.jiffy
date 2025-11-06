@@ -19,7 +19,7 @@ namespace Zeiterfassungssoftware.Mapper
             };
         }
 
-        public static SharedData.ShouldTimes.ShouldTimeDto ToDTO(ShouldTime shouldTime)
+        public static ShouldTimeDto ToDTO(ShouldTime shouldTime)
         {
             if (shouldTime is null)
                 throw new ArgumentNullException();

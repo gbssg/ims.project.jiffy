@@ -1,5 +1,3 @@
-
-
 using Zeiterfassungssoftware.SharedData.Activities;
 
 namespace Zeiterfassungssoftware.Client.Pages
@@ -9,10 +7,10 @@ namespace Zeiterfassungssoftware.Client.Pages
         
         private string ActivityTitle { get; set; } = string.Empty;
         private string ActivityDescription { get; set; } = string.Empty;
-        private ActivityTitle SelectedTitle => ActivitySource.GetActivityTitles().FirstOrDefault(e => string.Equals(e.Id.ToString(), ActivityTitle)) ?? new ActivityTitle();
-        private ActivityDescription SelectedDescription => ActivitySource.GetActivityDescriptions().FirstOrDefault(e => string.Equals(e.Id.ToString(), ActivityDescription)) ?? new ActivityDescription();
-        private ActivityTitle? EditingTitle { get; set; }
-        private ActivityDescription? EditingDescription { get; set; }
+        private ActivityTitleDto SelectedTitle => ActivitySource.GetActivityTitles().FirstOrDefault(e => string.Equals(e.Id.ToString(), ActivityTitle)) ?? new ActivityTitleDto();
+        private ActivityDescriptionDto SelectedDescription => ActivitySource.GetActivityDescriptions().FirstOrDefault(e => string.Equals(e.Id.ToString(), ActivityDescription)) ?? new ActivityDescriptionDto();
+        private ActivityTitleDto? EditingTitle { get; set; }
+        private ActivityDescriptionDto? EditingDescription { get; set; }
 
 
         private Timer? Timer { get; set; }
@@ -36,7 +34,7 @@ namespace Zeiterfassungssoftware.Client.Pages
         public void Edit(object Obj)
         {
 
-            if ((Obj is ActivityDescription) ? (EditingDescription is null) : (EditingTitle is null))
+            if ((Obj is ActivityDescriptionDto) ? (EditingDescription is null) : (EditingTitle is null))
             {
                 StartEditing(Obj);
             }
@@ -48,7 +46,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 
         public void StartEditing(object Obj)
         {
-            if(Obj is ActivityTitle Title)
+            if(Obj is ActivityTitleDto Title)
             {
                 EditingTitle = new()
                 {
@@ -57,7 +55,7 @@ namespace Zeiterfassungssoftware.Client.Pages
                 };
             } 
             
-            if(Obj is ActivityDescription Description)
+            if(Obj is ActivityDescriptionDto Description)
             {
                 EditingDescription = new()
                 {
@@ -69,7 +67,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 
         public void StopEditing(object Obj)
         {
-            if (Obj is ActivityTitle Title)
+            if (Obj is ActivityTitleDto Title)
             {
                 if(!Title.Id.Equals(EditingTitle?.Id))
                 {
@@ -82,7 +80,7 @@ namespace Zeiterfassungssoftware.Client.Pages
                 ActivitySource.Update(Title);
             }
 
-            if (Obj is ActivityDescription Description)
+            if (Obj is ActivityDescriptionDto Description)
             {
                 if (!Description.Id.Equals(EditingDescription?.Id))
                 {
@@ -100,14 +98,14 @@ namespace Zeiterfassungssoftware.Client.Pages
 
         public void Favorize(object Obj)
         {
-            if(Obj is ActivityDescription Description)
+            if(Obj is ActivityDescriptionDto Description)
             {
                 Description.Favorite = !Description.Favorite;
                 ActivitySource.Update(Description);
                 return;
             }
 
-            if (Obj is ActivityTitle Title)
+            if (Obj is ActivityTitleDto Title)
             {
                 Title.Favorite = !Title.Favorite;
                 ActivitySource.Update(Title);

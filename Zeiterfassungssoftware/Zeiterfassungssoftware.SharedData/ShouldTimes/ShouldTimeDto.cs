@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Zeiterfassungssoftware.SharedData.ShouldTimes
+﻿namespace Zeiterfassungssoftware.SharedData.ShouldTimes
 {
     public class ShouldTimeDto
     {

@@ -1,15 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.Mapper;
-using Zeiterfassungssoftware.SharedData.Activities;
-using Zeiterfassungssoftware.SharedData.Times;
-using ActivityDescription = Zeiterfassungssoftware.SharedData.Activities.ActivityDescription;
-using ActivityTitle = Zeiterfassungssoftware.SharedData.Activities.ActivityTitle;
 
 namespace Zeiterfassungssoftware.Controller
 {

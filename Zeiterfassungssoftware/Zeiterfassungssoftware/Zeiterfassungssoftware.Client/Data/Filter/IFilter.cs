@@ -1,6 +1,4 @@
-﻿using Zeiterfassungssoftware.SharedData.Times;
-
-namespace Zeiterfassungssoftware.Client.Data.Filter
+﻿namespace Zeiterfassungssoftware.Client.Data.Filter
 {
     public interface IFilter
     {

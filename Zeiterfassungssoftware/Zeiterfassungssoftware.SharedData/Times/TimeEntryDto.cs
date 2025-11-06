@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Zeiterfassungssoftware.SharedData.Times
+﻿namespace Zeiterfassungssoftware.SharedData.Times
 {
     public class TimeEntryDto
     {

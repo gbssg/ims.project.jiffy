@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
-using Zeiterfassungssoftware.SharedData.Activities;
-
-namespace Zeiterfassungssoftware.Data.Jiffy.Models;
+﻿namespace Zeiterfassungssoftware.Data.Jiffy.Models;
 
 public partial class ActivityDescription
 {

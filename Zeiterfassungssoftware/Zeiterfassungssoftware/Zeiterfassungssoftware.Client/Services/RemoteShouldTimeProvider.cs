@@ -1,6 +1,5 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
-using Zeiterfassungssoftware.SharedData.Classes;
 using Zeiterfassungssoftware.SharedData.ShouldTimes;
 
 namespace Zeiterfassungssoftware.Client.Services

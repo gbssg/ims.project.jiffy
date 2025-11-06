@@ -1,10 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Globalization;
 using Zeiterfassungssoftware.Client.Data.Filter;
 using Zeiterfassungssoftware.SharedData.Times;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Zeiterfassungssoftware.Client.Pages
 {

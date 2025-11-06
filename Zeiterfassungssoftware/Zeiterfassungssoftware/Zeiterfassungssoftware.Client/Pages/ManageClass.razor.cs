@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Components;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Zeiterfassungssoftware.SharedData.Classes;
 using Zeiterfassungssoftware.SharedData.Times;
 using Zeiterfassungssoftware.SharedData.Users;

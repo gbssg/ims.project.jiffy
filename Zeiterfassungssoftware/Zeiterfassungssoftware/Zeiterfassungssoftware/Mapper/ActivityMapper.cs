@@ -65,7 +65,7 @@ namespace Zeiterfassungssoftware.Mapper
             return !string.IsNullOrWhiteSpace(activityTitleDto.Value);
         }
 
-        public static bool ValidateDescriptionDTO(ActivityDescription activityDescriptionDto)
+        public static bool ValidateDescriptionDTO(ActivityDescriptionDto activityDescriptionDto)
         {
             if (activityDescriptionDto is null)
                 return false;

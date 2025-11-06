@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using Zeiterfassungssoftware.SharedData.Times;
-
-namespace Zeiterfassungssoftware.Data.Jiffy.Models;
+﻿namespace Zeiterfassungssoftware.Data.Jiffy.Models;
 
 public partial class Entry
 {

@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Components;
-using Zeiterfassungssoftware.Client.Pages;
 using Zeiterfassungssoftware.SharedData.Times;
 
 namespace Zeiterfassungssoftware.Client.Components

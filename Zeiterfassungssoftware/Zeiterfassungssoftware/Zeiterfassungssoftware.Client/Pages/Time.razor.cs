@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Zeiterfassungssoftware.Client.Data.Filter;
 using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Times;
 
@@ -82,7 +80,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 			{
 				if (ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE))
 				{
-					var Title = new ActivityTitle()
+					var Title = new ActivityTitleDto()
 					{
 						Value = ActivityTitle,
 					};
@@ -94,7 +92,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 
 				if (ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION))
 				{
-                    var Description = new ActivityDescription()
+                    var Description = new ActivityDescriptionDto()
                     {
                         Value = ActivityDescription,
                     };

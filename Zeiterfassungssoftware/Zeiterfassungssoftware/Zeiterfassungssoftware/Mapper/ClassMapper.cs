@@ -1,5 +1,4 @@
-﻿using Zeiterfassungssoftware.Controller;
-using Zeiterfassungssoftware.Data.Jiffy.Models;
+﻿using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.SharedData.Classes;
 
 namespace Zeiterfassungssoftware.Mapper
