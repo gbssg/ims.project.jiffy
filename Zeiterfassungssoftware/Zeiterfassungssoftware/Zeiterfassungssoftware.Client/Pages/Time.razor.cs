@@ -20,7 +20,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 		public bool Disabled => !(Started || !((ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) && ActivityTitle.Trim().Equals("")) || (ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) && ActivityDescription.Trim().Equals(""))));
 		private TimeSpan PassedTime => (DateTime.Now - CurrentEntry?.Start) ?? TimeSpan.Zero;
 
-		public TimeEntry? CurrentEntry { get; set; }
+		public TimeEntryDto? CurrentEntry { get; set; }
 		private Timer? Timer;
 
 		private const string NEW_ACTIVITY_TITLE = "New Activity";
@@ -64,7 +64,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 
 			if (string.Equals(Title, "Krank"))
             {
-				TimeEntry Entry = new()
+				TimeEntryDto Entry = new()
 				{
 					Start = new DateTime(DateOnly.FromDateTime(DateTime.Now), new TimeOnly(0,0,0)),
 					End = new DateTime(DateOnly.FromDateTime(DateTime.Now), new TimeOnly(23, 59, 59)),

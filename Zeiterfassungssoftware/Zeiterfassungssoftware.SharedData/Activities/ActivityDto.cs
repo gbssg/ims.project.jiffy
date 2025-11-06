@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Zeiterfassungssoftware.SharedData.Activities
 {
-	public class ActivityTitle
+	public class ActivityTitleDto
 	{
 		public Guid Id { get; set; }
 		public string Value { get; set; } = string.Empty;
@@ -17,7 +17,7 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 
         public override bool Equals(object? obj)
         {
-            if(obj is ActivityTitle Other)
+            if(obj is ActivityTitleDto Other)
 			{
 				string Value = Normalize(this.Value);
 				string OtherValue = Normalize(Other.Value);
@@ -34,7 +34,7 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 		
     }
 
-	public class ActivityDescription
+	public class ActivityDescriptionDto
 	{
         public Guid Id { get; set; }
 		public string Value { get; set; } = string.Empty;
@@ -42,7 +42,7 @@ namespace Zeiterfassungssoftware.SharedData.Activities
 
         public override bool Equals(object? obj)
 		{
-			if (obj is ActivityDescription Other)
+			if (obj is ActivityDescriptionDto Other)
 			{ 
 				string Value = Normalize(this.Value); 
 				string OtherValue = Normalize(Other.Value);

@@ -15,7 +15,7 @@ namespace Zeiterfassungssoftware.Client.Pages
         [Inject]
         public IShouldTimeProvider ShouldTimeSource { get; set; }
 
-        public Class SelectedClass { get; set; } = new();
+        public ClassDto SelectedClass { get; set; } = new();
         public Guid SelectedGuid { get; set; }
 
         public Timer? Timer { get; set; }

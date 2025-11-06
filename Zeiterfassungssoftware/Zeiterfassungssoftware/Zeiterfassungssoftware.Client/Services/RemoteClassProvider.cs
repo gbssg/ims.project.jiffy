@@ -18,7 +18,7 @@ namespace Zeiterfassungssoftware.Client.Services
             BaseAddress = new Uri("https://localhost:7099/api/v1/classes/")
         };
         public bool IsLoaded { get; set; }
-        public List<Class> _classes { get; set; } = new();
+        public List<ClassDto> _classes { get; set; } = new();
         
         public RemoteClassProvider()
         {
@@ -27,11 +27,11 @@ namespace Zeiterfassungssoftware.Client.Services
 
         public async void LoadData()
         {
-            _classes = await HttpClient.GetFromJsonAsync<List<Class>>("") ?? new();
+            _classes = await HttpClient.GetFromJsonAsync<List<ClassDto>>("") ?? new();
             IsLoaded = true;
         }
 
-        public async void Add(Class Class)
+        public async void Add(ClassDto Class)
         {
             string JsonData = JsonSerializer.Serialize(Class);
             var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
@@ -41,7 +41,7 @@ namespace Zeiterfassungssoftware.Client.Services
                 HttpResponseMessage Response = await HttpClient.PostAsync("", Content);
                 Response.EnsureSuccessStatusCode();
                 string ReponseContent = await Response.Content.ReadAsStringAsync();
-                Class = JsonSerializer.Deserialize<Class>(ReponseContent, Options) ?? new();
+                Class = JsonSerializer.Deserialize<ClassDto>(ReponseContent, Options) ?? new();
                 _classes.Add(Class);
             }
             catch (Exception e) { 
@@ -51,16 +51,16 @@ namespace Zeiterfassungssoftware.Client.Services
             return;
         }
 
-        public List<Class> GetClasses()
+        public List<ClassDto> GetClasses()
         {
             return _classes;
         }
-        public async Task<Class> GetClassById(Guid Id)
+        public async Task<ClassDto> GetClassById(Guid Id)
         {
-            return await HttpClient.GetFromJsonAsync<Class>($"{Id}");
+            return await HttpClient.GetFromJsonAsync<ClassDto>($"{Id}");
         }
 
-        public async void Remove(Class Class)
+        public async void Remove(ClassDto Class)
         {
 
             try
@@ -79,7 +79,7 @@ namespace Zeiterfassungssoftware.Client.Services
             }
         }
 
-        public async Task Update(Class Class)
+        public async Task Update(ClassDto Class)
         {
             string JsonData = JsonSerializer.Serialize(Class);
             var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
@@ -96,9 +96,9 @@ namespace Zeiterfassungssoftware.Client.Services
             return;
         }
 
-        public async Task<Class> GetOwnClass()
+        public async Task<ClassDto> GetOwnClass()
         {
-            return await HttpClient.GetFromJsonAsync<Class>($"own") ?? new();
+            return await HttpClient.GetFromJsonAsync<ClassDto>($"own") ?? new();
         }
     }
 }

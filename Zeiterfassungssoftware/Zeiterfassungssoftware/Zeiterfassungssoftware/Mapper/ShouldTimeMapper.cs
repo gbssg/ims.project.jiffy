@@ -1,40 +1,44 @@
 ﻿using Zeiterfassungssoftware.Data.Jiffy.Models;
+using Zeiterfassungssoftware.SharedData.ShouldTimes;
 
 namespace Zeiterfassungssoftware.Mapper
 {
     public class ShouldTimeMapper
     {
-        public static ShouldTime FromDTO(SharedData.ShouldTimes.ShouldTime ShouldTime)
+        public static ShouldTime FromDTO(ShouldTimeDto shouldTimeDto)
         {
-            if (ShouldTime is null)
+            if (shouldTimeDto is null)
                 throw new ArgumentNullException();
 
             return new()
             {
-                Id = ShouldTime.Id,
-                ClassId = ShouldTime.ClassId,
-                Should = ShouldTime.Should,
-                DayOfWeek = ShouldTime.DayOfWeek,
+                Id = shouldTimeDto.Id,
+                ClassId = shouldTimeDto.ClassId,
+                Should = shouldTimeDto.Should,
+                DayOfWeek = shouldTimeDto.DayOfWeek,
             };
         }
 
-        public static SharedData.ShouldTimes.ShouldTime ToDTO(ShouldTime ShouldTime)
+        public static SharedData.ShouldTimes.ShouldTimeDto ToDTO(ShouldTime shouldTime)
         {
-            if (ShouldTime is null)
+            if (shouldTime is null)
                 throw new ArgumentNullException();
 
             return new()
             {
-                Id = ShouldTime.Id,
-                ClassId = ShouldTime.ClassId,
-                Should = ShouldTime.Should,
-                DayOfWeek = ShouldTime.DayOfWeek,
+                Id = shouldTime.Id,
+                ClassId = shouldTime.ClassId,
+                Should = shouldTime.Should,
+                DayOfWeek = shouldTime.DayOfWeek,
             };
         }
 
-        public static bool ValidateDto(SharedData.ShouldTimes.ShouldTime ShouldTime)
+        public static bool ValidateDto(ShouldTimeDto shouldTimeDto)
         {
-            if(ShouldTime.Should <= TimeSpan.FromSeconds(0))
+            if (shouldTimeDto is null)
+                return false;
+
+            if(shouldTimeDto.Should <= TimeSpan.FromSeconds(0))
                 return false;
 
             return true;

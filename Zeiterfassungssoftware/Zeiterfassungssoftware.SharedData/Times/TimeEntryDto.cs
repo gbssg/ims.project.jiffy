@@ -2,7 +2,7 @@
 
 namespace Zeiterfassungssoftware.SharedData.Times
 {
-    public class TimeEntry
+    public class TimeEntryDto
     {
         private const string TIME_FORMAT = "HH:mm";
         //private const string DURATION_FORMAT = @"h\h\ m\m\i\n\ s\s";

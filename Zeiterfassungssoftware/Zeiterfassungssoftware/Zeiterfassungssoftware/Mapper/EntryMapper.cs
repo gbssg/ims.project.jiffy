@@ -6,48 +6,46 @@ namespace Zeiterfassungssoftware.Mapper
     public class EntryMapper
     {
 
-        // NOTE This does not set the user id
-        public static Entry FromDTO(TimeEntry TimeEntry)
+        public static Entry FromDTO(TimeEntryDto timeEntryDto)
         {
-            if (TimeEntry is null)
+            if (timeEntryDto is null)
                 throw new ArgumentNullException();
 
             return new()
             {
-                Id = TimeEntry.Id,
-                Start = TimeEntry.Start,
-                End = TimeEntry.End,
-                Title = TimeEntry.Title,
-                Description = TimeEntry.Description
+                Id = timeEntryDto.Id,
+                Start = timeEntryDto.Start,
+                End = timeEntryDto.End,
+                Title = timeEntryDto.Title,
+                Description = timeEntryDto.Description
             };
         }
 
-        // NOTE this does not set the username
-        public static TimeEntry ToDTO(Entry Entry)
+        public static TimeEntryDto ToDTO(Entry entry)
         {
-            if (Entry is null)
+            if (entry is null)
                 throw new ArgumentNullException();
 
             return new()
             {
-                Id = Entry.Id,
-                Start = Entry.Start,
-                End = Entry.End,
-                Title = Entry.Title,
-                Description = Entry.Description,
-                ShouldTime = Entry.ShouldTime.Should
+                Id = entry.Id,
+                Start = entry.Start,
+                End = entry.End,
+                Title = entry.Title,
+                Description = entry.Description,
+                ShouldTime = entry.ShouldTime.Should
             };
         }
 
-        public static bool ValidateDTO(TimeEntry Entry)
+        public static bool ValidateDTO(TimeEntryDto timeEntryDto)
         {
-            if (Entry is null)
+            if (timeEntryDto is null)
                 return false;
 
-            if (string.IsNullOrWhiteSpace(Entry.Title) || string.IsNullOrWhiteSpace(Entry.Description))
+            if (string.IsNullOrWhiteSpace(timeEntryDto.Title) || string.IsNullOrWhiteSpace(timeEntryDto.Description))
                 return false;
 
-            if ((Entry.End is not null) && Entry.Start >= Entry.End)
+            if ((timeEntryDto.End is not null) && timeEntryDto.Start >= timeEntryDto.End)
                 return false;
 
             return true;

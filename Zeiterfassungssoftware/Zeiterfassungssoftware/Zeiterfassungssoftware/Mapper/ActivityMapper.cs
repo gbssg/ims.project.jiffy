@@ -1,77 +1,76 @@
 ﻿using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.SharedData.Activities;
-using ActivityDescription = Zeiterfassungssoftware.SharedData.Activities.ActivityDescription;
 
 namespace Zeiterfassungssoftware.Mapper
 {
     public class ActivityMapper
     {
-        public static Data.Jiffy.Models.ActivityTitle FromTitleDTO(SharedData.Activities.ActivityTitle ActivityTitle)
+        public static ActivityTitle FromTitleDTO(ActivityTitleDto activityTitleDto)
         {
-            if (ActivityTitle is null)
+            if (activityTitleDto is null)
                 throw new ArgumentNullException();
 
             return new()
             {
-                Id = ActivityTitle.Id,
-                Favorite = ActivityTitle.Favorite,
-                Title = ActivityTitle.Value,
+                Id = activityTitleDto.Id,
+                Favorite = activityTitleDto.Favorite,
+                Title = activityTitleDto.Value,
             };
         }
 
-        public static Data.Jiffy.Models.ActivityDescription FromDescriptionDTO(ActivityDescription ActivityDescription)
+        public static ActivityDescription FromDescriptionDTO(ActivityDescriptionDto activityDescriptionDto)
         {
-            if (ActivityDescription is null)
+            if (activityDescriptionDto is null)
                 throw new ArgumentNullException();
 
             return new()
             {
-                Id = ActivityDescription.Id,
-                Favorite = ActivityDescription.Favorite,
-                Value = ActivityDescription.Value,
+                Id = activityDescriptionDto.Id,
+                Favorite = activityDescriptionDto.Favorite,
+                Value = activityDescriptionDto.Value,
             };
         }
 
-        public static SharedData.Activities.ActivityTitle ToTitleDTO(Data.Jiffy.Models.ActivityTitle ActivityTitle)
+        public static ActivityTitleDto ToTitleDTO(ActivityTitle activityTitle)
         {
-            if (ActivityTitle is null)
+            if (activityTitle is null)
                 throw new ArgumentNullException();
 
             return new()
             {
-                Id = ActivityTitle.Id,
-                Favorite = ActivityTitle.Favorite,
-                Value = ActivityTitle.Title,
+                Id = activityTitle.Id,
+                Favorite = activityTitle.Favorite,
+                Value = activityTitle.Title,
             };
         }
 
-        public static ActivityDescription ToDescriptionDTO(Data.Jiffy.Models.ActivityDescription ActivityDescription)
+        public static ActivityDescriptionDto ToDescriptionDTO(ActivityDescription activityDescription)
         {
-            if (ActivityDescription is null)
+            if (activityDescription is null)
                 throw new ArgumentNullException();
 
             return new()
             {
-                Id = ActivityDescription.Id,
-                Favorite = ActivityDescription.Favorite,
-                Value = ActivityDescription.Value,
+                Id = activityDescription.Id,
+                Favorite = activityDescription.Favorite,
+                Value = activityDescription.Value,
             };
         }
 
-        public static bool ValidateTitleDTO(SharedData.Activities.ActivityTitle ActivityTitle)
+        public static bool ValidateTitleDTO(ActivityTitleDto activityTitleDto)
         {
-            if (ActivityTitle is null)
+            if (activityTitleDto is null)
                 return false;
 
-            return !string.IsNullOrWhiteSpace(ActivityTitle.Value);
+            return !string.IsNullOrWhiteSpace(activityTitleDto.Value);
         }
 
-        public static bool ValidateDescriptionDTO(ActivityDescription ActivityDescription)
+        public static bool ValidateDescriptionDTO(ActivityDescription activityDescriptionDto)
         {
-            if (ActivityDescription is null)
+            if (activityDescriptionDto is null)
                 return false;
 
-            return !string.IsNullOrWhiteSpace(ActivityDescription.Value);
+            return !string.IsNullOrWhiteSpace(activityDescriptionDto.Value);
         }
     }
 }

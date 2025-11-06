@@ -29,13 +29,13 @@ namespace Zeiterfassungssoftware.Services
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEntries([FromQuery] int Start, [FromQuery] int Limit)
+        public async Task<IActionResult> GetEntries([FromQuery] int start, [FromQuery] int limit)
         {
-            if (Start < 0) 
-                Start = 0;
+            if (start < 0) 
+                start = 0;
 
-            if (Limit <= 0 || Limit > 1000) 
-                Limit = 50;
+            if (limit <= 0 || limit > 1000) 
+                limit = 50;
 
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(UserId))
@@ -45,8 +45,8 @@ namespace Zeiterfassungssoftware.Services
             {
                 var Entries = await _context.Entries
                     .OrderByDescending(e => e.Start)
-                    .Skip(Start)
-                    .Take(Limit)
+                    .Skip(start)
+                    .Take(limit)
                     .Include(e => e.ShouldTime)
                     .ToListAsync();
 
@@ -70,8 +70,8 @@ namespace Zeiterfassungssoftware.Services
                 var Entries = await _context.Entries
                     .Where(e => e.UserId == UserId)
                     .OrderByDescending(e => e.Start)
-                    .Skip(Start)
-                    .Take(Limit)
+                    .Skip(start)
+                    .Take(limit)
                     .Select(e => EntryMapper.ToDTO(e))
                     .ToListAsync();
 
@@ -79,30 +79,30 @@ namespace Zeiterfassungssoftware.Services
             }
         }
 
-        [HttpGet("{Id}")]
-		public IActionResult GetEntryById(Guid Id)
+        [HttpGet("{id}")]
+		public IActionResult GetEntryById(Guid id)
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
 
-            Entry? DbEntry = _context.Entries.Include(e => e.ShouldTime).FirstOrDefault(e => e.Id == Id && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
+            Entry? Entry = _context.Entries.Include(e => e.ShouldTime).FirstOrDefault(e => e.Id == id && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
                 
-            if (DbEntry is null)
+            if (Entry is null)
                 return NotFound();
 
             string Username = User.IsInRole("Administrator") ? User.Identity.Name.Split("@")[0] : string.Empty;
 
-            TimeEntry Entry = EntryMapper.ToDTO(DbEntry);
-            Entry.Username = Username;
+            TimeEntryDto EntryDto = EntryMapper.ToDTO(Entry);
+            EntryDto.Username = Username;
 
-            return Ok(Entry);
+            return Ok(EntryDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] TimeEntry Entry)
+        public async Task<IActionResult> AddEntry([FromBody] TimeEntryDto entryDto)
         {
-            if (!EntryMapper.ValidateDTO(Entry))
+            if (!EntryMapper.ValidateDTO(entryDto))
                 return BadRequest("Invalid data");
 
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -110,41 +110,38 @@ namespace Zeiterfassungssoftware.Services
                 return Unauthorized();
 
             var DbUser = await _userManager.GetUserAsync(User);
-            var ShouldTimes = _context.ShouldTimes.Where(e => e.ClassId == DbUser.ClassId);
-            var Day = DateTime.Now.DayOfWeek;
-            var ShouldTime = ShouldTimes.FirstOrDefault(e => e.DayOfWeek == Day && e.ValidUntil > DateTime.Now);
-            var ShouldTimeId = ShouldTime.Id;
+            if (DbUser is null)
+                return Unauthorized();
 
-            Entry DbEntry = new()
-            {
-                Id = Guid.NewGuid(),
-                Start = Entry.Start,
-                End = Entry.End,
-                Title = Entry.Title,
-                Description = Entry.Description,
-                UserId = UserId,
-                ShouldTimeId = ShouldTimeId,
-            };
+            Entry Entry = EntryMapper.FromDTO(entryDto);
+            Entry.Id = Guid.NewGuid();
+            Entry.UserId = UserId;
 
-            _context.Entries.Add(DbEntry);
+            var ShouldTime = await _context.ShouldTimes.FirstOrDefaultAsync(e => e.DayOfWeek == DateTime.Now.DayOfWeek && e.ValidUntil > DateTime.Now);
+            if ((ShouldTime is not null) && !IsHoliday(DateTime.Now))
+                Entry.ShouldTimeId = ShouldTime.Id;
+            else
+                Entry.ShouldTimeId = Guid.Empty;
+
+            _context.Entries.Add(Entry);
             _context.SaveChanges();
 
             string Username = User.IsInRole("Administrator") ? User.Identity.Name.Split("@")[0] : string.Empty;
 
-            TimeEntry EntryDto = EntryMapper.ToDTO(DbEntry);
-            Entry.Username = Username;
+            TimeEntryDto EntryDto = EntryMapper.ToDTO(Entry);
+            EntryDto.Username = Username;
 
             return Ok(EntryDto);
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteEntry(Guid Id)
+        public IActionResult DeleteEntry(Guid id)
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
 
-            Entry? Entry = _context.Entries.FirstOrDefault(e => (e.Id == Id) && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
+            Entry? Entry = _context.Entries.FirstOrDefault(e => (e.Id == id) && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
 
             if (Entry is null)
                 return NotFound();
@@ -155,31 +152,31 @@ namespace Zeiterfassungssoftware.Services
             return Ok();
         }
 
-		[HttpPatch]
-        public IActionResult PatchEntry([FromBody] TimeEntry Entry)
+		[HttpPut("{id}")]
+        public IActionResult PatchEntry(Guid id, [FromBody] TimeEntryDto entryDto)
         {
-            if (!EntryMapper.ValidateDTO(Entry))
+            if (!EntryMapper.ValidateDTO(entryDto))
                 return BadRequest("Invalid data");
 
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
 
-            Entry? DbEntry = _context.Entries.FirstOrDefault(e => (e.Id == Entry.Id) && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
+            Entry? Entry = _context.Entries.FirstOrDefault(e => (e.Id == id) && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
 
-            if (DbEntry is null)
+            if (Entry is null)
                 return NotFound();
 
-            DbEntry.Start = Entry.Start;
-            DbEntry.End = Entry.End;
-            DbEntry.Title = Entry.Title;
-            DbEntry.Description = Entry.Description;
+            Entry.Start = entryDto.Start;
+            Entry.End = entryDto.End;
+            Entry.Title = entryDto.Title;
+            Entry.Description = entryDto.Description;
 
             _context.SaveChanges();
 
             string Username = User.IsInRole("Administrator") ? User.Identity.Name.Split("@")[0] : string.Empty;
 
-            return Ok(EntryMapper.ToDTO(DbEntry));
+            return Ok(EntryMapper.ToDTO(Entry));
         }
 
         public bool IsHoliday(DateTime Date)

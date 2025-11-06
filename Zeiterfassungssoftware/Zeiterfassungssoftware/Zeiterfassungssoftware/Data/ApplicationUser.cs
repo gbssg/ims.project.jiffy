@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
 
 namespace Zeiterfassungssoftware.Data
@@ -13,6 +14,14 @@ namespace Zeiterfassungssoftware.Data
         public virtual ICollection<Entry> Entries { get; set; } = new List<Entry>();
         public Guid ClassId { get; set; }
         public virtual Class Class { get; set; } = null!;
+
+        public override bool Equals(object? obj)
+        {
+            if(obj is not ApplicationUser other) 
+                return false;
+
+            return this.Id == other.Id;
+        }
     }
 
 }

@@ -8,7 +8,7 @@ namespace Zeiterfassungssoftware.Client.Services
     public class RemoteShouldTimeProvider : IShouldTimeProvider
     {
         public bool IsLoaded { get; set; }
-        public List<ShouldTime> _shouldTimes { get; set; }
+        public List<ShouldTimeDto> _shouldTimes { get; set; }
 
         public static readonly JsonSerializerOptions Options = new JsonSerializerOptions()
         {
@@ -26,10 +26,10 @@ namespace Zeiterfassungssoftware.Client.Services
 
         public async Task LoadShouldTimes()
         {
-            _shouldTimes = await HttpClient.GetFromJsonAsync<List<ShouldTime>>("") ?? new();
+            _shouldTimes = await HttpClient.GetFromJsonAsync<List<ShouldTimeDto>>("") ?? new();
         }
 
-        public void Add(ShouldTime ShouldTime)
+        public void Add(ShouldTimeDto ShouldTime)
         {
             var Result = HttpClient.PostAsJsonAsync("", ShouldTime).GetAwaiter().GetResult();
 
@@ -38,22 +38,22 @@ namespace Zeiterfassungssoftware.Client.Services
             
 
             var Response = Result.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            var ConfirmedShouldTime = JsonSerializer.Deserialize<ShouldTime>(Response, Options);
+            var ConfirmedShouldTime = JsonSerializer.Deserialize<ShouldTimeDto>(Response, Options);
             _shouldTimes.Add(ConfirmedShouldTime);
         }
 
-        public ShouldTime GetShouldTimeById(ShouldTime Id)
+        public ShouldTimeDto GetShouldTimeById(ShouldTimeDto Id)
         {
-            var ShouldTime = HttpClient.GetFromJsonAsync<ShouldTime>($"{Id}").GetAwaiter().GetResult() ?? new();
+            var ShouldTime = HttpClient.GetFromJsonAsync<ShouldTimeDto>($"{Id}").GetAwaiter().GetResult() ?? new();
             return ShouldTime;
         }
 
-        public List<ShouldTime> GetShouldTimes()
+        public List<ShouldTimeDto> GetShouldTimes()
         {
             return _shouldTimes;
         }
 
-        public void Remove(ShouldTime ShouldTime)
+        public void Remove(ShouldTimeDto ShouldTime)
         {
             var Result = HttpClient.DeleteAsync($"{ShouldTime.Id}").GetAwaiter().GetResult();
 
@@ -63,7 +63,7 @@ namespace Zeiterfassungssoftware.Client.Services
             _shouldTimes.Remove(ShouldTime);
         }
 
-        public async Task Update(ShouldTime ShouldTime)
+        public async Task Update(ShouldTimeDto ShouldTime)
         {
             var Result = await HttpClient.PutAsJsonAsync($"{ShouldTime.Id}", ShouldTime);
 
@@ -71,7 +71,7 @@ namespace Zeiterfassungssoftware.Client.Services
                 throw new Exception("Failed to update shouldtime");
             
             var Response = await Result.Content.ReadAsStringAsync();
-            var UpdatedShouldTime = JsonSerializer.Deserialize<ShouldTime>(Response, Options);
+            var UpdatedShouldTime = JsonSerializer.Deserialize<ShouldTimeDto>(Response, Options);
             _shouldTimes[_shouldTimes.IndexOf(ShouldTime)] = UpdatedShouldTime ?? new();
         }
     }

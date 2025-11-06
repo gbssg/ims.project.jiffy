@@ -95,7 +95,7 @@ namespace Zeiterfassungssoftware.Client.Pages
             Timer?.Dispose();
         }
 
-        public bool DoFiltersApply(TimeEntry Entry)
+        public bool DoFiltersApply(TimeEntryDto Entry)
 		{
 			return Filters[0].MatchesCriteria(Entry.Start) && Filters[1].MatchesCriteria(Entry.Start) &&
 				        Filters[2].MatchesCriteria(Entry.End ?? DateTime.Now) && Filters[3].MatchesCriteria(Entry.Title) &&

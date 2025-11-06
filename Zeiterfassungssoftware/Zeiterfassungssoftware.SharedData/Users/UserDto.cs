@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Zeiterfassungssoftware.SharedData.Users
 {
-    public class User
+    public class UserDto
     {
         public string Id { get; set; } = null!;
         public Guid ClassId { get; set; }
@@ -22,5 +22,12 @@ namespace Zeiterfassungssoftware.SharedData.Users
         public DateTime LockoutEnd { get; set; }
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            if(obj is UserDto other)
+                return other.Id == this.Id;
+            return false;
+        }
     }
 }

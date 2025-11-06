@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Zeiterfassungssoftware.SharedData.ShouldTimes
 {
-    public class ShouldTime
+    public class ShouldTimeDto
     {
         public Guid Id { get; set; }
         public Guid ClassId { get; set; }

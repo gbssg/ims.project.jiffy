@@ -51,7 +51,7 @@ namespace Zeiterfassungssoftware.Controller
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public async Task<IActionResult> AddUsers([FromBody] User user)
+        public async Task<IActionResult> AddUsers([FromBody] UserDto user)
         {
             if(string.IsNullOrWhiteSpace(user.Password) || user.Password.Length < 6)
                 return BadRequest();
@@ -85,7 +85,7 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(string id, [FromBody] Zeiterfassungssoftware.SharedData.Users.User user)
+        public async Task<IActionResult> UpdateUser(string id, [FromBody] Zeiterfassungssoftware.SharedData.Users.UserDto user)
         {
             var applicationUser = await _userManager.FindByIdAsync(id);
             if (applicationUser == null)

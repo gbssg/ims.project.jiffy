@@ -5,8 +5,11 @@ namespace Zeiterfassungssoftware.Mapper
 {
     public class UserMapper
     {
-        public static User ToDTO(ApplicationUser applicationUser)
+        public static UserDto ToDTO(ApplicationUser applicationUser)
         {
+            if (applicationUser is null)
+                throw new ArgumentNullException();
+
             return new()
             {
                 Id = applicationUser.Id,
@@ -26,23 +29,26 @@ namespace Zeiterfassungssoftware.Mapper
             };
         }
 
-        public static ApplicationUser FromDTO(User user)
+        public static ApplicationUser FromDTO(UserDto userDto)
         {
+            if (userDto is null)
+                throw new ArgumentNullException();
+
             return new()
             {
-                Id = user.Id,
-                ClassId = user.ClassId,
-                UserName = user.UserName,
-                NormalizedUserName = user.NormalizedUserName,
-                Email = user.Email,
-                NormalizedEmail = user.NormalizedEmail,
-                EmailConfirmed = user.EmailConfirmed,
-                PhoneNumber = user.PhoneNumber,
-                PhoneNumberConfirmed = user.PhoneNumberConfirmed,
-                TwoFactorEnabled = user.TwoFactorEnabled,
-                LockoutEnd = user.LockoutEnd == DateTime.MinValue ? null : new DateTimeOffset(user.LockoutEnd),
-                LockoutEnabled = user.LockoutEnabled,
-                AccessFailedCount = user.AccessFailedCount
+                Id = userDto.Id,
+                ClassId = userDto.ClassId,
+                UserName = userDto.UserName,
+                NormalizedUserName = userDto.NormalizedUserName,
+                Email = userDto.Email,
+                NormalizedEmail = userDto.NormalizedEmail,
+                EmailConfirmed = userDto.EmailConfirmed,
+                PhoneNumber = userDto.PhoneNumber,
+                PhoneNumberConfirmed = userDto.PhoneNumberConfirmed,
+                TwoFactorEnabled = userDto.TwoFactorEnabled,
+                LockoutEnd = userDto.LockoutEnd == DateTime.MinValue ? null : new DateTimeOffset(user.LockoutEnd),
+                LockoutEnabled = userDto.LockoutEnabled,
+                AccessFailedCount = userDto.AccessFailedCount
             };
         }
     }

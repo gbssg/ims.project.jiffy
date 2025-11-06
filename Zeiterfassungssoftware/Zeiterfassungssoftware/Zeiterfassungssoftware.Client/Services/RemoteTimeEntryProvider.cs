@@ -21,7 +21,7 @@ namespace Zeiterfassungssoftware.Client.Services
 			BaseAddress = new Uri("https://localhost:7099/api/v1/entries/")
 		};
 
-		private List<TimeEntry> _timeEntries = [];
+		private List<TimeEntryDto> _timeEntries = [];
 		public bool IsLoaded { get; private set; }
 
 
@@ -35,7 +35,7 @@ namespace Zeiterfassungssoftware.Client.Services
 			int i = 0;
 			while(true)
 			{
-				var Entries = await HttpClient.GetFromJsonAsync<List<TimeEntry>>($"?start={30*i}&limit=30") ?? new();
+				var Entries = await HttpClient.GetFromJsonAsync<List<TimeEntryDto>>($"?start={30*i}&limit=30") ?? new();
 				IsLoaded = true;
 
 				if (!Entries.Any())
@@ -46,7 +46,7 @@ namespace Zeiterfassungssoftware.Client.Services
 			}
 		}
 
-		public async void Add(TimeEntry Entry)
+		public async void Add(TimeEntryDto Entry)
 		{
 
 			string JsonData = JsonSerializer.Serialize(Entry);
@@ -58,7 +58,7 @@ namespace Zeiterfassungssoftware.Client.Services
 			{
 				Response.EnsureSuccessStatusCode();
 				string ReponseContent = await Response.Content.ReadAsStringAsync();
-				var ConfirmedEntry = JsonSerializer.Deserialize<TimeEntry>(ReponseContent, Options) ?? new();
+				var ConfirmedEntry = JsonSerializer.Deserialize<TimeEntryDto>(ReponseContent, Options) ?? new();
 				Entry.Id = ConfirmedEntry.Id;
                 _timeEntries.Add(ConfirmedEntry);
 			}
@@ -68,18 +68,18 @@ namespace Zeiterfassungssoftware.Client.Services
 			
 		}
 
-		public List<TimeEntry> GetEntries()
+		public List<TimeEntryDto> GetEntries()
 		{
 			return _timeEntries;
 		}
 
-		public async Task<TimeEntry> GetEntryById(Guid Id)
+		public async Task<TimeEntryDto> GetEntryById(Guid Id)
 		{
-			return await HttpClient.GetFromJsonAsync<TimeEntry>($"{Id}");
+			return await HttpClient.GetFromJsonAsync<TimeEntryDto>($"{Id}");
 		}
 
 
-        public async Task Remove(TimeEntry Entry)
+        public async Task Remove(TimeEntryDto Entry)
 		{
 			HttpResponseMessage Message = await HttpClient.DeleteAsync($"{Entry.Id}");
 			
@@ -97,7 +97,7 @@ namespace Zeiterfassungssoftware.Client.Services
 			}
 		}
 
-        public async Task Update(TimeEntry Entry)
+        public async Task Update(TimeEntryDto Entry)
         {
 			string JsonData = JsonSerializer.Serialize(Entry);
 			var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");

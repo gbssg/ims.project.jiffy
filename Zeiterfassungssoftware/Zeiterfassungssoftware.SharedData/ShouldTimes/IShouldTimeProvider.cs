@@ -10,11 +10,11 @@ namespace Zeiterfassungssoftware.SharedData.ShouldTimes
     public interface IShouldTimeProvider
     {
         public bool IsLoaded { get; set; }
-        public void Add(ShouldTime ShouldTime);
-        public void Remove(ShouldTime ShouldTime);
-        public ShouldTime GetShouldTimeById(ShouldTime Id);
-        public List<ShouldTime> GetShouldTimes();
-        public Task Update(ShouldTime ShouldTime);
+        public void Add(ShouldTimeDto ShouldTime);
+        public void Remove(ShouldTimeDto ShouldTime);
+        public ShouldTimeDto GetShouldTimeById(ShouldTimeDto Id);
+        public List<ShouldTimeDto> GetShouldTimes();
+        public Task Update(ShouldTimeDto ShouldTime);
 
     }
 }

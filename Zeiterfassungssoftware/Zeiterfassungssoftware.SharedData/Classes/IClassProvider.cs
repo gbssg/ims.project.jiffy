@@ -10,12 +10,12 @@ namespace Zeiterfassungssoftware.SharedData.Classes
     public interface IClassProvider
     {
         public bool IsLoaded { get; set; }
-        public void Add(Class Class);
-        public void Remove(Class Entry);
-        public Task<Class> GetClassById(Guid Id);
-        public List<Class> GetClasses();
-        public Task Update(Class Class);
-        public Task<Class> GetOwnClass();
+        public void Add(ClassDto Class);
+        public void Remove(ClassDto Entry);
+        public Task<ClassDto> GetClassById(Guid Id);
+        public List<ClassDto> GetClasses();
+        public Task Update(ClassDto Class);
+        public Task<ClassDto> GetOwnClass();
 
     }
 }

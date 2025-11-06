@@ -20,7 +20,7 @@ namespace Zeiterfassungssoftware.Client.Pages
         [Inject]
         private NavigationManager Navigation { get; set; }
 
-        public TimeEntry? Entry { get; set; }
+        public TimeEntryDto? Entry { get; set; }
         public DateOnly StartDate { get; set; }
         public TimeOnly StartTime { get; set; }
         public DateOnly? EndDate { get; set; }

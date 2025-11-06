@@ -30,9 +30,9 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpGet("{Id}")]
-        public async Task<IActionResult> GetShouldTimeById(Guid Id)
+        public async Task<IActionResult> GetShouldTimeById(Guid id)
         {
-            var ShouldTime = await _context.ShouldTimes.FirstOrDefaultAsync(e => e.Id == Id && e.ValidUntil > DateTime.Now);
+            var ShouldTime = await _context.ShouldTimes.FirstOrDefaultAsync(e => e.Id == id && e.ValidUntil > DateTime.Now);
 
             if(ShouldTime is null)
                 return NotFound();
@@ -40,19 +40,19 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ShouldTimeMapper.ToDTO(ShouldTime));
         }
 
-        [HttpPut("/{Id}")]
-        public async Task<IActionResult> UpdateShouldTime(Guid Id, [FromBody] ShouldTime ShouldTime)
+        [HttpPut("{Id}")]
+        public async Task<IActionResult> UpdateShouldTime(Guid id, [FromBody] ShouldTimeDto shouldTimeDto)
         {
-            if (!ShouldTimeMapper.ValidateDto(ShouldTime))
+            if (!ShouldTimeMapper.ValidateDto(shouldTimeDto))
                 return BadRequest();
 
-            var OldShouldTime = _context.ShouldTimes.FirstOrDefault(e => e.Id == Id);
+            var OldShouldTime = _context.ShouldTimes.FirstOrDefault(e => e.Id == id);
             if (OldShouldTime is null)
                 return NotFound();
 
             OldShouldTime.ValidUntil = DateTime.Now;
 
-            var NewShouldTime = ShouldTimeMapper.FromDTO(ShouldTime);
+            var NewShouldTime = ShouldTimeMapper.FromDTO(shouldTimeDto);
             NewShouldTime.Id = Guid.NewGuid();
             _context.ShouldTimes.Add(NewShouldTime);
 
