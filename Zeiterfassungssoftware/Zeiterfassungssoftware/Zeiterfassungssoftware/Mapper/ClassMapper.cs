@@ -36,7 +36,7 @@ namespace Zeiterfassungssoftware.Mapper
             if (classDto is null)
                 return false;
 
-            return (!string.IsNullOrEmpty(classDto.Name));
+            return (!string.IsNullOrWhiteSpace(classDto.Name));
         }
     }
 }
