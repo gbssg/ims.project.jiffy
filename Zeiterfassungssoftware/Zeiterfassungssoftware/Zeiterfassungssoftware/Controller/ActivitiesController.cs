@@ -23,6 +23,9 @@ namespace Zeiterfassungssoftware.Controller
 
         #region Descriptions
 
+        /// <summary>
+        /// Gets a list of all the descriptions owned by a user.
+        /// </summary>
         [HttpGet("descriptions")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ActivityDescriptionDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -40,7 +43,9 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(Descriptions);            
         }
 
-        
+        /// <summary>
+        /// Creates a new description for the current user.
+        /// </summary>
         [HttpPost("descriptions")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActivityDescriptionDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -64,6 +69,9 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ActivityMapper.ToDescriptionDTO(Description));
         }
 
+        /// <summary>
+        /// Deletes a description if it is ownd by the current user.
+        /// </summary>
         [HttpDelete("descriptions/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -86,6 +94,10 @@ namespace Zeiterfassungssoftware.Controller
             return NoContent();
         }
 
+
+        /// <summary>
+        /// Updates a description if it is owned by the current user.
+        /// </summary>
         [HttpPut("descriptions/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActivityDescriptionDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -118,6 +130,9 @@ namespace Zeiterfassungssoftware.Controller
 
         #region Titles
 
+        /// <summary>
+        /// Gets a list of all the titles owned by a user.
+        /// </summary>
         [HttpGet("titles")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ActivityTitleDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -135,6 +150,9 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(Titles);
         }
 
+        /// <summary>
+        /// Creates a new title for the current user.
+        /// </summary>
         [HttpPost("titles")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActivityTitleDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -158,6 +176,9 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ActivityMapper.ToTitleDTO(Title));
         }
 
+        /// <summary>
+        /// Deletes a title if it is owned by the current user.
+        /// </summary>
         [HttpDelete("titles/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -180,6 +201,9 @@ namespace Zeiterfassungssoftware.Controller
             return NoContent();
         }
 
+        /// <summary>
+        /// Updates a title if it is owned by the current user.
+        /// </summary>
         [HttpPut("titles/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActivityTitleDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

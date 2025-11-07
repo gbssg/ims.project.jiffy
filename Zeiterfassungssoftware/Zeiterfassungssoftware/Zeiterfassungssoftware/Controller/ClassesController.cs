@@ -22,6 +22,9 @@ namespace Zeiterfassungssoftware.Controller
             _context = context;
         }
 
+        /// <summary>
+        /// Gets a list containing all available classes
+        /// </summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ClassDto>))]
         public async Task<ActionResult<List<ClassDto>>> GetAllClasses()
@@ -34,6 +37,10 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(Classes);
         }
 
+
+        /// <summary>
+        /// Gets a specific class
+        /// </summary>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClassDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -49,6 +56,9 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ClassMapper.ToDTO(Class));
         }
 
+        /// <summary>
+        /// Deletes a class (for administrator only).
+        /// </summary>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Administrator")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -86,6 +96,9 @@ namespace Zeiterfassungssoftware.Controller
             return NoContent();
         }
 
+        /// <summary>
+        /// Creates a new class (for administrator only).
+        /// </summary>
         [HttpPost]
         [Authorize(Roles = "Administrator")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClassDto))]
@@ -104,6 +117,9 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ClassMapper.ToDTO(Class));
         }
 
+        /// <summary>
+        /// Updates a class (for administrator only).
+        /// </summary>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrator")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClassDto))]

@@ -27,6 +27,9 @@ namespace Zeiterfassungssoftware.Services
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// If the current user is an administrator, a list of all entries and their owners will be returned. However, if the user is not an administrator, only a list of their own entries will be returned.
+        /// </summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<TimeEntryDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -80,6 +83,9 @@ namespace Zeiterfassungssoftware.Services
             }
         }
 
+        /// <summary>
+        /// Gets a specific entry (limited to own entries for non-administrators).
+        /// </summary>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TimeEntryDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -103,6 +109,9 @@ namespace Zeiterfassungssoftware.Services
             return Ok(EntryDto);
         }
 
+        /// <summary>
+        /// Creates a new entry that is linked to the current user.
+        /// </summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TimeEntryDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -141,6 +150,9 @@ namespace Zeiterfassungssoftware.Services
             return Ok(EntryDto);
         }
 
+        /// <summary>
+        /// Deletes an entry (limited to own entries for non-administrators).
+        /// </summary>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -162,7 +174,10 @@ namespace Zeiterfassungssoftware.Services
             return NoContent();
         }
 
-		[HttpPut("{id}")]
+        /// <summary>
+        /// Updates an entry (limited to own entry for non-administrators).
+        /// </summary>
+        [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TimeEntryDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

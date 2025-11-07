@@ -25,6 +25,9 @@ namespace Zeiterfassungssoftware.Controller
         }
 
 
+        /// <summary>
+        /// Gets a list of all users (for administrators only).
+        /// </summary>
         [HttpGet]
         [Authorize(Roles = "Administrator")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<UserDto>))]
@@ -34,6 +37,9 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(Users);
         }
 
+        /// <summary>
+        /// It gets a user's information (for administrators only).
+        /// </summary>
         [HttpGet("{id}")]
         [Authorize(Roles = "Administrator")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
@@ -48,6 +54,9 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(UserMapper.ToDTO(User));
         }
 
+        /// <summary>
+        /// Creates a new user (for administrators only).
+        /// </summary>
         [HttpPost]
         [Authorize(Roles = "Administrator")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
@@ -71,6 +80,9 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(UserMapper.ToDTO(applicationUser));
         }
 
+        /// <summary>
+        /// Deletes a user by ID (for administrators only).
+        /// </summary>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Administrator")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -89,6 +101,9 @@ namespace Zeiterfassungssoftware.Controller
             return NoContent();
         }
 
+        /// <summary>
+        /// Updates a specific user's information. If the current user is an administrator, they can edit every field of every user. If the user is not an administrator, however, they can only edit their own class ID.
+        /// </summary>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

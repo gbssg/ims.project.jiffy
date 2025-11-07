@@ -21,6 +21,9 @@ namespace Zeiterfassungssoftware.Controller
             _context = context;
         }
 
+        /// <summary>
+        /// Gets a list of all the shouldtimes.
+        /// </summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ShouldTimeDto>))]
         public async Task<ActionResult<List<ShouldTimeDto>>> GetShouldTimes()
@@ -31,6 +34,9 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ShouldTimes);
         }
 
+        /// <summary>
+        /// Gets a specific shouldtime.
+        /// </summary>
         [HttpGet("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ShouldTimeDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -44,6 +50,9 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ShouldTimeMapper.ToDTO(ShouldTime));
         }
 
+        /// <summary>
+        /// Updates a specific shouldtime.
+        /// </summary>
         [HttpPut("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ShouldTimeDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -68,6 +77,10 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ShouldTimeMapper.ToDTO(NewShouldTime));
         }
 
+
+        /// <summary>
+        /// Deletes a specific shouldtime.
+        /// </summary>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
