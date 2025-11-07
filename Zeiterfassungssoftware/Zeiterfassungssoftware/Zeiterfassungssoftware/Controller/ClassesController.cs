@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.Mapper;
+using Zeiterfassungssoftware.SharedData.Activities;
+using Zeiterfassungssoftware.SharedData.Classes;
 
 namespace Zeiterfassungssoftware.Controller
 {
@@ -21,7 +23,8 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllClasses()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ClassDto>))]
+        public async Task<ActionResult<List<ClassDto>>> GetAllClasses()
         {
             var Classes = await _context.Classes
                  .Include(e => e.ShouldTimes)
@@ -32,7 +35,9 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetClassById(Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClassDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ClassDto>> GetClassById(Guid id)
         {
             var Class = await _context.Classes
                 .Include(e => e.ShouldTimes)
@@ -44,8 +49,10 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ClassMapper.ToDTO(Class));
         }
 
-        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteClassById(Guid id)
         {
             if (id == Guid.Empty)
@@ -79,9 +86,11 @@ namespace Zeiterfassungssoftware.Controller
             return NoContent();
         }
 
-        [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public async Task<IActionResult> AddClass([FromBody, Required] SharedData.Classes.ClassDto classDto)
+        [Authorize(Roles = "Administrator")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClassDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ClassDto>> AddClass([FromBody, Required] SharedData.Classes.ClassDto classDto)
         {
             if (!ClassMapper.ValidateDTO(classDto))
                 return BadRequest("Invalid data");
@@ -95,9 +104,12 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ClassMapper.ToDTO(Class));
         }
 
-        [Authorize(Roles = "Administrator")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateClass(Guid id, [FromBody, Required] SharedData.Classes.ClassDto classDto)
+        [Authorize(Roles = "Administrator")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClassDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ClassDto>> UpdateClass(Guid id, [FromBody, Required] SharedData.Classes.ClassDto classDto)
         {
             if (id == Guid.Empty)
                 return BadRequest();
@@ -120,6 +132,5 @@ namespace Zeiterfassungssoftware.Controller
 
             return Ok(ClassMapper.ToDTO(DbClass));
         }
-
     }
 }

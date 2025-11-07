@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Mapper;
+using Zeiterfassungssoftware.SharedData.ShouldTimes;
 using Zeiterfassungssoftware.SharedData.Users;
 
 namespace Zeiterfassungssoftware.Controller
@@ -24,17 +25,20 @@ namespace Zeiterfassungssoftware.Controller
         }
 
 
-        [Authorize(Roles = "Administrator")]
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        [Authorize(Roles = "Administrator")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<UserDto>))]
+        public async Task<ActionResult<List<UserDto>>> GetUsers()
         {
             var Users = await _context.Users.Select(e => UserMapper.ToDTO(e)).ToListAsync();
             return Ok(Users);
         }
 
-        [Authorize(Roles = "Administrator")]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserById(string Id)
+        [Authorize(Roles = "Administrator")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<UserDto>> GetUserById(string Id)
         {
             var User = await _userManager.FindByIdAsync(Id);
 
@@ -44,9 +48,12 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(UserMapper.ToDTO(User));
         }
 
-        [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public async Task<IActionResult> AddUsers([FromBody, Required] UserDto user)
+        [Authorize(Roles = "Administrator")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<UserDto>> AddUsers([FromBody, Required] UserDto user)
         {
             if(string.IsNullOrWhiteSpace(user.Password) || user.Password.Length < 6)
                 return BadRequest();
@@ -64,8 +71,11 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(UserMapper.ToDTO(applicationUser));
         }
 
-        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteUser(string id)
         {
             var applicationUser = await _userManager.FindByIdAsync(id);
@@ -80,7 +90,10 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(string id, [FromBody, Required] UserDto user)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<UserDto>> UpdateUser(string id, [FromBody, Required] UserDto user)
         {
             var applicationUser = await _userManager.FindByIdAsync(id);
             if (applicationUser == null)

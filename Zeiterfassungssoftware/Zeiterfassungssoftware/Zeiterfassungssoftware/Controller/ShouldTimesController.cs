@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Mapper;
 using Zeiterfassungssoftware.SharedData.ShouldTimes;
+using Zeiterfassungssoftware.SharedData.Times;
 
 namespace Zeiterfassungssoftware.Controller
 {
@@ -21,7 +22,8 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetShouldTimes()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ShouldTimeDto>))]
+        public async Task<ActionResult<List<ShouldTimeDto>>> GetShouldTimes()
         {
             var ShouldTimes = await _context.ShouldTimes.Where(e => e.ValidUntil > DateTime.Now)
                                                         .Select(e => ShouldTimeMapper.ToDTO(e))
@@ -30,7 +32,9 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpGet("{Id}")]
-        public async Task<IActionResult> GetShouldTimeById(Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ShouldTimeDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ShouldTimeDto>> GetShouldTimeById(Guid id)
         {
             var ShouldTime = await _context.ShouldTimes.FirstOrDefaultAsync(e => e.Id == id && e.ValidUntil > DateTime.Now);
 
@@ -41,7 +45,10 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpPut("{Id}")]
-        public async Task<IActionResult> UpdateShouldTime(Guid id, [FromBody, Required] ShouldTimeDto shouldTimeDto)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ShouldTimeDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ShouldTimeDto>> UpdateShouldTime(Guid id, [FromBody, Required] ShouldTimeDto shouldTimeDto)
         {
             if (!ShouldTimeMapper.ValidateDto(shouldTimeDto))
                 return BadRequest();
@@ -61,7 +68,9 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ShouldTimeMapper.ToDTO(NewShouldTime));
         }
 
-        [HttpDelete("{id}")] 
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteShouldTime(Guid id)
         {
             var ShouldTime = await _context.ShouldTimes.FirstOrDefaultAsync(e => e.Id == id);

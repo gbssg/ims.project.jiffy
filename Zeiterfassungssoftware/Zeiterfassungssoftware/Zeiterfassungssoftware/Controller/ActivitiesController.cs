@@ -24,7 +24,9 @@ namespace Zeiterfassungssoftware.Controller
         #region Descriptions
 
         [HttpGet("descriptions")]
-        public async Task<IActionResult> GetAllDescriptions()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ActivityDescriptionDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<List<ActivityDescriptionDto>>> GetAllDescriptions()
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(UserId))
@@ -40,7 +42,10 @@ namespace Zeiterfassungssoftware.Controller
 
         
         [HttpPost("descriptions")]
-        public async Task<IActionResult> AddDescription([FromBody, Required] ActivityDescriptionDto descriptionDto)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActivityDescriptionDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ActivityDescriptionDto>> AddDescription([FromBody, Required] ActivityDescriptionDto descriptionDto)
         {
             if (!ActivityMapper.ValidateDescriptionDTO(descriptionDto))
                 return BadRequest("Invalid data");
@@ -60,6 +65,9 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpDelete("descriptions/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteDescription(Guid id)
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -79,15 +87,16 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpPut("descriptions/{id}")]
-        public async Task<IActionResult> UpdateDescription(Guid id, [FromBody, Required] ActivityDescriptionDto descriptionDto)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActivityDescriptionDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ActivityDescriptionDto>> UpdateDescription(Guid id, [FromBody, Required] ActivityDescriptionDto descriptionDto)
         {
             if (!ActivityMapper.ValidateDescriptionDTO(descriptionDto))
                 return BadRequest("Invalid data");
 
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(UserId))
-                return Unauthorized();
-
             if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
 
@@ -110,7 +119,9 @@ namespace Zeiterfassungssoftware.Controller
         #region Titles
 
         [HttpGet("titles")]
-        public async Task<IActionResult> GetAllTitles()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ActivityTitleDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<List<ActivityTitleDto>>> GetAllTitles()
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(UserId))
@@ -125,7 +136,10 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpPost("titles")]
-		public async Task<IActionResult> AddTitle([FromBody, Required] ActivityTitleDto titleDto)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActivityTitleDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ActivityTitleDto>> AddTitle([FromBody, Required] ActivityTitleDto titleDto)
         {
             if (!ActivityMapper.ValidateTitleDTO(titleDto))
                 return BadRequest("Invalid data");
@@ -145,6 +159,9 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpDelete("titles/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> DeleteTitle(Guid id)
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -164,7 +181,11 @@ namespace Zeiterfassungssoftware.Controller
         }
 
         [HttpPut("titles/{id}")]
-        public async Task<IActionResult> UpdateTitle(Guid id, [FromBody, Required] ActivityTitleDto titleDto)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActivityTitleDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ActivityTitleDto>> UpdateTitle(Guid id, [FromBody, Required] ActivityTitleDto titleDto)
         {
             if (!ActivityMapper.ValidateTitleDTO(titleDto))
                 return BadRequest("Invalid data");

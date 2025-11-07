@@ -7,6 +7,7 @@ using System.Security.Claims;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.Mapper;
+using Zeiterfassungssoftware.SharedData.Classes;
 using Zeiterfassungssoftware.SharedData.Times;
 
 namespace Zeiterfassungssoftware.Services
@@ -27,7 +28,9 @@ namespace Zeiterfassungssoftware.Services
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEntries([FromQuery] int start, [FromQuery] int limit)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<TimeEntryDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<List<TimeEntryDto>>> GetEntries([FromQuery] int start, [FromQuery] int limit)
         {
             if (start < 0) 
                 start = 0;
@@ -78,13 +81,16 @@ namespace Zeiterfassungssoftware.Services
         }
 
         [HttpGet("{id}")]
-		public IActionResult GetEntryById(Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TimeEntryDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<TimeEntryDto>> GetEntryById(Guid id)
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
 
-            Entry? Entry = _context.Entries.Include(e => e.ShouldTime).FirstOrDefault(e => e.Id == id && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
+            Entry? Entry = await _context.Entries.Include(e => e.ShouldTime).FirstOrDefaultAsync(e => e.Id == id && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
                 
             if (Entry is null)
                 return NotFound();
@@ -98,7 +104,10 @@ namespace Zeiterfassungssoftware.Services
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEntry([FromBody, Required] TimeEntryDto entryDto)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TimeEntryDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<TimeEntryDto>> AddEntry([FromBody, Required] TimeEntryDto entryDto)
         {
             if (!EntryMapper.ValidateDTO(entryDto))
                 return BadRequest("Invalid data");
@@ -122,7 +131,7 @@ namespace Zeiterfassungssoftware.Services
                 Entry.ShouldTimeId = Guid.Empty;
 
             _context.Entries.Add(Entry);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             string Username = User.IsInRole("Administrator") ? User.Identity.Name.Split("@")[0] : string.Empty;
 
@@ -133,25 +142,32 @@ namespace Zeiterfassungssoftware.Services
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteEntry(Guid id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> DeleteEntry(Guid id)
         {
             var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
 
-            Entry? Entry = _context.Entries.FirstOrDefault(e => (e.Id == id) && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
+            Entry? Entry = await _context.Entries.FirstOrDefaultAsync(e => (e.Id == id) && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
 
             if (Entry is null)
                 return NotFound();
 
             _context.Entries.Remove(Entry);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            return Ok();
+            return NoContent();
         }
 
 		[HttpPut("{id}")]
-        public IActionResult PatchEntry(Guid id, [FromBody, Required] TimeEntryDto entryDto)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TimeEntryDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<TimeEntryDto>> PatchEntry(Guid id, [FromBody, Required] TimeEntryDto entryDto)
         {
             if (!EntryMapper.ValidateDTO(entryDto))
                 return BadRequest("Invalid data");
@@ -160,7 +176,7 @@ namespace Zeiterfassungssoftware.Services
             if (string.IsNullOrEmpty(UserId))
                 return Unauthorized();
 
-            Entry? Entry = _context.Entries.FirstOrDefault(e => (e.Id == id) && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
+            Entry? Entry = await _context.Entries.FirstOrDefaultAsync(e => (e.Id == id) && ((e.UserId == UserId) || (User.IsInRole("Administrator"))));
 
             if (Entry is null)
                 return NotFound();
@@ -170,7 +186,7 @@ namespace Zeiterfassungssoftware.Services
             Entry.Title = entryDto.Title;
             Entry.Description = entryDto.Description;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             string Username = User.IsInRole("Administrator") ? User.Identity.Name.Split("@")[0] : string.Empty;
 
