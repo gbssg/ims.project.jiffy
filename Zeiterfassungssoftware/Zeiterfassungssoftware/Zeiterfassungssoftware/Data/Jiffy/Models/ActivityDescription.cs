@@ -10,4 +10,11 @@ public partial class ActivityDescription
     public string UserId { get; set; } = null!;
     public virtual ApplicationUser User { get; set; } = null!;
 
+    public override bool Equals(object? obj)
+    {
+        if (obj is not ActivityDescription other)
+            return false;
+
+        return this.Id == other.Id;
+    }
 }

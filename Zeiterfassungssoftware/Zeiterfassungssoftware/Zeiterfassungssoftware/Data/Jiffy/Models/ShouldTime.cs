@@ -9,5 +9,13 @@
         public DateTime ValidUntil { get; set; }
         public Guid ClassId { get; set; }
         public virtual Class Class { get; set; } = null!;
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not ShouldTime other)
+                return false;
+
+            return this.Id == other.Id;
+        }
     }
 }

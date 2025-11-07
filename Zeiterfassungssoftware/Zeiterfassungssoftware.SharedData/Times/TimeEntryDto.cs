@@ -1,4 +1,6 @@
-﻿namespace Zeiterfassungssoftware.SharedData.Times
+﻿using Zeiterfassungssoftware.SharedData.Users;
+
+namespace Zeiterfassungssoftware.SharedData.Times
 {
     public class TimeEntryDto
     {
@@ -56,6 +58,13 @@
         public string GetDateString()
         {
             return Start.ToString(DATE_FORMAT);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is TimeEntryDto other)
+                return other.Id == this.Id;
+            return false;
         }
 
     }

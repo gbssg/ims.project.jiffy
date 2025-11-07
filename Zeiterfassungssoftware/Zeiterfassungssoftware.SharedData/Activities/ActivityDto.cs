@@ -1,4 +1,6 @@
-﻿namespace Zeiterfassungssoftware.SharedData.Activities
+﻿using Zeiterfassungssoftware.SharedData.Users;
+
+namespace Zeiterfassungssoftware.SharedData.Activities
 {
 	public class ActivityTitleDto
 	{
@@ -23,7 +25,7 @@
         public override int GetHashCode() => Normalize(Value).GetHashCode();
         private string Normalize(string Input) => Input.ToLower().Trim();
 		public override string ToString() => Id.ToString();
-		
+
     }
 
 	public class ActivityDescriptionDto
@@ -47,5 +49,6 @@
         public override int GetHashCode() => Normalize(Value).GetHashCode();
         private string Normalize(string Input) => Input.ToLower().Trim();
         public override string ToString() => Id.ToString();
+
     }
 }
