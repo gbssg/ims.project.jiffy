@@ -1,152 +1,602 @@
+# Jiffy
+Eine ASP.NET Core Web-API zur Erfassung der Arbeitszeit
 
-# API
+## Version: v1
 
-## Inhaltsverzeichnis
+---
 
+### [GET] /api/v1/Activities/descriptions
+**Ruft eine Liste aller Beschreibungen ab, die dem Benutzer gehören.**
 
-- [1 User](#1-user)
-   - [1.1 PATCH ClassId](#11-patch-classid)
-      - [1.1.1 Parameter](#111-parameter)
-      - [1.1.2 Antworten](#112-antworten)
-   - [1.2 GET Users](#12-get-users)
-      - [1.2.1 Antworten](#121-antworten)
-   - [1.3 POST User](#13-post-user)
-      - [1.3.1 Request Body](#131-request-body)
-      - [1.3.2 Antworten](#132-antworten)
-   - [1.4 DELETE User](#14-delete-user)
-      - [1.4.1 Parameter](#141-parameter)
-      - [1.4.2 Antworten](#142-antworten)
-   - [1.5 PATCH User](#15-patch-user)
-      - [1.5.1 Parameter](#151-parameter)
-      - [1.5.2 Request Body](#152-request-body)
-      - [1.5.3 Antworten](#153-antworten)
+#### Responses
 
-## 1 User
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ [ActivityDescriptionDto](#activitydescriptiondto) ]<br>**application/json**: [ [ActivityDescriptionDto](#activitydescriptiondto) ]<br>**text/json**: [ [ActivityDescriptionDto](#activitydescriptiondto) ]<br> |
+| 401 | Unauthorized | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
 
-### 1.1 PATCH ClassId
+### [POST] /api/v1/Activities/descriptions
+**Erstellt eine neue Beschreibung für den aktuellen Benutzer.**
 
-> Route: `/api/v1/users/set-class/{id}`
-> Authorization Level: **Authentifiziert**
+#### Request Body
 
-Setzt die Klasse des aktuell angemeldeten Benutzers.
+| Benötigt | Schema |
+| -------- | ------ |
+|  Ja | **application/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**text/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**application/*+json**: [ActivityDescriptionDto](#activitydescriptiondto)<br> | **application/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**text/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**application/*+json**: [ActivityDescriptionDto](#activitydescriptiondto)<br> | **application/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**text/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**application/*+json**: [ActivityDescriptionDto](#activitydescriptiondto)<br> |
 
-#### 1.1.1 Parameter
+#### Responses
 
-  | Name | Typ  | Beschreibung  |
-  | ---- | ---- | ------------- |
-  | id   | Guid | Id der Klasse |
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**application/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**text/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br> |
+| 400 | Bad Request | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 401 | Unauthorized | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
 
-#### 1.1.2 Antworten
+### [DELETE] /api/v1/Activities/descriptions/{id}
+**Löscht eine Beschreibung, wenn sie dem aktuellen Benutzer gehört.**
 
-  | Code | Beschreibung                   |
-  | ---- | ------------------------------ |
-  | 200  | Klasse erfolgreich gesetzt     |
-  | 401  | Benutzer nicht authentifiziert |
-  | 404  | Klasse nicht gefunden          |
+#### Parameters
 
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string (uuid) |
 
-### 1.2 GET Users
+#### Responses
 
-> Route: `/api/v1/users`
-> Authorization Level: **Administrator**
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 204 | No Content |  |
+| 401 | Unauthorized | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
 
-Gibt alle Benutzer im System zurück.
+### [PUT] /api/v1/Activities/descriptions/{id}
+**Aktualisiert eine Beschreibung, wenn sie dem aktuellen Benutzer gehört.**
 
-#### 1.2.1 Antworten
+#### Parameters
 
-  | Code | Beschreibung                          |
-  | ---- | ------------------------------------- |
-  | 200  | Liste von Benutzer-DTOs zurückgegeben |
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string (uuid) |
 
+#### Request Body
 
-### 1.3 POST User
+| Benötigt | Schema |
+| -------- | ------ |
+|  Ja | **application/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**text/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**application/*+json**: [ActivityDescriptionDto](#activitydescriptiondto)<br> | **application/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**text/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**application/*+json**: [ActivityDescriptionDto](#activitydescriptiondto)<br> | **application/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**text/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**application/*+json**: [ActivityDescriptionDto](#activitydescriptiondto)<br> |
 
-> Route: `/api/v1/users`
-> Authorization Level: **Administrator**
+#### Responses
 
-Erstellt einen neuen Benutzer.
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**application/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br>**text/json**: [ActivityDescriptionDto](#activitydescriptiondto)<br> |
+| 400 | Bad Request | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 401 | Unauthorized | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
 
-#### 1.3.1 Request Body
+### [GET] /api/v1/Activities/titles
+**Ruft eine Liste aller Titel ab, die ein Benutzer besitzt.**
 
-  ```json
-  {
-    "userName": "max.mustermann",
-    "email": "max@example.com",
-    "password": "Str0ngP@ss!",
-    "phoneNumber": "0791234567",
-    "twoFactorEnabled": false,
-    "lockoutEnabled": false,
-    "lockoutEnd": "2025-12-31T23:59:59Z",
-    "accessFailedCount": 0,
-    "emailConfirmed": false
-  }
-  ```
+#### Responses
 
-#### 1.3.2 Antworten
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ [ActivityTitleDto](#activitytitledto) ]<br>**application/json**: [ [ActivityTitleDto](#activitytitledto) ]<br>**text/json**: [ [ActivityTitleDto](#activitytitledto) ]<br> |
+| 401 | Unauthorized | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
 
-  | Code | Beschreibung                                     |
-  | ---- | ------------------------------------------------ |
-  | 200  | Benutzer erfolgreich erstellt, DTO zurückgegeben |
-  | 400  | Passwort ungültig oder Fehler                    |
-  | 409  | Benutzer mit dieser Email existiert bereits      |
+### [POST] /api/v1/Activities/titles
+**Erstellt einen neuen Titel für den aktuellen Benutzer.**
 
+#### Request Body
 
-### 1.4 DELETE User
+| Benötigt | Schema |
+| -------- | ------ |
+|  Ja | **application/json**: [ActivityTitleDto](#activitytitledto)<br>**text/json**: [ActivityTitleDto](#activitytitledto)<br>**application/*+json**: [ActivityTitleDto](#activitytitledto)<br> | **application/json**: [ActivityTitleDto](#activitytitledto)<br>**text/json**: [ActivityTitleDto](#activitytitledto)<br>**application/*+json**: [ActivityTitleDto](#activitytitledto)<br> | **application/json**: [ActivityTitleDto](#activitytitledto)<br>**text/json**: [ActivityTitleDto](#activitytitledto)<br>**application/*+json**: [ActivityTitleDto](#activitytitledto)<br> |
 
-> Route: `/api/v1/users/{id}`
-> Authorization Level: **Administrator**
+#### Responses
 
-Löscht einen Benutzer anhand seiner Id.
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ActivityTitleDto](#activitytitledto)<br>**application/json**: [ActivityTitleDto](#activitytitledto)<br>**text/json**: [ActivityTitleDto](#activitytitledto)<br> |
+| 400 | Bad Request | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 401 | Unauthorized | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
 
-#### 1.4.1 Parameter
+### [DELETE] /api/v1/Activities/titles/{id}
+**Löscht einen Titel, wenn er dem aktuellen Benutzer gehört.**
 
-  | Name | Typ    | Beschreibung |
-  | ---- | ------ | ------------ |
-  | id   | string | Benutzer-Id  |
+#### Parameters
 
-#### 1.4.2 Antworten
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string (uuid) |
 
-  | Code | Beschreibung                  |
-  | ---- | ----------------------------- |
-  | 204  | Benutzer erfolgreich gelöscht |
-  | 404  | Benutzer nicht gefunden       |
-  | 400  | Fehler beim Löschen           |
+#### Responses
 
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 204 | No Content |  |
+| 401 | Unauthorized | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
 
-### 1.5 PATCH User
+### [PUT] /api/v1/Activities/titles/{id}
+**Aktualisiert einen Titel, wenn er sich im Besitz des aktuellen Benutzers befindet.**
 
-> Route: `/api/v1/users/{id}`
-> Authorization Level: **Administrator**
+#### Parameters
 
-Aktualisiert die Daten eines Benutzers.
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string (uuid) |
 
-#### 1.5.1 Parameter
+#### Request Body
 
-  | Name | Typ    | Beschreibung |
-  | ---- | ------ | ------------ |
-  | id   | string | Benutzer-Id  |
+| Benötigt | Schema |
+| -------- | ------ |
+|  Ja | **application/json**: [ActivityTitleDto](#activitytitledto)<br>**text/json**: [ActivityTitleDto](#activitytitledto)<br>**application/*+json**: [ActivityTitleDto](#activitytitledto)<br> | **application/json**: [ActivityTitleDto](#activitytitledto)<br>**text/json**: [ActivityTitleDto](#activitytitledto)<br>**application/*+json**: [ActivityTitleDto](#activitytitledto)<br> | **application/json**: [ActivityTitleDto](#activitytitledto)<br>**text/json**: [ActivityTitleDto](#activitytitledto)<br>**application/*+json**: [ActivityTitleDto](#activitytitledto)<br> |
 
-#### 1.5.2 Request Body
+#### Responses
 
-  ```json
-  {
-    "userName": "new.username",
-    "email": "new@example.com",
-    "password": "NeuesStr0ngP@ss!",
-    "phoneNumber": "0787654321",
-    "phoneNumberConfirmed": true,
-    "twoFactorEnabled": true,
-    "lockoutEnabled": true,
-    "lockoutEnd": "2026-01-01T12:00:00Z",
-    "accessFailedCount": 1,
-    "emailConfirmed": true
-  }
-  ```
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ActivityTitleDto](#activitytitledto)<br>**application/json**: [ActivityTitleDto](#activitytitledto)<br>**text/json**: [ActivityTitleDto](#activitytitledto)<br> |
+| 400 | Bad Request | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 401 | Unauthorized | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
 
-#### 1.5.3 Antworten
+---
 
-  | Code | Beschreibung                                         |
-  | ---- | ---------------------------------------------------- |
-  | 200  | Benutzer erfolgreich aktualisiert, DTO zurückgegeben |
-  | 404  | Benutzer nicht gefunden                              |
-  | 400  | Fehler beim Aktualisieren oder Passwort ändern       |
+### [GET] /api/v1/Classes
+**Ruft eine Liste mit allen verfügbaren Klassen ab.**
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ [ClassDto](#classdto) ]<br>**application/json**: [ [ClassDto](#classdto) ]<br>**text/json**: [ [ClassDto](#classdto) ]<br> |
+
+### [POST] /api/v1/Classes
+**Erstellt eine neue Klasse (nur für Administratoren).**
+
+#### Request Body
+
+| Benötigt | Schema |
+| -------- | ------ |
+|  Ja | **application/json**: [ClassDto](#classdto)<br>**text/json**: [ClassDto](#classdto)<br>**application/*+json**: [ClassDto](#classdto)<br> | **application/json**: [ClassDto](#classdto)<br>**text/json**: [ClassDto](#classdto)<br>**application/*+json**: [ClassDto](#classdto)<br> | **application/json**: [ClassDto](#classdto)<br>**text/json**: [ClassDto](#classdto)<br>**application/*+json**: [ClassDto](#classdto)<br> |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ClassDto](#classdto)<br>**application/json**: [ClassDto](#classdto)<br>**text/json**: [ClassDto](#classdto)<br> |
+| 400 | Bad Request | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+### [GET] /api/v1/Classes/{id}
+**Ruft eine bestimmte Klasse ab.**
+
+#### Parameters
+
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string (uuid) |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ClassDto](#classdto)<br>**application/json**: [ClassDto](#classdto)<br>**text/json**: [ClassDto](#classdto)<br> |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+### [DELETE] /api/v1/Classes/{id}
+**Löscht eine Klasse (nur für Administratoren).**
+
+#### Parameters
+
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string (uuid) |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 204 | No Content |  |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+### [PUT] /api/v1/Classes/{id}
+**Aktualisiert eine Klasse (nur für Administratoren).**
+
+#### Parameters
+
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string (uuid) |
+
+#### Request Body
+
+| Benötigt | Schema |
+| -------- | ------ |
+|  Ja | **application/json**: [ClassDto](#classdto)<br>**text/json**: [ClassDto](#classdto)<br>**application/*+json**: [ClassDto](#classdto)<br> | **application/json**: [ClassDto](#classdto)<br>**text/json**: [ClassDto](#classdto)<br>**application/*+json**: [ClassDto](#classdto)<br> | **application/json**: [ClassDto](#classdto)<br>**text/json**: [ClassDto](#classdto)<br>**application/*+json**: [ClassDto](#classdto)<br> |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ClassDto](#classdto)<br>**application/json**: [ClassDto](#classdto)<br>**text/json**: [ClassDto](#classdto)<br> |
+| 400 | Bad Request | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+---
+
+### [GET] /api/v1/Entries
+**Wenn der aktuelle Benutzer ein Administrator ist, wird eine Liste aller Einträge und ihrer Eigentümer zurückgegeben. Ist der Benutzer jedoch kein Administrator, wird nur eine Liste seiner eigenen Einträge zurückgegeben.**
+
+#### Parameters
+
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| start | query |  | Nein | integer |
+| limit | query |  | Nein | integer |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ [TimeEntryDto](#timeentrydto) ]<br>**application/json**: [ [TimeEntryDto](#timeentrydto) ]<br>**text/json**: [ [TimeEntryDto](#timeentrydto) ]<br> |
+| 401 | Unauthorized | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+### [POST] /api/v1/Entries
+**Erstellt einen neuen Eintrag, der mit dem aktuellen Benutzer verknüpft ist.**
+
+#### Request Body
+
+| Benötigt | Schema |
+| -------- | ------ |
+|  Ja | **application/json**: [TimeEntryDto](#timeentrydto)<br>**text/json**: [TimeEntryDto](#timeentrydto)<br>**application/*+json**: [TimeEntryDto](#timeentrydto)<br> | **application/json**: [TimeEntryDto](#timeentrydto)<br>**text/json**: [TimeEntryDto](#timeentrydto)<br>**application/*+json**: [TimeEntryDto](#timeentrydto)<br> | **application/json**: [TimeEntryDto](#timeentrydto)<br>**text/json**: [TimeEntryDto](#timeentrydto)<br>**application/*+json**: [TimeEntryDto](#timeentrydto)<br> |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [TimeEntryDto](#timeentrydto)<br>**application/json**: [TimeEntryDto](#timeentrydto)<br>**text/json**: [TimeEntryDto](#timeentrydto)<br> |
+| 400 | Bad Request | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 401 | Unauthorized | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+### [GET] /api/v1/Entries/{id}
+**Ruft einen bestimmten Eintrag ab (beschränkt auf eigene Einträge für Nicht-Administratoren).**
+
+#### Parameters
+
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string (uuid) |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [TimeEntryDto](#timeentrydto)<br>**application/json**: [TimeEntryDto](#timeentrydto)<br>**text/json**: [TimeEntryDto](#timeentrydto)<br> |
+| 401 | Unauthorized | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+### [DELETE] /api/v1/Entries/{id}
+**Löscht einen Eintrag (beschränkt auf eigene Einträge für Nicht-Administratoren).**
+
+#### Parameters
+
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string (uuid) |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 204 | No Content |  |
+| 401 | Unauthorized | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+### [PUT] /api/v1/Entries/{id}
+**Aktualisiert einen Eintrag (für Nicht-Administratoren beschränkt auf eigene Einträge).**
+
+#### Parameters
+
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string (uuid) |
+
+#### Request Body
+
+| Benötigt | Schema |
+| -------- | ------ |
+|  Ja | **application/json**: [TimeEntryDto](#timeentrydto)<br>**text/json**: [TimeEntryDto](#timeentrydto)<br>**application/*+json**: [TimeEntryDto](#timeentrydto)<br> | **application/json**: [TimeEntryDto](#timeentrydto)<br>**text/json**: [TimeEntryDto](#timeentrydto)<br>**application/*+json**: [TimeEntryDto](#timeentrydto)<br> | **application/json**: [TimeEntryDto](#timeentrydto)<br>**text/json**: [TimeEntryDto](#timeentrydto)<br>**application/*+json**: [TimeEntryDto](#timeentrydto)<br> |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [TimeEntryDto](#timeentrydto)<br>**application/json**: [TimeEntryDto](#timeentrydto)<br>**text/json**: [TimeEntryDto](#timeentrydto)<br> |
+| 400 | Bad Request | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 401 | Unauthorized | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+---
+
+### [GET] /api/v1/ShouldTimes
+**Ruft eine Liste aller Sollzeiten ab.**
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ [ShouldTimeDto](#shouldtimedto) ]<br>**application/json**: [ [ShouldTimeDto](#shouldtimedto) ]<br>**text/json**: [ [ShouldTimeDto](#shouldtimedto) ]<br> |
+
+### [GET] /api/v1/ShouldTimes/{Id}
+**Ruft eine bestimmte Sollzeit ab.**
+
+#### Parameters
+
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string (uuid) |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ShouldTimeDto](#shouldtimedto)<br>**application/json**: [ShouldTimeDto](#shouldtimedto)<br>**text/json**: [ShouldTimeDto](#shouldtimedto)<br> |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+### [PUT] /api/v1/ShouldTimes/{Id}
+**Aktualisiert eine bestimmte Sollzeit.**
+
+#### Parameters
+
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string (uuid) |
+
+#### Request Body
+
+| Benötigt | Schema |
+| -------- | ------ |
+|  Ja | **application/json**: [ShouldTimeDto](#shouldtimedto)<br>**text/json**: [ShouldTimeDto](#shouldtimedto)<br>**application/*+json**: [ShouldTimeDto](#shouldtimedto)<br> | **application/json**: [ShouldTimeDto](#shouldtimedto)<br>**text/json**: [ShouldTimeDto](#shouldtimedto)<br>**application/*+json**: [ShouldTimeDto](#shouldtimedto)<br> | **application/json**: [ShouldTimeDto](#shouldtimedto)<br>**text/json**: [ShouldTimeDto](#shouldtimedto)<br>**application/*+json**: [ShouldTimeDto](#shouldtimedto)<br> |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ShouldTimeDto](#shouldtimedto)<br>**application/json**: [ShouldTimeDto](#shouldtimedto)<br>**text/json**: [ShouldTimeDto](#shouldtimedto)<br> |
+| 400 | Bad Request | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+### [DELETE] /api/v1/ShouldTimes/{id}
+**Löscht eine bestimmte Sollzeit.**
+
+#### Parameters
+
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string (uuid) |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 204 | No Content |  |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+---
+
+### [GET] /api/v1/Users
+**Ruft eine Liste aller Benutzer ab (nur für Administratoren).**
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [ [UserDto](#userdto) ]<br>**application/json**: [ [UserDto](#userdto) ]<br>**text/json**: [ [UserDto](#userdto) ]<br> |
+
+### [POST] /api/v1/Users
+**Erstellt einen neuen Benutzer (nur für Administratoren).**
+
+#### Request Body
+
+| Benötigt | Schema |
+| -------- | ------ |
+|  Ja | **application/json**: [UserDto](#userdto)<br>**text/json**: [UserDto](#userdto)<br>**application/*+json**: [UserDto](#userdto)<br> | **application/json**: [UserDto](#userdto)<br>**text/json**: [UserDto](#userdto)<br>**application/*+json**: [UserDto](#userdto)<br> | **application/json**: [UserDto](#userdto)<br>**text/json**: [UserDto](#userdto)<br>**application/*+json**: [UserDto](#userdto)<br> |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [UserDto](#userdto)<br>**application/json**: [UserDto](#userdto)<br>**text/json**: [UserDto](#userdto)<br> |
+| 400 | Bad Request | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 409 | Conflict | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+### [GET] /api/v1/Users/{id}
+**Es ruft die Informationen eines Benutzers ab (nur für Administratoren).**
+
+#### Parameters
+
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| Id | path |  | Ja | string |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [UserDto](#userdto)<br>**application/json**: [UserDto](#userdto)<br>**text/json**: [UserDto](#userdto)<br> |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+### [DELETE] /api/v1/Users/{id}
+**Löscht einen Benutzer anhand seiner ID (nur für Administratoren).**
+
+#### Parameters
+
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 204 | No Content |  |
+| 400 | Bad Request | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+### [PUT] /api/v1/Users/{id}
+**Aktualisiert die Informationen eines bestimmten Benutzers. Wenn der aktuelle Benutzer ein Administrator ist, kann er jedes Feld jedes Benutzers bearbeiten. Ist der Benutzer jedoch kein Administrator, kann er nur seine eigene Klassen-ID bearbeiten.**
+
+#### Parameters
+
+| Name | Ort | Beschreibung | Benötigt | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path |  | Ja | string |
+
+#### Request Body
+
+| Benötigt | Schema |
+| -------- | ------ |
+|  Ja | **application/json**: [UserDto](#userdto)<br>**text/json**: [UserDto](#userdto)<br>**application/*+json**: [UserDto](#userdto)<br> | **application/json**: [UserDto](#userdto)<br>**text/json**: [UserDto](#userdto)<br>**application/*+json**: [UserDto](#userdto)<br> | **application/json**: [UserDto](#userdto)<br>**text/json**: [UserDto](#userdto)<br>**application/*+json**: [UserDto](#userdto)<br> |
+
+#### Responses
+
+| Code | Beschreibung | Schema |
+| ---- | ----------- | ------ |
+| 200 | OK | **text/plain**: [UserDto](#userdto)<br>**application/json**: [UserDto](#userdto)<br>**text/json**: [UserDto](#userdto)<br> |
+| 400 | Bad Request | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+| 404 | Not Found | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
+
+---
+
+### [POST] /Account/PerformExternalLogin
+#### Request Body
+
+| Benötigt | Schema |
+| -------- | ------ |
+|  Nein | **multipart/form-data**: { **"provider"**: string, **"returnUrl"**: string }<br>**application/x-www-form-urlencoded**: { **"provider"**: string, **"returnUrl"**: string }<br> | **multipart/form-data**: { **"provider"**: string, **"returnUrl"**: string }<br>**application/x-www-form-urlencoded**: { **"provider"**: string, **"returnUrl"**: string }<br> |
+
+#### Responses
+
+| Code | Beschreibung |
+| ---- | ----------- |
+| 200 | OK |
+
+### [POST] /Account/Logout
+#### Request Body
+
+| Benötigt | Schema |
+| -------- | ------ |
+|  Nein | **multipart/form-data**: { **"returnUrl"**: string }<br>**application/x-www-form-urlencoded**: { **"returnUrl"**: string }<br> | **multipart/form-data**: { **"returnUrl"**: string }<br>**application/x-www-form-urlencoded**: { **"returnUrl"**: string }<br> |
+
+#### Responses
+
+| Code | Beschreibung |
+| ---- | ----------- |
+| 200 | OK |
+
+### [POST] /Account/Manage/LinkExternalLogin
+#### Request Body
+
+| Benötigt | Schema |
+| -------- | ------ |
+|  Nein | **multipart/form-data**: { **"provider"**: string }<br>**application/x-www-form-urlencoded**: { **"provider"**: string }<br> | **multipart/form-data**: { **"provider"**: string }<br>**application/x-www-form-urlencoded**: { **"provider"**: string }<br> |
+
+#### Responses
+
+| Code | Beschreibung |
+| ---- | ----------- |
+| 200 | OK |
+
+### [POST] /Account/Manage/DownloadPersonalData
+#### Responses
+
+| Code | Beschreibung |
+| ---- | ----------- |
+| 200 | OK |
+
+---
+### Schemas
+
+#### ActivityDescriptionDto
+
+| Name | Type | Beschreibung | Benötigt |
+| ---- | ---- | ----------- | -------- |
+| id | string (uuid) |  | Nein |
+| value | string |  | Nein |
+| favorite | boolean |  | Nein |
+
+#### ActivityTitleDto
+
+| Name | Type | Beschreibung | Benötigt |
+| ---- | ---- | ----------- | -------- |
+| id | string (uuid) |  | Nein |
+| value | string |  | Nein |
+| favorite | boolean |  | Nein |
+
+#### ClassDto
+
+| Name | Type | Beschreibung | Benötigt |
+| ---- | ---- | ----------- | -------- |
+| id | string (uuid) |  | Nein |
+| name | string |  | Nein |
+| shouldTimes | [ [ShouldTimeDto](#shouldtimedto) ] |  | Nein |
+
+#### DayOfWeek
+
+| Name | Type | Beschreibung | Benötigt |
+| ---- | ---- | ----------- | -------- |
+| DayOfWeek | integer |  |  |
+
+#### ProblemDetails
+
+| Name | Type | Beschreibung | Benötigt |
+| ---- | ---- | ----------- | -------- |
+| type | string |  | Nein |
+| title | string |  | Nein |
+| status | integer |  | Nein |
+| detail | string |  | Nein |
+| instance | string |  | Nein |
+
+#### ShouldTimeDto
+
+| Name | Type | Beschreibung | Benötigt |
+| ---- | ---- | ----------- | -------- |
+| id | string (uuid) |  | Nein |
+| classId | string (uuid) |  | Nein |
+| dayOfWeek | [DayOfWeek](#dayofweek) |  | Nein |
+| should | string (date-span) |  | Nein |
+
+#### TimeEntryDto
+
+| Name | Type | Beschreibung | Benötigt |
+| ---- | ---- | ----------- | -------- |
+| id | string (uuid) |  | Nein |
+| start | dateTime |  | Nein |
+| end | dateTime |  | Nein |
+| title | string |  | Nein |
+| Beschreibung | string |  | Nein |
+| username | string |  | Nein |
+| time | string (date-span) |  | Nein |
+| shouldTime | string (date-span) |  | Nein |
+| ovetime | string (date-span) |  | Nein |
+| sick | boolean |  | Nein |
+
+#### UserDto
+
+| Name | Type | Beschreibung | Benötigt |
+| ---- | ---- | ----------- | -------- |
+| id | string |  | Nein |
+| classId | string (uuid) |  | Nein |
+| userName | string |  | Nein |
+| normalizedUserName | string |  | Nein |
+| email | string |  | Nein |
+| normalizedEmail | string |  | Nein |
+| emailConfirmed | boolean |  | Nein |
+| password | string |  | Nein |
+| phoneNumber | string |  | Nein |
+| phoneNumberConfirmed | boolean |  | Nein |
+| twoFactorEnabled | boolean |  | Nein |
+| lockoutEnd | dateTime |  | Nein |
+| lockoutEnabled | boolean |  | Nein |
+| accessFailedCount | integer |  | Nein |

@@ -6,7 +6,7 @@ An ASP.NET Core Web API for tracking work time
 ---
 
 ### [GET] /api/v1/Activities/descriptions
-**Gets a list of all the descriptions owned by a user.**
+**Gets a list of all the descriptions owned by the user.**
 
 #### Responses
 
@@ -144,7 +144,7 @@ An ASP.NET Core Web API for tracking work time
 ---
 
 ### [GET] /api/v1/Classes
-**Gets a list containing all available classes**
+**Gets a list containing all available classes.**
 
 #### Responses
 
@@ -169,7 +169,7 @@ An ASP.NET Core Web API for tracking work time
 | 400 | Bad Request | **text/plain**: [ProblemDetails](#problemdetails)<br>**application/json**: [ProblemDetails](#problemdetails)<br>**text/json**: [ProblemDetails](#problemdetails)<br> |
 
 ### [GET] /api/v1/Classes/{id}
-**Gets a specific class**
+**Gets a specific class.**
 
 #### Parameters
 
