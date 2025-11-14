@@ -7,7 +7,6 @@ using System.Security.Claims;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Data.Jiffy.Models;
 using Zeiterfassungssoftware.Mapper;
-using Zeiterfassungssoftware.SharedData.Classes;
 using Zeiterfassungssoftware.SharedData.Times;
 
 namespace Zeiterfassungssoftware.Services
@@ -133,7 +132,8 @@ namespace Zeiterfassungssoftware.Services
             Entry.Id = Guid.NewGuid();
             Entry.UserId = UserId;
 
-            var ShouldTime = await _context.ShouldTimes.FirstOrDefaultAsync(e => e.DayOfWeek == DateTime.Now.DayOfWeek && e.ValidUntil > DateTime.Now);
+
+            var ShouldTime = await _context.ShouldTimes.FirstOrDefaultAsync(e => e.DayOfWeek == DateTime.Now.DayOfWeek && e.ValidUntil > DateTime.Now && e.ClassId == DbUser.ClassId);
             if ((ShouldTime is not null) && !EntryMapper.IsHoliday(DateTime.Now))
                 Entry.ShouldTimeId = ShouldTime.Id;
             else
