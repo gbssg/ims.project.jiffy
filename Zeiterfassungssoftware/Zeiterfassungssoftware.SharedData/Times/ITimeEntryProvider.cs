@@ -4,11 +4,11 @@
     {
         public bool IsLoaded { get; }
 
-        public void Add(TimeEntryDto Entry);
-		public Task Remove(TimeEntryDto Entry);
-        public Task<TimeEntryDto> GetEntryById(Guid Id);
+        public Task<TimeEntryDto> CreateEntry(TimeEntryDto entry);
+		public Task DeleteEntry(Guid id);
+        public Task<TimeEntryDto?> GetEntryById(Guid id);
         public List<TimeEntryDto> GetEntries();
-        public Task Update(TimeEntryDto Entry);
+        public Task<TimeEntryDto> UpdateEntry(Guid id, TimeEntryDto entry);
 
     }
 }

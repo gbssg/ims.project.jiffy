@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text;
 using Zeiterfassungssoftware.SharedData.Times;
+using System.Net;
 
 namespace Zeiterfassungssoftware.Client.Services
 {
@@ -43,26 +44,22 @@ namespace Zeiterfassungssoftware.Client.Services
 			}
 		}
 
-		public async void Add(TimeEntryDto Entry)
+		public async Task<TimeEntryDto> CreateEntry(TimeEntryDto entry)
 		{
-
-			string JsonData = JsonSerializer.Serialize(Entry);
-			var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
-
-			HttpResponseMessage Response = await HttpClient.PostAsync("", Content);
+			var Response = await HttpClient.PostAsJsonAsync("", entry);
 			
 			try
 			{
 				Response.EnsureSuccessStatusCode();
-				string ReponseContent = await Response.Content.ReadAsStringAsync();
+				var ReponseContent = await Response.Content.ReadAsStringAsync();
 				var ConfirmedEntry = JsonSerializer.Deserialize<TimeEntryDto>(ReponseContent, Options) ?? new();
-				Entry.Id = ConfirmedEntry.Id;
                 _timeEntries.Add(ConfirmedEntry);
+				return ConfirmedEntry;
 			}
-			catch (Exception e) { Console.WriteLine($"Failed to Send Entry: {e.Message}"); }
-
-			return;
-			
+			catch (Exception e) 
+			{
+				throw new InvalidDataException();
+			}
 		}
 
 		public List<TimeEntryDto> GetEntries()
@@ -70,47 +67,69 @@ namespace Zeiterfassungssoftware.Client.Services
 			return _timeEntries;
 		}
 
-		public async Task<TimeEntryDto> GetEntryById(Guid Id)
+		public async Task<TimeEntryDto?> GetEntryById(Guid id)
 		{
-			return await HttpClient.GetFromJsonAsync<TimeEntryDto>($"{Id}");
+			var TimeEntry = await HttpClient.GetFromJsonAsync<TimeEntryDto>($"{id}");
+
+			if (TimeEntry is null)
+				throw new KeyNotFoundException();
+
+            return TimeEntry;
 		}
 
 
-        public async Task Remove(TimeEntryDto Entry)
+        public async Task DeleteEntry(Guid id)
 		{
-			HttpResponseMessage Message = await HttpClient.DeleteAsync($"{Entry.Id}");
+			var Response = await HttpClient.DeleteAsync($"{id}");
 			
 			try
 			{
-				Message.EnsureSuccessStatusCode();
+                Response.EnsureSuccessStatusCode();
+				var Entry = _timeEntries.FirstOrDefault(e => e.Id == id);
 
-				Entry = _timeEntries.Where(e => e.Id == Entry.Id).FirstOrDefault();
 				if (Entry is not null)
 					_timeEntries.Remove(Entry);
-
-            } catch(Exception e)
+            } 
+			catch(Exception e)
 			{
-				Console.WriteLine(e.Message);
-			}
+				throw new KeyNotFoundException();
+            }
 		}
 
-        public async Task Update(TimeEntryDto Entry)
+        public async Task<TimeEntryDto> UpdateEntry(Guid id, TimeEntryDto entry)
         {
-			string JsonData = JsonSerializer.Serialize(Entry);
-			var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
-
-			HttpResponseMessage Response = await HttpClient.PatchAsync("", Content);
+			var Response = await HttpClient.PutAsJsonAsync("", entry);
 
 			try
 			{
 				Response.EnsureSuccessStatusCode();
-				_timeEntries[_timeEntries.IndexOf(_timeEntries.FirstOrDefault(e => e.Id == Entry.Id) ?? new())] = Entry;
+
+				var Body = await Response.Content.ReadAsStringAsync();
+				var ConfirmedEntry = JsonSerializer.Deserialize<TimeEntryDto>(Body);
+
+				if (ConfirmedEntry is null)
+					throw new Exception();
+
+
+				var Entry = _timeEntries.FirstOrDefault(e => e.Id == id);
+				if(Entry is null)
+				{
+					_timeEntries.Add(ConfirmedEntry);
+				}
+				else
+				{
+					var index = _timeEntries.IndexOf(Entry);
+					_timeEntries[index] = ConfirmedEntry;
+				}
+
+				return ConfirmedEntry;
             }
-			catch (Exception e) { Console.WriteLine($"Failed to Update Entry: {e.Message}"); }
-
-			return;
+			catch (Exception e) {
+				if (Response.StatusCode == HttpStatusCode.NotFound)
+					throw new KeyNotFoundException();
+				else
+					throw new InvalidDataException();
+			}
         }
-
-		
     }
 }
