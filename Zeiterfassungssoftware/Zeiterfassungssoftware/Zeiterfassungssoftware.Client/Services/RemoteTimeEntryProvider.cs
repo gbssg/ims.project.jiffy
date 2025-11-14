@@ -69,7 +69,7 @@ namespace Zeiterfassungssoftware.Client.Services
 
 		public async Task<TimeEntryDto?> GetEntryById(Guid id)
 		{
-			var TimeEntry = await HttpClient.GetFromJsonAsync<TimeEntryDto>($"{id}");
+			var TimeEntry = await HttpClient.GetFromJsonAsync<TimeEntryDto>(id.ToString());
 
 			if (TimeEntry is null)
 				throw new KeyNotFoundException();
@@ -80,7 +80,7 @@ namespace Zeiterfassungssoftware.Client.Services
 
         public async Task DeleteEntry(Guid id)
 		{
-			var Response = await HttpClient.DeleteAsync($"{id}");
+			var Response = await HttpClient.DeleteAsync(id.ToString());
 			
 			try
 			{
@@ -98,7 +98,7 @@ namespace Zeiterfassungssoftware.Client.Services
 
         public async Task<TimeEntryDto> UpdateEntry(Guid id, TimeEntryDto entry)
         {
-			var Response = await HttpClient.PutAsJsonAsync("", entry);
+			var Response = await HttpClient.PutAsJsonAsync(id.ToString(), entry);
 
 			try
 			{
