@@ -1,6 +1,8 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net;
+using System.Net.Http.Json;
 using System.Text.Json;
 using Zeiterfassungssoftware.SharedData.ShouldTimes;
+using Zeiterfassungssoftware.SharedData.Times;
 
 namespace Zeiterfassungssoftware.Client.Services
 {
@@ -28,50 +30,93 @@ namespace Zeiterfassungssoftware.Client.Services
             _shouldTimes = await HttpClient.GetFromJsonAsync<List<ShouldTimeDto>>("") ?? new();
         }
 
-        public void Add(ShouldTimeDto ShouldTime)
+        public async Task<ShouldTimeDto> CreateShouldTime(ShouldTimeDto shouldTime)
         {
-            var Result = HttpClient.PostAsJsonAsync("", ShouldTime).GetAwaiter().GetResult();
+            var Response = await HttpClient.PostAsJsonAsync("", shouldTime);
 
-            if(!Result.IsSuccessStatusCode)
-                throw new Exception("Failed to add new shouldtime");
-            
-
-            var Response = Result.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            var ConfirmedShouldTime = JsonSerializer.Deserialize<ShouldTimeDto>(Response, Options);
-            _shouldTimes.Add(ConfirmedShouldTime);
+            try
+            {
+                Response.EnsureSuccessStatusCode();
+                var ReponseContent = await Response.Content.ReadAsStringAsync();
+                var ConfirmedShouldTime = JsonSerializer.Deserialize<ShouldTimeDto>(ReponseContent, Options) ?? new();
+                
+                _shouldTimes.Add(ConfirmedShouldTime);
+                return ConfirmedShouldTime;
+            }
+            catch (Exception e)
+            {
+                throw new InvalidDataException();
+            }
         }
 
-        public ShouldTimeDto GetShouldTimeById(ShouldTimeDto Id)
+        public async Task<ShouldTimeDto> UpdateShouldTime(Guid id, ShouldTimeDto souldTime)
         {
-            var ShouldTime = HttpClient.GetFromJsonAsync<ShouldTimeDto>($"{Id}").GetAwaiter().GetResult() ?? new();
+            var Response = await HttpClient.PutAsJsonAsync("", souldTime);
+
+            try
+            {
+                Response.EnsureSuccessStatusCode();
+
+                var Body = await Response.Content.ReadAsStringAsync();
+                var ConfirmedShouldTime = JsonSerializer.Deserialize<ShouldTimeDto>(Body);
+
+                if (ConfirmedShouldTime is null)
+                    throw new Exception();
+
+
+                var Entry = _shouldTimes.FirstOrDefault(e => e.Id == id);
+                if (Entry is null)
+                {
+                    _shouldTimes.Add(ConfirmedShouldTime);
+                }
+                else
+                {
+                    var index = _shouldTimes.IndexOf(Entry);
+                    _shouldTimes[index] = ConfirmedShouldTime;
+                }
+
+                return ConfirmedShouldTime;
+            }
+            catch (Exception e)
+            {
+                if (Response.StatusCode == HttpStatusCode.NotFound)
+                    throw new KeyNotFoundException();
+                else
+                    throw new InvalidDataException();
+            }
+        }
+
+        public async Task DeleteShouldTime(Guid id)
+        {
+            var Response = await HttpClient.DeleteAsync(id.ToString());
+
+            try
+            {
+                Response.EnsureSuccessStatusCode();
+                var ShouldTime = _shouldTimes.FirstOrDefault(e => e.Id == id);
+
+                if (ShouldTime is not null)
+                    _shouldTimes.Remove(ShouldTime);
+            }
+            catch (Exception e)
+            {
+                throw new KeyNotFoundException();
+            }
+        }
+
+        public async Task<ShouldTimeDto> GetShouldTimeById(Guid id)
+        {
+            var ShouldTime = await HttpClient.GetFromJsonAsync<ShouldTimeDto>(id.ToString());
+
+            if (ShouldTime is null)
+                throw new KeyNotFoundException();
+
             return ShouldTime;
         }
 
         public List<ShouldTimeDto> GetShouldTimes()
         {
             return _shouldTimes;
-        }
-
-        public void Remove(ShouldTimeDto ShouldTime)
-        {
-            var Result = HttpClient.DeleteAsync($"{ShouldTime.Id}").GetAwaiter().GetResult();
-
-            if (!Result.IsSuccessStatusCode)
-                throw new Exception("Failed to delete shouldtime");
-            
-            _shouldTimes.Remove(ShouldTime);
-        }
-
-        public async Task Update(ShouldTimeDto ShouldTime)
-        {
-            var Result = await HttpClient.PutAsJsonAsync($"{ShouldTime.Id}", ShouldTime);
-
-            if (!Result.IsSuccessStatusCode)
-                throw new Exception("Failed to update shouldtime");
-            
-            var Response = await Result.Content.ReadAsStringAsync();
-            var UpdatedShouldTime = JsonSerializer.Deserialize<ShouldTimeDto>(Response, Options);
-            _shouldTimes[_shouldTimes.IndexOf(ShouldTime)] = UpdatedShouldTime ?? new();
         }
     }
 }
