@@ -3,11 +3,12 @@
     public interface IClassProvider
     {
         public bool IsLoaded { get; set; }
-        public void Add(ClassDto Class);
-        public void Remove(ClassDto Entry);
-        public Task<ClassDto> GetClassById(Guid Id);
+
+        public Task<ClassDto> CreateClass(ClassDto @class);
+        public Task<ClassDto> UpdateClass(Guid id, ClassDto @class);
+        public Task DeleteClass(Guid id);
+        public Task<ClassDto> GetClassById(Guid id);
         public List<ClassDto> GetClasses();
-        public Task Update(ClassDto Class);
         public Task<ClassDto> GetOwnClass();
 
     }

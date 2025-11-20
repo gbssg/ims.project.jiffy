@@ -1,7 +1,9 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using Zeiterfassungssoftware.SharedData.Classes;
+using Zeiterfassungssoftware.SharedData.ShouldTimes;
 
 namespace Zeiterfassungssoftware.Client.Services
 {
@@ -15,88 +17,116 @@ namespace Zeiterfassungssoftware.Client.Services
         {
             BaseAddress = new Uri("https://localhost:7099/api/v1/classes/")
         };
+
         public bool IsLoaded { get; set; }
         public List<ClassDto> _classes { get; set; } = new();
         
         public RemoteClassProvider()
         {
-            LoadData();
+            LoadClasses();
         }
 
-        public async void LoadData()
+        public async void LoadClasses()
         {
             _classes = await HttpClient.GetFromJsonAsync<List<ClassDto>>("") ?? new();
-            IsLoaded = true;
         }
 
-        public async void Add(ClassDto Class)
+        public async Task<ClassDto> CreateClass(ClassDto @class)
         {
-            string JsonData = JsonSerializer.Serialize(Class);
-            var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
+            var Response = await HttpClient.PostAsJsonAsync("", @class);
 
             try
             {
-                HttpResponseMessage Response = await HttpClient.PostAsync("", Content);
                 Response.EnsureSuccessStatusCode();
-                string ReponseContent = await Response.Content.ReadAsStringAsync();
-                Class = JsonSerializer.Deserialize<ClassDto>(ReponseContent, Options) ?? new();
-                _classes.Add(Class);
-            }
-            catch (Exception e) { 
-                Console.WriteLine(e.Message);
-            }
+                var ReponseContent = await Response.Content.ReadAsStringAsync();
+                var ConfirmedClass = JsonSerializer.Deserialize<ClassDto>(ReponseContent, Options) ?? new();
 
-            return;
+                _classes.Add(ConfirmedClass);
+                return ConfirmedClass;
+            }
+            catch (Exception e)
+            {
+                throw new InvalidDataException();
+            }
+        }
+
+        public async Task<ClassDto> UpdateClass(Guid id, ClassDto @class)
+        {
+            var Response = await HttpClient.PutAsJsonAsync("", @class);
+
+            try
+            {
+                Response.EnsureSuccessStatusCode();
+
+                var Body = await Response.Content.ReadAsStringAsync();
+                var ConfirmedClass = JsonSerializer.Deserialize<ClassDto>(Body);
+
+                if (ConfirmedClass is null)
+                    throw new Exception();
+
+                var Class = _classes.FirstOrDefault(e => e.Id == id);
+                if (Class is null)
+                {
+                    _classes.Add(ConfirmedClass);
+                }
+                else
+                {
+                    var index = _classes.IndexOf(Class);
+                    _classes[index] = ConfirmedClass;
+                }
+
+                return ConfirmedClass;
+            }
+            catch (Exception e)
+            {
+                if (Response.StatusCode == HttpStatusCode.NotFound)
+                    throw new KeyNotFoundException();
+                else
+                    throw new InvalidDataException();
+            }
+        }
+
+        public async Task DeleteClass(Guid id)
+        {
+            var Response = await HttpClient.DeleteAsync(id.ToString());
+
+            try
+            {
+                Response.EnsureSuccessStatusCode();
+                var Class = _classes.FirstOrDefault(e => e.Id == id);
+
+                if (Class is not null)
+                    _classes.Remove(Class);
+            }
+            catch (Exception e)
+            {
+                throw new KeyNotFoundException();
+            }
+        }
+
+        public async Task<ClassDto> GetClassById(Guid id)
+        {
+            var Class = await HttpClient.GetFromJsonAsync<ClassDto>(id.ToString());
+
+            if (Class is null)
+                throw new KeyNotFoundException();
+
+            return Class;
         }
 
         public List<ClassDto> GetClasses()
         {
             return _classes;
         }
-        public async Task<ClassDto> GetClassById(Guid Id)
-        {
-            return await HttpClient.GetFromJsonAsync<ClassDto>($"{Id}");
-        }
-
-        public async void Remove(ClassDto Class)
-        {
-
-            try
-            {
-                HttpResponseMessage Message = await HttpClient.DeleteAsync($"{Class.Id}");
-                Message.EnsureSuccessStatusCode();
-
-                Class = _classes.FirstOrDefault(e => e.Id == Class.Id);
-                if (Class is not null)
-                    _classes.Remove(Class);
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-
-        public async Task Update(ClassDto Class)
-        {
-            string JsonData = JsonSerializer.Serialize(Class);
-            var Content = new StringContent(JsonData, Encoding.UTF8, "application/json");
-
-            HttpResponseMessage Response = await HttpClient.PatchAsync($"{Class.Id}", Content);
-
-            try
-            {
-                Response.EnsureSuccessStatusCode();
-                _classes[_classes.IndexOf(_classes.FirstOrDefault(e => e.Id == Class.Id) ?? new())] = Class;
-            }
-            catch (Exception e) { Console.WriteLine($"Failed to Update Class: {e.Message}"); }
-
-            return;
-        }
 
         public async Task<ClassDto> GetOwnClass()
         {
-            return await HttpClient.GetFromJsonAsync<ClassDto>($"own") ?? new();
+            var Class = await HttpClient.GetFromJsonAsync<ClassDto>("own");
+
+            if (Class is null)
+                throw new KeyNotFoundException();
+
+            return Class;
         }
     }
 }
