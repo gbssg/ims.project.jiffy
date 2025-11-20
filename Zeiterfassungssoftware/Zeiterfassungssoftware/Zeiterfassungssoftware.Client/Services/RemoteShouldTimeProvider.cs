@@ -64,14 +64,14 @@ namespace Zeiterfassungssoftware.Client.Services
                     throw new Exception();
 
 
-                var Entry = _shouldTimes.FirstOrDefault(e => e.Id == id);
-                if (Entry is null)
+                var ShouldTime = _shouldTimes.FirstOrDefault(e => e.Id == id);
+                if (ShouldTime is null)
                 {
                     _shouldTimes.Add(ConfirmedShouldTime);
                 }
                 else
                 {
-                    var index = _shouldTimes.IndexOf(Entry);
+                    var index = _shouldTimes.IndexOf(ShouldTime);
                     _shouldTimes[index] = ConfirmedShouldTime;
                 }
 
