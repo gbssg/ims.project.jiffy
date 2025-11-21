@@ -17,7 +17,7 @@ namespace Zeiterfassungssoftware.SharedData.Times
         
         public TimeSpan Time => (End != null ? End - Start : DateTime.Now-Start).Value;
         public TimeSpan ShouldTime { get; set; }
-        public TimeSpan Ovetime => Time - ShouldTime;
+        public TimeSpan Overtime => Time - ShouldTime;
 
         public bool Sick => Title.Equals("Krank");
 
