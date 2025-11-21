@@ -52,7 +52,7 @@ namespace Zeiterfassungssoftware.Client.Services
 
         public async Task<ClassDto> UpdateClass(Guid id, ClassDto @class)
         {
-            var Response = await HttpClient.PutAsJsonAsync("", @class);
+            var Response = await HttpClient.PutAsJsonAsync(id.ToString(), @class);
 
             try
             {

@@ -51,7 +51,7 @@ namespace Zeiterfassungssoftware.Client.Services
 
         public async Task<ShouldTimeDto> UpdateShouldTime(Guid id, ShouldTimeDto souldTime)
         {
-            var Response = await HttpClient.PutAsJsonAsync("", souldTime);
+            var Response = await HttpClient.PutAsJsonAsync(id.ToString(), souldTime);
 
             try
             {
