@@ -66,7 +66,7 @@ namespace Zeiterfassungssoftware.Client.Services
                 var ReponseContent = await Response.Content.ReadAsStringAsync();
                 var ConfirmedDescription = JsonSerializer.Deserialize<ActivityDescriptionDto>(ReponseContent, Options) ?? new();
 
-                _activityDescriptionss.Add(ConfirmedDescription);
+                _activityDescriptions.Add(ConfirmedDescription);
                 return ConfirmedDescription;
             }
             catch (Exception e)
