@@ -70,7 +70,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 					Description = this.Description,
 				};
 
-				TimeEntrySource.Add(Entry);
+				TimeEntrySource.CreateEntry(Entry);
 				
                 ResetValues();
                 return;
@@ -85,8 +85,8 @@ namespace Zeiterfassungssoftware.Client.Pages
 						Value = ActivityTitle,
 					};
 
-					if (!ActivitySource.Contains(Title))
-						ActivitySource.Add(Title);
+                    if (!ActivitySource.GetTitles().Any(e => e.Value == ActivityTitle))
+                        ActivitySource.CreateTitle(Title);
 				}
 
 
@@ -97,8 +97,8 @@ namespace Zeiterfassungssoftware.Client.Pages
                         Value = ActivityDescription,
                     };
 
-                    if (!ActivitySource.Contains(Description))
-						ActivitySource.Add(Description);
+                    if (!ActivitySource.GetDescriptions().Any(e => e.Value == ActivityDescription))
+						ActivitySource.CreateDescription(Description);
 				}
 
 				Timer = new System.Threading.Timer(UpdateTimer, null, 0, 1000);
@@ -109,7 +109,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 					Description = this.Description,
 				};
 
-				TimeEntrySource.Add(CurrentEntry);
+				TimeEntrySource.CreateEntry(CurrentEntry);
             }
 			else if (CurrentEntry != null)
 			{
@@ -118,9 +118,9 @@ namespace Zeiterfassungssoftware.Client.Pages
 
 
 				if (CurrentEntry.Time < new TimeSpan(0, 0, 1))
-					TimeEntrySource.Remove(CurrentEntry);
+					TimeEntrySource.CreateEntry(CurrentEntry);
 				else
-					TimeEntrySource.Update(CurrentEntry);
+					TimeEntrySource.UpdateEntry(CurrentEntry.Id, CurrentEntry);
 
 				ResetValues();
 			}

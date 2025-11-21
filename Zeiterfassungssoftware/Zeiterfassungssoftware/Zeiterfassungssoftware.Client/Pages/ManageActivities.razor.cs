@@ -7,8 +7,8 @@ namespace Zeiterfassungssoftware.Client.Pages
         
         private string ActivityTitle { get; set; } = string.Empty;
         private string ActivityDescription { get; set; } = string.Empty;
-        private ActivityTitleDto SelectedTitle => ActivitySource.GetActivityTitles().FirstOrDefault(e => string.Equals(e.Id.ToString(), ActivityTitle)) ?? new ActivityTitleDto();
-        private ActivityDescriptionDto SelectedDescription => ActivitySource.GetActivityDescriptions().FirstOrDefault(e => string.Equals(e.Id.ToString(), ActivityDescription)) ?? new ActivityDescriptionDto();
+        private ActivityTitleDto SelectedTitle => ActivitySource.GetTitles().FirstOrDefault(e => string.Equals(e.Id.ToString(), ActivityTitle)) ?? new ActivityTitleDto();
+        private ActivityDescriptionDto SelectedDescription => ActivitySource.GetDescriptions().FirstOrDefault(e => string.Equals(e.Id.ToString(), ActivityDescription)) ?? new ActivityDescriptionDto();
         private ActivityTitleDto? EditingTitle { get; set; }
         private ActivityDescriptionDto? EditingDescription { get; set; }
 
@@ -28,7 +28,14 @@ namespace Zeiterfassungssoftware.Client.Pages
 
         public void Delete(object Obj)
         {
-            ActivitySource.Remove(Obj);
+            if (Obj is ActivityDescriptionDto Description)
+            {
+               ActivitySource.DeleteDescription(Description.Id);
+            } 
+            else if(Obj is ActivityTitleDto Title)
+            {
+                ActivitySource.DeleteTitle(Title.Id);
+            }
         }
 
         public void Edit(object Obj)
@@ -71,27 +78,27 @@ namespace Zeiterfassungssoftware.Client.Pages
             {
                 if(!Title.Id.Equals(EditingTitle?.Id))
                 {
-                    Title = ActivitySource.GetActivityTitles().FirstOrDefault(e => e.Id.Equals(EditingTitle?.Id));
+                    Title = ActivitySource.GetTitles().FirstOrDefault(e => e.Id.Equals(EditingTitle?.Id));
                     if (Title is null)
                         return;
                 }
                 Title.Value = EditingTitle?.Value ?? string.Empty;
                 EditingTitle = null;
-                ActivitySource.Update(Title);
+                ActivitySource.UpdateTitle(Title.Id, Title);
             }
 
             if (Obj is ActivityDescriptionDto Description)
             {
                 if (!Description.Id.Equals(EditingDescription?.Id))
                 {
-                    Description = ActivitySource.GetActivityDescriptions().FirstOrDefault(e => e.Id.Equals(EditingDescription.Id));
+                    Description = ActivitySource.GetDescriptions().FirstOrDefault(e => e.Id.Equals(EditingDescription.Id));
                     if (Description is null)
                         return;
                 }
 
                 Description.Value = EditingDescription?.Value ?? string.Empty;
                 EditingDescription = null;
-                ActivitySource.Update(Description);
+                ActivitySource.UpdateDescription(Description.Id, Description);
             }
         }
 
@@ -101,14 +108,14 @@ namespace Zeiterfassungssoftware.Client.Pages
             if(Obj is ActivityDescriptionDto Description)
             {
                 Description.Favorite = !Description.Favorite;
-                ActivitySource.Update(Description);
+                ActivitySource.UpdateDescription(Description.Id, Description);
                 return;
             }
 
             if (Obj is ActivityTitleDto Title)
             {
                 Title.Favorite = !Title.Favorite;
-                ActivitySource.Update(Title);
+                ActivitySource.UpdateTitle(Title.Id, Title);
                 return;
             }
         }

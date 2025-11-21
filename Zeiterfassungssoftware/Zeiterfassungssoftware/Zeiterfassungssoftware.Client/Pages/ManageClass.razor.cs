@@ -28,7 +28,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 
         public void UpdateClicked()
         {
-            UserSource.UpdateClass(SelectedClass);
+            //UserSource.UpdateUser(USer.Id, SelectedClass);
         }
 
         public void UpdateTimer(object? State)

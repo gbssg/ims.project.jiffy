@@ -53,7 +53,7 @@ namespace Zeiterfassungssoftware.Client.Pages
         private void SaveChanges()
         {
             UpdateEntry();
-            TimeEntrySource.Update(Entry);
+            TimeEntrySource.UpdateEntry(Entry.Id, Entry);
             Navigation.NavigateTo("/history");
         }
 
@@ -62,7 +62,7 @@ namespace Zeiterfassungssoftware.Client.Pages
             if (Entry is null)
                 return;
 
-            await TimeEntrySource.Remove(Entry);
+            await TimeEntrySource.DeleteEntry(Entry.Id);
 
             Navigation.NavigateTo("/history");
         }

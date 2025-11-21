@@ -16,7 +16,7 @@
         <div class="activity-page-body">
             <p class="activity-edit-title">Titles</p>
             <select style="@((EditingTitle is null) ? "" : "height: calc(36vh - 30px)")" class="activity-select-list" size="5" @bind="ActivityTitle">
-                @foreach (var Activity in ActivitySource.GetActivityTitles().OrderByDescending(e => e.Favorite))
+                @foreach (var Activity in ActivitySource.GetTitles().OrderByDescending(e => e.Favorite))
                 {
                     <option value="@Activity">
                         @if (Activity.Favorite)
@@ -69,7 +69,7 @@
 
             <p class="activity-edit-title">Descriptions</p>
             <select style="@((EditingDescription is null) ? "" : "height: calc(36vh - 111px)")" class="activity-select-list" size="5" @bind="ActivityDescription">
-                @foreach (var Activity in ActivitySource.GetActivityDescriptions().OrderByDescending(e => e.Favorite))
+                @foreach (var Activity in ActivitySource.GetDescriptions().OrderByDescending(e => e.Favorite))
                 {
                     <option value="@Activity">
                         @if (Activity.Favorite)

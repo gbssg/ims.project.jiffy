@@ -35,11 +35,11 @@ namespace Zeiterfassungssoftware.Client.Pages
         {
             if (SelectedGuid.Equals(Guid.Empty))
             {
-                ClassSource.Add(SelectedClass);
+                ClassSource.CreateClass(SelectedClass);
 
                 foreach (var ShouldTime in SelectedClass.ShouldTimes)
                 {
-                    ShouldTimeSource.Add(ShouldTime);
+                    ShouldTimeSource.CreateShouldTime(ShouldTime);
                 }
 
                 SelectedClassChanged(new ChangeEventArgs()
@@ -49,7 +49,7 @@ namespace Zeiterfassungssoftware.Client.Pages
             }
             else
             {
-                ClassSource.Update(SelectedClass);
+                ClassSource.UpdateClass(SelectedClass.Id, SelectedClass);
             }
         }
 
@@ -57,10 +57,10 @@ namespace Zeiterfassungssoftware.Client.Pages
         {
             foreach (var ShouldTime in SelectedClass.ShouldTimes)
             {
-                ShouldTimeSource.Remove(ShouldTime);
+                ShouldTimeSource.DeleteShouldTime(ShouldTime.Id);
             }
 
-            ClassSource.Remove(SelectedClass);
+            ClassSource.DeleteClass(SelectedClass.Id);
 
             SelectedClassChanged(new ChangeEventArgs()
             {
