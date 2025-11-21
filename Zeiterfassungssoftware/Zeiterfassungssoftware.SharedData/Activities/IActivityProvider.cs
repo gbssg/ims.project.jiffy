@@ -4,12 +4,19 @@
 	{
 		public bool IsLoaded { get; }
 
-		public void Remove(object Obj);
-		public void Add(object Obj);
-		public bool Contains(object Obj);
-        public Task<object> Update(object Obj);
+		public Task DeleteDescription(Guid id);
+		public Task<ActivityDescriptionDto> CreateDescription(ActivityDescriptionDto activityDescription);
+        public Task<ActivityDescriptionDto> UpdateDescription(Guid id, ActivityDescriptionDto activityDescription);
+		public Task<ActivityDescriptionDto> GetDescriptionById(Guid id);
+        public List<ActivityDescriptionDto> GetDescriptions();
 
-        public List<ActivityDescriptionDto> GetActivityDescriptions();
-		public List<ActivityTitleDto> GetActivityTitles();
-	}
+
+
+        public Task DeleteTitle(Guid id);
+        public Task<ActivityTitleDto> CreateTitle(ActivityTitleDto activityTitle);
+        public Task<ActivityTitleDto> UpdateTitle(Guid id, ActivityTitleDto activityTitle);
+        public Task<ActivityTitleDto> GetTitleById(Guid id);
+        public List<ActivityTitleDto> GetTitles();
+
+    }
 }
