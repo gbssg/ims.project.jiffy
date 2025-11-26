@@ -31,7 +31,7 @@ Speichert Claims, die einer bestimmten Rolle zugeordnet sind.
 | Name       | Typ           | Schlüssel   | Beschreibung |
 |------------|---------------|-------------|--------------|
 | Id         | int           | Primär      | -            |
-| RoleId     | nvarchar(450) | Roles | -            |
+| RoleId     | nvarchar(450) | Roles       | -            |
 | ClaimType  | nvarchar(MAX) | -           | -            |
 | ClaimValue | nvarchar(MAX) | -           | -            |
 

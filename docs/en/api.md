@@ -546,7 +546,7 @@ An ASP.NET Core Web API for tracking work time
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
-| DayOfWeek | integer |  |  |
+| DayOfWeek | integer | Weekday (0 = Sunday, 1 = Monday, ...) |  |
 
 #### ProblemDetails
 
@@ -578,9 +578,7 @@ An ASP.NET Core Web API for tracking work time
 | description | string |  | No |
 | username | string |  | No |
 | time | string (date-span) |  | No |
-| shouldTime | string (date-span) |  | No |
-| ovetime | string (date-span) |  | No |
-| sick | boolean |  | No |
+| shouldTime | string (date-span) | Should time for that day | No |
 
 #### UserDto
 

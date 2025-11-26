@@ -546,7 +546,7 @@ Eine ASP.NET Core Web-API zur Erfassung der Arbeitszeit
 
 | Name | Type | Beschreibung | Benötigt |
 | ---- | ---- | ----------- | -------- |
-| DayOfWeek | integer |  |  |
+| DayOfWeek | integer | Wochentag (0 = Sonntag, 1 = Montag, ...) |  |
 
 #### ProblemDetails
 
@@ -564,8 +564,8 @@ Eine ASP.NET Core Web-API zur Erfassung der Arbeitszeit
 | ---- | ---- | ----------- | -------- |
 | id | string (uuid) |  | Nein |
 | classId | string (uuid) |  | Nein |
-| dayOfWeek | [DayOfWeek](#dayofweek) | | Nein |
-| should | string (date-span) |  | Nein |
+| dayOfWeek | [DayOfWeek](#dayofweek) |  | Nein |
+| should | string (date-span) | Erwartete Arbeitszeit an diesem Tag | Nein |
 
 #### TimeEntryDto
 
@@ -575,11 +575,10 @@ Eine ASP.NET Core Web-API zur Erfassung der Arbeitszeit
 | start | dateTime |  | Nein |
 | end | dateTime |  | Nein |
 | title | string |  | Nein |
-| Description | string |  | Nein |
+| description | string |  | Nein |
 | username | string |  | Nein |
 | time | string (date-span) |  | Nein |
-| shouldTime | string (date-span) |  | Nein |
-| sick | boolean |  | Nein |
+| shouldTime | string (date-span) | Soll-Arbeitszeit für diesen Tag | Nein |
 
 #### UserDto
 
