@@ -25,9 +25,10 @@ namespace Zeiterfassungssoftware.Client.Services
             LoadShouldTimes();
         }
 
-        public async Task LoadShouldTimes()
+        public async void LoadShouldTimes()
         {
             _shouldTimes = await HttpClient.GetFromJsonAsync<List<ShouldTimeDto>>("") ?? new();
+            IsLoaded = true;
         }
 
         public async Task<ShouldTimeDto> CreateShouldTime(ShouldTimeDto shouldTime)

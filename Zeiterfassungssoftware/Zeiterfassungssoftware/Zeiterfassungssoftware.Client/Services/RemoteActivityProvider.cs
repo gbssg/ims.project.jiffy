@@ -36,6 +36,7 @@ namespace Zeiterfassungssoftware.Client.Services
 		{
 			_activityTitles = await HttpClient.GetFromJsonAsync<List<ActivityTitleDto>>("titles") ?? new();
 			_activityDescriptions = await HttpClient.GetFromJsonAsync<List<ActivityDescriptionDto>>("descriptions") ?? new();
+            IsLoaded = true;
 		}
 
         public async Task DeleteDescription(Guid id)

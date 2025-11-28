@@ -28,7 +28,7 @@ namespace Zeiterfassungssoftware.Client.Services
 			LoadEntries();
 		}
 
-		public async Task LoadEntries()
+		public async void LoadEntries()
 		{
 			int i = 0;
 			while(true)
@@ -40,6 +40,7 @@ namespace Zeiterfassungssoftware.Client.Services
 					break;
 
                 _timeEntries.AddRange(Entries);
+                IsLoaded = true;
                 i++;
 			}
 		}

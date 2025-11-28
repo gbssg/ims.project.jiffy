@@ -29,6 +29,7 @@ namespace Zeiterfassungssoftware.Client.Services
         public async void LoadClasses()
         {
             _classes = await HttpClient.GetFromJsonAsync<List<ClassDto>>("") ?? new();
+            IsLoaded = true;
         }
 
         public async Task<ClassDto> CreateClass(ClassDto @class)
