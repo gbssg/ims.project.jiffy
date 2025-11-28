@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Mapper;
+using Zeiterfassungssoftware.SharedData.Classes;
 using Zeiterfassungssoftware.SharedData.ShouldTimes;
 using Zeiterfassungssoftware.SharedData.Times;
 
@@ -77,6 +78,27 @@ namespace Zeiterfassungssoftware.Controller
             return Ok(ShouldTimeMapper.ToDTO(NewShouldTime));
         }
 
+
+        /// <summary>
+        /// Creates a new shouldtime
+        /// </summary>
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> CreateShouldTime([FromBody] ShouldTimeDto shouldTime)
+        {
+            if (!ShouldTimeMapper.ValidateDto(shouldTime))
+                return BadRequest("Invalid data");
+
+            var ShouldTime = ShouldTimeMapper.FromDTO(shouldTime);
+            ShouldTime.Id = Guid.NewGuid();
+            ShouldTime.ValidUntil = new DateTime(9999, 12, 31, 23, 59, 59);
+
+            _context.ShouldTimes.Add(ShouldTime);
+            await _context.SaveChangesAsync();
+
+            return Ok(ShouldTimeMapper.ToDTO(ShouldTime));
+        }
 
         /// <summary>
         /// Deletes a specific shouldtime.
