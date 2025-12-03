@@ -9,7 +9,7 @@
 <PageTitle>Time</PageTitle>
 
 <AuthorizeView>
-	@if(ActivitySource.IsLoaded)
+	@if(TimeEntrySource.IsLoaded)
 	{
 		
 		<div class="timepage-body">
@@ -18,23 +18,27 @@
 			</div>
 
 
-			@if (ActivitySource != null && !Started)
+			@if (!Started)
 			{
 				<div class="centered-div-flex">
 					<select class="activity-select toprounded" @bind="ActivityTitleSelect">
 						<option>@NEW_ACTIVITY_TITLE</option>
 						<option>Krank</option>
-						@foreach (var Activity in ActivitySource.GetTitles().OrderByDescending(e => e.Favorite))
+
+						@if (ActivitySource.IsLoaded)
 						{
-							<option value="@Activity.Value">
-								<div style="width: 100%;">
-									@if (Activity.Favorite)
-									{
-										<p>&starf; </p>
-									}
-									<p>@Activity.Value</p>
-								</div>
-							</option>
+							@foreach (var Activity in ActivitySource.GetTitles().OrderByDescending(e => e.Favorite))
+							{
+								<option value="@Activity.Value">
+									<div style="width: 100%;">
+										@if (Activity.Favorite)
+										{
+											<p>&starf; </p>
+										}
+										<p>@Activity.Value</p>
+									</div>
+								</option>
+							}
 						}
 					</select>
 				</div>
@@ -44,23 +48,25 @@
 				<div class="centered-div-flex">
 					<select @bind="ActivityDescriptionSelect" class="activity-select @(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "" : "bottomrounded")">
 						<option>@NEW_ACTIVITY_DESCRIPTION</option>
-						@foreach (var Activity in ActivitySource.GetDescriptions().OrderByDescending(e => e.Favorite))
+						@if (ActivitySource.IsLoaded)
 						{
-							<option value="@Activity.Value">
-								<div style="width: 100%;">
-									@if (Activity.Favorite)
-									{
-										<p>&starf; </p>
-									}
-									<p>@Activity.Value</p>
-								</div>
-							</option>
+							@foreach (var Activity in ActivitySource.GetDescriptions().OrderByDescending(e => e.Favorite))
+							{
+								<option value="@Activity.Value">
+									<div style="width: 100%;">
+										@if (Activity.Favorite)
+										{
+											<p>&starf; </p>
+										}
+										<p>@Activity.Value</p>
+									</div>
+								</option>
+							}
 						}
 					</select>
 				</div>
 
 				<TextField Style="height: 90px;" Class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "textfield activity-textfield bottomrounded" : "invisible")" PlaceHolder="Activity Description..." @bind-Value="@ActivityDescription" Multiline="true" />
-
 			}
 			else
 			{
@@ -70,32 +76,7 @@
 	}
 	else
 	{
-		<div class="vertical-center">
-			<div class="centered-div-flex">
-				<div class="loader">
-					<div class="box box-1">
-						<div class="side-left"></div>
-						<div class="side-right"></div>
-						<div class="side-top"></div>
-					</div>
-					<div class="box box-2">
-						<div class="side-left"></div>
-						<div class="side-right"></div>
-						<div class="side-top"></div>
-					</div>
-					<div class="box box-3">
-						<div class="side-left"></div>
-						<div class="side-right"></div>
-						<div class="side-top"></div>
-					</div>
-					<div class="box box-4">
-						<div class="side-left"></div>
-						<div class="side-right"></div>
-						<div class="side-top"></div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<Throbber/>
 	}
 	
 </AuthorizeView>
