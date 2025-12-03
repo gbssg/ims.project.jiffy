@@ -133,11 +133,11 @@ namespace Zeiterfassungssoftware.Services
             Entry.UserId = UserId;
 
 
-            var ShouldTime = await _context.ShouldTimes.FirstOrDefaultAsync(e => e.DayOfWeek == DateTime.Now.DayOfWeek && e.ValidUntil > DateTime.Now && e.ClassId == DbUser.ClassId);
+            var ShouldTimes = await _context.ShouldTimes.Where(e => e.ValidUntil > DateTime.Now && e.ClassId == DbUser.ClassId).ToListAsync();
+            var ShouldTime = ShouldTimes.FirstOrDefault(e => e.DayOfWeek == DateTime.Now.DayOfWeek);
+
             if ((ShouldTime is not null) && !EntryMapper.IsHoliday(DateTime.Now))
                 Entry.ShouldTimeId = ShouldTime.Id;
-            else
-                Entry.ShouldTimeId = Guid.Empty;
 
             _context.Entries.Add(Entry);
             await _context.SaveChangesAsync();
