@@ -58,13 +58,16 @@ namespace Zeiterfassungssoftware.Controller
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ShouldTimeDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ShouldTimeDto>> UpdateShouldTime(Guid id, [FromBody, Required] ShouldTimeDto shouldTimeDto)
+        public async Task<ActionResult<ShouldTimeDto>> UpdateShouldTime(Guid id, [FromBody, Required] shouldTimeDto shouldTimeDto)
         {
             if (!ShouldTimeMapper.ValidateDto(shouldTimeDto))
                 return BadRequest();
 
             var OldShouldTime = _context.ShouldTimes.FirstOrDefault(e => e.Id == id);
             if (OldShouldTime is null)
+                return NotFound();
+
+            if (OldShouldTime.ValidUntil < DateTime.Now)
                 return NotFound();
 
             OldShouldTime.ValidUntil = DateTime.Now;
@@ -85,12 +88,12 @@ namespace Zeiterfassungssoftware.Controller
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> CreateShouldTime([FromBody] ShouldTimeDto shouldTime)
+        public async Task<IActionResult> CreateShouldTime([FromBody] ShouldTimeDto shouldTimeDto)
         {
-            if (!ShouldTimeMapper.ValidateDto(shouldTime))
+            if (!ShouldTimeMapper.ValidateDto(shouldTimeDto))
                 return BadRequest("Invalid data");
 
-            var ShouldTime = ShouldTimeMapper.FromDTO(shouldTime);
+            var ShouldTime = ShouldTimeMapper.FromDTO(shouldTimeDto);
             ShouldTime.Id = Guid.NewGuid();
             ShouldTime.ValidUntil = new DateTime(9999, 12, 31, 23, 59, 59);
 
@@ -109,7 +112,7 @@ namespace Zeiterfassungssoftware.Controller
         public async Task<IActionResult> DeleteShouldTime(Guid id)
         {
             var ShouldTime = await _context.ShouldTimes.FirstOrDefaultAsync(e => e.Id == id);
-            if (ShouldTime is null)
+            if (ShouldTime is null || ShouldTime.ValidUntil < DateTime.Now)
                 return NotFound();
 
             ShouldTime.ValidUntil = DateTime.Now;
