@@ -60,7 +60,7 @@ namespace Zeiterfassungssoftware.Client.Services
                 Response.EnsureSuccessStatusCode();
 
                 var Body = await Response.Content.ReadAsStringAsync();
-                var ConfirmedClass = JsonSerializer.Deserialize<ClassDto>(Body);
+                var ConfirmedClass = JsonSerializer.Deserialize<ClassDto>(Body, Options);
 
                 if (ConfirmedClass is null)
                     throw new Exception();

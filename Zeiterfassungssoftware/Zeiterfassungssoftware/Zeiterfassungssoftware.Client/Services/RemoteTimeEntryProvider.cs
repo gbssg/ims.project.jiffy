@@ -106,7 +106,7 @@ namespace Zeiterfassungssoftware.Client.Services
 				Response.EnsureSuccessStatusCode();
 
 				var Body = await Response.Content.ReadAsStringAsync();
-				var ConfirmedEntry = JsonSerializer.Deserialize<TimeEntryDto>(Body);
+				var ConfirmedEntry = JsonSerializer.Deserialize<TimeEntryDto>(Body, Options);
 
 				if (ConfirmedEntry is null)
 					throw new Exception();

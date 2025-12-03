@@ -59,7 +59,7 @@ namespace Zeiterfassungssoftware.Client.Services
                 Response.EnsureSuccessStatusCode();
 
                 var Body = await Response.Content.ReadAsStringAsync();
-                var ConfirmedShouldTime = JsonSerializer.Deserialize<ShouldTimeDto>(Body);
+                var ConfirmedShouldTime = JsonSerializer.Deserialize<ShouldTimeDto>(Body, Options);
 
                 if (ConfirmedShouldTime is null)
                     throw new Exception();

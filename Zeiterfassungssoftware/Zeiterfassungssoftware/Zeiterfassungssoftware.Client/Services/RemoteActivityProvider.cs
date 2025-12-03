@@ -85,7 +85,7 @@ namespace Zeiterfassungssoftware.Client.Services
                 Response.EnsureSuccessStatusCode();
 
                 var Body = await Response.Content.ReadAsStringAsync();
-                var ConfirmedDescription = JsonSerializer.Deserialize<ActivityDescriptionDto>(Body);
+                var ConfirmedDescription = JsonSerializer.Deserialize<ActivityDescriptionDto>(Body, Options);
 
                 if (ConfirmedDescription is null)
                     throw new Exception();
@@ -173,7 +173,7 @@ namespace Zeiterfassungssoftware.Client.Services
                 Response.EnsureSuccessStatusCode();
 
                 var Body = await Response.Content.ReadAsStringAsync();
-                var ConfirmedTitle = JsonSerializer.Deserialize<ActivityTitleDto>(Body);
+                var ConfirmedTitle = JsonSerializer.Deserialize<ActivityTitleDto>(Body, Options);
 
                 if (ConfirmedTitle is null)
                     throw new Exception();

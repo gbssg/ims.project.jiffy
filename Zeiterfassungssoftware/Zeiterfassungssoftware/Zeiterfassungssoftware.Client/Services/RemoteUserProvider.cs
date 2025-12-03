@@ -92,7 +92,7 @@ namespace Zeiterfassungssoftware.Client.Services
                 Response.EnsureSuccessStatusCode();
 
                 var Body = await Response.Content.ReadAsStringAsync();
-                var ConfirmedUser = JsonSerializer.Deserialize<UserDto>(Body);
+                var ConfirmedUser = JsonSerializer.Deserialize<UserDto>(Body, Options);
 
                 if (ConfirmedUser is null)
                     throw new Exception();
