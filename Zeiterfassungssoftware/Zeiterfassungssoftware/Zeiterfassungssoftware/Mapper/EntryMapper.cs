@@ -33,7 +33,7 @@ namespace Zeiterfassungssoftware.Mapper
                 End = entry.End,
                 Title = entry.Title,
                 Description = entry.Description,
-                ShouldTime = entry.ShouldTime.Should
+                ShouldTime = (entry.ShouldTime is not null) ? entry.ShouldTime.Should : new TimeSpan(0, 0, 0, 0, 0, 0)
             };
         }
 
