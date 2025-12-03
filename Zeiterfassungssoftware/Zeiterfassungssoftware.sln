@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.9.34607.119
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11222.16 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zeiterfassungssoftware.SharedData", "Zeiterfassungssoftware.SharedData\Zeiterfassungssoftware.SharedData.csproj", "{13453ED3-9928-49CC-9AD8-72F8FE3B18B3}"
 EndProject

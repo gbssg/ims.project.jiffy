@@ -50,10 +50,10 @@ namespace Zeiterfassungssoftware.Client.Pages
                 Entry.End = EndDate.Value.ToDateTime(EndTime.Value);
         }
 
-        private void SaveChanges()
+        private async void SaveChanges()
         {
             UpdateEntry();
-            TimeEntrySource.UpdateEntry(Entry.Id, Entry);
+            await TimeEntrySource.UpdateEntry(Entry.Id, Entry);
             Navigation.NavigateTo("/history");
         }
 

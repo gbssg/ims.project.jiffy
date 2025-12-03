@@ -6,8 +6,11 @@ namespace Zeiterfassungssoftware.Client.Pages
 {
     public partial class Time : IDisposable
     {
-		
-		[Inject]
+
+        private const string NEW_ACTIVITY_TITLE = "New Activity";
+        private const string NEW_ACTIVITY_DESCRIPTION = "New Description";
+
+        [Inject]
 		private ITimeEntryProvider TimeEntrySource { get; init; }
 
 		[Inject]
@@ -21,8 +24,6 @@ namespace Zeiterfassungssoftware.Client.Pages
 		public TimeEntryDto? CurrentEntry { get; set; }
 		private Timer? Timer;
 
-		private const string NEW_ACTIVITY_TITLE = "New Activity";
-		private const string NEW_ACTIVITY_DESCRIPTION = "New Description";
 
 		private string ActivityTitleSelect = NEW_ACTIVITY_TITLE;
 		private string ActivityTitle = string.Empty;
@@ -55,7 +56,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 				Timer?.Dispose();
 		}
 
-		private void ToggleClock()
+		private async void ToggleClock()
 		{
 			if (Disabled)
 				return;
@@ -70,7 +71,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 					Description = this.Description,
 				};
 
-				TimeEntrySource.CreateEntry(Entry);
+				await TimeEntrySource.CreateEntry(Entry);
 				
                 ResetValues();
                 return;
@@ -86,7 +87,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 					};
 
                     if (!ActivitySource.GetTitles().Any(e => e.Value == ActivityTitle))
-                        ActivitySource.CreateTitle(Title);
+                        await ActivitySource.CreateTitle(Title);
 				}
 
 
@@ -98,7 +99,7 @@ namespace Zeiterfassungssoftware.Client.Pages
                     };
 
                     if (!ActivitySource.GetDescriptions().Any(e => e.Value == ActivityDescription))
-						ActivitySource.CreateDescription(Description);
+						await ActivitySource.CreateDescription(Description);
 				}
 
 				Timer = new System.Threading.Timer(UpdateTimer, null, 0, 1000);
@@ -109,7 +110,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 					Description = this.Description,
 				};
 
-				TimeEntrySource.CreateEntry(CurrentEntry);
+				CurrentEntry = await TimeEntrySource.CreateEntry(CurrentEntry);
             }
 			else if (CurrentEntry != null)
 			{
@@ -118,9 +119,9 @@ namespace Zeiterfassungssoftware.Client.Pages
 
 
 				if (CurrentEntry.Time < new TimeSpan(0, 0, 1))
-					TimeEntrySource.CreateEntry(CurrentEntry);
+					await TimeEntrySource.CreateEntry(CurrentEntry);
 				else
-					TimeEntrySource.UpdateEntry(CurrentEntry.Id, CurrentEntry);
+					await TimeEntrySource.UpdateEntry(CurrentEntry.Id, CurrentEntry);
 
 				ResetValues();
 			}
