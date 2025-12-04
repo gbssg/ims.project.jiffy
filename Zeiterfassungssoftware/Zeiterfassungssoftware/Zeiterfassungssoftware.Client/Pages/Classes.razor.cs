@@ -38,11 +38,21 @@ namespace Zeiterfassungssoftware.Client.Pages
         {
             if (SelectedGuid == Guid.Empty)
             {
-                await ClassSource.CreateClass(SelectedClass);
+                var ConfirmedClass = await ClassSource.CreateClass(SelectedClass);
+                for (int i = 0; i < SelectedClass.ShouldTimes.Count; i++)
+                {
+                    var ShouldTime = SelectedClass.ShouldTimes[i];
+                    ShouldTime.ClassId = ConfirmedClass.Id;
+                    var ConfirmedShouldTime = await ShouldTimeSource.CreateShouldTime(ShouldTime);
+                    SelectedClass.ShouldTimes[i] = ConfirmedShouldTime;
+                }
+                // ???
+                SelectedClass = await ClassSource.UpdateClass(ConfirmedClass.Id, SelectedClass);
                 SelectedClassChanged(new ChangeEventArgs { Value = Guid.Empty.ToString() });
             }
             else
             {
+                // Temporary Fix
                 foreach (var ShouldTime in Original)
                 {
                     await ShouldTimeSource.DeleteShouldTime(ShouldTime.Id);
@@ -55,8 +65,13 @@ namespace Zeiterfassungssoftware.Client.Pages
                     var ConfirmedShouldTime = await ShouldTimeSource.CreateShouldTime(ShouldTime);
                     SelectedClass.ShouldTimes[i] = ConfirmedShouldTime;
                 }
+
                 SelectedClass = await ClassSource.UpdateClass(SelectedClass.Id, SelectedClass);
-                Original = new(SelectedClass.ShouldTimes);
+
+                SelectedClassChanged(new ChangeEventArgs()
+                {
+                    Value = Guid.Empty.ToString()
+                });
             }
         }
 
