@@ -95,7 +95,7 @@ namespace Zeiterfassungssoftware.Controller
 
             var ShouldTime = ShouldTimeMapper.FromDTO(shouldTimeDto);
             ShouldTime.Id = Guid.NewGuid();
-            ShouldTime.ValidUntil = new DateTime(9999, 12, 31, 23, 59, 59);
+            ShouldTime.ValidUntil = DateTime.MaxValue;
 
             _context.ShouldTimes.Add(ShouldTime);
             await _context.SaveChangesAsync();

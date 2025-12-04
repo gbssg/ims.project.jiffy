@@ -14,6 +14,8 @@ namespace Zeiterfassungssoftware.Client.Pages
         public ClassDto SelectedClass { get; set; } = new();
         public Guid SelectedGuid { get; set; }
 
+        public List<ShouldTimeDto> Original { get; set; } = new();
+
         public Timer? Timer { get; set; }
 
         protected override void OnInitialized()
@@ -29,36 +31,37 @@ namespace Zeiterfassungssoftware.Client.Pages
         {
             SelectedGuid = Guid.Parse(args.Value.ToString());
             SelectedClass = SelectedGuid.Equals(Guid.Empty) ? new() : ClassSource.GetClasses().FirstOrDefault(e => e.Id.Equals(SelectedGuid)) ?? new();
+            Original = new(SelectedClass.ShouldTimes);
         }
 
-        public void SaveClass()
+        public async Task SaveClass()
         {
-            if (SelectedGuid.Equals(Guid.Empty))
+            if (SelectedGuid == Guid.Empty)
             {
-                ClassSource.CreateClass(SelectedClass);
-
-                foreach (var ShouldTime in SelectedClass.ShouldTimes)
-                {
-                    ShouldTimeSource.CreateShouldTime(ShouldTime);
-                }
-
-                SelectedClassChanged(new ChangeEventArgs()
-                {
-                    Value = Guid.Empty.ToString()
-                });
+                await ClassSource.CreateClass(SelectedClass);
+                SelectedClassChanged(new ChangeEventArgs { Value = Guid.Empty.ToString() });
             }
             else
             {
-                ClassSource.UpdateClass(SelectedClass.Id, SelectedClass);
+                foreach (var ShouldTime in Original)
+                {
+                    await ShouldTimeSource.DeleteShouldTime(ShouldTime.Id);
+                }
+
+                for (int i = 0; i < SelectedClass.ShouldTimes.Count; i++)
+                {
+                    var ShouldTime = SelectedClass.ShouldTimes[i];
+                    ShouldTime.ClassId = SelectedClass.Id;
+                    var ConfirmedShouldTime = await ShouldTimeSource.CreateShouldTime(ShouldTime);
+                    SelectedClass.ShouldTimes[i] = ConfirmedShouldTime;
+                }
+                SelectedClass = await ClassSource.UpdateClass(SelectedClass.Id, SelectedClass);
+                Original = new(SelectedClass.ShouldTimes);
             }
         }
 
         public void DeleteClass()
         {
-            foreach (var ShouldTime in SelectedClass.ShouldTimes)
-            {
-                ShouldTimeSource.DeleteShouldTime(ShouldTime.Id);
-            }
 
             ClassSource.DeleteClass(SelectedClass.Id);
 

@@ -140,7 +140,6 @@ namespace Zeiterfassungssoftware.Controller
             if (DbClass is null)
                 return NotFound();
 
-            
             var Class = ClassMapper.FromDTO(classDto);
             DbClass.Name = Class.Name;
 
