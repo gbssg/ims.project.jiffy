@@ -58,7 +58,7 @@ namespace Zeiterfassungssoftware.Controller
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ShouldTimeDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ShouldTimeDto>> UpdateShouldTime(Guid id, [FromBody, Required] shouldTimeDto shouldTimeDto)
+        public async Task<ActionResult<ShouldTimeDto>> UpdateShouldTime(Guid id, [FromBody, Required] ShouldTimeDto shouldTimeDto)
         {
             if (!ShouldTimeMapper.ValidateDto(shouldTimeDto))
                 return BadRequest();
