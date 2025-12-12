@@ -17,7 +17,6 @@ namespace Zeiterfassungssoftware.Client.Pages
 
         public int Sickdays { get; set; } = 0;
         public TimeSpan Overtime { get; set; } = new TimeSpan(0, 0, 0);
-        public readonly TimeSpan NeededWeeklyTime = new TimeSpan(14, 0, 0);
         
         public bool ShowFilters { get; set; }
         public int LastCount { get; set; }
