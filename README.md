@@ -1,7 +1,15 @@
 # Jiffy
 
-- [1 Dokumentation](./docs/documentation.md)
-  - [1.1 Datenmodel](./docs/datenmodell.md)
-  - [1.2 Abläufe](./docs/ablaeufe.md)
-- [2 Konventionen](./docs/conventions.md)
+## English
+- [1 API](./docs/en/api.md)
 
+## Deutsch
+- [1 Dokumentation](./docs/de/documentation.md)
+- [2 Datenmodel](./docs/de/datenmodell.md)
+- [3 Abläufe](./docs/de/ablaeufe.md)
+- [4 Konventionen](./docs/de/conventions.md)
+- [5 API](./docs/de/api.md)
+
+![Time page started](./assets/time_started.png)
+![Time page started](./assets/time_stopped.png)
+![Class management page](./assets/class_manage.png)
