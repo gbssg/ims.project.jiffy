@@ -13,4 +13,9 @@ public partial class Class
 
         return this.Id == other.Id;
     }
+
+    public override int GetHashCode()
+    {
+        return Id.GetHashCode();
+    }
 }
