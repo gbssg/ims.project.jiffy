@@ -9,21 +9,13 @@ namespace Zeiterfassungssoftware.Client.Pages
     {
         [Inject]
         public ITimeEntryProvider TimeEntrySource { get; set; }
-        
-        [Inject]
-        private NavigationManager Navigation { get; set; }
 
         public Timer? Timer { get; set; }
 
-        public int Sickdays { get; set; } = 0;
         public TimeSpan Overtime { get; set; } = new TimeSpan(0, 0, 0);
         
         public bool ShowFilters { get; set; }
         public int LastCount { get; set; }
-
-
-        [Inject]
-        private IJSRuntime js { get; set; }
 
 
         private IFilter[] Filters =
@@ -36,8 +28,6 @@ namespace Zeiterfassungssoftware.Client.Pages
             new StringFilter("Username"),
         ];
         private IFilter SelectedFilter => Filters.FirstOrDefault(e => e.PopUp);
-
-        
 
         protected override void OnInitialized()
         {
@@ -55,12 +45,6 @@ namespace Zeiterfassungssoftware.Client.Pages
             {
                 var CurrentDay = Day.FirstOrDefault();
 
-                if(CurrentDay.Sick)
-                {
-                    Sickdays++;
-                    continue;
-                }
-                
                 foreach (var Entry in Day)
                 {
                     Overtime += Entry.Time;

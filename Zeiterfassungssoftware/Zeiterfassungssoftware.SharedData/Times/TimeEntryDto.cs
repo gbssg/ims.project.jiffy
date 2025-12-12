@@ -19,14 +19,10 @@ namespace Zeiterfassungssoftware.SharedData.Times
         public TimeSpan ShouldTime { get; set; }
         public TimeSpan Overtime => Time - ShouldTime;
 
-        public bool Sick => Title.Equals("Krank");
 
         
         public string GetTimeString()
         {
-            if (Sick)
-                return "Krank";
-
             var Hours = Math.Floor(Time.TotalHours);
             var Minutes = Math.Floor((Time.TotalHours - Hours) * 60);
             string TimeString = "";
@@ -46,12 +42,12 @@ namespace Zeiterfassungssoftware.SharedData.Times
 
         public string GetStartString()
         {
-            return Sick ? "" : Start.ToString(TIME_FORMAT);
+            return Start.ToString(TIME_FORMAT);
         }
 
         public string GetEndString()
         {
-            return Sick ? "" : End?.ToString(TIME_FORMAT) ?? "?";
+            return End?.ToString(TIME_FORMAT) ?? "?";
         }
 
 
