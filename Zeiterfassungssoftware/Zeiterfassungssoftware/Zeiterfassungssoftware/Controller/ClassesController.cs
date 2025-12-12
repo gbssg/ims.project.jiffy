@@ -79,7 +79,7 @@ namespace Zeiterfassungssoftware.Controller
             var ShouldTimes = _context.ShouldTimes
                 .Where(e => e.ClassId == id && e.ValidUntil > DateTime.Now);
 
-            foreach (var ShouldTime in ShouldTimes)
+            foreach (var ShouldTime in ShouldTimes.Where(e => e.ValidUntil > DateTime.Now))
             {
                 ShouldTime.ValidUntil = DateTime.Now;
             }
