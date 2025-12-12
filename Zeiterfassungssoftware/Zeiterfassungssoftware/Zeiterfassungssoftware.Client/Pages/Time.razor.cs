@@ -77,7 +77,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 					return;
 
 				CurrentEntry = Temp;
-                CreateEntry(Temp);
+                CurrentEntry = await TimeEntrySource.CreateEntry(Temp);
             }
 			else
 			{  
@@ -92,10 +92,6 @@ namespace Zeiterfassungssoftware.Client.Pages
 			}
 		}
 
-		public async void CreateEntry(TimeEntryDto entry)
-		{
-            CurrentEntry = await TimeEntrySource.CreateEntry(entry);
-        }
 
 
 		public async void PostTitle()
@@ -138,6 +134,7 @@ namespace Zeiterfassungssoftware.Client.Pages
             ActivityDescriptionSelect = NEW_ACTIVITY_DESCRIPTION;
             ActivityTitle = string.Empty;
             ActivityDescription = string.Empty;
+			InvokeAsync(StateHasChanged);
         }
 
 		public void UpdateTimer(object? obj)

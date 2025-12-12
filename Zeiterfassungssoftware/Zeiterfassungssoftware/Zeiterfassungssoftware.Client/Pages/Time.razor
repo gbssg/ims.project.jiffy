@@ -17,7 +17,6 @@
 				<RoundButton OnClick="ToggleClock" Started="@Started" Disabled="@Disabled" />
 			</div>
 
-
 			@if (!Started)
 			{
 				<div class="centered-div-flex">
@@ -41,7 +40,6 @@
 						}
 					</select>
 				</div>
-
 				<TextField Style="height: 45px;" Class="@(ActivityTitleSelect.Equals(NEW_ACTIVITY_TITLE) ? "textfield activity-textfield" : "invisible")" PlaceHolder="Activity Title..." @bind-Value="@ActivityTitle" Multiline="false" />
 
 				<div class="centered-div-flex">
@@ -64,7 +62,6 @@
 						}
 					</select>
 				</div>
-
 				<TextField Style="height: 90px;" Class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "textfield activity-textfield bottomrounded" : "invisible")" PlaceHolder="Activity Description..." @bind-Value="@ActivityDescription" Multiline="true" />
 			}
 			else
