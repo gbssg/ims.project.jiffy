@@ -9,6 +9,6 @@
         public Task<TimeEntryDto?> GetEntryById(Guid id);
         public List<TimeEntryDto> GetEntries();
         public Task<TimeEntryDto> UpdateEntry(Guid id, TimeEntryDto entry);
-
+        public bool PreValidateEntry(TimeEntryDto entry);
     }
 }
