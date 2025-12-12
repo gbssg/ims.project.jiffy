@@ -132,5 +132,19 @@ namespace Zeiterfassungssoftware.Client.Services
 					throw new InvalidDataException();
 			}
         }
+
+        public bool PreValidateEntry(TimeEntryDto entry)
+        {
+            if (entry is null)
+                return false;
+
+            if (string.IsNullOrWhiteSpace(entry.Title) || string.IsNullOrWhiteSpace(entry.Description))
+                return false;
+
+            if ((entry.End is not null) && entry.Start >= entry.End)
+                return false;
+
+            return true;
+        }
     }
 }

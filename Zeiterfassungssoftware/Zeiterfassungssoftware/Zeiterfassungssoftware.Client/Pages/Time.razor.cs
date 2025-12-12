@@ -23,6 +23,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 		
 		
 		public TimeEntryDto? CurrentEntry { get; set; }
+
 		private TimeSpan PassedTime => (DateTime.Now - CurrentEntry?.Start) ?? TimeSpan.Zero;
 		private Timer? Timer;
 
@@ -36,8 +37,6 @@ namespace Zeiterfassungssoftware.Client.Pages
 		private string ActivityDescription = string.Empty;
 		private string Description => string.Equals(ActivityDescriptionSelect, NEW_ACTIVITY_DESCRIPTION) ? ActivityDescription : ActivityDescriptionSelect;
 
-		public string ActivityDescriptionTextAreaStyle => string.Equals(ActivityDescriptionSelect, NEW_ACTIVITY_DESCRIPTION) ? "" : "display: none;";
-
 
 		public bool Loaded = false;
 
@@ -47,7 +46,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 			Timer = new Timer(UpdateTimer, null, 0, 1000);
 		}
 
-		public void Init()
+		public void Initialize()
 		{
             CurrentEntry = TimeEntrySource.GetEntries().FirstOrDefault(e => e.End is null);
 
@@ -67,14 +66,18 @@ namespace Zeiterfassungssoftware.Client.Pages
 
 				Timer = new Timer(UpdateTimer, null, 0, 1000);
 
-				CurrentEntry = await TimeEntrySource.CreateEntry(
-					new()
-					{
-						Start = DateTime.Now,
-						Title = this.Title,
-						Description = this.Description,
-					}
-				);
+				var Temp = new TimeEntryDto()
+				{
+					Start = DateTime.Now,
+					Title = this.Title,
+					Description = this.Description,
+				};
+
+				if (!TimeEntrySource.PreValidateEntry(Temp))
+					return;
+
+				CurrentEntry = Temp;
+                CreateEntry(Temp);
             }
 			else
 			{  
@@ -88,6 +91,12 @@ namespace Zeiterfassungssoftware.Client.Pages
 				ResetValues();
 			}
 		}
+
+		public async void CreateEntry(TimeEntryDto entry)
+		{
+            CurrentEntry = await TimeEntrySource.CreateEntry(entry);
+        }
+
 
 		public async void PostTitle()
 		{
@@ -136,7 +145,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 			if(TimeEntrySource.IsLoaded && ActivitySource.IsLoaded && !Loaded)
 			{
 				Loaded = true;
-				Init();
+				Initialize();
 			}
 
 			InvokeAsync(StateHasChanged);
