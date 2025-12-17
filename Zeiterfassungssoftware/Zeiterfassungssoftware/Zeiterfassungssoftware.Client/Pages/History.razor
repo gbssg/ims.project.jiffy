@@ -11,8 +11,10 @@
     <div class="history-page-body">
         <div class="info-body">
             <div class="flex-div-nowrap info-widgets">
-                <Widget Title="Overtime" Text=@(Math.Abs(Overtime.TotalHours) < 1 ? $"{Math.Floor(Overtime.TotalMinutes)}min" : $"{Math.Floor(Overtime.TotalHours)}h") />
+                <Widget Title="Overtime" Text="@OvertimeDisplay" />
+                <Widget Title="Overtime" Text="@OvertimeDisplay" />
             </div>
+
             <div class="history-filter-container">
                 <div class="history-filter-title" @onclick="() => ShowFilters = !ShowFilters">
                     <p>Filter setting</p>
@@ -21,18 +23,17 @@
 
                 <div class="history-filter-settings history-filter-display-@(ShowFilters ? "block" : "none")">
                     <div class="flex-div-wrap">
-                        @foreach (IFilter Filter in Filters.OrderByDescending(e => e.Enabled))
+                        @foreach (var Filter in Filters)
                         {
-                            @if (!context.User.IsInRole("Administrator") && string.Equals(Filter.Name, "Username"))
-                                continue;
-
-                            <p @onclick="() => OnFilterClicked(Filter)" class="filter-control-element @(Filter.Enabled ? "filter-enabled" : "filter-disabled")">
+                            <p class="filter-control-element @(Filter.Enabled ? "filter-enabled" : "filter-disabled")" @onclick="() => OnFilterClicked(Filter)">
                                 @Filter.Name
                             </p>
-                            <p class="filter-x" @onclick="() => {Filter.Enabled = false; Filter.PopUp = false;}">@(Filter.Enabled ? "🞩" : "")</p>
+
+                            <p class="filter-x" @onclick="() => { Filter.Enabled = false; Filter.PopUp = false; }">
+                                @(Filter.Enabled ? "🞩" : "")
+                            </p>
                         }
                     </div>
-
                 </div>
 
                 @if (SelectedFilter is not null)
@@ -42,17 +43,15 @@
             </div>
         </div>
         
-        <div class="filter-dropdown-body">
-        </div>
         <div class="entry-list-body">
             @if (TimeEntrySource.IsLoaded)
             {
-                @foreach (var Entry in TimeEntrySource.GetEntries().Take(LastCount).Where(e => DoFiltersApply(e)).OrderByDescending(e => e.Start))
+                @foreach (var Entry in FilteredEntries.Take(LastCount))
                 {
                     <HistoryEntry Entry="@Entry" />
                 }
             }
-        </div>    
+        </div>
     </div>
 </AuthorizeView>
 
