@@ -11,53 +11,25 @@
 
 
 <AuthorizeView>
-    @if(Entry is null)
+    @if (Entry is null)
     {
         <div class="vertical-center">
-            <div class="centered-div-flex">
-                <div class="loader">
-                    <div class="box box-1">
-                        <div class="side-left"></div>
-                        <div class="side-right"></div>
-                        <div class="side-top"></div>
-                    </div>
-                    <div class="box box-2">
-                        <div class="side-left"></div>
-                        <div class="side-right"></div>
-                        <div class="side-top"></div>
-                    </div>
-                    <div class="box box-3">
-                        <div class="side-left"></div>
-                        <div class="side-right"></div>
-                        <div class="side-top"></div>
-                    </div>
-                    <div class="box box-4">
-                        <div class="side-left"></div>
-                        <div class="side-right"></div>
-                        <div class="side-top"></div>
-                    </div>
-                </div>
-            </div>
+            <Throbber />
         </div>
         return;
     }
-
     <div class="vertical-center">
         <div class="edit-container">
-
             <p class="edit-category-title">Date</p>
             <div class="edit-info-container">
-
                 <div class="flex-div-nowrap">
                     <p>Start</p>
                     <input type="date" @bind="@StartDate" class="rounded edit-info-date" />
                 </div>
-
                 <div class="flex-div-nowrap">
                     <p>End</p>
                     <input type="date" @bind="@EndDate" class="rounded edit-info-date" />
                 </div>
-
             </div>
 
             <p class="edit-category-title" >Time</p>
@@ -86,6 +58,7 @@
                     <p class="edit-username">@Entry.Username</p>
                 }
             </div>
+
             <div class="btn-edit-container">
                 <Button Text="Delete" Class="btn-delete btn-edit" OnClick="DeleteEntry" />
                 <Button Text="Save" Class="btn-primary btn-edit" OnClick="SaveChanges" />

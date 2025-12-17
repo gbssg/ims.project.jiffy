@@ -63,7 +63,6 @@ namespace Zeiterfassungssoftware.Client.Pages
                 return;
 
             await TimeEntrySource.DeleteEntry(Entry.Id);
-
             Navigation.NavigateTo("/history");
         }
 
