@@ -1,0 +1,38 @@
+﻿@page "/usermanagement"
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
+
+@using Microsoft.AspNetCore.Authorization
+@using Zeiterfassungssoftware.SharedData.Users
+@attribute [Authorize(Roles = "Administrator")]
+
+<PageTitle>User Management</PageTitle>
+
+
+@if (UserProvider.IsLoaded)
+{
+    <div class="usermanagement-page-body">
+        <div class="usermanagement-top-bar">
+            <TextField PlaceHolder="Type to search..." Class="usermanagement-search-bar" />
+            <Button Text="+ Add"/>
+        </div>
+        <div class="usermanagement-list">
+            @foreach (UserDto User in UserProvider.GetUsers())
+            {
+                <div class="user-container" @onclick="() => OnUserClicked(User)">
+                    <div class="user-picture">
+                        @User.UserName.FirstOrDefault().ToString().ToUpper()
+                    </div>
+                    <div class="user-info-container">
+                        <p class="user-username">@User.UserName.Split("@")[0]</p>
+                        <p class="user-email">@User.Email</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <Throbber />
+}
+
