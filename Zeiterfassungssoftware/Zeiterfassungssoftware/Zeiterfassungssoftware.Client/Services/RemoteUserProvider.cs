@@ -15,7 +15,7 @@ namespace Zeiterfassungssoftware.Client.Services
 
         public HttpClient HttpClient { get; set; } = new HttpClient()
         {
-            BaseAddress = new Uri("https://localhost:7099/api/v1/user/")
+            BaseAddress = new Uri("https://localhost:7099/api/v1/users/")
         };
         public bool IsLoaded { get; set; }
 
@@ -26,9 +26,10 @@ namespace Zeiterfassungssoftware.Client.Services
             LoadUsers();
         }
 
-        public async Task LoadUsers()
+        public async void LoadUsers()
         {
             _users = await HttpClient.GetFromJsonAsync<List<UserDto>>("") ?? new();
+            IsLoaded = true;
         }
 
         public async Task<UserDto> CreateUser(UserDto user)
