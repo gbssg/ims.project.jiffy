@@ -731,15 +731,24 @@ textarea {
 
 
 /* Buttons */
+
 .btn-primary {
-    background-color: transparent;
-    border: 2px solid #bb86fc;
+    background-color: #bb86fc;
+    border: none;
     border-radius: 25px;
     font-size: 24px;
-    color: #bb86fc;
+    color: white;
     transition: 1s;
     text-decoration: none;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 40px;
 }
+
+.btn-primary:hover {
+    background-color: rgb(147, 94, 212);
+}
+
 
 .btn-reset-authenticator {
     background-color: transparent;
@@ -1428,3 +1437,66 @@ input:focus {
     }
 
 
+/* User Management */
+
+.usermanagement-top-bar {
+    margin-top: 20px;
+    display: flex;
+    width: 90%;
+    gap: 10px
+}
+
+.user-picture {
+    background-color: #bb86fc;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+.user-email {
+    color: #9ca3af;
+}
+
+.user-container {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    background-color: #000000;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    border-radius: 34px;
+}
+
+.user-container:hover {
+    filter: drop-shadow(0px 0px 4px #bb86fc);
+}
+
+.usermanagement-page-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.usermanagement-list {
+    background-color: #272727;
+    width: 90%;
+    align-items: center;
+    padding: 20px;
+    border-radius: 40px;
+    overflow: scroll;
+    scrollbar-width: none;
+    height: calc(100vh - 40px - 20px * 2 - 10px);
+}
+
+.usermanagement-search-bar {
+    width: calc((100vw - 250px) / 100 * 90 - 93px - 10px);
+    height: 40px;
+    padding-left: 20px;
+    border-radius: 20px;
+}
