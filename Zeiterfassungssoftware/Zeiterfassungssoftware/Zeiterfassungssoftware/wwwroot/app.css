@@ -367,6 +367,7 @@ p {
     display: none;
 }
 
+
 @media (min-width: 1282px) {
     .filter-popup {
         position: relative;
@@ -376,28 +377,14 @@ p {
         display: block;
     }
 
-    .history-page-body {
-        margin: 2.5vh;
-        display: flex;
-        align-self: center;
-        justify-content: center;
-    }
 
     .entry-list-body {
-        width: 40vw;
+        width: 95%;
     }
 
     .info-widgets {
         margin: 0;
         align-items: flex-start;
-    }
-
-
-    .history-filter-container {
-        display: block;
-        width: 40vw;
-        margin-top: 10px;
-        height: calc(100vh - 116px - 5vh);
     }
 
     .history-filter-title {
@@ -645,7 +632,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 @media (min-width: 1282px) {
     .widget {
-        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        width: 45%;
     }
     .info-widgets {
         gap: 10px;
