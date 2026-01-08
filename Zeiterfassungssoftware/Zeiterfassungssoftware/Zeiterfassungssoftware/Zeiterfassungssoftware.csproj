@@ -17,9 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\Zeiterfassungssoftware.Client\Pages\Classes.razor.cs" Link="Classes.razor.cs" />
-    <Compile Include="..\Zeiterfassungssoftware.Client\Pages\ManageClass.razor.cs" Link="ManageClass.razor.cs" />
-    <Compile Include="..\Zeiterfassungssoftware.Client\Pages\UserManagement.razor.cs" Link="UserManagement.razor.cs" />
+    <Compile Include="..\Zeiterfassungssoftware.Client\Pages\EditUser.razor.cs" Link="EditUser.razor.cs" />
   </ItemGroup>
 
 
