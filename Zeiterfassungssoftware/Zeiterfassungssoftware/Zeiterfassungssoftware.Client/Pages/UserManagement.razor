@@ -8,15 +8,15 @@
 <PageTitle>User Management</PageTitle>
 
 
-@if (UserProvider.IsLoaded)
+@if (UserSource.IsLoaded)
 {
     <div class="usermanagement-page-body">
         <div class="usermanagement-top-bar">
             <TextField PlaceHolder="Type to search..." Class="usermanagement-search-bar" />
-            <Button Text="+ Add"/>
+            <Button Text="+ Add" OnClick="@(() => Navigation.NavigateTo($"/user/{Guid.Empty}"))" />
         </div>
         <div class="usermanagement-list">
-            @foreach (UserDto User in UserProvider.GetUsers())
+            @foreach (UserDto User in UserSource.GetUsers())
             {
                 <div class="user-container" @onclick="() => OnUserClicked(User)">
                     <div class="user-picture">

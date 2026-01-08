@@ -7,7 +7,7 @@ namespace Zeiterfassungssoftware.Client.Pages
     {
 
         [Inject]
-        public IUserProvider UserProvider { get; set; }
+        public IUserProvider UserSource { get; set; }
 
         [Inject]
         private NavigationManager Navigation { get; set; }
