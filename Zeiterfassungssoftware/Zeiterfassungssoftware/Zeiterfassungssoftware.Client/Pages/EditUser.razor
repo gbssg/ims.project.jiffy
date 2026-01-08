@@ -1,0 +1,106 @@
+﻿@using Microsoft.AspNetCore.Components.Web;
+@using System.Net.NetworkInformation;
+
+@page "/user/{Id}"
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
+
+@using Microsoft.AspNetCore.Authorization
+@using Zeiterfassungssoftware.SharedData.Users
+@attribute [Authorize(Roles = "Administrator")]
+
+<PageTitle>Edit User</PageTitle>
+
+
+<AuthorizeView>
+    @if (User is null)
+    {
+        <div class="vertical-center">
+            <Throbber />
+        </div>
+        return;
+    }
+    <div class="vertical-center">
+        <div class="edit-container">
+            <p class="edit-category-title">Personal Info</p>
+            <div class="edit-info-container">
+                <p>Username</p>
+                <TextField @bind-Value="@User.UserName" PlaceHolder="Username..." Class="edit-info-text edit-info-displays edit-textfield edit-textfield-singleline" />
+            
+                <p>Email</p>
+                <TextField @bind-Value="@User.Email" PlaceHolder="Email..." Class="edit-info-text edit-info-displays edit-textfield edit-textfield-singleline" />
+                
+
+                <div class="flex-div-nowrap">
+                    <p>Email confirmed</p>
+                    <input type="checkbox" @bind="@User.EmailConfirmed" class="edit-info-checkbox"/>
+                </div>
+
+                <p>Phone Number</p>
+                <TextField @bind-Value="@User.PhoneNumber" PlaceHolder="Phone number..." Class="edit-info-text edit-info-displays edit-textfield edit-textfield-singleline" />
+                
+
+                <div class="flex-div-nowrap">
+                    <p>Phone number confirmed</p>
+                    <input type="checkbox" @bind="@User.PhoneNumberConfirmed" class="edit-info-checkbox" />
+                </div>
+            </div>
+
+            <p class="edit-category-title">Security</p>
+            <div class="edit-info-container">
+                <p>Password</p>
+                <TextField @bind-Value="@User.Password" PlaceHolder="Password..." Class="edit-info-text edit-info-displays edit-textfield edit-textfield-singleline" />
+
+                <div class="flex-div-nowrap">
+                    <p>2-Factor enabled</p>
+                    <input type="checkbox" @bind="@User.TwoFactorEnabled" class="edit-info-checkbox" />
+                </div>
+
+                <br />
+                <div class="flex-div-nowrap">
+                    <p>Lockout enabled</p>
+                    <input type="checkbox" @bind="@User.LockoutEnabled" class="edit-info-checkbox" />
+                </div>
+
+                @if(User.LockoutEnabled)
+                {
+                    <p>Lockout end</p>
+                    <div class="flex-div-nowrap">
+                        <input type="date" @bind="@LockoutEndDate" class="rounded edit-info-lockdate" />
+                        <input type="time" @bind="@LockoutEndTime" class="rounded edit-info-locktime" />
+                    </div>
+                }
+
+                <br />
+                <div class="flex-div-nowrap">
+                    <p>Access failed count</p>
+                    <input type="number" min="0" @bind="@User.AccessFailedCount" class="edit-info-number" />
+                </div>
+                
+
+            </div>
+
+
+            <p class="edit-category-title">Class</p>
+            <div class="edit-info-container">
+                <select @bind="@User.ClassId" class="edit-info-select">
+                    @foreach(var Class in ClassSource.GetClasses())
+                    {
+                        <option value="@Class.Id">@Class.Name</option>
+                    }
+                </select>
+            </div>
+
+
+            <div class="btn-edit-container">
+                <Button Text="Delete" Class="btn-delete btn-edit" OnClick="DeleteUser" />
+                <Button Text="Save" Class="btn-primary btn-edit" OnClick="SaveChanges" />
+            </div>
+            <p class="back" @onclick="@(() => Navigation.NavigateTo("/usermanagement"))">🡐 Back</p>
+
+        </div>
+    </div>
+
+</AuthorizeView>
+
+
+

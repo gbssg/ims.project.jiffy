@@ -23,7 +23,7 @@ a:hover {
 */
 
 
-    .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus{
+    .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
         color: black;
     }
 
@@ -1499,4 +1499,42 @@ input:focus {
     height: 40px;
     padding-left: 20px;
     border-radius: 20px;
+}
+
+
+.edit-info-checkbox {
+    margin-left: auto;
+    margin-right: 5px;
+}
+
+
+.edit-info-number {
+    margin-left: auto;
+    margin-right: 5px;
+    height: min-content;
+    width: 50px;
+    border-radius: 15px;
+    padding-left: 5px;
+}
+
+
+.edit-info-select {
+    width: 100%;
+    margin-top: 4px;
+    border-radius: 10px;
+}
+
+.edit-info-lockdate {
+    width: 105px;
+    background: #090909;
+    color: white;
+    border: none;
+}
+
+.edit-info-locktime {
+    width: 73px;
+    margin-left: 5px;
+    background: #090909;
+    color: white;
+    border: none;
 }
