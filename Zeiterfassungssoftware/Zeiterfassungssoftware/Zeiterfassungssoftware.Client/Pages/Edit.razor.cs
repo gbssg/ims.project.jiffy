@@ -61,7 +61,6 @@ namespace Zeiterfassungssoftware.Client.Pages
         private void DeleteClicked()
         {
             DisplayDeleteModal = true;
-            InvokeAsync(StateHasChanged);
         }
 
         private async void DeleteEntry()
