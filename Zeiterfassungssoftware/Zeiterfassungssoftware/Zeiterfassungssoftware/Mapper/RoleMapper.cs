@@ -32,5 +32,13 @@ namespace Zeiterfassungssoftware.Mapper
                 ConcurrencyStamp = roleDto.ConcurrencyStamp
             };
         }
+
+        public static bool ValidateDto(RoleDto roleDto)
+        {
+            if(roleDto is null)
+                return false;
+
+            return !string.IsNullOrWhiteSpace(roleDto.Name) && !string.IsNullOrWhiteSpace(roleDto.NormalizedName);
+        }
     }
 }
