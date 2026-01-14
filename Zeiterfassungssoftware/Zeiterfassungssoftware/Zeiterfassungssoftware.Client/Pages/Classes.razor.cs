@@ -18,6 +18,8 @@ namespace Zeiterfassungssoftware.Client.Pages
 
         public Timer? Timer { get; set; }
 
+        public bool DisplayDeleteModal { get; set; }
+
         protected override void OnInitialized()
         {
             Timer = new Timer(UpdateTimer, null, 0, 200);
@@ -73,6 +75,10 @@ namespace Zeiterfassungssoftware.Client.Pages
                     Value = Guid.Empty.ToString()
                 });
             }
+        }
+        private void DeleteClicked()
+        {
+            DisplayDeleteModal = true;
         }
 
         public void DeleteClass()
