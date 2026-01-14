@@ -25,6 +25,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 
         public Timer? Timer { get; set; }
 
+        public bool DisplayDeleteModal { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -55,6 +56,12 @@ namespace Zeiterfassungssoftware.Client.Pages
             UpdateEntry();
             await TimeEntrySource.UpdateEntry(Entry.Id, Entry);
             Navigation.NavigateTo("/history");
+        }
+
+        private void DeleteClicked()
+        {
+            DisplayDeleteModal = true;
+            InvokeAsync(StateHasChanged);
         }
 
         private async void DeleteEntry()
