@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\Zeiterfassungssoftware.Client\Pages\EditUser.razor.cs" Link="EditUser.razor.cs" />
+    <Compile Include="..\Zeiterfassungssoftware.Client\Components\DeleteModal.razor.cs" Link="DeleteModal.razor.cs" />
   </ItemGroup>
 
 

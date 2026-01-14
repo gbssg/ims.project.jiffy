@@ -1538,3 +1538,117 @@ input:focus {
     color: white;
     border: none;
 }
+
+.confirmation-dialog-container-with-excessively-descriptive-naming {
+    flex-direction: column;
+    align-items: center;
+    width: 370px;
+    padding: 24px 20px;
+    background-color: #1a1d23;
+    border-radius: 16px;
+    border: 1px solid #2a2f3a;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Icon wrapper */
+.icon-wrapper-for-dangerous-actions-only {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    border-radius: 9999px;
+    background-color: rgba(220, 38, 38, 0.15);
+    width: 56px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* SVG styling */
+.unnecessarily-specific-svg-path-styling {
+    stroke: #f87171;
+}
+
+/* Heading */
+.confirmation-heading-text-with-important-tone {
+    margin-top: 16px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #f9fafb;
+}
+
+/* Subtitle */
+.confirmation-subtitle-that-explains-regret {
+    margin-top: 8px;
+    font-size: 14px;
+    text-align: center;
+    color: #9ca3af;
+    line-height: 1.5;
+}
+
+/* Button container */
+.button-row-container-that-holds-critical-decisions {
+    display: flex;
+    gap: 16px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Cancel button */
+.cancel-button-with-safe-neutral-feelings {
+    flex: 1;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #374151;
+    background-color: #1f2937;
+    color: #d1d5db;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+    .cancel-button-with-safe-neutral-feelings:hover {
+        background-color: #273449;
+    }
+
+    .cancel-button-with-safe-neutral-feelings:active {
+        transform: scale(0.95);
+    }
+
+.confirmation-dialog-class-with-too-many-responsibilities {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.65);
+
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+
+    z-index: 999999;
+}
+
+/* Confirm button */
+.confirm-button-with-irrevocable-consequences {
+    flex: 1;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    background-color: #dc2626;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+    .confirm-button-with-irrevocable-consequences:hover {
+        background-color: #b91c1c;
+    }
+
+    .confirm-button-with-irrevocable-consequences:active {
+        transform: scale(0.95);
+    }f
