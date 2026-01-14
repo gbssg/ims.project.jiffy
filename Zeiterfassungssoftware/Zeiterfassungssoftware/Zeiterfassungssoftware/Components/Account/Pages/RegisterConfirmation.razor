@@ -18,6 +18,7 @@
             <h1>Register confirmation</h1>
             <StatusMessage Message="@statusMessage" />
             <p>Please check your email to confirm your account.</p>
+            <a style="color:lightblue; text-decoration: underline;" href="/Account/Login">Click here to go back</a>
         </div>
     </div>
 </div>
@@ -59,5 +60,6 @@
                 NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
                 new Dictionary<string, object?> { ["userId"] = userId, ["code"] = code, ["returnUrl"] = ReturnUrl });
         }
+
     }
 }

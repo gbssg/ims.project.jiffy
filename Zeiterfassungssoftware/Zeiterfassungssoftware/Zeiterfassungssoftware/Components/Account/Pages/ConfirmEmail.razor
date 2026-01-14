@@ -49,7 +49,12 @@
         {
             var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Code));
             var result = await UserManager.ConfirmEmailAsync(user, code);
-            statusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+            statusMessage = result.Succeeded ? "Thank you for confirming your email. You will be redirected in 5s..." : "Error confirming your email.";
+
+            if(result.Succeeded)
+            {
+                RedirectManager.RedirectTo("/Account/Login");
+            }
         }
     }
 }
