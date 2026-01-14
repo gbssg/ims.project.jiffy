@@ -24,6 +24,8 @@ namespace Zeiterfassungssoftware.Client.Pages
         public DateOnly LockoutEndDate { get; set; }
         public TimeOnly LockoutEndTime { get; set; }
 
+        public bool DisplayDeleteModal { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             if(!string.Equals(Id, Guid.Empty.ToString()))
@@ -51,6 +53,11 @@ namespace Zeiterfassungssoftware.Client.Pages
         void IDisposable.Dispose()
         {
             Timer?.Dispose();
+        }
+
+        private void DeleteClicked()
+        {
+            DisplayDeleteModal = true;
         }
 
         public async void DeleteUser()

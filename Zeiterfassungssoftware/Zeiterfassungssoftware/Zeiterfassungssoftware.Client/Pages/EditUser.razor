@@ -19,6 +19,12 @@
         </div>
         return;
     }
+
+    @if (DisplayDeleteModal)
+    {
+        <DeleteModal OnConfirm="@DeleteUser" OnCancel="@(() => { DisplayDeleteModal = false; })" />
+    }
+
     <div class="vertical-center">
         <div class="edit-container">
             <p class="edit-category-title">Personal Info</p>
@@ -92,7 +98,7 @@
 
 
             <div class="btn-edit-container">
-                <Button Text="Delete" Class="btn-delete btn-edit" OnClick="DeleteUser" />
+                <Button Text="Delete" Class="btn-delete btn-edit" OnClick="DeleteClicked" />
                 <Button Text="Save" Class="btn-primary btn-edit" OnClick="SaveChanges" />
             </div>
             <p class="back" @onclick="@(() => Navigation.NavigateTo("/usermanagement"))">🡐 Back</p>
