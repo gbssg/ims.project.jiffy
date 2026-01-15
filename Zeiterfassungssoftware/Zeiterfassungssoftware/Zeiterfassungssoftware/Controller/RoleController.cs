@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using Zeiterfassungssoftware.Data;
 using Zeiterfassungssoftware.Mapper;
 using Zeiterfassungssoftware.SharedData.Roles;
 using Zeiterfassungssoftware.SharedData.ShouldTimes;
+using Zeiterfassungssoftware.SharedData.Times;
 
 namespace Zeiterfassungssoftware.Controller
 {
@@ -68,6 +71,33 @@ namespace Zeiterfassungssoftware.Controller
             Role.ConcurrencyStamp = roleDto.ConcurrencyStamp;
 
             _context.Roles.Add(Role);
+            await _context.SaveChangesAsync();
+
+            return Ok(RoleMapper.ToDto(Role));
+        }
+
+        /// <summary>
+        /// Creates a new shouldtime
+        /// </summary>
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TimeEntryDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> UpdateRole(string id, [FromBody, Required] RoleDto roleDto)
+        {
+            if (!RoleMapper.ValidateDto(roleDto))
+                return BadRequest("Invalid data");
+
+            IdentityRole? Role = await _context.Roles.FirstOrDefaultAsync(e => e.Id == id);
+
+            if (Role is null)
+                return NotFound();
+
+            Role.Name = roleDto.NormalizedName;
+            Role.NormalizedName = roleDto.NormalizedName;
+            Role.ConcurrencyStamp = roleDto.ConcurrencyStamp;
+
             await _context.SaveChangesAsync();
 
             return Ok(RoleMapper.ToDto(Role));
