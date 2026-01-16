@@ -12,7 +12,7 @@ namespace Zeiterfassungssoftware.Controller.Tests
     public class RoleControllerTests
     {
         private ApplicationDbContext _context;
-        private RoleController _controller;
+        private RolesController _controller;
 
         [TestInitialize]
         public void Setup()
@@ -22,7 +22,7 @@ namespace Zeiterfassungssoftware.Controller.Tests
                 .Options;
 
             _context = new ApplicationDbContext(options);
-            _controller = new RoleController(_context);
+            _controller = new RolesController(_context);
         }
 
         [TestCleanup]

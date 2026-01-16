@@ -15,11 +15,11 @@ namespace Zeiterfassungssoftware.Controller
     [Route("api/v1/[controller]")]
     [ApiController]
     [Authorize(Roles = "Administrator")]
-    public class RoleController : ControllerBase
+    public class RolesController : ControllerBase
     {
         private ApplicationDbContext _context;
 
-        public RoleController(ApplicationDbContext context)
+        public RolesController(ApplicationDbContext context)
         {
             _context = context;
         }
