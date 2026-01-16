@@ -23,7 +23,7 @@ a:hover {
 */
 
 
-    .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus{
+    .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
         color: black;
     }
 
@@ -367,6 +367,7 @@ p {
     display: none;
 }
 
+
 @media (min-width: 1282px) {
     .filter-popup {
         position: relative;
@@ -376,28 +377,14 @@ p {
         display: block;
     }
 
-    .history-page-body {
-        margin: 2.5vh;
-        display: flex;
-        align-self: center;
-        justify-content: center;
-    }
 
     .entry-list-body {
-        width: 40vw;
+        width: 95%;
     }
 
     .info-widgets {
         margin: 0;
         align-items: flex-start;
-    }
-
-
-    .history-filter-container {
-        display: block;
-        width: 40vw;
-        margin-top: 10px;
-        height: calc(100vh - 116px - 5vh);
     }
 
     .history-filter-title {
@@ -645,7 +632,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 @media (min-width: 1282px) {
     .widget {
-        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        width: 45%;
     }
     .info-widgets {
         gap: 10px;
@@ -742,15 +731,24 @@ textarea {
 
 
 /* Buttons */
+
 .btn-primary {
-    background-color: transparent;
-    border: 2px solid #bb86fc;
+    background-color: #bb86fc;
+    border: none;
     border-radius: 25px;
     font-size: 24px;
-    color: #bb86fc;
+    color: white;
     transition: 1s;
     text-decoration: none;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 40px;
 }
+
+.btn-primary:hover {
+    background-color: rgb(147, 94, 212);
+}
+
 
 .btn-reset-authenticator {
     background-color: transparent;
@@ -1439,3 +1437,218 @@ input:focus {
     }
 
 
+/* User Management */
+
+.usermanagement-top-bar {
+    margin-top: 20px;
+    display: flex;
+    width: 90%;
+    gap: 10px
+}
+
+.user-picture {
+    background-color: #bb86fc;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+.user-email {
+    color: #9ca3af;
+}
+
+.user-container {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    background-color: #000000;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    border-radius: 34px;
+}
+
+.user-container:hover {
+    filter: drop-shadow(0px 0px 4px #bb86fc);
+}
+
+.usermanagement-page-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.usermanagement-list {
+    background-color: #272727;
+    width: 90%;
+    align-items: center;
+    padding: 20px;
+    border-radius: 40px;
+    overflow: scroll;
+    scrollbar-width: none;
+    height: calc(100vh - 40px - 20px * 2 - 10px);
+}
+
+.usermanagement-search-bar {
+    width: calc((100vw - 250px) / 100 * 90 - 93px - 10px);
+    height: 40px;
+    padding-left: 20px;
+    border-radius: 20px;
+}
+
+
+.edit-info-checkbox {
+    margin-left: auto;
+    margin-right: 5px;
+}
+
+
+.edit-info-number {
+    margin-left: auto;
+    margin-right: 5px;
+    height: min-content;
+    width: 50px;
+    border-radius: 15px;
+    padding-left: 5px;
+}
+
+
+.edit-info-select {
+    width: 100%;
+    margin-top: 4px;
+    border-radius: 10px;
+}
+
+.edit-info-lockdate {
+    width: 105px;
+    background: #090909;
+    color: white;
+    border: none;
+}
+
+.edit-info-locktime {
+    width: 73px;
+    margin-left: 5px;
+    background: #090909;
+    color: white;
+    border: none;
+}
+
+.confirmation-dialog-container-with-excessively-descriptive-naming {
+    flex-direction: column;
+    align-items: center;
+    width: 370px;
+    padding: 24px 20px;
+    background-color: #1a1d23;
+    border-radius: 16px;
+    border: 1px solid #2a2f3a;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Icon wrapper */
+.icon-wrapper-for-dangerous-actions-only {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    border-radius: 9999px;
+    background-color: rgba(220, 38, 38, 0.15);
+    width: 56px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* SVG styling */
+.unnecessarily-specific-svg-path-styling {
+    stroke: #f87171;
+}
+
+/* Heading */
+.confirmation-heading-text-with-important-tone {
+    margin-top: 16px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #f9fafb;
+}
+
+/* Subtitle */
+.confirmation-subtitle-that-explains-regret {
+    margin-top: 8px;
+    font-size: 14px;
+    text-align: center;
+    color: #9ca3af;
+    line-height: 1.5;
+}
+
+/* Button container */
+.button-row-container-that-holds-critical-decisions {
+    display: flex;
+    gap: 16px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Cancel button */
+.cancel-button-with-safe-neutral-feelings {
+    flex: 1;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #374151;
+    background-color: #1f2937;
+    color: #d1d5db;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+    .cancel-button-with-safe-neutral-feelings:hover {
+        background-color: #273449;
+    }
+
+    .cancel-button-with-safe-neutral-feelings:active {
+        transform: scale(0.95);
+    }
+
+.confirmation-dialog-class-with-too-many-responsibilities {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.65);
+
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+
+    z-index: 999999;
+}
+
+/* Confirm button */
+.confirm-button-with-irrevocable-consequences {
+    flex: 1;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    background-color: #dc2626;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+    .confirm-button-with-irrevocable-consequences:hover {
+        background-color: #b91c1c;
+    }
+
+    .confirm-button-with-irrevocable-consequences:active {
+        transform: scale(0.95);
+    }f

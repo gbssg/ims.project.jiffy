@@ -2,13 +2,16 @@
 @rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
 
 @using Microsoft.AspNetCore.Authorization
-@using Zeiterfassungssoftware.SharedData.Classes
-@using Zeiterfassungssoftware.SharedData.ShouldTimes
 @attribute [Authorize(Roles = "Administrator")]
 
 <PageTitle>Classes</PageTitle>
 
-@if(ClassSource.IsLoaded) {
+@if (ClassSource.IsLoaded)
+{
+    @if (DisplayDeleteModal)
+    {
+        <DeleteModal OnConfirm="@DeleteClass" OnCancel="@(() => { DisplayDeleteModal = false; })" />
+    }
     <div class="vertical-center">
         <div class="centered-div-flex">
             <div class="class-edit-page">
@@ -54,7 +57,7 @@
                                 else
                                 {
                                     <Button Class="btn-primary classes-button" Text="Save" OnClick="SaveClass" />
-                                    <Button Class="btn-primary classes-button" Text="Delete" OnClick="DeleteClass" />
+                                    <Button Class="btn-primary classes-button" Text="Delete" OnClick="DeleteClicked" />
                                 }
                             </div>
                         </div>

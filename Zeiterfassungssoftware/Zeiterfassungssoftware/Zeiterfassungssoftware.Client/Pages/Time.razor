@@ -14,11 +14,12 @@
 		
 		<div class="timepage-body">
 			<div class="centered-div-flex">
-				<RoundButton OnClick="ToggleClock" Started="@Started" Disabled="@Disabled" />
+				<RoundButton OnClick="ToggleClock" Started="@Started"/>
 			</div>
 
-			@if (!Started)
+			@if (Started)
 			{
+					<div class="text-passed-time">@PassedTime.ToString(@"hh\:mm\:ss")</div>
 				<div class="centered-div-flex">
 					<select class="activity-select toprounded" @bind="ActivityTitleSelect">
 						<option>@NEW_ACTIVITY_TITLE</option>
@@ -63,10 +64,6 @@
 					</select>
 				</div>
 				<TextField Style="height: 90px;" Class="@(ActivityDescriptionSelect.Equals(NEW_ACTIVITY_DESCRIPTION) ? "textfield activity-textfield bottomrounded" : "invisible")" PlaceHolder="Activity Description..." @bind-Value="@ActivityDescription" Multiline="true" />
-			}
-			else
-			{
-				<div class="text-passed-time">@PassedTime.ToString(@"hh\:mm\:ss")</div>
 			}
 		</div>
 	}

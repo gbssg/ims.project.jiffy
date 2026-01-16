@@ -19,7 +19,7 @@ namespace Zeiterfassungssoftware.Client.Pages
 
 		public bool Started => CurrentEntry is not null 
 							   && CurrentEntry.End is null;
-		public bool Disabled => !Started && (string.IsNullOrWhiteSpace(Title) || string.IsNullOrWhiteSpace(Description));
+		public bool Disabled => Started && (string.IsNullOrWhiteSpace(Title) || string.IsNullOrWhiteSpace(Description));
 		
 		
 		public TimeEntryDto? CurrentEntry { get; set; }
@@ -56,21 +56,19 @@ namespace Zeiterfassungssoftware.Client.Pages
 
 		public async void ToggleClock()
 		{
-			if (Disabled)
-				return;
 
 			if (!Started)
-			{
-				PostTitle();
-				PostDescription();
+            {
+                PostTitle();
+                PostDescription();
 
-				Timer = new Timer(UpdateTimer, null, 0, 1000);
+                Timer = new Timer(UpdateTimer, null, 0, 1000);
 
 				var Temp = new TimeEntryDto()
 				{
 					Start = DateTime.Now,
-					Title = this.Title,
-					Description = this.Description,
+					Title = "?",
+					Description = "?",
 				};
 
 				if (!TimeEntrySource.PreValidateEntry(Temp))
@@ -84,7 +82,16 @@ namespace Zeiterfassungssoftware.Client.Pages
 				if (CurrentEntry is null)
 					return;
 
-				CurrentEntry.End = DateTime.Now;
+				if (string.IsNullOrWhiteSpace(Title) || string.IsNullOrWhiteSpace(Description))
+					return;
+
+
+                PostTitle();
+                PostDescription();
+
+				CurrentEntry.Title = Title;
+				CurrentEntry.Description = Description;
+                CurrentEntry.End = DateTime.Now;
 				await TimeEntrySource.UpdateEntry(CurrentEntry.Id, CurrentEntry);
 				
 				Timer?.Dispose();
