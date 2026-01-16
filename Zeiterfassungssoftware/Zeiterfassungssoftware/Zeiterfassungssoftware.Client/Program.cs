@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Zeiterfassungssoftware.Client.Services;
 using Zeiterfassungssoftware.SharedData.Activities;
 using Zeiterfassungssoftware.SharedData.Classes;
+using Zeiterfassungssoftware.SharedData.Roles;
 using Zeiterfassungssoftware.SharedData.ShouldTimes;
 using Zeiterfassungssoftware.SharedData.Times;
 using Zeiterfassungssoftware.SharedData.Users;
@@ -26,6 +27,7 @@ namespace Zeiterfassungssoftware.Client
             builder.Services.AddSingleton<IClassProvider, RemoteClassProvider>();
             builder.Services.AddSingleton<IUserProvider, RemoteUserProvider>();
             builder.Services.AddSingleton<IShouldTimeProvider, RemoteShouldTimeProvider>();
+            builder.Services.AddSingleton<IRoleProvider, RemoteRoleProvider>();
 
             await builder.Build().RunAsync();
         }
