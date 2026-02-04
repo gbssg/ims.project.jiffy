@@ -1,4 +1,6 @@
-﻿namespace Zeiterfassungssoftware.SharedData.Users
+﻿using Zeiterfassungssoftware.SharedData.Roles;
+
+namespace Zeiterfassungssoftware.SharedData.Users
 {
     public class UserDto
     {
@@ -16,6 +18,7 @@
         public DateTime LockoutEnd { get; set; }
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
+        public List<RoleDto> Roles { get; set; } = new();
 
         public override bool Equals(object? obj)
         {

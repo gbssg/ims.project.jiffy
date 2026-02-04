@@ -31,8 +31,9 @@ namespace Zeiterfassungssoftware.Controller
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<RoleDto>))]
         public async Task<ActionResult<List<RoleDto>>> GetRoles()
         {
-            var Roles = await _context.Roles.Select(e => RoleMapper.ToDto(e))
-                                            .ToListAsync();
+            var UserRoles = _context.UserRoles.GroupBy(e => e.UserId).Select(e => RoleMapper.ToDto(_context.Roles.FirstOrDefault(r => r.Id == e.RoleId)));
+
+            var Roles = await _context.Users.ToListAsync();
 
             return Ok(Roles);
         }

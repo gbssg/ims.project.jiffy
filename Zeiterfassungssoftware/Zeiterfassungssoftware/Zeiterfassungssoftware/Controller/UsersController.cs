@@ -77,7 +77,7 @@ namespace Zeiterfassungssoftware.Controller
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 ;
-            return Ok(UserMapper.ToDTO(applicationUser));
+            return Ok(UserMapper.ToDTO(applicationUser, new()));
         }
 
         /// <summary>

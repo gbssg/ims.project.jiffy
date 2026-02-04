@@ -1,11 +1,13 @@
-﻿using Zeiterfassungssoftware.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using Zeiterfassungssoftware.Data;
+using Zeiterfassungssoftware.SharedData.Roles;
 using Zeiterfassungssoftware.SharedData.Users;
 
 namespace Zeiterfassungssoftware.Mapper
 {
     public class UserMapper
     {
-        public static UserDto ToDTO(ApplicationUser applicationUser)
+        public static UserDto ToDTO(ApplicationUser applicationUser, List<IdentityRole> roles)
         {
             if (applicationUser is null)
                 throw new ArgumentNullException();
@@ -25,8 +27,9 @@ namespace Zeiterfassungssoftware.Mapper
                 TwoFactorEnabled = applicationUser.TwoFactorEnabled,
                 LockoutEnd = applicationUser.LockoutEnd?.UtcDateTime ?? DateTime.MinValue,
                 LockoutEnabled = applicationUser.LockoutEnabled,
-                AccessFailedCount = applicationUser.AccessFailedCount
-            };
+                AccessFailedCount = applicationUser.AccessFailedCount,
+                Roles = roles.Select(e => RoleMapper.ToDto(e)).ToList()
+            };   
         }
 
         public static ApplicationUser FromDTO(UserDto userDto)
