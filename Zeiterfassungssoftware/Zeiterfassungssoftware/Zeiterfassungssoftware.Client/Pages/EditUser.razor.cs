@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Zeiterfassungssoftware.SharedData.Classes;
+using Zeiterfassungssoftware.SharedData.Roles;
 using Zeiterfassungssoftware.SharedData.Times;
 using Zeiterfassungssoftware.SharedData.Users;
 
@@ -15,6 +16,10 @@ namespace Zeiterfassungssoftware.Client.Pages
         public IUserProvider UserSource { get; set; }
         [Inject]
         public IClassProvider ClassSource { get; set; }
+
+        [Inject]
+        public IRoleProvider RoleProvider { get; set; }
+
         [Inject]
         private NavigationManager Navigation { get; set; }
 
@@ -25,6 +30,7 @@ namespace Zeiterfassungssoftware.Client.Pages
         public TimeOnly LockoutEndTime { get; set; }
 
         public bool DisplayDeleteModal { get; set; }
+        private List<RoleDto> SelectedRoles = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -33,6 +39,7 @@ namespace Zeiterfassungssoftware.Client.Pages
                 User = await UserSource.GetUserById(Id);
                 LockoutEndDate = DateOnly.FromDateTime(User.LockoutEnd);
                 LockoutEndTime = TimeOnly.FromDateTime(User.LockoutEnd);
+                SelectedRoles = User.Roles;
             }
             else
             {
@@ -68,6 +75,17 @@ namespace Zeiterfassungssoftware.Client.Pages
             Navigation.NavigateTo("/usermanagement");
         }
 
+        private void ToggleRole(RoleDto role)
+        {
+            if(SelectedRoles.Contains(role))
+            {
+                SelectedRoles.Remove(role);
+            }
+            else
+            {
+                SelectedRoles.Add(role);
+            }
+        }
         public async void SaveChanges()
         {
             if(string.Equals(Id, Guid.Empty.ToString()))

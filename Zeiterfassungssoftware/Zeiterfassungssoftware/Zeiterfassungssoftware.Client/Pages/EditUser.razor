@@ -96,6 +96,18 @@
                 </select>
             </div>
 
+            <p class="edit-category-title">Roles</p>
+
+            <div class="edit-info-container">
+                @foreach (var role in RoleProvider.GetRoles())
+                {
+                    <div class="flex-div-nowrap">
+                        <p style="margin:0">@role.Name</p>
+                        <input type="checkbox" class="edit-info-checkbox" checked="@SelectedRoles.Contains(role)" @onchange="() => ToggleRole(role)" />
+                    </div>
+                }
+            </div>
+
 
             <div class="btn-edit-container">
                 <Button Text="Delete" Class="btn-delete btn-edit" OnClick="DeleteClicked" />

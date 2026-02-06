@@ -12,5 +12,12 @@ namespace Zeiterfassungssoftware.SharedData.Roles
         public string Name { get; set; } = string.Empty;
         public string NormalizedName { get; set; } = string.Empty;
         public string ConcurrencyStamp {  get; set; } = string.Empty;
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is RoleDto dto)
+                return dto.Id == this.Id;
+            return false;
+        }
     }
 }
