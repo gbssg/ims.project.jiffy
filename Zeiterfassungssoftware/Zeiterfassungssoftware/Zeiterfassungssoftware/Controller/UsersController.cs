@@ -33,7 +33,15 @@ namespace Zeiterfassungssoftware.Controller
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<UserDto>))]
         public async Task<ActionResult<List<UserDto>>> GetUsers()
         {
-            var Users = await _context.Users.Select(e => UserMapper.ToDTO(e)).ToListAsync();
+            var Users = await _context.Users.Select(e => UserMapper.ToDTO(e, new())).ToListAsync();
+
+            foreach(UserDto user in Users)
+            {
+                var UserRoles = await _context.UserRoles.Where(e => e.UserId == user.Id).Select(e => e.RoleId).ToListAsync();
+                var Roles = await _context.Roles.Where(e => UserRoles.Contains(e.Id)).Select(e => RoleMapper.ToDto(e)).ToListAsync();
+                user.Roles = Roles;
+            }
+
             return Ok(Users);
         }
 
@@ -51,7 +59,10 @@ namespace Zeiterfassungssoftware.Controller
             if (User is null)
                 return NotFound();
 
-            return Ok(UserMapper.ToDTO(User));
+            var UserRoles = await _context.UserRoles.Where(e => e.UserId == Id).Select(e => e.RoleId).ToListAsync();
+            var Roles = await _context.Roles.Where(e => UserRoles.Contains(e.Id)).ToListAsync();
+
+            return Ok(UserMapper.ToDTO(User, Roles));
         }
 
         /// <summary>
@@ -111,8 +122,12 @@ namespace Zeiterfassungssoftware.Controller
         public async Task<ActionResult<UserDto>> UpdateUser(string id, [FromBody, Required] UserDto user)
         {
             var applicationUser = await _userManager.FindByIdAsync(id);
+            
             if (applicationUser == null)
                 return NotFound();
+
+            var UserRoles = await _context.UserRoles.Where(e => e.UserId == id).Select(e => e.RoleId).ToListAsync();
+            var Roles = await _context.Roles.Where(e => UserRoles.Contains(e.Id)).ToListAsync();
 
             if(User.IsInRole("Administrator"))
             {
@@ -149,7 +164,62 @@ namespace Zeiterfassungssoftware.Controller
                         return BadRequest(passResult.Errors);
                 }
 
-                return Ok(UserMapper.ToDTO(applicationUser));
+                var newRoles = user.Roles
+                    .Where(r => !string.IsNullOrWhiteSpace(r.Name))
+                    .Select(r => r.Name!.Trim())
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToList();
+
+                var currentRoles = Roles
+                    .Select(r => r.Name)
+                    .Where(n => !string.IsNullOrWhiteSpace(n))
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToList();
+
+                var existingRoleNames = await _context.Roles
+                    .Select(r => r.Name)
+                    .Where(n => n != null)
+                    .ToListAsync();
+
+                var missingRoles = newRoles
+                    .Where(rn => !existingRoleNames.Contains(rn, StringComparer.OrdinalIgnoreCase))
+                    .ToList();
+
+                if (missingRoles.Count > 0)
+                    return BadRequest(new { message = "One or more roles do not exist.", missingRoles });
+
+                var toAdd = newRoles
+                    .Except(currentRoles, StringComparer.OrdinalIgnoreCase)
+                    .ToList();
+
+                var toRemove = currentRoles
+                    .Except(newRoles, StringComparer.OrdinalIgnoreCase)
+                    .ToList();
+
+                if (toRemove.Count > 0)
+                {
+                    var removeResult = await _userManager.RemoveFromRolesAsync(applicationUser, toRemove);
+                    if (!removeResult.Succeeded)
+                        return BadRequest(removeResult.Errors);
+                }
+
+                if (toAdd.Count > 0)
+                {
+                    var addResult = await _userManager.AddToRolesAsync(applicationUser, toAdd);
+                    if (!addResult.Succeeded)
+                        return BadRequest(addResult.Errors);
+                }
+
+                UserRoles = await _context.UserRoles
+                    .Where(e => e.UserId == id)
+                    .Select(e => e.RoleId)
+                    .ToListAsync();
+
+                Roles = await _context.Roles
+                    .Where(e => UserRoles.Contains(e.Id))
+                    .ToListAsync();
+
+                return Ok(UserMapper.ToDTO(applicationUser, Roles));
             }
 
             if(id == User.Claims.FirstOrDefault().Value)
@@ -160,7 +230,7 @@ namespace Zeiterfassungssoftware.Controller
                 if (!result.Succeeded)
                     return BadRequest(result.Errors);
 
-                return Ok(UserMapper.ToDTO(applicationUser));
+                return Ok(UserMapper.ToDTO(applicationUser, new()));
             }
 
             return BadRequest();

@@ -16,10 +16,6 @@
     <None Remove="Components\Data\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="..\Zeiterfassungssoftware.Client\Components\DeleteModal.razor.cs" Link="DeleteModal.razor.cs" />
-  </ItemGroup>
-
 
 
 
